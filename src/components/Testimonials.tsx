@@ -90,10 +90,10 @@ const testimonials = [
   },
   {
     quote:
-      "Acabamento impecável. Você sente a diferença assim que abre a caixa. Vale cada centavo, é uma joia de verdade.",
-    name: "Rafael Almeida",
-    role: "Corredor de rua — Rio de Janeiro",
-    distance: "21K",
+      "Minha joia chegou na sexta, já coloquei assim que chegou, não tirei mais! Ela é linda demais e já me deu muita sorte. Primeira prova com ela e voltei com 2 troféus.",
+    name: "Carin Marchinhacki",
+    role: "Corredora — SP",
+    distance: "RUN",
   },
   {
     quote:
