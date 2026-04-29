@@ -25,7 +25,7 @@ export const Header = () => {
             <span className="font-medium tracking-wide">@3rfitnessjr</span>
           </a>
         </div>
-        <nav className="hidden md:flex items-center gap-8 text-sm">
+        <nav className="flex items-center gap-4 md:gap-8 text-sm">
           <Link to="/" className="hover:text-accent transition-smooth">Loja</Link>
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-1 hover:text-accent transition-smooth outline-none">
