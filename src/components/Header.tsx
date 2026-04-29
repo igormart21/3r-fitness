@@ -16,7 +16,7 @@ export const Header = () => {
             aria-label="Instagram @3rfitnessjr"
           >
             <Instagram className="h-5 w-5" strokeWidth={1.5} />
-            <span className="font-medium tracking-wide">@3rfitnessjr</span>
+            
           </a>
         </div>
         <nav className="hidden md:flex items-center gap-8 text-sm">
