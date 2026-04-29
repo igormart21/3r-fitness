@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import pendantGold from "@/assets/testimonial-pendant-gold.png";
-import pendantSilver from "@/assets/testimonial-pendant-silver.jpg";
+import pendantSilver from "@/assets/testimonial-pendant-silver.png";
 
 // 👇 TROQUE AQUI PARA TESTAR: "offwhite" | "preto" | "grafite" | "bokeh"
 const THEME: "offwhite" | "preto" | "grafite" | "bokeh" = "offwhite";
