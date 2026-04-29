@@ -1,6 +1,83 @@
 import { useEffect, useState } from "react";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 
+// 👇 TROQUE AQUI PARA TESTAR: "offwhite" | "preto" | "grafite" | "bokeh"
+const THEME: "offwhite" | "preto" | "grafite" | "bokeh" = "preto";
+
+const themes = {
+  offwhite: {
+    background: "linear-gradient(180deg, hsl(36 35% 95%) 0%, hsl(36 30% 92%) 100%)",
+    overlay: null as string | null,
+    eyebrow: "hsl(40 60% 40%)",
+    title: "hsl(20 14% 15%)",
+    quoteIcon: "hsl(40 70% 50%)",
+    quote: "hsl(20 14% 20%)",
+    line: "hsl(40 70% 55%)",
+    name: "hsl(20 14% 15%)",
+    role: "hsl(20 8% 45%)",
+    accent: "hsl(40 60% 40%)",
+    border: "hsl(40 40% 70%)",
+    arrow: "hsl(20 14% 20%)",
+    dotInactive: "hsl(30 15% 75%)",
+    dotActive: "hsl(40 70% 50%)",
+    topLine: "linear-gradient(90deg, transparent, hsl(40 70% 55%), transparent)",
+  },
+  preto: {
+    background: "hsl(0 0% 4%)",
+    overlay: null,
+    eyebrow: "hsl(40 70% 60%)",
+    title: "hsl(36 30% 96%)",
+    quoteIcon: "hsl(40 80% 60%)",
+    quote: "hsl(36 20% 92%)",
+    line: "hsl(40 70% 55%)",
+    name: "hsl(36 30% 96%)",
+    role: "hsl(30 10% 60%)",
+    accent: "hsl(40 70% 60%)",
+    border: "hsl(40 40% 35%)",
+    arrow: "hsl(36 30% 90%)",
+    dotInactive: "hsl(0 0% 25%)",
+    dotActive: "hsl(40 70% 55%)",
+    topLine: "linear-gradient(90deg, transparent, hsl(40 70% 55%), transparent)",
+  },
+  grafite: {
+    background:
+      "radial-gradient(ellipse at top, hsl(20 6% 18%) 0%, hsl(20 8% 12%) 60%, hsl(20 10% 8%) 100%)",
+    overlay:
+      "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+    eyebrow: "hsl(40 50% 60%)",
+    title: "hsl(36 20% 92%)",
+    quoteIcon: "hsl(40 60% 55%)",
+    quote: "hsl(30 15% 88%)",
+    line: "hsl(40 60% 50%)",
+    name: "hsl(36 20% 92%)",
+    role: "hsl(30 8% 60%)",
+    accent: "hsl(40 55% 55%)",
+    border: "hsl(20 10% 30%)",
+    arrow: "hsl(36 20% 88%)",
+    dotInactive: "hsl(20 8% 28%)",
+    dotActive: "hsl(40 60% 55%)",
+    topLine: "linear-gradient(90deg, transparent, hsl(40 50% 50%), transparent)",
+  },
+  bokeh: {
+    background:
+      "radial-gradient(circle at 20% 30%, hsl(40 80% 50% / 0.18), transparent 40%), radial-gradient(circle at 80% 70%, hsl(35 70% 55% / 0.15), transparent 45%), radial-gradient(circle at 50% 50%, hsl(40 60% 40% / 0.08), transparent 60%), linear-gradient(180deg, hsl(20 15% 8%), hsl(20 20% 5%))",
+    overlay: null,
+    eyebrow: "hsl(40 80% 65%)",
+    title: "hsl(36 30% 96%)",
+    quoteIcon: "hsl(40 90% 65%)",
+    quote: "hsl(36 25% 94%)",
+    line: "hsl(40 80% 60%)",
+    name: "hsl(36 30% 96%)",
+    role: "hsl(30 15% 70%)",
+    accent: "hsl(40 80% 65%)",
+    border: "hsl(40 40% 40%)",
+    arrow: "hsl(36 30% 92%)",
+    dotInactive: "hsl(20 10% 30%)",
+    dotActive: "hsl(40 80% 60%)",
+    topLine: "linear-gradient(90deg, transparent, hsl(40 80% 60%), transparent)",
+  },
+};
+
 const testimonials = [
   {
     quote:
@@ -33,6 +110,7 @@ const testimonials = [
 ];
 
 export const Testimonials = () => {
+  const t = themes[THEME];
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -51,24 +129,30 @@ export const Testimonials = () => {
     <section
       id="depoimentos"
       className="relative py-24 md:py-32 overflow-hidden"
-      style={{ background: "linear-gradient(180deg, hsl(36 35% 95%) 0%, hsl(36 30% 92%) 100%)" }}
+      style={{ background: t.background }}
     >
-      {/* Detalhe dourado decorativo */}
+      {t.overlay && (
+        <div
+          className="absolute inset-0 pointer-events-none mix-blend-overlay"
+          style={{ backgroundImage: t.overlay }}
+        />
+      )}
+
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-32"
-        style={{ background: "linear-gradient(90deg, transparent, hsl(40 70% 55%), transparent)" }}
+        style={{ background: t.topLine }}
       />
 
-      <div className="container max-w-4xl text-center">
+      <div className="container max-w-4xl text-center relative">
         <span
           className="text-[11px] uppercase tracking-[0.4em] font-medium"
-          style={{ color: "hsl(40 60% 40%)" }}
+          style={{ color: t.eyebrow }}
         >
           Depoimentos
         </span>
         <h2
           className="font-display text-4xl md:text-5xl font-medium mt-4 mb-16"
-          style={{ color: "hsl(20 14% 15%)" }}
+          style={{ color: t.title }}
         >
           Histórias que carregamos
         </h2>
@@ -76,45 +160,35 @@ export const Testimonials = () => {
         <div className="relative min-h-[280px] md:min-h-[240px]">
           <Quote
             className="mx-auto mb-8 h-10 w-10 opacity-80"
-            style={{ color: "hsl(40 70% 50%)" }}
+            style={{ color: t.quoteIcon }}
             strokeWidth={1.25}
           />
 
           <blockquote
             key={index}
             className="animate-fade-in font-display text-2xl md:text-3xl leading-relaxed font-light italic px-4 md:px-12"
-            style={{ color: "hsl(20 14% 20%)" }}
+            style={{ color: t.quote }}
           >
             “{current.quote}”
           </blockquote>
 
           <div className="mt-10 flex flex-col items-center gap-1">
-            <div
-              className="h-px w-12 mb-4"
-              style={{ background: "hsl(40 70% 55%)" }}
-            />
-            <p
-              className="text-sm font-medium tracking-wide"
-              style={{ color: "hsl(20 14% 15%)" }}
-            >
+            <div className="h-px w-12 mb-4" style={{ background: t.line }} />
+            <p className="text-sm font-medium tracking-wide" style={{ color: t.name }}>
               {current.name}
             </p>
-            <p
-              className="text-xs uppercase tracking-[0.25em]"
-              style={{ color: "hsl(20 8% 45%)" }}
-            >
-              {current.role} · <span style={{ color: "hsl(40 60% 40%)" }}>{current.distance}</span>
+            <p className="text-xs uppercase tracking-[0.25em]" style={{ color: t.role }}>
+              {current.role} · <span style={{ color: t.accent }}>{current.distance}</span>
             </p>
           </div>
         </div>
 
-        {/* Controles */}
         <div className="mt-12 flex items-center justify-center gap-6">
           <button
             onClick={prev}
             aria-label="Depoimento anterior"
             className="p-2 rounded-full border transition-all hover:scale-110"
-            style={{ borderColor: "hsl(40 40% 70%)", color: "hsl(20 14% 20%)" }}
+            style={{ borderColor: t.border, color: t.arrow }}
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
@@ -128,7 +202,7 @@ export const Testimonials = () => {
                 className="h-1.5 rounded-full transition-all"
                 style={{
                   width: i === index ? "32px" : "8px",
-                  background: i === index ? "hsl(40 70% 50%)" : "hsl(30 15% 75%)",
+                  background: i === index ? t.dotActive : t.dotInactive,
                 }}
               />
             ))}
@@ -138,7 +212,7 @@ export const Testimonials = () => {
             onClick={next}
             aria-label="Próximo depoimento"
             className="p-2 rounded-full border transition-all hover:scale-110"
-            style={{ borderColor: "hsl(40 40% 70%)", color: "hsl(20 14% 20%)" }}
+            style={{ borderColor: t.border, color: t.arrow }}
           >
             <ChevronRight className="h-4 w-4" />
           </button>
