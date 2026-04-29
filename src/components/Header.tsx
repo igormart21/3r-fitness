@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Instagram } from "lucide-react";
 import { CartDrawer } from "./CartDrawer";
-import logo3R from "@/assets/3r-logo.png";
+
 
 export const Header = () => {
   return (
