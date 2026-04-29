@@ -102,6 +102,13 @@ const testimonials = [
     role: "Triatleta — Belo Horizonte",
     distance: "70.3",
   },
+  {
+    quote:
+      "Meu pingente de corredora carrega minha alegria, minha dedicação e a liberdade que sinto quando estou correndo.",
+    name: "Catiucia Bertuol",
+    role: "Corredora — RJ",
+    distance: "RUN",
+  },
 ];
 
 export const Testimonials = () => {
