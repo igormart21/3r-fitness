@@ -19,9 +19,6 @@ export const Header = () => {
             <span className="font-medium tracking-wide">@3rfitnessjr</span>
           </a>
         </div>
-        <Link to="/" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2" aria-label="3R Fitness - Início">
-          <span className="font-display text-sm uppercase tracking-[0.25em] text-muted-foreground hidden sm:inline">Fitness</span>
-        </Link>
         <nav className="hidden md:flex items-center gap-8 text-sm">
           <Link to="/" className="hover:text-accent transition-smooth">Loja</Link>
           <a href="#sobre" className="hover:text-accent transition-smooth">Sobre</a>
