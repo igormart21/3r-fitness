@@ -13,7 +13,7 @@ export const Header = () => {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 md:gap-6">
           <a
             href="https://instagram.com/3rfitnessjr"
             target="_blank"
@@ -24,11 +24,8 @@ export const Header = () => {
             <Instagram className="h-5 w-5" strokeWidth={1.5} />
             <span className="font-medium tracking-wide">@3rfitnessjr</span>
           </a>
-        </div>
-        <nav className="flex items-center gap-4 md:gap-8 text-sm">
-          <Link to="/" className="hover:text-accent transition-smooth">Loja</Link>
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 hover:text-accent transition-smooth outline-none">
+            <DropdownMenuTrigger className="flex items-center gap-1 text-sm hover:text-accent transition-smooth outline-none">
               Coleções <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="bg-background border border-border">
@@ -40,6 +37,9 @@ export const Header = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+        </div>
+        <nav className="hidden md:flex items-center gap-8 text-sm">
+          <Link to="/" className="hover:text-accent transition-smooth">Loja</Link>
           <a href="#sobre" className="hover:text-accent transition-smooth">Sobre</a>
           <a href="#contato" className="hover:text-accent transition-smooth">Contato</a>
         </nav>
