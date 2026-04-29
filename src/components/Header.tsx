@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
-import { Instagram } from "lucide-react";
+import { Instagram, ChevronDown } from "lucide-react";
 import { CartDrawer } from "./CartDrawer";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "./ui/dropdown-menu";
 
 
 export const Header = () => {
@@ -21,6 +27,19 @@ export const Header = () => {
         </div>
         <nav className="hidden md:flex items-center gap-8 text-sm">
           <Link to="/" className="hover:text-accent transition-smooth">Loja</Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex items-center gap-1 hover:text-accent transition-smooth outline-none">
+              Coleções <ChevronDown className="h-4 w-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="bg-background border border-border">
+              <DropdownMenuItem asChild>
+                <a href="#colecao-ouro" className="cursor-pointer">Coleção Ouro</a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <a href="#colecao-prata" className="cursor-pointer">Coleção Prata</a>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <a href="#sobre" className="hover:text-accent transition-smooth">Sobre</a>
           <a href="#contato" className="hover:text-accent transition-smooth">Contato</a>
         </nav>
