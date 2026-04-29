@@ -83,10 +83,10 @@ const themes = {
 const testimonials = [
   {
     quote:
-      "Comprei o pingente da minha primeira maratona e nunca mais tirei do pescoço. É como carregar a história daquele dia comigo todos os dias.",
-    name: "Mariana Costa",
-    role: "Maratonista — São Paulo",
-    distance: "42K",
+      "A joia significa a personificação da corredora que sempre sonhei ser!",
+    name: "Elizandra Fernandes",
+    role: "Corredora — SC",
+    distance: "RUN",
   },
   {
     quote:
