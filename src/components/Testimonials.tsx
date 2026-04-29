@@ -102,13 +102,6 @@ const testimonials = [
     role: "Triatleta — Belo Horizonte",
     distance: "70.3",
   },
-  {
-    quote:
-      "Já tive vários colares esportivos, mas a 3R é outro nível. Discreto o suficiente pro dia a dia, marcante o suficiente pra contar uma história.",
-    name: "Pedro Henrique Lima",
-    role: "Ultramaratonista — Curitiba",
-    distance: "100K",
-  },
 ];
 
 export const Testimonials = () => {
