@@ -12,11 +12,10 @@ export const Header = () => {
             href="https://instagram.com/3rfitnessjr"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm hover:text-accent transition-smooth"
+            className="flex items-center text-sm hover:text-accent transition-smooth"
             aria-label="Instagram @3rfitnessjr"
           >
             <Instagram className="h-5 w-5" strokeWidth={1.5} />
-            <span className="font-medium tracking-wide">@3rfitnessjr</span>
           </a>
         </div>
         <Link to="/" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2" aria-label="3R Fitness - Início">
