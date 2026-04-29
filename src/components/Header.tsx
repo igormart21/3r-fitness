@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
-import { Instagram } from "lucide-react";
+import { Instagram, ChevronDown } from "lucide-react";
 import { CartDrawer } from "./CartDrawer";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "./ui/dropdown-menu";
 
 
 export const Header = () => {
