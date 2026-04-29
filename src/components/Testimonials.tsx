@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import pendantGold from "@/assets/testimonial-pendant-gold.png";
+import pendantSilver from "@/assets/testimonial-pendant-silver.jpg";
 
 // 👇 TROQUE AQUI PARA TESTAR: "offwhite" | "preto" | "grafite" | "bokeh"
 const THEME: "offwhite" | "preto" | "grafite" | "bokeh" = "offwhite";
@@ -142,6 +144,38 @@ export const Testimonials = () => {
         className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-32"
         style={{ background: t.topLine }}
       />
+
+      {/* Lateral images — decorative */}
+      <div
+        className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 w-[22%] max-w-[320px] pointer-events-none select-none"
+        style={{
+          transform: "translateY(-50%) rotate(-6deg)",
+          filter: "drop-shadow(0 30px 40px hsl(20 14% 15% / 0.18))",
+        }}
+        aria-hidden="true"
+      >
+        <img
+          src={pendantGold}
+          alt=""
+          className="w-full h-auto object-contain rounded-sm"
+          loading="lazy"
+        />
+      </div>
+      <div
+        className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[22%] max-w-[320px] pointer-events-none select-none"
+        style={{
+          transform: "translateY(-50%) rotate(6deg)",
+          filter: "drop-shadow(0 30px 40px hsl(20 14% 15% / 0.18))",
+        }}
+        aria-hidden="true"
+      >
+        <img
+          src={pendantSilver}
+          alt=""
+          className="w-full h-auto object-contain rounded-sm"
+          loading="lazy"
+        />
+      </div>
 
       <div className="container max-w-4xl text-center relative">
         <span
