@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Instagram } from "lucide-react";
 import { CartDrawer } from "./CartDrawer";
+import logo3R from "@/assets/3r-logo.png";
 
 export const Header = () => {
   return (
@@ -18,9 +19,9 @@ export const Header = () => {
             <span className="font-medium tracking-wide">@3rfitnessjr</span>
           </a>
         </div>
-        <Link to="/" className="hidden md:flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
-          <span className="font-display text-2xl font-semibold tracking-tight">Atelier</span>
-          <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground hidden sm:inline">est. 2026</span>
+        <Link to="/" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2" aria-label="3R Fitness - Início">
+          <img src={logo3R} alt="3R Fitness" className="h-10 w-auto" loading="eager" />
+          <span className="font-display text-sm uppercase tracking-[0.25em] text-muted-foreground hidden sm:inline">Fitness</span>
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-sm">
           <Link to="/" className="hover:text-accent transition-smooth">Loja</Link>
