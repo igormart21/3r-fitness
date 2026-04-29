@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 
 // 👇 TROQUE AQUI PARA TESTAR: "offwhite" | "preto" | "grafite" | "bokeh"
-const THEME: "offwhite" | "preto" | "grafite" | "bokeh" = "bokeh";
+const THEME: "offwhite" | "preto" | "grafite" | "bokeh" = "offwhite";
 
 const themes = {
   offwhite: {
