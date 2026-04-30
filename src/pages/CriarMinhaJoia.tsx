@@ -201,12 +201,17 @@ const CriarMinhaJoia = () => {
               <button
                 key={cat}
                 onClick={() => setCategoria(cat)}
-                className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
+                className={`relative px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
                   categoria === cat
-                    ? "border-accent bg-accent/5"
+                    ? "border-accent bg-accent/10 text-accent shadow-[0_0_0_1px_hsl(var(--accent))]"
                     : "border-border bg-card"
                 }`}
               >
+                {categoria === cat && (
+                  <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
+                    <Check className="h-3 w-3" strokeWidth={3} />
+                  </span>
+                )}
                 {cat}
               </button>
             ))}
@@ -246,12 +251,17 @@ const CriarMinhaJoia = () => {
                 <button
                   key={m}
                   onClick={() => handleSelecionarMaterial(m)}
-                  className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
+                  className={`relative px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
                     material === m
-                      ? "border-accent bg-accent/5"
+                      ? "border-accent bg-accent/10 text-accent shadow-[0_0_0_1px_hsl(var(--accent))]"
                       : "border-border bg-card"
                   }`}
                 >
+                  {material === m && (
+                    <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
+                      <Check className="h-3 w-3" strokeWidth={3} />
+                    </span>
+                  )}
                   {m}
                 </button>
               ))}
@@ -307,12 +317,17 @@ const CriarMinhaJoia = () => {
                 <button
                   key={e}
                   onClick={() => setEstilo(estilo === e ? null : e)}
-                  className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
+                  className={`relative px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
                     estilo === e
-                      ? "border-accent bg-accent/5"
+                      ? "border-accent bg-accent/10 text-accent shadow-[0_0_0_1px_hsl(var(--accent))]"
                       : "border-border bg-card"
                   }`}
                 >
+                  {estilo === e && (
+                    <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
+                      <Check className="h-3 w-3" strokeWidth={3} />
+                    </span>
+                  )}
                   {e}
                 </button>
               ))}
@@ -346,12 +361,17 @@ const CriarMinhaJoia = () => {
               <button
                 key={g}
                 onClick={() => setGenero(g)}
-                className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
+                className={`relative px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
                   genero === g
-                    ? "border-accent bg-accent/5"
+                    ? "border-accent bg-accent/10 text-accent shadow-[0_0_0_1px_hsl(var(--accent))]"
                     : "border-border bg-card"
                 }`}
               >
+                {genero === g && (
+                  <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
+                    <Check className="h-3 w-3" strokeWidth={3} />
+                  </span>
+                )}
                 {g}
               </button>
             ))}
@@ -368,12 +388,17 @@ const CriarMinhaJoia = () => {
               <div key={t} className="flex flex-col items-center gap-1">
                 <button
                   onClick={() => setTamanho(t)}
-                  className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
+                  className={`relative px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
                     tamanho === t
-                      ? "border-accent bg-accent/5"
+                      ? "border-accent bg-accent/10 text-accent shadow-[0_0_0_1px_hsl(var(--accent))]"
                       : "border-border bg-card"
                   }`}
                 >
+                  {tamanho === t && (
+                    <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
+                      <Check className="h-3 w-3" strokeWidth={3} />
+                    </span>
+                  )}
                   {t}
                 </button>
                 <span className="text-xs text-muted-foreground">
