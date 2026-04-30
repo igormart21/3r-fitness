@@ -49,6 +49,11 @@ import bonecoFisiFemClassicoPrata from "@/assets/boneco-fisiculturismo-fem-class
 import bonecoFisiFemUndergroundPrata from "@/assets/boneco-fisiculturismo-fem-underground-prata.jpg";
 import bonecoFisiMascClassicoPrata from "@/assets/boneco-fisiculturismo-masc-classico-prata.jpg";
 import bonecoFisiMascUndergroundPrata from "@/assets/boneco-fisiculturismo-masc-underground-prata.jpg";
+// Bikes CICLISTA (Speed = pneu liso, Mountain = pneu com ranhuras)
+import bikeSpeedClassicoOuro from "@/assets/bike-speed-classico-ouro.jpg";
+import bikeSpeedClassicoPrata from "@/assets/bike-speed-classico-prata.jpg";
+import bikeMountainClassicoOuro from "@/assets/bike-mountain-classico-ouro.jpg";
+import bikeMountainClassicoPrata from "@/assets/bike-mountain-classico-prata.jpg";
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
