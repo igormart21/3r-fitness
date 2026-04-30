@@ -1183,9 +1183,9 @@ const StepperExperience = (p: StepperProps) => {
                           src={p.pingenteGerado}
                           alt="Pingente gerado"
                           className="w-full max-w-[360px] aspect-square bg-black border border-accent/50"
-                          zoom={2.6}
+                          zoom={3.2}
                           lensSize={150}
-                          fit="contain"
+                          fit="cover"
                         />
                         {p.fotoPingente && (
                           <button
