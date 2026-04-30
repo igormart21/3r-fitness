@@ -574,7 +574,11 @@ const CriarMinhaJoia = () => {
         <Divider />
 
         {/* VI — Termine sua personalização */}
-        <SectionTitle numeral="VI" label="Termine sua personalização" hint="Eternize sua história" />
+        <SectionTitle
+          numeral="VI"
+          label="Termine sua personalização"
+          hint="Escolha apenas UMA inscrição para sua joia"
+        />
 
         <div className="mb-12 max-w-2xl mx-auto space-y-3">
           {/* Nome */}
@@ -582,7 +586,8 @@ const CriarMinhaJoia = () => {
             label="Nome"
             isOpen={openField === "nome"}
             hasValue={!!nome.trim()}
-            onToggle={() => setOpenField(openField === "nome" ? null : "nome")}
+            disabled={!!personalizacaoEscolhida && personalizacaoEscolhida !== "nome"}
+            onToggle={() => abrirCampoExclusivo("nome")}
           >
             <Input
               autoFocus
@@ -600,16 +605,15 @@ const CriarMinhaJoia = () => {
             isOpen={openField === "km"}
             hasValue={!!km}
             valuePreview={km}
-            onToggle={() => setOpenField(openField === "km" ? null : "km")}
+            disabled={!!personalizacaoEscolhida && personalizacaoEscolhida !== "km"}
+            onToggle={() => abrirCampoExclusivo("km")}
           >
             <div className="flex flex-wrap gap-2.5 justify-center pt-1">
               {KM_OPCOES.map((opt) => (
                 <LuxButton
                   key={opt}
                   selected={km === opt}
-                  onClick={() => {
-                    setKm(km === opt ? "" : opt);
-                  }}
+                  onClick={() => setKm(km === opt ? "" : opt)}
                 >
                   {opt}
                 </LuxButton>
@@ -623,7 +627,8 @@ const CriarMinhaJoia = () => {
             isOpen={openField === "data"}
             hasValue={!!data.trim()}
             valuePreview={data}
-            onToggle={() => setOpenField(openField === "data" ? null : "data")}
+            disabled={!!personalizacaoEscolhida && personalizacaoEscolhida !== "data"}
+            onToggle={() => abrirCampoExclusivo("data")}
           >
             <Input
               autoFocus
@@ -641,7 +646,8 @@ const CriarMinhaJoia = () => {
             isOpen={openField === "tempo"}
             hasValue={!!tempo.trim()}
             valuePreview={tempo}
-            onToggle={() => setOpenField(openField === "tempo" ? null : "tempo")}
+            disabled={!!personalizacaoEscolhida && personalizacaoEscolhida !== "tempo"}
+            onToggle={() => abrirCampoExclusivo("tempo")}
           >
             <Input
               autoFocus
@@ -652,6 +658,18 @@ const CriarMinhaJoia = () => {
               className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
             />
           </CtaField>
+
+          {personalizacaoEscolhida && (
+            <button
+              onClick={() => {
+                limparPersonalizacao();
+                setOpenField(null);
+              }}
+              className="block mx-auto mt-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
+            >
+              Trocar inscrição
+            </button>
+          )}
         </div>
 
         <div className="flex justify-end">
