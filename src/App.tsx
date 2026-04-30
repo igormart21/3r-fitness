@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
 import CriarMinhaJoia from "./pages/CriarMinhaJoia.tsx";
 import Catalogo from "./pages/Catalogo.tsx";
+import TesteBotoes from "./pages/TesteBotoes.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { useCartSync } from "@/hooks/useCartSync";
 import { InstagramFloatingButton } from "@/components/InstagramFloatingButton";
@@ -22,6 +23,7 @@ const AppRoutes = () => {
       <Route path="/product/:handle" element={<ProductDetail />} />
       <Route path="/criar-minha-joia" element={<CriarMinhaJoia />} />
       <Route path="/catalogo" element={<Catalogo />} />
+      <Route path="/teste-botoes" element={<TesteBotoes />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
