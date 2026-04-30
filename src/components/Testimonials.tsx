@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
-import pendantGold from "@/assets/testimonial-pendant-gold.png";
-import pendantSilver from "@/assets/testimonial-pendant-silver.png";
+import modelLeft from "@/assets/model-3r.png";
+import modelRight from "@/assets/model-original.jpg";
 
 // 👇 TROQUE AQUI PARA TESTAR: "offwhite" | "preto" | "grafite" | "bokeh"
 const THEME: "offwhite" | "preto" | "grafite" | "bokeh" = "offwhite";
@@ -130,7 +130,7 @@ export const Testimonials = () => {
   return (
     <section
       id="depoimentos"
-      className="relative py-24 md:py-32 overflow-hidden"
+      className="relative py-16 sm:py-20 md:py-32 overflow-hidden"
       style={{ background: t.background }}
     >
       {t.overlay && (
@@ -141,83 +141,83 @@ export const Testimonials = () => {
       )}
 
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-32"
+        className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-24 sm:w-32"
         style={{ background: t.topLine }}
       />
 
-      {/* Lateral images — decorative */}
+      {/* Modelos laterais — visíveis em todos os tamanhos */}
       <div
-        className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 w-[22%] max-w-[320px] pointer-events-none select-none"
+        className="absolute left-0 top-1/2 w-[40%] sm:w-[32%] lg:w-[22%] max-w-[320px] pointer-events-none select-none opacity-25 sm:opacity-40 lg:opacity-100"
         style={{
-          transform: "translateY(-50%) rotate(-6deg)",
+          transform: "translateY(-50%) rotate(-4deg)",
           filter: "drop-shadow(0 30px 40px hsl(20 14% 15% / 0.18))",
         }}
         aria-hidden="true"
       >
         <img
-          src={pendantGold}
+          src={modelLeft}
           alt=""
           className="w-full h-auto object-contain rounded-sm"
           loading="lazy"
         />
       </div>
       <div
-        className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[22%] max-w-[320px] pointer-events-none select-none"
+        className="absolute right-0 top-1/2 w-[40%] sm:w-[32%] lg:w-[22%] max-w-[320px] pointer-events-none select-none opacity-25 sm:opacity-40 lg:opacity-100"
         style={{
-          transform: "translateY(-50%) rotate(6deg)",
+          transform: "translateY(-50%) rotate(4deg)",
           filter: "drop-shadow(0 30px 40px hsl(20 14% 15% / 0.18))",
         }}
         aria-hidden="true"
       >
         <img
-          src={pendantSilver}
+          src={modelRight}
           alt=""
           className="w-full h-auto object-contain rounded-sm"
           loading="lazy"
         />
       </div>
 
-      <div className="container max-w-4xl text-center relative">
+      <div className="container max-w-4xl text-center relative px-6 sm:px-8">
         <span
-          className="text-[11px] uppercase tracking-[0.4em] font-medium"
+          className="text-[10px] sm:text-[11px] uppercase tracking-[0.35em] sm:tracking-[0.4em] font-medium"
           style={{ color: t.eyebrow }}
         >
           Depoimentos
         </span>
         <h2
-          className="font-display text-4xl md:text-5xl font-medium mt-4 mb-16"
+          className="font-display text-3xl sm:text-4xl md:text-5xl font-medium mt-3 sm:mt-4 mb-10 sm:mb-16"
           style={{ color: t.title }}
         >
           Histórias que carregamos
         </h2>
 
-        <div className="relative min-h-[280px] md:min-h-[240px]">
+        <div className="relative min-h-[320px] sm:min-h-[280px] md:min-h-[240px]">
           <Quote
-            className="mx-auto mb-8 h-10 w-10 opacity-80"
+            className="mx-auto mb-6 sm:mb-8 h-8 w-8 sm:h-10 sm:w-10 opacity-80"
             style={{ color: t.quoteIcon }}
             strokeWidth={1.25}
           />
 
           <blockquote
             key={index}
-            className="animate-fade-in font-display text-2xl md:text-3xl leading-relaxed font-light italic px-4 md:px-12"
+            className="animate-fade-in font-display text-lg sm:text-2xl md:text-3xl leading-relaxed font-light italic px-2 sm:px-4 md:px-12"
             style={{ color: t.quote }}
           >
             “{current.quote}”
           </blockquote>
 
-          <div className="mt-10 flex flex-col items-center gap-1">
-            <div className="h-px w-12 mb-4" style={{ background: t.line }} />
+          <div className="mt-8 sm:mt-10 flex flex-col items-center gap-1">
+            <div className="h-px w-10 sm:w-12 mb-3 sm:mb-4" style={{ background: t.line }} />
             <p className="text-sm font-medium tracking-wide" style={{ color: t.name }}>
               {current.name}
             </p>
-            <p className="text-xs uppercase tracking-[0.25em]" style={{ color: t.role }}>
+            <p className="text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em]" style={{ color: t.role }}>
               {current.role} · <span style={{ color: t.accent }}>{current.distance}</span>
             </p>
           </div>
         </div>
 
-        <div className="mt-12 flex items-center justify-center gap-6">
+        <div className="mt-10 sm:mt-12 flex items-center justify-center gap-4 sm:gap-6">
           <button
             onClick={prev}
             aria-label="Depoimento anterior"
