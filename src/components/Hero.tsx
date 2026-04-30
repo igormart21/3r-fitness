@@ -8,7 +8,7 @@ export const Hero = () => {
       <img
         src={heroImage}
         alt="3R Fitness - Cada quilômetro tem uma história"
-        className="w-full block h-[70vh] sm:h-[80vh] md:h-auto object-cover object-center"
+        className="w-full block h-[82vh] sm:h-[88vh] md:h-auto object-cover object-center"
         loading="eager"
       />
       <style>{`
