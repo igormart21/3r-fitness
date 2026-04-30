@@ -473,96 +473,87 @@ const CriarMinhaJoia = () => {
           </div>
         </div>
 
-        {/* Personalização */}
-        <div className="border-t border-border pt-8 mb-8">
-          <h2 className="font-display text-2xl md:text-3xl mb-1">
-            Termine sua personalização
-          </h2>
-          <p className="text-sm text-muted-foreground mb-6">
-            Adicione os detalhes que vão eternizar sua história
-          </p>
+        <Divider />
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Foto */}
-            <div>
-              <Label className="text-xs uppercase tracking-widest text-muted-foreground mb-2 block">
-                Adicione sua foto
-              </Label>
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className="w-full aspect-square rounded-lg border-2 border-dashed border-border hover:border-accent transition-colors bg-card flex flex-col items-center justify-center overflow-hidden group"
-              >
-                {foto ? (
-                  <img src={foto} alt="Sua foto" className="w-full h-full object-cover" />
-                ) : (
-                  <>
-                    <Upload className="h-10 w-10 text-muted-foreground group-hover:text-accent mb-3 transition-colors" />
-                    <p className="text-sm text-muted-foreground">Upload foto</p>
-                    <p className="text-xs text-muted-foreground/60 mt-1">JPG, PNG até 5MB</p>
-                  </>
-                )}
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFotoUpload}
-                className="hidden"
-              />
-              {foto && (
-                <button
-                  onClick={() => setFoto(null)}
-                  className="text-xs text-muted-foreground hover:text-destructive mt-2"
+        {/* VI — Termine sua personalização */}
+        <SectionTitle numeral="VI" label="Termine sua personalização" hint="Eternize sua história" />
+
+        <div className="mb-12 max-w-2xl mx-auto space-y-3">
+          {/* Nome */}
+          <CtaField
+            label="Nome"
+            isOpen={openField === "nome"}
+            hasValue={!!nome.trim()}
+            onToggle={() => setOpenField(openField === "nome" ? null : "nome")}
+          >
+            <Input
+              autoFocus
+              value={nome}
+              onChange={(e) => setNome(e.target.value.slice(0, 50))}
+              placeholder="Escreva o nome a ser gravado"
+              maxLength={50}
+              className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
+            />
+          </CtaField>
+
+          {/* KM */}
+          <CtaField
+            label="KM"
+            isOpen={openField === "km"}
+            hasValue={!!km}
+            valuePreview={km}
+            onToggle={() => setOpenField(openField === "km" ? null : "km")}
+          >
+            <div className="flex flex-wrap gap-2.5 justify-center pt-1">
+              {KM_OPCOES.map((opt) => (
+                <LuxButton
+                  key={opt}
+                  selected={km === opt}
+                  onClick={() => {
+                    setKm(km === opt ? "" : opt);
+                  }}
                 >
-                  Remover foto
-                </button>
-              )}
+                  {opt}
+                </LuxButton>
+              ))}
             </div>
+          </CtaField>
 
-            {/* Campos */}
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="nome">Nome *</Label>
-                <Input
-                  id="nome"
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value.slice(0, 50))}
-                  placeholder="Escreva aqui"
-                  maxLength={50}
-                />
-              </div>
-              <div>
-                <Label htmlFor="data">Data</Label>
-                <Input
-                  id="data"
-                  value={data}
-                  onChange={(e) => setData(e.target.value.slice(0, 30))}
-                  placeholder="Escreva aqui"
-                  maxLength={30}
-                />
-              </div>
-              <div>
-                <Label htmlFor="km">KM</Label>
-                <Input
-                  id="km"
-                  value={km}
-                  onChange={(e) => setKm(e.target.value.slice(0, 20))}
-                  placeholder="Escreva aqui"
-                  maxLength={20}
-                />
-              </div>
-              <div>
-                <Label htmlFor="tempo">Tempo</Label>
-                <Input
-                  id="tempo"
-                  value={tempo}
-                  onChange={(e) => setTempo(e.target.value.slice(0, 20))}
-                  placeholder="Escreva aqui"
-                  maxLength={20}
-                />
-              </div>
-            </div>
-          </div>
+          {/* Data */}
+          <CtaField
+            label="Data da corrida"
+            isOpen={openField === "data"}
+            hasValue={!!data.trim()}
+            valuePreview={data}
+            onToggle={() => setOpenField(openField === "data" ? null : "data")}
+          >
+            <Input
+              autoFocus
+              value={data}
+              onChange={(e) => setData(e.target.value.slice(0, 30))}
+              placeholder="Ex: 12/10/2025"
+              maxLength={30}
+              className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
+            />
+          </CtaField>
+
+          {/* Tempo */}
+          <CtaField
+            label="Tempo percorrido"
+            isOpen={openField === "tempo"}
+            hasValue={!!tempo.trim()}
+            valuePreview={tempo}
+            onToggle={() => setOpenField(openField === "tempo" ? null : "tempo")}
+          >
+            <Input
+              autoFocus
+              value={tempo}
+              onChange={(e) => setTempo(e.target.value.slice(0, 20))}
+              placeholder="Ex: 1h 45min"
+              maxLength={20}
+              className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
+            />
+          </CtaField>
         </div>
 
         <div className="flex justify-end">
