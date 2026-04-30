@@ -1189,7 +1189,7 @@ const StepperExperience = (p: StepperProps) => {
               </div>
             </StepPanel>
 
-            <StepPanel index={6} step={step} numeral="VII" label="Sua foto em pingente" hint="Envie uma pose · veja a peça moldada por IA" expanded>
+            <StepPanel index={5} step={step} numeral="VI" label="Sua foto em pingente" hint="Envie uma pose · veja a peça moldada por IA" expanded>
               <div className="grid gap-5 md:grid-cols-2 max-w-4xl mx-auto">
                 <div className="relative border border-border/60 bg-card/30 p-5 md:p-6 min-h-[280px] flex flex-col">
                   <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
