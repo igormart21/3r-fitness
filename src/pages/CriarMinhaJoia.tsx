@@ -1015,7 +1015,7 @@ const StepperExperience = (p: StepperProps) => {
                             if (!desmarcar) setTimeout(() => autoAdvance(3), 280);
                           }}
                           className={`group relative flex flex-col items-center gap-3 p-3 md:p-4 transition-all duration-300 ${
-                            selected ? "bg-accent/[0.06]" : "opacity-70 hover:opacity-100"
+                            selected ? "bg-accent/[0.06]" : "hover:bg-accent/[0.03]"
                           }`}
                         >
                           {selected && (
