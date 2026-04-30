@@ -1,6 +1,5 @@
 import { Hero } from "@/components/Hero";
 import { Testimonials } from "@/components/Testimonials";
-import { InstagramFloatingButton } from "@/components/InstagramFloatingButton";
 
 const Index = () => {
   return (
@@ -9,7 +8,6 @@ const Index = () => {
         <Hero />
         <Testimonials />
       </main>
-      <InstagramFloatingButton />
     </div>
   );
 };
