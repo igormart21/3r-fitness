@@ -623,6 +623,7 @@ type StepperProps = {
   setOpenPingenteField: (k: CtaFieldKey | null) => void;
   adicionando: boolean;
   handleAdicionarAoCarrinho: () => void;
+  handleProsseguirParaPagamento: () => void;
 };
 
 const STEP_LABELS = [
