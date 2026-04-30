@@ -22,6 +22,15 @@ import bonecoMascClassicoPrata from "@/assets/boneco-masc-classico-prata.jpg";
 import bonecoMascUndergroundPrata from "@/assets/boneco-masc-underground-prata.jpg";
 import bonecoFemClassicoPrata from "@/assets/boneco-fem-classico-prata.jpg";
 import bonecoFemUndergroundPrata from "@/assets/boneco-fem-underground-prata.jpg";
+// Bonecos CORREDORES (específicos da modalidade)
+import bonecoCorrFemClassicoOuro from "@/assets/boneco-corredores-fem-classico-ouro.jpg";
+import bonecoCorrFemUndergroundOuro from "@/assets/boneco-corredores-fem-underground-ouro.jpg";
+import bonecoCorrMascClassicoOuro from "@/assets/boneco-corredores-masc-classico-ouro.jpg";
+import bonecoCorrMascUndergroundOuro from "@/assets/boneco-corredores-masc-underground-ouro.jpg";
+import bonecoCorrFemClassicoPrata from "@/assets/boneco-corredores-fem-classico-prata.jpg";
+import bonecoCorrFemUndergroundPrata from "@/assets/boneco-corredores-fem-underground-prata.jpg";
+import bonecoCorrMascClassicoPrata from "@/assets/boneco-corredores-masc-classico-prata.jpg";
+import bonecoCorrMascUndergroundPrata from "@/assets/boneco-corredores-masc-underground-prata.jpg";
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
@@ -45,7 +54,16 @@ const BONECOS_DEFAULT: Record<string, Record<string, Record<string, string>>> = 
 // Para customizar uma modalidade específica, sobrescreva aqui.
 // Estrutura: BONECOS[modalidade][material][genero][estilo] = imagem
 const BONECOS: Record<string, Record<string, Record<string, Record<string, string>>>> = {
-  Corredores: BONECOS_DEFAULT,
+  Corredores: {
+    "Ouro 18K": {
+      Masculino: { "Clássico": bonecoCorrMascClassicoOuro, Underground: bonecoCorrMascUndergroundOuro },
+      Feminino: { "Clássico": bonecoCorrFemClassicoOuro, Underground: bonecoCorrFemUndergroundOuro },
+    },
+    "Prata 925": {
+      Masculino: { "Clássico": bonecoCorrMascClassicoPrata, Underground: bonecoCorrMascUndergroundPrata },
+      Feminino: { "Clássico": bonecoCorrFemClassicoPrata, Underground: bonecoCorrFemUndergroundPrata },
+    },
+  },
   "Musculação": BONECOS_DEFAULT,
   Fisiculturismo: BONECOS_DEFAULT,
   Ciclista: BONECOS_DEFAULT,
