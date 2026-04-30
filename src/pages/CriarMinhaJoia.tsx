@@ -31,6 +31,15 @@ import bonecoCorrFemClassicoPrata from "@/assets/boneco-corredores-fem-classico-
 import bonecoCorrFemUndergroundPrata from "@/assets/boneco-corredores-fem-underground-prata.jpg";
 import bonecoCorrMascClassicoPrata from "@/assets/boneco-corredores-masc-classico-prata.jpg";
 import bonecoCorrMascUndergroundPrata from "@/assets/boneco-corredores-masc-underground-prata.jpg";
+// Bonecos MUSCULAÇÃO
+import bonecoMuscFemClassicoOuro from "@/assets/boneco-musculacao-fem-classico-ouro.jpg";
+import bonecoMuscFemUndergroundOuro from "@/assets/boneco-musculacao-fem-underground-ouro.jpg";
+import bonecoMuscMascClassicoOuro from "@/assets/boneco-musculacao-masc-classico-ouro.jpg";
+import bonecoMuscMascUndergroundOuro from "@/assets/boneco-musculacao-masc-underground-ouro.jpg";
+import bonecoMuscFemClassicoPrata from "@/assets/boneco-musculacao-fem-classico-prata.jpg";
+import bonecoMuscFemUndergroundPrata from "@/assets/boneco-musculacao-fem-underground-prata.jpg";
+import bonecoMuscMascClassicoPrata from "@/assets/boneco-musculacao-masc-classico-prata.jpg";
+import bonecoMuscMascUndergroundPrata from "@/assets/boneco-musculacao-masc-underground-prata.jpg";
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
@@ -64,7 +73,16 @@ const BONECOS: Record<string, Record<string, Record<string, Record<string, strin
       Feminino: { "Clássico": bonecoCorrFemClassicoPrata, Underground: bonecoCorrFemUndergroundPrata },
     },
   },
-  "Musculação": BONECOS_DEFAULT,
+  "Musculação": {
+    "Ouro 18K": {
+      Masculino: { "Clássico": bonecoMuscMascClassicoOuro, Underground: bonecoMuscMascUndergroundOuro },
+      Feminino: { "Clássico": bonecoMuscFemClassicoOuro, Underground: bonecoMuscFemUndergroundOuro },
+    },
+    "Prata 925": {
+      Masculino: { "Clássico": bonecoMuscMascClassicoPrata, Underground: bonecoMuscMascUndergroundPrata },
+      Feminino: { "Clássico": bonecoMuscFemClassicoPrata, Underground: bonecoMuscFemUndergroundPrata },
+    },
+  },
   Fisiculturismo: BONECOS_DEFAULT,
   Ciclista: BONECOS_DEFAULT,
   Crossfit: BONECOS_DEFAULT,
