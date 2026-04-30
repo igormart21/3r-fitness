@@ -162,16 +162,7 @@ const CriarMinhaJoia = () => {
             <ArrowLeft className="h-4 w-4" />
             Voltar
           </Link>
-          <div className="flex items-center gap-2">
-            {[1, 2, 3].map((s) => (
-              <div
-                key={s}
-                className={`h-2 w-8 rounded-full transition-colors ${
-                  s <= step ? "bg-accent" : "bg-border"
-                }`}
-              />
-            ))}
-          </div>
+          <div className="text-sm text-muted-foreground">Crie sua joia</div>
         </div>
       </header>
 
