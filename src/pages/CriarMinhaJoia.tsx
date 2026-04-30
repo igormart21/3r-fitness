@@ -680,41 +680,60 @@ const StepperExperience = (p: StepperProps) => {
             </StepPanel>
 
             <StepPanel numeral="II" label="Material" hint="Escolha a essência">
-              <div
-                className={`grid gap-8 items-center ${
-                  p.material ? "md:grid-cols-[1fr,auto,1fr]" : "grid-cols-1"
-                }`}
-              >
-                <div className="flex justify-center md:justify-end min-h-[1px]">
-                  {p.material === "Prata 925" && MATERIAL_IMAGENS[p.material] && (
-                    <ShowcaseFrame
-                      src={MATERIAL_IMAGENS[p.material]}
-                      alt={`Mostruário ${p.material}`}
-                      caption="Prata 925 · Polimento Espelhado"
-                    />
-                  )}
-                </div>
-                <div className="flex flex-wrap gap-3 justify-center md:items-center">
-                  {MATERIAIS.map((m) => (
-                    <LuxButton
+              <div className="grid grid-cols-2 gap-4 md:gap-8 max-w-3xl mx-auto">
+                {MATERIAIS.map((m) => {
+                  const selected = p.material === m;
+                  const legenda = m === "Prata 925" ? "Polimento Espelhado" : "Acabamento Premium";
+                  return (
+                    <button
                       key={m}
-                      selected={p.material === m}
                       onClick={() => p.handleSelecionarMaterial(m)}
-                      size="lg"
+                      className={`group relative flex flex-col items-center gap-3 p-3 md:p-4 transition-all duration-300 ${
+                        selected ? "bg-accent/[0.06]" : "opacity-70 hover:opacity-100"
+                      }`}
                     >
-                      {m}
-                    </LuxButton>
-                  ))}
-                </div>
-                <div className="flex justify-center md:justify-start min-h-[1px]">
-                  {p.material === "Ouro 18K" && MATERIAL_IMAGENS[p.material] && (
-                    <ShowcaseFrame
-                      src={MATERIAL_IMAGENS[p.material]}
-                      alt={`Mostruário ${p.material}`}
-                      caption="Ouro 18K · Acabamento Premium"
-                    />
-                  )}
-                </div>
+                      {selected && (
+                        <>
+                          <span className="absolute -top-[5px] -left-[5px] h-2.5 w-2.5 border-t border-l border-accent" />
+                          <span className="absolute -top-[5px] -right-[5px] h-2.5 w-2.5 border-t border-r border-accent" />
+                          <span className="absolute -bottom-[5px] -left-[5px] h-2.5 w-2.5 border-b border-l border-accent" />
+                          <span className="absolute -bottom-[5px] -right-[5px] h-2.5 w-2.5 border-b border-r border-accent" />
+                          <span className="absolute -top-2.5 -right-2.5 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md z-10">
+                            <Check className="h-3 w-3" strokeWidth={3} />
+                          </span>
+                        </>
+                      )}
+                      <div
+                        className={`relative p-2 md:p-3 bg-card transition-all ${
+                          selected ? "" : "grayscale-[40%] group-hover:grayscale-0"
+                        }`}
+                      >
+                        <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent/70" />
+                        <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent/70" />
+                        <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent/70" />
+                        <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent/70" />
+                        <div className="w-44 h-44 md:w-56 md:h-56 overflow-hidden bg-white">
+                          <img
+                            src={MATERIAL_IMAGENS[m]}
+                            alt={`Mostruário ${m}`}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                      </div>
+                      <span
+                        className={`font-display tracking-[0.25em] uppercase text-xs md:text-sm transition-colors ${
+                          selected ? "text-accent" : "text-foreground/85 group-hover:text-accent"
+                        }`}
+                      >
+                        {m}
+                      </span>
+                      <span className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-muted-foreground/80">
+                        {legenda}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </StepPanel>
 
