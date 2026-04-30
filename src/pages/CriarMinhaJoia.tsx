@@ -575,7 +575,7 @@ const StepperExperience = (p: StepperProps) => {
   const goNext = () => setStep((s) => Math.min(total - 1, s + 1));
 
   return (
-    <main className="container mx-auto px-4 pt-8 pb-32 md:pt-10 md:pb-36 max-w-7xl">
+    <main className="container mx-auto px-4 pt-8 pb-44 md:pt-10 md:pb-48 max-w-7xl">
       <div className="text-center mb-6 md:mb-8">
         <div className="flex items-center justify-center gap-3 mb-3">
           <span className="h-px w-8 bg-accent/60" />
@@ -1038,7 +1038,7 @@ const StepperExperience = (p: StepperProps) => {
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-accent/30 bg-background/95 backdrop-blur">
+      <div className="fixed bottom-6 md:bottom-8 left-3 right-3 md:left-6 md:right-6 z-20 border border-accent/40 rounded-md bg-background/95 backdrop-blur shadow-[0_-8px_30px_-10px_hsl(var(--accent)/0.25)]">
         <div className="container mx-auto px-4 py-3 max-w-7xl flex items-center gap-3">
           <button
             onClick={goPrev}
