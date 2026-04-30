@@ -1,401 +1,422 @@
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, MapPin, Sparkles, Package, Award, Gem, ShieldCheck, Heart, Clock } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import runnerEmotional from "@/assets/runner-emotional.jpg";
-import colarDestaque from "@/assets/colar-destaque.jpg";
+import { ArrowLeft, Upload, Check, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import { useCartStore } from "@/stores/cartStore";
+import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/lib/shopify";
+import estiloUndergroundImg from "@/assets/estilo-underground.jpg";
+import estiloClassicoImg from "@/assets/estilo-classico.jpg";
 
-const GOLD = "#D4AF37";
+const ESTILO_IMAGENS: Record<string, string> = {
+  Underground: estiloUndergroundImg,
+  "Clássico": estiloClassicoImg,
+};
 
-const passos = [
-  {
-    icon: MapPin,
-    title: "Escolha sua distância",
-    desc: "5K, 10K, meia, maratona ou ultra — sua conquista, seu marco.",
-  },
-  {
-    icon: Sparkles,
-    title: "Personalize sua história",
-    desc: "Nome, data, tempo e local. Cada detalhe gravado em prata.",
-  },
-  {
-    icon: Package,
-    title: "Receba sua joia",
-    desc: "Produzida sob encomenda e enviada com cuidado até a sua porta.",
-  },
+type Categoria =
+  | "Corredores"
+  | "Musculação"
+  | "Fisiculturismo"
+  | "Ciclista"
+  | "Crossfit"
+  | "Triatlon";
+
+type Material = "Prata 925" | "Ouro 18K";
+type Estilo = "Botão Reta" | "Underground" | "Clássico";
+
+const CATEGORIAS: Categoria[] = [
+  "Corredores",
+  "Musculação",
+  "Fisiculturismo",
+  "Ciclista",
+  "Crossfit",
+  "Triatlon",
 ];
 
-const beneficios = [
-  { icon: Heart, title: "Feito para atletas reais" },
-  { icon: Sparkles, title: "Personalização única" },
-  { icon: Gem, title: "Prata 925 de alta qualidade" },
-  { icon: Award, title: "Design sofisticado" },
-  { icon: ShieldCheck, title: "Resistente para o dia a dia" },
-];
-
-const depoimentos = [
-  {
-    nome: "Mariana S.",
-    prova: "Maratona de São Paulo",
-    texto:
-      "Toda vez que olho meu colar, lembro da última quilômetro — quando achei que não ia conseguir. É emoção pura.",
-  },
-  {
-    nome: "Rafael T.",
-    prova: "Ultra 80km",
-    texto:
-      "Não é uma joia, é um troféu que carrego comigo. Quem corre entende o que está gravado ali.",
-  },
-  {
-    nome: "Júlia M.",
-    prova: "Meia Maratona do Rio",
-    texto:
-      "Ganhei do meu marido depois da minha primeira meia. Choro até hoje. Acabamento impecável.",
-  },
-];
-
-const faqs = [
-  {
-    q: "Qual é o material da joia?",
-    a: "Trabalhamos com Prata 925 maciça e Ouro 18K. Ambos com certificado de pureza e acabamento de alta joalheria.",
-  },
-  {
-    q: "Como funciona a personalização?",
-    a: "Você escolhe a distância, envia os detalhes (nome, data, tempo, local) e nossa equipe grava a laser, à mão, em cada peça. Cada joia é única.",
-  },
-  {
-    q: "Quanto tempo leva para receber?",
-    a: "Como cada peça é feita sob encomenda, a produção leva de 7 a 15 dias úteis, somado ao prazo de envio para o seu endereço.",
-  },
-  {
-    q: "Posso usar todos os dias, inclusive treinando?",
-    a: "Sim. A Prata 925 é resistente e pensada para o dia a dia. Recomendamos apenas evitar contato prolongado com cloro e produtos químicos agressivos.",
-  },
-  {
-    q: "E se eu não gostar?",
-    a: "Como é uma peça personalizada, não trabalhamos com troca por arrependimento, mas garantimos qualidade. Qualquer defeito de fabricação é trocado sem custo.",
-  },
-];
+const MATERIAIS: Material[] = ["Prata 925", "Ouro 18K"];
+const ESTILOS: Estilo[] = ["Underground", "Clássico"];
 
 const CriarMinhaJoia = () => {
-  const goCheckout = () => {
-    document.getElementById("cta-final")?.scrollIntoView({ behavior: "smooth" });
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [categoria, setCategoria] = useState<Categoria | null>(null);
+  const [material, setMaterial] = useState<Material | null>(null);
+  const [estilo, setEstilo] = useState<Estilo | null>(null);
+
+  const [foto, setFoto] = useState<string | null>(null);
+  const [nome, setNome] = useState("");
+  const [data, setData] = useState("");
+  const [km, setKm] = useState("");
+  const [tempo, setTempo] = useState("");
+  const [adicionando, setAdicionando] = useState(false);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const addItem = useCartStore((s) => s.addItem);
+
+  const handleFotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("A foto deve ter no máximo 5MB");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => setFoto(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  const handleSelecionarMaterial = (m: Material) => {
+    setMaterial(m);
+    setEstilo(null);
+  };
+
+  const handleAdicionarAoCarrinho = async () => {
+    if (!nome.trim()) {
+      toast.error("Por favor, preencha seu nome");
+      return;
+    }
+
+    setAdicionando(true);
+    try {
+      // Busca um produto disponível na loja para anexar a personalização
+      const data1 = await storefrontApiRequest(STOREFRONT_QUERY, { first: 5, query: null });
+      const products: ShopifyProduct[] = data1?.data?.products?.edges || [];
+      const product = products.find((p) =>
+        p.node.variants.edges.some((v) => v.node.availableForSale)
+      );
+
+      if (!product) {
+        toast.error("Nenhum produto disponível para personalização. Cadastre uma joia na loja primeiro.");
+        return;
+      }
+      const variant = product.node.variants.edges.find((v) => v.node.availableForSale)!.node;
+
+      const personalizacao = [
+        { name: "Categoria", value: categoria! },
+        { name: "Material", value: material! },
+        { name: "Estilo", value: estilo! },
+        { name: "Nome gravado", value: nome },
+        ...(data ? [{ name: "Data", value: data }] : []),
+        ...(km ? [{ name: "KM", value: km }] : []),
+        ...(tempo ? [{ name: "Tempo", value: tempo }] : []),
+        ...(foto ? [{ name: "Foto", value: "Anexada pelo cliente" }] : []),
+      ];
+
+      await addItem({
+        product,
+        variantId: variant.id,
+        variantTitle: variant.title,
+        price: variant.price,
+        quantity: 1,
+        selectedOptions: personalizacao,
+      });
+
+      toast.success("Joia personalizada adicionada ao carrinho!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Não foi possível adicionar ao carrinho. Tente novamente.");
+    } finally {
+      setAdicionando(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Top bar mínima */}
-      <header className="absolute top-0 left-0 right-0 z-30">
-        <div className="container py-5">
+    <div
+      className="min-h-screen bg-background text-foreground"
+      style={{
+        // Preto fosco + dourado (escopado a esta página)
+        ["--background" as any]: "0 0% 7%",
+        ["--foreground" as any]: "43 65% 70%",
+        ["--card" as any]: "0 0% 9%",
+        ["--card-foreground" as any]: "43 65% 70%",
+        ["--popover" as any]: "0 0% 9%",
+        ["--popover-foreground" as any]: "43 65% 70%",
+        ["--primary" as any]: "43 65% 55%",
+        ["--primary-foreground" as any]: "0 0% 7%",
+        ["--secondary" as any]: "0 0% 12%",
+        ["--secondary-foreground" as any]: "43 65% 70%",
+        ["--muted" as any]: "0 0% 12%",
+        ["--muted-foreground" as any]: "43 30% 60%",
+        ["--accent" as any]: "43 65% 55%",
+        ["--accent-foreground" as any]: "0 0% 7%",
+        ["--border" as any]: "43 55% 45%",
+        ["--input" as any]: "43 55% 45%",
+        ["--ring" as any]: "43 65% 55%",
+      }}
+    >
+      {/* Header */}
+      <header className="border-b border-border bg-card/50 backdrop-blur sticky top-0 z-10">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white transition-smooth"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Voltar
           </Link>
+          <div className="flex items-center gap-2">
+            {[1, 2, 3].map((s) => (
+              <div
+                key={s}
+                className={`h-2 w-8 rounded-full transition-colors ${
+                  s <= step ? "bg-accent" : "bg-border"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </header>
 
-      {/* 2. BLOCO EMOCIONAL */}
-      <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
-        <img
-          src={runnerEmotional}
-          alt="Corredor cruzando a linha de chegada ao pôr do sol"
-          className="absolute inset-0 w-full h-full object-cover"
-          width={1920}
-          height={1080}
-        />
-        <div className="absolute inset-0 bg-black/65" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/80" />
+      <main className="container mx-auto px-4 py-12 max-w-4xl">
+        {/* STEP 1 - Categoria */}
+        {step === 1 && (
+          <section>
+            <div className="text-center mb-10">
+              <p className="text-muted-foreground text-lg">
+                Comece escolhendo sua modalidade
+              </p>
+            </div>
 
-        <div className="relative container max-w-3xl text-center text-white animate-fade-in">
-          <p
-            className="text-xs md:text-sm uppercase tracking-[0.4em] mb-6"
-            style={{ color: GOLD }}
-          >
-            3R Fitness
-          </p>
-          <h1 className="font-display text-3xl md:text-5xl lg:text-6xl leading-tight mb-8">
-            VOCÊ NÃO CORRE POR ACASO.
-          </h1>
-          <div className="space-y-4 text-base md:text-lg text-white/85 max-w-xl mx-auto leading-relaxed">
-            <p>Você corre por algo maior.</p>
-            <p>Cada treino. Cada dor. Cada conquista.</p>
-            <p className="italic">
-              Agora, tudo isso pode ser carregado com você — todos os dias.
-            </p>
-          </div>
-
-          <button
-            onClick={goCheckout}
-            className="mt-12 inline-flex items-center justify-center px-10 py-4 text-black font-semibold tracking-[0.2em] text-sm shadow-elegant transition-smooth hover:-translate-y-0.5 hover:scale-105"
-            style={{ backgroundColor: GOLD }}
-          >
-            CRIAR MEU COLAR
-          </button>
-        </div>
-      </section>
-
-      {/* 3. COMO FUNCIONA */}
-      <section className="py-24 md:py-32 bg-background">
-        <div className="container max-w-6xl">
-          <div className="text-center mb-16 animate-fade-in">
-            <p
-              className="text-xs uppercase tracking-[0.3em] mb-3"
-              style={{ color: GOLD }}
-            >
-              Como funciona
-            </p>
-            <h2 className="font-display text-3xl md:text-5xl">
-              Três passos para eternizar sua história
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-10 md:gap-6">
-            {passos.map((p, i) => (
-              <div
-                key={p.title}
-                className="text-center px-4 animate-fade-in"
-                style={{ animationDelay: `${i * 120}ms` }}
-              >
-                <div
-                  className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-6 border"
-                  style={{ borderColor: GOLD, color: GOLD }}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {CATEGORIAS.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    setCategoria(cat);
+                    setStep(2);
+                  }}
+                  className={`group relative aspect-square rounded-lg border-2 p-6 flex flex-col items-center justify-center text-center transition-all hover:border-accent hover:shadow-elegant hover:-translate-y-1 ${
+                    categoria === cat ? "border-accent bg-accent/5" : "border-border bg-card"
+                  }`}
                 >
-                  <p.icon className="h-7 w-7" strokeWidth={1.5} />
-                </div>
-                <p
-                  className="text-xs tracking-[0.3em] uppercase mb-3"
-                  style={{ color: GOLD }}
-                >
-                  Passo {i + 1}
-                </p>
-                <h3 className="font-display text-2xl mb-3">{p.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{p.desc}</p>
+                  <span className="font-display text-xl md:text-2xl">{cat}</span>
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* STEP 2 - Mostruário */}
+        {step === 2 && categoria && (
+          <section>
+            <div className="text-center mb-10">
+              <p className="text-sm uppercase tracking-widest text-accent mb-2">
+                Categoria: {categoria}
+              </p>
+              <h1 className="font-display text-4xl md:text-5xl mb-3">Escolha seu modelo</h1>
+              <p className="text-muted-foreground text-lg">
+                Material e estilo da sua joia
+              </p>
+            </div>
+
+            {/* Material */}
+            <div className="mb-10">
+              <h2 className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
+                Material
+              </h2>
+              <div className="grid grid-cols-2 gap-4">
+                {MATERIAIS.map((m) => (
+                  <button
+                    key={m}
+                    onClick={() => handleSelecionarMaterial(m)}
+                    className={`rounded-lg border-2 p-8 transition-all hover:border-accent ${
+                      material === m
+                        ? "border-accent bg-accent/5"
+                        : "border-border bg-card"
+                    }`}
+                  >
+                    {/* Mostruário ilustrativo (placeholder) */}
+                    <div className="aspect-square mb-4 rounded-md bg-gradient-warm flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="w-16 h-16 mx-auto mb-2 rounded-full border-4 border-foreground/20" />
+                        <div className="w-1 h-12 mx-auto bg-foreground/20" />
+                        <div className="w-8 h-8 mx-auto mt-1 rounded bg-foreground/30" />
+                      </div>
+                    </div>
+                    <p className="font-display text-2xl">{m}</p>
+                    <p className="text-xs text-muted-foreground mt-1">Colar + Pingente</p>
+                  </button>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
 
-      {/* 4. BENEFÍCIOS */}
-      <section className="py-24 md:py-32 bg-secondary/40 border-y border-border">
-        <div className="container max-w-6xl">
-          <div className="text-center mb-16">
-            <p
-              className="text-xs uppercase tracking-[0.3em] mb-3"
-              style={{ color: GOLD }}
-            >
-              Por que 3R Fitness
-            </p>
-            <h2 className="font-display text-3xl md:text-5xl">
-              Pensada nos mínimos detalhes
-            </h2>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {beneficios.map((b, i) => (
-              <div
-                key={b.title}
-                className="bg-card border border-border rounded-lg p-6 text-center transition-smooth hover:-translate-y-1 hover:shadow-elegant animate-fade-in"
-                style={{ animationDelay: `${i * 80}ms` }}
-              >
-                <div
-                  className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-4"
-                  style={{ backgroundColor: `${GOLD}15`, color: GOLD }}
-                >
-                  <b.icon className="h-5 w-5" strokeWidth={1.5} />
+            {/* Estilo (somente após escolher material) */}
+            {material && (
+              <div className="mb-10 animate-in fade-in slide-in-from-bottom-4">
+                <h2 className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
+                  Estilo
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {ESTILOS.map((e) => (
+                    <button
+                      key={e}
+                      onClick={() => setEstilo(e)}
+                      className={`rounded-lg border-2 p-4 text-center transition-all hover:border-accent overflow-hidden ${
+                        estilo === e
+                          ? "border-accent bg-accent/5"
+                          : "border-border bg-card"
+                      }`}
+                    >
+                      {ESTILO_IMAGENS[e] && (
+                        <div className="aspect-square mb-3 rounded-md overflow-hidden bg-background">
+                          <img
+                            src={ESTILO_IMAGENS[e]}
+                            alt={`Estilo ${e}`}
+                            width={768}
+                            height={768}
+                            loading="lazy"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                      <p className="font-display text-xl">{e}</p>
+                    </button>
+                  ))}
                 </div>
-                <p className="font-medium text-sm leading-snug">{b.title}</p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            )}
 
-      {/* 5. PROVA SOCIAL */}
-      <section className="py-24 md:py-32">
-        <div className="container max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-3xl md:text-5xl">
-              QUEM CORRE, RECONHECE.
-            </h2>
-            <div
-              className="w-16 h-px mx-auto mt-6"
-              style={{ backgroundColor: GOLD }}
-            />
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {depoimentos.map((d, i) => (
-              <figure
-                key={d.nome}
-                className="bg-card border border-border rounded-lg p-8 flex flex-col animate-fade-in"
-                style={{ animationDelay: `${i * 100}ms` }}
+            <div className="flex gap-3 justify-between">
+              <Button variant="outline" onClick={() => setStep(1)}>
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Voltar
+              </Button>
+              <Button
+                onClick={() => setStep(3)}
+                disabled={!material || !estilo}
+                className="bg-accent hover:bg-accent/90 text-accent-foreground"
               >
-                <div
-                  className="font-display text-5xl leading-none mb-4"
-                  style={{ color: GOLD }}
+                Termine sua personalização
+              </Button>
+            </div>
+          </section>
+        )}
+
+        {/* STEP 3 - Personalização */}
+        {step === 3 && (
+          <section>
+            <div className="text-center mb-10">
+              <p className="text-sm uppercase tracking-widest text-accent mb-2">
+                {categoria} · {material} · {estilo}
+              </p>
+              <h1 className="font-display text-4xl md:text-5xl mb-3">
+                Termine sua personalização
+              </h1>
+              <p className="text-muted-foreground text-lg">
+                Adicione os detalhes que vão eternizar sua história
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Foto */}
+              <div>
+                <Label className="text-sm uppercase tracking-widest text-muted-foreground mb-3 block">
+                  Adicione sua foto
+                </Label>
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-full aspect-square rounded-lg border-2 border-dashed border-border hover:border-accent transition-colors bg-card flex flex-col items-center justify-center overflow-hidden group"
                 >
-                  “
+                  {foto ? (
+                    <img src={foto} alt="Sua foto" className="w-full h-full object-cover" />
+                  ) : (
+                    <>
+                      <Upload className="h-10 w-10 text-muted-foreground group-hover:text-accent mb-3 transition-colors" />
+                      <p className="text-sm text-muted-foreground">Upload foto</p>
+                      <p className="text-xs text-muted-foreground/60 mt-1">JPG, PNG até 5MB</p>
+                    </>
+                  )}
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFotoUpload}
+                  className="hidden"
+                />
+                {foto && (
+                  <button
+                    onClick={() => setFoto(null)}
+                    className="text-xs text-muted-foreground hover:text-destructive mt-2"
+                  >
+                    Remover foto
+                  </button>
+                )}
+              </div>
+
+              {/* Campos */}
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="nome">Nome *</Label>
+                  <Input
+                    id="nome"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value.slice(0, 50))}
+                    placeholder="Escreva aqui"
+                    maxLength={50}
+                  />
                 </div>
-                <blockquote className="text-base leading-relaxed text-foreground/90 flex-1">
-                  {d.texto}
-                </blockquote>
-                <figcaption className="mt-6 pt-6 border-t border-border">
-                  <p className="font-semibold">{d.nome}</p>
-                  <p className="text-xs uppercase tracking-widest text-muted-foreground mt-1">
-                    {d.prova}
-                  </p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
+                <div>
+                  <Label htmlFor="data">Data</Label>
+                  <Input
+                    id="data"
+                    value={data}
+                    onChange={(e) => setData(e.target.value.slice(0, 30))}
+                    placeholder="Escreva aqui"
+                    maxLength={30}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="km">KM</Label>
+                  <Input
+                    id="km"
+                    value={km}
+                    onChange={(e) => setKm(e.target.value.slice(0, 20))}
+                    placeholder="Escreva aqui"
+                    maxLength={20}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="tempo">Tempo</Label>
+                  <Input
+                    id="tempo"
+                    value={tempo}
+                    onChange={(e) => setTempo(e.target.value.slice(0, 20))}
+                    placeholder="Escreva aqui"
+                    maxLength={20}
+                  />
+                </div>
+              </div>
+            </div>
 
-      {/* 6. PRODUTO EM DESTAQUE */}
-      <section className="py-24 md:py-32 bg-[#0d0b0a] text-white">
-        <div className="container max-w-6xl grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-          <div className="relative animate-fade-in">
-            <img
-              src={colarDestaque}
-              alt="Colar 3R Fitness em prata 925 com pingente personalizado"
-              className="w-full h-auto rounded-lg shadow-elegant"
-              loading="lazy"
-              width={1280}
-              height={1280}
-            />
-          </div>
-          <div className="animate-fade-in">
-            <p
-              className="text-xs uppercase tracking-[0.3em] mb-4"
-              style={{ color: GOLD }}
-            >
-              Produto em destaque
-            </p>
-            <h2 className="font-display text-3xl md:text-5xl leading-tight mb-6">
-              MAIS QUE UM ACESSÓRIO. <br />
-              <span style={{ color: GOLD }}>UM SÍMBOLO DA SUA DISCIPLINA.</span>
-            </h2>
-            <p className="text-white/70 leading-relaxed mb-8 max-w-md">
-              Em Prata 925, com gravação personalizada da sua maior conquista.
-              Pensada para durar — assim como a sua memória.
-            </p>
-            <button
-              onClick={goCheckout}
-              className="inline-flex items-center justify-center px-10 py-4 text-black font-semibold tracking-[0.2em] text-sm shadow-elegant transition-smooth hover:-translate-y-0.5 hover:scale-105"
-              style={{ backgroundColor: GOLD }}
-            >
-              CRIAR MEU COLAR
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. SOBRE A MARCA */}
-      <section className="py-24 md:py-32">
-        <div className="container max-w-3xl text-center">
-          <p
-            className="text-xs uppercase tracking-[0.3em] mb-4"
-            style={{ color: GOLD }}
-          >
-            Sobre a marca
-          </p>
-          <h2 className="font-display text-3xl md:text-4xl leading-tight mb-8">
-            A 3R Fitness não é sobre acessórios.
-            <br />
-            <span style={{ color: GOLD }}>É sobre identidade.</span>
-          </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            Criamos peças para quem entende que performance não é estética —
-            é compromisso.
-          </p>
-        </div>
-      </section>
-
-      {/* 8. URGÊNCIA */}
-      <section className="py-16 border-y border-border bg-secondary/40">
-        <div className="container max-w-3xl text-center">
-          <Clock
-            className="h-7 w-7 mx-auto mb-4"
-            style={{ color: GOLD }}
-            strokeWidth={1.5}
-          />
-          <p className="font-display text-xl md:text-2xl">
-            Produção limitada.{" "}
-            <span className="text-muted-foreground">
-              Cada peça é feita sob demanda.
-            </span>
-          </p>
-        </div>
-      </section>
-
-      {/* 9. FAQ */}
-      <section className="py-24 md:py-32">
-        <div className="container max-w-3xl">
-          <div className="text-center mb-12">
-            <p
-              className="text-xs uppercase tracking-[0.3em] mb-3"
-              style={{ color: GOLD }}
-            >
-              Perguntas frequentes
-            </p>
-            <h2 className="font-display text-3xl md:text-4xl">
-              Tudo o que você precisa saber
-            </h2>
-          </div>
-
-          <Accordion type="single" collapsible className="w-full">
-            {faqs.map((f, i) => (
-              <AccordionItem key={i} value={`item-${i}`}>
-                <AccordionTrigger className="text-left font-display text-lg hover:no-underline">
-                  {f.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed text-base">
-                  {f.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </section>
-
-      {/* 10. CTA FINAL */}
-      <section
-        id="cta-final"
-        className="relative py-32 md:py-40 overflow-hidden bg-[#0d0b0a] text-white"
-      >
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage: `radial-gradient(circle at 50% 50%, ${GOLD}40 0%, transparent 60%)`,
-          }}
-        />
-        <div className="relative container max-w-3xl text-center">
-          <h2 className="font-display text-3xl md:text-5xl lg:text-6xl leading-tight mb-10">
-            SUA HISTÓRIA NÃO TERMINA <br className="hidden md:block" />
-            NA LINHA DE CHEGADA.
-            <br />
-            <span style={{ color: GOLD }}>ELA COMEÇA ALI.</span>
-          </h2>
-          <a
-            href="#cta-final"
-            className="inline-flex items-center justify-center px-12 py-5 text-black font-semibold tracking-[0.25em] text-sm md:text-base shadow-elegant transition-smooth hover:-translate-y-0.5 hover:scale-105"
-            style={{ backgroundColor: GOLD }}
-          >
-            CRIAR MEU COLAR
-          </a>
-          <p className="mt-8 text-xs uppercase tracking-[0.3em] text-white/50">
-            Prata 925 · Feito sob encomenda · Envio para todo Brasil
-          </p>
-        </div>
-      </section>
+            <div className="flex gap-3 justify-between mt-10">
+              <Button variant="outline" onClick={() => setStep(2)}>
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Voltar
+              </Button>
+              <Button
+                onClick={handleAdicionarAoCarrinho}
+                disabled={adicionando || !nome.trim()}
+                size="lg"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground"
+              >
+                {adicionando ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Adicionando...
+                  </>
+                ) : (
+                  <>
+                    <Check className="h-4 w-4 mr-2" />
+                    Adicionar ao carrinho
+                  </>
+                )}
+              </Button>
+            </div>
+          </section>
+        )}
+      </main>
     </div>
   );
 };
