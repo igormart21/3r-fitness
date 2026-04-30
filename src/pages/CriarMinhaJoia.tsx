@@ -344,6 +344,7 @@ const CriarMinhaJoia = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addItem = useCartStore((s) => s.addItem);
+  const getCheckoutUrl = useCartStore((s) => s.getCheckoutUrl);
 
   // ===== Seção VII — Foto → Pingente (inscrição independente) =====
   const [pingenteNome, setPingenteNome] = useState("");
