@@ -622,6 +622,7 @@ const STEP_LABELS = [
 
 const StepperExperience = (p: StepperProps) => {
   const [step, setStep] = useState(0);
+  const [showBalao, setShowBalao] = useState(false);
   const total = STEP_LABELS.length;
 
   const stepCompleted = useMemo(() => [
