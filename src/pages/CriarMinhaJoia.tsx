@@ -331,30 +331,8 @@ const CriarMinhaJoia = () => {
           </div>
         </div>
 
-        {/* Tamanho */}
-        <div className="mb-8">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
-            Tamanho
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {TAMANHOS.map((t) => (
-              <button
-                key={t}
-                onClick={() => setTamanho(t)}
-                className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
-                  tamanho === t
-                    ? "border-accent bg-accent/5"
-                    : "border-border bg-card"
-                }`}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-        </div>
-
         {/* Gênero */}
-        <div className="mb-10">
+        <div className="mb-8">
           <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
             Gênero
           </h2>
@@ -370,6 +348,28 @@ const CriarMinhaJoia = () => {
                 }`}
               >
                 {g}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Tamanho */}
+        <div className="mb-10">
+          <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
+            Tamanho
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {TAMANHOS.map((t) => (
+              <button
+                key={t}
+                onClick={() => setTamanho(t)}
+                className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
+                  tamanho === t
+                    ? "border-accent bg-accent/5"
+                    : "border-border bg-card"
+                }`}
+              >
+                {t}
               </button>
             ))}
           </div>
