@@ -321,21 +321,12 @@ const CriarMinhaJoia = () => {
             </div>
             <div className="relative inline-block">
               <span
-                className="block text-2xl md:text-3xl leading-none italic font-light tracking-wide bg-clip-text text-transparent"
-                style={{
-                  fontFamily: "'Pinyon Script', 'Cormorant Garamond', serif",
-                  backgroundImage:
-                    "linear-gradient(135deg, #f8e7b0 0%, #f3d27a 25%, #fffbe6 50%, #d4a84b 75%, #f8e7b0 100%)",
-                  WebkitBackgroundClip: "text",
-                  filter: "drop-shadow(0 1px 2px rgba(212, 168, 75, 0.35))",
-                }}
+                className="block text-white text-2xl md:text-3xl leading-none italic font-light tracking-wide"
+                style={{ fontFamily: "'Pinyon Script', 'Cormorant Garamond', serif" }}
               >
                 Renata Ramos Ribeiro
               </span>
-              <span
-                className="block mt-2 text-[9px] uppercase tracking-[0.45em] text-center"
-                style={{ color: "hsl(43 45% 75%)" }}
-              >
+              <span className="block mt-2 text-[9px] uppercase tracking-[0.45em] text-center text-white">
                 Artesã · Mestre Joalheira
               </span>
             </div>
