@@ -682,7 +682,7 @@ const CriarMinhaJoia = () => {
               !estilo ||
               !tamanho ||
               !genero ||
-              !nome.trim()
+              !personalizacaoEscolhida
             }
             size="lg"
             className="bg-accent hover:bg-accent/90 text-accent-foreground"
