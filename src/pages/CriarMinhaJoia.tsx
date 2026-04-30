@@ -671,7 +671,7 @@ const StepperExperience = (p: StepperProps) => {
   };
 
   return (
-    <main className="container mx-auto px-4 pt-8 pb-12 md:pt-10 md:pb-16 max-w-7xl">
+    <main className="container mx-auto px-4 pt-8 pb-12 md:pt-10 md:pb-16 max-w-4xl">
       <div className="text-center mb-6 md:mb-8">
         <div className="flex items-center justify-center gap-3 mb-3">
           <span className="h-px w-8 bg-accent/60" />
