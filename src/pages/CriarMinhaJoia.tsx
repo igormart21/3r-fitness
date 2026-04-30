@@ -54,6 +54,10 @@ import bikeSpeedClassicoOuro from "@/assets/bike-speed-classico-ouro.jpg";
 import bikeSpeedClassicoPrata from "@/assets/bike-speed-classico-prata.jpg";
 import bikeMountainClassicoOuro from "@/assets/bike-mountain-classico-ouro.jpg";
 import bikeMountainClassicoPrata from "@/assets/bike-mountain-classico-prata.jpg";
+import bikeSpeedUndergroundFemOuro from "@/assets/bike-speed-underground-feminino-ouro.jpg";
+import bikeSpeedUndergroundFemPrata from "@/assets/bike-speed-underground-feminino-prata.jpg";
+import bikeMountainUndergroundFemOuro from "@/assets/bike-mountain-underground-feminino-ouro.jpg";
+import bikeMountainUndergroundFemPrata from "@/assets/bike-mountain-underground-feminino-prata.jpg";
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
@@ -151,16 +155,29 @@ const TAMANHO_LEGENDAS: Record<Tamanho, string> = {
 const GENEROS: Genero[] = ["Masculino", "Feminino"];
 const PERFIS_BIKE: PerfilBike[] = ["Speed", "Mountain Bike"];
 
-// Bikes do Ciclista por Perfil × Material × Estilo.
-// Underground (bike + boneco) ainda não enviado — usa a bike clássica como placeholder.
-const BIKES: Record<PerfilBike, Record<Material, Record<"Clássico" | "Underground", string>>> = {
+// Bikes do Ciclista por Perfil × Gênero × Material × Estilo.
+// Clássico = só a bike (independe de gênero). Underground = bike + boneco (varia por gênero).
+// Underground masculino ainda não enviado — usa o feminino como placeholder temporário.
+const BIKES: Record<PerfilBike, Record<Genero, Record<Material, Record<"Clássico" | "Underground", string>>>> = {
   Speed: {
-    "Ouro 18K": { "Clássico": bikeSpeedClassicoOuro, Underground: bikeSpeedClassicoOuro },
-    "Prata 925": { "Clássico": bikeSpeedClassicoPrata, Underground: bikeSpeedClassicoPrata },
+    Masculino: {
+      "Ouro 18K": { "Clássico": bikeSpeedClassicoOuro, Underground: bikeSpeedUndergroundFemOuro },
+      "Prata 925": { "Clássico": bikeSpeedClassicoPrata, Underground: bikeSpeedUndergroundFemPrata },
+    },
+    Feminino: {
+      "Ouro 18K": { "Clássico": bikeSpeedClassicoOuro, Underground: bikeSpeedUndergroundFemOuro },
+      "Prata 925": { "Clássico": bikeSpeedClassicoPrata, Underground: bikeSpeedUndergroundFemPrata },
+    },
   },
   "Mountain Bike": {
-    "Ouro 18K": { "Clássico": bikeMountainClassicoOuro, Underground: bikeMountainClassicoOuro },
-    "Prata 925": { "Clássico": bikeMountainClassicoPrata, Underground: bikeMountainClassicoPrata },
+    Masculino: {
+      "Ouro 18K": { "Clássico": bikeMountainClassicoOuro, Underground: bikeMountainUndergroundFemOuro },
+      "Prata 925": { "Clássico": bikeMountainClassicoPrata, Underground: bikeMountainUndergroundFemPrata },
+    },
+    Feminino: {
+      "Ouro 18K": { "Clássico": bikeMountainClassicoOuro, Underground: bikeMountainUndergroundFemOuro },
+      "Prata 925": { "Clássico": bikeMountainClassicoPrata, Underground: bikeMountainUndergroundFemPrata },
+    },
   },
 };
 const KM_OPCOES = ["5K", "10K", "21K", "42K"] as const;
