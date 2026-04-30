@@ -170,6 +170,7 @@ const CtaField = ({
   isOpen,
   hasValue,
   valuePreview,
+  disabled,
   onToggle,
   children,
 }: {
@@ -177,12 +178,15 @@ const CtaField = ({
   isOpen: boolean;
   hasValue: boolean;
   valuePreview?: string;
+  disabled?: boolean;
   onToggle: () => void;
   children: React.ReactNode;
 }) => (
   <div
     className={`relative border transition-all duration-300 ${
-      isOpen
+      disabled
+        ? "border-border/30 bg-card/10 opacity-40"
+        : isOpen
         ? "border-accent bg-accent/[0.04]"
         : hasValue
         ? "border-accent/60 bg-card/40"
@@ -191,7 +195,8 @@ const CtaField = ({
   >
     <button
       onClick={onToggle}
-      className="w-full flex items-center justify-between px-5 py-4 text-left group"
+      disabled={disabled}
+      className="w-full flex items-center justify-between px-5 py-4 text-left group disabled:cursor-not-allowed"
     >
       <span className="flex items-center gap-3">
         <span
@@ -216,7 +221,7 @@ const CtaField = ({
         }`}
       />
     </button>
-    {isOpen && (
+    {isOpen && !disabled && (
       <div className="px-5 pb-5 pt-1 animate-in fade-in slide-in-from-top-1 duration-200">
         {children}
       </div>
