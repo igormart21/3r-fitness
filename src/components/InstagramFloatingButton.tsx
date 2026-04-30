@@ -7,14 +7,14 @@ export const InstagramFloatingButton = () => {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Abrir Instagram @3rfitnessjr em nova aba"
-      className="fixed top-20 left-6 z-50 flex h-14 w-14 items-center justify-center rounded-full text-white shadow-lg transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2"
+      className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full text-white shadow-lg transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2"
       style={{
         background:
           "linear-gradient(135deg, #feda75 0%, #fa7e1e 25%, #d62976 50%, #962fbf 75%, #4f5bd5 100%)",
         boxShadow: "0 10px 25px rgba(214, 41, 118, 0.45)",
       }}
     >
-      <Instagram className="h-6 w-6" strokeWidth={2} />
+      <Instagram className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={2} />
     </a>
   );
 };
