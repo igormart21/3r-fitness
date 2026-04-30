@@ -26,7 +26,7 @@ export const Hero = () => {
         to="/criar-minha-joia"
         aria-label="Criar minha joia"
         translate="no"
-        className="group notranslate absolute left-[8%] md:left-[12%] top-[70%] md:top-[72%] translate-x-[6px] inline-flex items-center gap-2 md:gap-3 px-6 md:px-12 py-3 md:py-5 overflow-hidden border border-black transition-all duration-500 hover:-translate-y-0.5"
+        className="group notranslate absolute left-[8%] md:left-[12%] top-[70%] md:top-[72%] inline-flex items-center gap-1.5 sm:gap-2 md:gap-3 px-3 sm:px-6 md:px-12 py-2 sm:py-3 md:py-5 overflow-hidden border border-black transition-all duration-500 hover:-translate-y-0.5 max-w-[88%] whitespace-nowrap"
         style={{
           background:
             "linear-gradient(110deg, rgba(184,134,11,0.55) 0%, rgba(212,175,55,0.55) 25%, rgba(244,215,122,0.55) 50%, rgba(212,175,55,0.55) 75%, rgba(184,134,11,0.55) 100%)",
@@ -44,11 +44,11 @@ export const Hero = () => {
             mixBlendMode: "screen",
           }}
         />
-        <Sparkles className="h-3.5 w-3.5 md:h-4 md:w-4 text-black relative z-10" strokeWidth={1.5} />
+        <Sparkles className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-black relative z-10 shrink-0" strokeWidth={1.5} />
         <span
           translate="no"
           lang="pt-BR"
-          className="notranslate relative z-10 font-display text-xs md:text-sm tracking-[0.4em] uppercase text-black"
+          className="notranslate relative z-10 font-display text-[9px] sm:text-xs md:text-sm tracking-[0.25em] sm:tracking-[0.35em] md:tracking-[0.4em] uppercase text-black"
         >
           Criar minha joia
         </span>
