@@ -7,6 +7,13 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useCartStore } from "@/stores/cartStore";
 import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/lib/shopify";
+import estiloUndergroundImg from "@/assets/estilo-underground.jpg";
+import estiloClassicoImg from "@/assets/estilo-classico.jpg";
+
+const ESTILO_IMAGENS: Record<string, string> = {
+  Underground: estiloUndergroundImg,
+  "Clássico": estiloClassicoImg,
+};
 
 type Categoria =
   | "Corredores"
@@ -240,17 +247,29 @@ const CriarMinhaJoia = () => {
                 <h2 className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
                   Estilo
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {ESTILOS.map((e) => (
                     <button
                       key={e}
                       onClick={() => setEstilo(e)}
-                      className={`rounded-lg border-2 p-6 text-center transition-all hover:border-accent ${
+                      className={`rounded-lg border-2 p-4 text-center transition-all hover:border-accent overflow-hidden ${
                         estilo === e
                           ? "border-accent bg-accent/5"
                           : "border-border bg-card"
                       }`}
                     >
+                      {ESTILO_IMAGENS[e] && (
+                        <div className="aspect-square mb-3 rounded-md overflow-hidden bg-background">
+                          <img
+                            src={ESTILO_IMAGENS[e]}
+                            alt={`Estilo ${e}`}
+                            width={768}
+                            height={768}
+                            loading="lazy"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
                       <p className="font-display text-xl">{e}</p>
                     </button>
                   ))}
