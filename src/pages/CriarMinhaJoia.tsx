@@ -573,6 +573,14 @@ const StepperExperience = (p: StepperProps) => {
 
   const goPrev = () => setStep((s) => Math.max(0, s - 1));
   const goNext = () => setStep((s) => Math.min(total - 1, s + 1));
+  const autoAdvance = (fromStep: number) => {
+    // Avança apenas se o usuário ainda está na etapa que acabou de preencher
+    setStep((s) => (s === fromStep && fromStep < total - 1 ? fromStep + 1 : s));
+  };
+  const withAdvance = (fromStep: number, fn: () => void) => () => {
+    fn();
+    setTimeout(() => autoAdvance(fromStep), 320);
+  };
 
   return (
     <main className="container mx-auto px-4 pt-8 pb-12 md:pt-10 md:pb-16 max-w-7xl">
