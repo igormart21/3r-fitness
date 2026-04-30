@@ -58,6 +58,10 @@ import bikeSpeedUndergroundFemOuro from "@/assets/bike-speed-underground-feminin
 import bikeSpeedUndergroundFemPrata from "@/assets/bike-speed-underground-feminino-prata.jpg";
 import bikeMountainUndergroundFemOuro from "@/assets/bike-mountain-underground-feminino-ouro.jpg";
 import bikeMountainUndergroundFemPrata from "@/assets/bike-mountain-underground-feminino-prata.jpg";
+import bikeSpeedUndergroundMascOuro from "@/assets/bike-speed-underground-masculino-ouro.jpg";
+import bikeSpeedUndergroundMascPrata from "@/assets/bike-speed-underground-masculino-prata.jpg";
+import bikeMountainUndergroundMascOuro from "@/assets/bike-mountain-underground-masculino-ouro.jpg";
+import bikeMountainUndergroundMascPrata from "@/assets/bike-mountain-underground-masculino-prata.jpg";
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
@@ -157,12 +161,11 @@ const PERFIS_BIKE: PerfilBike[] = ["Speed", "Mountain Bike"];
 
 // Bikes do Ciclista por Perfil × Gênero × Material × Estilo.
 // Clássico = só a bike (independe de gênero). Underground = bike + boneco (varia por gênero).
-// Underground masculino ainda não enviado — usa o feminino como placeholder temporário.
 const BIKES: Record<PerfilBike, Record<Genero, Record<Material, Record<"Clássico" | "Underground", string>>>> = {
   Speed: {
     Masculino: {
-      "Ouro 18K": { "Clássico": bikeSpeedClassicoOuro, Underground: bikeSpeedUndergroundFemOuro },
-      "Prata 925": { "Clássico": bikeSpeedClassicoPrata, Underground: bikeSpeedUndergroundFemPrata },
+      "Ouro 18K": { "Clássico": bikeSpeedClassicoOuro, Underground: bikeSpeedUndergroundMascOuro },
+      "Prata 925": { "Clássico": bikeSpeedClassicoPrata, Underground: bikeSpeedUndergroundMascPrata },
     },
     Feminino: {
       "Ouro 18K": { "Clássico": bikeSpeedClassicoOuro, Underground: bikeSpeedUndergroundFemOuro },
@@ -171,8 +174,8 @@ const BIKES: Record<PerfilBike, Record<Genero, Record<Material, Record<"Clássic
   },
   "Mountain Bike": {
     Masculino: {
-      "Ouro 18K": { "Clássico": bikeMountainClassicoOuro, Underground: bikeMountainUndergroundFemOuro },
-      "Prata 925": { "Clássico": bikeMountainClassicoPrata, Underground: bikeMountainUndergroundFemPrata },
+      "Ouro 18K": { "Clássico": bikeMountainClassicoOuro, Underground: bikeMountainUndergroundMascOuro },
+      "Prata 925": { "Clássico": bikeMountainClassicoPrata, Underground: bikeMountainUndergroundMascPrata },
     },
     Feminino: {
       "Ouro 18K": { "Clássico": bikeMountainClassicoOuro, Underground: bikeMountainUndergroundFemOuro },
