@@ -5,7 +5,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
-import CriarMinhaJoia from "./pages/CriarMinhaJoia.tsx";
 import NossaHistoria from "./pages/NossaHistoria.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { useCartSync } from "@/hooks/useCartSync";
@@ -18,7 +17,6 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/product/:handle" element={<ProductDetail />} />
-      <Route path="/criar-minha-joia" element={<CriarMinhaJoia />} />
       <Route path="/nossa-historia" element={<NossaHistoria />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
