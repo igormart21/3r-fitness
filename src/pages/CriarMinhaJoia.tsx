@@ -1293,18 +1293,26 @@ const StepperExperience = (p: StepperProps) => {
               </div>
 
               {/* CTA final */}
-              <div className="mt-10 flex justify-center">
+              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
                 <Button
                   onClick={p.handleAdicionarAoCarrinho}
-                  disabled={p.adicionando || !allReady}
+                  disabled={p.adicionando}
                   size="lg"
-                  className="bg-accent hover:bg-accent/90 text-accent-foreground tracking-[0.2em] uppercase text-xs px-8"
+                  className="bg-accent hover:bg-accent/90 text-black font-bold tracking-[0.2em] uppercase text-xs px-8 shadow-lg shadow-accent/20"
                 >
                   {p.adicionando ? (
                     <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Adicionando...</>
                   ) : (
                     <><Check className="h-4 w-4 mr-2" /> Adicionar ao carrinho</>
                   )}
+                </Button>
+                <Button
+                  onClick={p.handleProsseguirParaPagamento}
+                  disabled={p.adicionando}
+                  size="lg"
+                  className="bg-accent hover:bg-accent/90 text-black font-bold tracking-[0.2em] uppercase text-xs px-8 shadow-lg shadow-accent/20"
+                >
+                  Prosseguir para pagamento
                 </Button>
               </div>
             </StepPanel>
