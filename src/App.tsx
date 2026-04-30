@@ -9,6 +9,7 @@ import CriarMinhaJoia from "./pages/CriarMinhaJoia.tsx";
 import Catalogo from "./pages/Catalogo.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { useCartSync } from "@/hooks/useCartSync";
+import { InstagramFloatingButton } from "@/components/InstagramFloatingButton";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
       <Sonner position="top-center" />
       <BrowserRouter>
         <AppRoutes />
+        <InstagramFloatingButton />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
