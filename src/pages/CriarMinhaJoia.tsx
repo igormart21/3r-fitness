@@ -153,7 +153,7 @@ const ShowcaseFrame = ({
           width={768}
           height={768}
           loading="lazy"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-500 ease-out hover:scale-110"
         />
       </div>
     </div>
