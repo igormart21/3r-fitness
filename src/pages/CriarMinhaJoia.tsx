@@ -1038,55 +1038,6 @@ const StepperExperience = (p: StepperProps) => {
         </div>
       </div>
 
-      <div className="fixed bottom-6 md:bottom-8 left-3 right-3 md:left-6 md:right-6 z-20 border border-accent/40 rounded-md bg-background/95 backdrop-blur shadow-[0_-8px_30px_-10px_hsl(var(--accent)/0.25)]">
-        <div className="container mx-auto px-4 py-3 max-w-7xl flex items-center gap-3">
-          <button
-            onClick={goPrev}
-            disabled={step === 0}
-            aria-label="Anterior"
-            className="md:hidden h-10 w-10 rounded-full border border-accent/40 flex items-center justify-center text-accent disabled:opacity-30"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </button>
-
-          <div className="hidden md:flex flex-1 items-center gap-4 text-[10px] uppercase tracking-[0.25em] text-muted-foreground/80 overflow-hidden">
-            <Chip label="Mod." value={p.categoria} />
-            <Chip label="Mat." value={p.material} />
-            <Chip label="Gên." value={p.genero} />
-            <Chip label="Tam." value={p.tamanho} />
-            <Chip label="Estilo" value={p.estilo} />
-            <Chip label="Inscr." value={p.personalizacaoEscolhida ? "✓" : null} />
-          </div>
-
-          <div className="flex-1 md:hidden text-center text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-            {step + 1} / {total}
-          </div>
-
-          {step < total - 1 ? (
-            <Button
-              onClick={goNext}
-              size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground tracking-[0.2em] uppercase text-xs"
-            >
-              Próximo
-              <ChevronRight className="h-4 w-4 ml-2" />
-            </Button>
-          ) : (
-            <Button
-              onClick={p.handleAdicionarAoCarrinho}
-              disabled={p.adicionando || !allReady}
-              size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground tracking-[0.2em] uppercase text-xs"
-            >
-              {p.adicionando ? (
-                <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Adicionando...</>
-              ) : (
-                <><Check className="h-4 w-4 mr-2" /> Adicionar ao carrinho</>
-              )}
-            </Button>
-          )}
-        </div>
-      </div>
     </main>
   );
 };
