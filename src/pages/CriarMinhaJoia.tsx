@@ -1121,8 +1121,8 @@ const StepperExperience = (p: StepperProps) => {
                             ? "Apenas a bike"
                             : "Pingente puro";
                       const bikeSrc =
-                        p.categoria === "Ciclista" && p.perfilBike && p.material
-                          ? BIKES[p.perfilBike][p.material][e as "Clássico" | "Underground"]
+                        p.categoria === "Ciclista" && p.perfilBike && p.material && p.genero
+                          ? BIKES[p.perfilBike][p.genero][p.material][e as "Clássico" | "Underground"]
                           : null;
                       const bonecoSrc =
                         bikeSrc ||
