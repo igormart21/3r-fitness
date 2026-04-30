@@ -769,7 +769,7 @@ const StepperExperience = (p: StepperProps) => {
                         <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent/70" />
                         <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent/70" />
                         <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent/70" />
-                        <div className="w-44 h-44 md:w-56 md:h-56 overflow-hidden bg-white">
+                        <div className="w-60 h-60 md:w-80 md:h-80 lg:w-96 lg:h-96 overflow-hidden bg-white">
                           <img
                             src={MATERIAL_IMAGENS[m]}
                             alt={`Mostruário ${m}`}
