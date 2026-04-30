@@ -25,6 +25,7 @@ type Categoria =
 
 type Material = "Prata 925" | "Ouro 18K";
 type Estilo = "Botão Reta" | "Underground" | "Clássico";
+type Tamanho = "Grande" | "Médio" | "Pequeno";
 
 const CATEGORIAS: Categoria[] = [
   "Corredores",
@@ -37,12 +38,14 @@ const CATEGORIAS: Categoria[] = [
 
 const MATERIAIS: Material[] = ["Prata 925", "Ouro 18K"];
 const ESTILOS: Estilo[] = ["Underground", "Clássico"];
+const TAMANHOS: Tamanho[] = ["Grande", "Médio", "Pequeno"];
 
 const CriarMinhaJoia = () => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [categoria, setCategoria] = useState<Categoria | null>(null);
   const [material, setMaterial] = useState<Material | null>(null);
   const [estilo, setEstilo] = useState<Estilo | null>(null);
+  const [tamanho, setTamanho] = useState<Tamanho | null>(null);
 
   const [foto, setFoto] = useState<string | null>(null);
   const [nome, setNome] = useState("");
@@ -96,6 +99,7 @@ const CriarMinhaJoia = () => {
         { name: "Categoria", value: categoria! },
         { name: "Material", value: material! },
         { name: "Estilo", value: estilo! },
+        { name: "Tamanho", value: tamanho! },
         { name: "Nome gravado", value: nome },
         ...(data ? [{ name: "Data", value: data }] : []),
         ...(km ? [{ name: "KM", value: km }] : []),
@@ -277,6 +281,30 @@ const CriarMinhaJoia = () => {
               </div>
             )}
 
+            {/* Tamanho (somente após escolher estilo) */}
+            {estilo && (
+              <div className="mb-10 animate-in fade-in slide-in-from-bottom-4">
+                <h2 className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
+                  Tamanho
+                </h2>
+                <div className="grid grid-cols-3 gap-3">
+                  {TAMANHOS.map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => setTamanho(t)}
+                      className={`rounded-lg border-2 p-4 md:p-6 text-center transition-all hover:border-accent ${
+                        tamanho === t
+                          ? "border-accent bg-accent/5"
+                          : "border-border bg-card"
+                      }`}
+                    >
+                      <p className="font-display text-lg md:text-xl">{t}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="flex gap-3 justify-between">
               <Button variant="outline" onClick={() => setStep(1)}>
                 <ArrowLeft className="h-4 w-4 mr-2" />
@@ -284,7 +312,7 @@ const CriarMinhaJoia = () => {
               </Button>
               <Button
                 onClick={() => setStep(3)}
-                disabled={!material || !estilo}
+                disabled={!material || !estilo || !tamanho}
                 className="bg-accent hover:bg-accent/90 text-accent-foreground"
               >
                 Termine sua personalização
@@ -298,7 +326,7 @@ const CriarMinhaJoia = () => {
           <section>
             <div className="text-center mb-10">
               <p className="text-sm uppercase tracking-widest text-accent mb-2">
-                {categoria} · {material} · {estilo}
+                {categoria} · {material} · {estilo} · {tamanho}
               </p>
               <h1 className="font-display text-4xl md:text-5xl mb-3">
                 Termine sua personalização
