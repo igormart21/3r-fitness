@@ -927,7 +927,7 @@ const StepperExperience = (p: StepperProps) => {
                   Imagens meramente ilustrativas
                 </p>
                 <p className="text-[11px] md:text-sm text-foreground/85 mt-1 normal-case tracking-normal">
-                  A cor do seu pingente será a do <span className="text-accent">material escolhido</span> na etapa anterior.
+                  A cor do seu pingente será a do <span className="text-accent">material escolhido</span> na etapa 2.
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-8 lg:gap-16 max-w-6xl mx-auto">
