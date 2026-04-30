@@ -27,10 +27,10 @@ Deno.serve(async (req) => {
       });
     }
 
-    const metalCor =
-      material === "Ouro 18K"
-        ? "ouro 18k amarelo polido brilhante"
-        : "prata 925 polida espelhada";
+    const isOuro = material === "Ouro 18K";
+    const metalCor = isOuro
+      ? "OURO 18K AMARELO maciço, tom dourado quente e brilhante (#D4AF37), polimento espelhado com reflexos amarelo-dourados intensos. NUNCA prateado, NUNCA cinza, NUNCA branco."
+      : "PRATA 925 maciça, tom prateado frio e brilhante (#C0C0C0 / cromado), polimento espelhado com reflexos prateados. NUNCA dourado, NUNCA amarelo, NUNCA cobre.";
 
     const estiloDesc =
       estilo === "Underground"
