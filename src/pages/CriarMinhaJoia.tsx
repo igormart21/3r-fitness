@@ -47,6 +47,11 @@ const CATEGORIAS: Categoria[] = [
 const MATERIAIS: Material[] = ["Prata 925", "Ouro 18K"];
 const ESTILOS: Estilo[] = ["Underground", "Clássico"];
 const TAMANHOS: Tamanho[] = ["Grande", "Médio", "Pequeno"];
+const TAMANHO_LEGENDAS: Record<Tamanho, string> = {
+  Grande: "3 cm",
+  "Médio": "2,5 cm",
+  Pequeno: "2 cm",
+};
 const GENEROS: Genero[] = ["Masculino", "Feminino"];
 
 const CriarMinhaJoia = () => {
@@ -358,19 +363,23 @@ const CriarMinhaJoia = () => {
           <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3 text-center">
             Tamanho
           </h2>
-          <div className="flex flex-wrap gap-2 justify-center">
+          <div className="flex flex-wrap gap-4 justify-center">
             {TAMANHOS.map((t) => (
-              <button
-                key={t}
-                onClick={() => setTamanho(t)}
-                className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
-                  tamanho === t
-                    ? "border-accent bg-accent/5"
-                    : "border-border bg-card"
-                }`}
-              >
-                {t}
-              </button>
+              <div key={t} className="flex flex-col items-center gap-1">
+                <button
+                  onClick={() => setTamanho(t)}
+                  className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
+                    tamanho === t
+                      ? "border-accent bg-accent/5"
+                      : "border-border bg-card"
+                  }`}
+                >
+                  {t}
+                </button>
+                <span className="text-xs text-muted-foreground">
+                  {TAMANHO_LEGENDAS[t]}
+                </span>
+              </div>
             ))}
           </div>
         </div>
