@@ -12,23 +12,23 @@ import {
 export const Header = () => {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-4 md:gap-6">
+      <div className="container flex h-14 sm:h-16 items-center justify-between gap-2">
+        <div className="flex items-center gap-3 sm:gap-6 min-w-0">
           <a
             href="https://instagram.com/3rfitnessjr"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm hover:text-accent transition-smooth"
+            className="flex items-center gap-2 text-sm hover:text-accent transition-smooth shrink-0"
             aria-label="Instagram @3rfitnessjr"
           >
             <Instagram className="h-5 w-5" strokeWidth={1.5} />
-            <span className="font-medium tracking-wide">@3rfitnessjr</span>
+            <span className="hidden sm:inline font-medium tracking-wide">@3rfitnessjr</span>
           </a>
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 text-sm hover:text-accent transition-smooth outline-none">
+            <DropdownMenuTrigger className="flex items-center gap-1 text-xs sm:text-sm hover:text-accent transition-smooth outline-none shrink-0">
               Coleções <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="bg-background border border-border">
+            <DropdownMenuContent align="start" className="bg-background border border-border z-50">
               <DropdownMenuItem asChild>
                 <a href="#colecao-ouro" className="cursor-pointer">Coleção Ouro</a>
               </DropdownMenuItem>
