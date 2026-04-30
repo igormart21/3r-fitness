@@ -986,7 +986,7 @@ const StepperExperience = (p: StepperProps) => {
                       const legenda =
                         e === "Underground" ? "Boné, óculos e relógio" : "Pingente puro";
                       const bonecoSrc =
-                        (p.categoria && BONECOS[p.categoria]?.[p.genero!]?.[e]) ||
+                        (p.categoria && p.material && BONECOS[p.categoria]?.[p.material]?.[p.genero!]?.[e]) ||
                         ESTILO_IMAGENS[e];
                       return (
                         <button
