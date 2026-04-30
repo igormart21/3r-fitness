@@ -54,6 +54,115 @@ const TAMANHO_LEGENDAS: Record<Tamanho, string> = {
 };
 const GENEROS: Genero[] = ["Masculino", "Feminino"];
 
+/* ----- Componentes auxiliares (visual de luxo) ----- */
+
+const SectionTitle = ({
+  numeral,
+  label,
+  hint,
+}: {
+  numeral: string;
+  label: string;
+  hint?: string;
+}) => (
+  <div className="text-center mb-6 md:mb-8">
+    <div className="flex items-center justify-center gap-4 mb-3">
+      <span className="h-px w-12 md:w-20 bg-accent/40" />
+      <span className="font-display text-[10px] md:text-xs tracking-[0.5em] text-accent">
+        {numeral}
+      </span>
+      <span className="h-px w-12 md:w-20 bg-accent/40" />
+    </div>
+    <h2 className="font-display text-xl md:text-2xl tracking-[0.2em] uppercase">
+      {label}
+    </h2>
+    {hint && (
+      <p className="mt-1.5 text-[10px] md:text-xs uppercase tracking-[0.3em] text-muted-foreground/80 italic">
+        {hint}
+      </p>
+    )}
+  </div>
+);
+
+const Divider = () => (
+  <div className="flex items-center justify-center gap-3 my-12 md:my-14">
+    <span className="h-px w-16 bg-border" />
+    <span className="h-1 w-1 rounded-full bg-accent/60" />
+    <span className="h-px w-16 bg-border" />
+  </div>
+);
+
+const LuxButton = ({
+  selected,
+  onClick,
+  children,
+  size = "default",
+}: {
+  selected: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+  size?: "default" | "lg";
+}) => (
+  <button
+    onClick={onClick}
+    className={`relative font-display tracking-[0.15em] uppercase text-xs md:text-sm transition-all duration-300 border rounded-none ${
+      size === "lg" ? "px-7 py-3.5" : "px-5 py-2.5"
+    } ${
+      selected
+        ? "border-accent text-accent bg-accent/[0.04] shadow-[inset_0_0_0_1px_hsl(var(--accent)/0.4)]"
+        : "border-border/60 text-foreground/85 hover:border-accent/70 hover:text-accent"
+    }`}
+  >
+    {selected && (
+      <>
+        <span className="absolute -top-[5px] -left-[5px] h-2 w-2 border-t border-l border-accent" />
+        <span className="absolute -top-[5px] -right-[5px] h-2 w-2 border-t border-r border-accent" />
+        <span className="absolute -bottom-[5px] -left-[5px] h-2 w-2 border-b border-l border-accent" />
+        <span className="absolute -bottom-[5px] -right-[5px] h-2 w-2 border-b border-r border-accent" />
+        <span className="absolute -top-2.5 -right-2.5 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
+          <Check className="h-3 w-3" strokeWidth={3} />
+        </span>
+      </>
+    )}
+    {children}
+  </button>
+);
+
+const ShowcaseFrame = ({
+  src,
+  alt,
+  caption,
+}: {
+  src: string;
+  alt: string;
+  caption?: string;
+}) => (
+  <div className="animate-in fade-in zoom-in-95 duration-500">
+    <div className="relative p-3 bg-card">
+      <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
+      <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
+      <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
+      <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent" />
+      <div className="w-64 h-64 md:w-72 md:h-72 overflow-hidden bg-white">
+        <img
+          src={src}
+          alt={alt}
+          width={768}
+          height={768}
+          loading="lazy"
+          className="w-full h-full object-cover"
+        />
+      </div>
+    </div>
+    {caption && (
+      <p className="mt-3 text-center text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+        {caption}
+      </p>
+    )}
+  </div>
+);
+
+
 const CriarMinhaJoia = () => {
   const [categoria, setCategoria] = useState<Categoria | null>(null);
   const [material, setMaterial] = useState<Material | null>(null);
