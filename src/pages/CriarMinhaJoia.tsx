@@ -414,6 +414,7 @@ const CriarMinhaJoia = () => {
   const [estilo, setEstilo] = useState<Estilo | null>(null);
   const [tamanho, setTamanho] = useState<Tamanho | null>(null);
   const [genero, setGenero] = useState<Genero | null>(null);
+  const [perfilBike, setPerfilBike] = useState<PerfilBike | null>(null);
 
   const [foto, setFoto] = useState<string | null>(null);
   const [nome, setNome] = useState("");
