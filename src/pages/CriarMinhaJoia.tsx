@@ -439,6 +439,7 @@ const CriarMinhaJoia = () => {
           imageDataUrl: dataUrl,
           material: material ?? "Prata 925",
           estilo: estilo ?? "Clássico",
+          genero: genero ?? "Masculino",
           inscricao: inscricaoPingenteValor(),
         },
       });
