@@ -130,7 +130,7 @@ export const Testimonials = () => {
   return (
     <section
       id="depoimentos"
-      className="relative py-16 sm:py-20 md:py-32 overflow-hidden"
+      className="relative py-10 sm:py-16 md:py-32 overflow-hidden"
       style={{ background: t.background }}
     >
       {t.overlay && (
