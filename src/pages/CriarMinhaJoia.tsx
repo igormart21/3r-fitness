@@ -200,7 +200,7 @@ const CriarMinhaJoia = () => {
             {CATEGORIAS.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setCategoria(cat)}
+                onClick={() => setCategoria(categoria === cat ? null : cat)}
                 className={`relative px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
                   categoria === cat
                     ? "border-accent bg-accent/10 text-accent shadow-[0_0_0_1px_hsl(var(--accent))]"
@@ -360,7 +360,7 @@ const CriarMinhaJoia = () => {
             {GENEROS.map((g) => (
               <button
                 key={g}
-                onClick={() => setGenero(g)}
+                onClick={() => setGenero(genero === g ? null : g)}
                 className={`relative px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
                   genero === g
                     ? "border-accent bg-accent/10 text-accent shadow-[0_0_0_1px_hsl(var(--accent))]"
@@ -387,7 +387,7 @@ const CriarMinhaJoia = () => {
             {TAMANHOS.map((t) => (
               <div key={t} className="flex flex-col items-center gap-1">
                 <button
-                  onClick={() => setTamanho(t)}
+                  onClick={() => setTamanho(tamanho === t ? null : t)}
                   className={`relative px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
                     tamanho === t
                       ? "border-accent bg-accent/10 text-accent shadow-[0_0_0_1px_hsl(var(--accent))]"
