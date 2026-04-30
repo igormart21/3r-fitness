@@ -676,7 +676,7 @@ const StepperExperience = (p: StepperProps) => {
           <span className="h-px w-8 bg-accent/60" />
         </div>
         <p className="text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-2 flex items-center justify-center gap-2 flex-wrap">
-          <span>Atelier · Edição Personalizada</span>
+          <span>Edição Personalizada</span>
           <span className="text-accent/40">·</span>
           <span className="text-accent/80 inline-flex flex-col items-center">
             <span>Renata Ramos Ribeiro</span>
