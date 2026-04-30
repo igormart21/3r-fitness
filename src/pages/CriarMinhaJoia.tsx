@@ -220,36 +220,39 @@ const CriarMinhaJoia = () => {
 
         {/* Estilo — com imagens, em quadrados menores */}
         <div className="mb-8">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
+          <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3 text-center">
             Estilo
           </h2>
-          <div className="grid grid-cols-2 gap-3 max-w-md">
+          <div className="flex flex-wrap gap-2 justify-center">
             {ESTILOS.map((e) => (
               <button
                 key={e}
                 onClick={() => setEstilo(e)}
-                className={`rounded-lg border-2 p-2 text-center transition-all hover:border-accent overflow-hidden ${
+                className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
                   estilo === e
                     ? "border-accent bg-accent/5"
                     : "border-border bg-card"
                 }`}
               >
-                {ESTILO_IMAGENS[e] && (
-                  <div className="aspect-square mb-2 rounded-md overflow-hidden bg-background">
-                    <img
-                      src={ESTILO_IMAGENS[e]}
-                      alt={`Estilo ${e}`}
-                      width={400}
-                      height={400}
-                      loading="lazy"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-                <p className="font-display text-sm md:text-base">{e}</p>
+                {e}
               </button>
             ))}
           </div>
+
+          {estilo && ESTILO_IMAGENS[estilo] && (
+            <div className="mt-4 flex justify-center animate-in fade-in zoom-in-95">
+              <div className="w-48 h-48 md:w-56 md:h-56 rounded-lg overflow-hidden border-2 border-accent bg-background">
+                <img
+                  src={ESTILO_IMAGENS[estilo]}
+                  alt={`Estilo ${estilo}`}
+                  width={400}
+                  height={400}
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Tamanho */}
