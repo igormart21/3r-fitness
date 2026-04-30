@@ -279,6 +279,93 @@ const CriarMinhaJoia = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addItem = useCartStore((s) => s.addItem);
 
+  // ===== Seção VII — Foto → Pingente (inscrição independente) =====
+  const [pingenteNome, setPingenteNome] = useState("");
+  const [pingenteKm, setPingenteKm] = useState("");
+  const [pingenteData, setPingenteData] = useState("");
+  const [pingenteTempo, setPingenteTempo] = useState("");
+  const [openPingenteField, setOpenPingenteField] = useState<CtaFieldKey | null>(null);
+  const [gerandoPingente, setGerandoPingente] = useState(false);
+  const [pingenteGerado, setPingenteGerado] = useState<string | null>(null);
+  const [fotoPingente, setFotoPingente] = useState<string | null>(null);
+  const fotoPingenteInputRef = useRef<HTMLInputElement>(null);
+
+  const inscricaoPingenteEscolhida: CtaFieldKey | null = pingenteNome.trim()
+    ? "nome"
+    : pingenteKm
+    ? "km"
+    : pingenteData.trim()
+    ? "data"
+    : pingenteTempo.trim()
+    ? "tempo"
+    : null;
+
+  const inscricaoPingenteValor = () => {
+    if (pingenteNome.trim()) return pingenteNome.trim();
+    if (pingenteKm) return pingenteKm;
+    if (pingenteData.trim()) return pingenteData.trim();
+    if (pingenteTempo.trim()) return pingenteTempo.trim();
+    return "";
+  };
+
+  const limparInscricaoPingente = () => {
+    setPingenteNome("");
+    setPingenteKm("");
+    setPingenteData("");
+    setPingenteTempo("");
+  };
+
+  const abrirCampoPingenteExclusivo = (key: CtaFieldKey) => {
+    if (openPingenteField === key) {
+      setOpenPingenteField(null);
+      return;
+    }
+    if (inscricaoPingenteEscolhida && inscricaoPingenteEscolhida !== key) {
+      limparInscricaoPingente();
+    }
+    setOpenPingenteField(key);
+  };
+
+  const gerarPingenteDaFoto = async (dataUrl: string) => {
+    setPingenteGerado(null);
+    setGerandoPingente(true);
+    try {
+      const { data: result, error } = await supabase.functions.invoke("gerar-pingente", {
+        body: {
+          imageDataUrl: dataUrl,
+          material: material ?? "Prata 925",
+          estilo: estilo ?? "Clássico",
+          inscricao: inscricaoPingenteValor(),
+        },
+      });
+      if (error) throw error;
+      if (!result?.imageUrl) throw new Error("Imagem não retornada");
+      setPingenteGerado(result.imageUrl);
+      toast.success("Seu pingente foi modelado!");
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err?.message || "Não foi possível gerar o pingente. Tente novamente.");
+    } finally {
+      setGerandoPingente(false);
+    }
+  };
+
+  const handleFotoPingenteUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("A foto deve ter no máximo 5MB");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const dataUrl = reader.result as string;
+      setFotoPingente(dataUrl);
+      gerarPingenteDaFoto(dataUrl);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleFotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
