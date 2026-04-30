@@ -309,6 +309,34 @@ const CriarMinhaJoia = () => {
           <p className="text-muted-foreground italic max-w-md mx-auto text-sm md:text-base">
             Cada peça é composta à mão. Selecione abaixo os elementos que vão eternizar a sua história.
           </p>
+
+          {/* Assinatura da artesã */}
+          <div className="mt-8 flex flex-col items-center">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="h-px w-8 bg-accent/40" />
+              <span className="text-[9px] uppercase tracking-[0.45em] text-muted-foreground/70">
+                Assinado por
+              </span>
+              <span className="h-px w-8 bg-accent/40" />
+            </div>
+            <div
+              className="relative inline-block"
+              style={{ transform: "rotate(-6deg)" }}
+            >
+              <span
+                className="block text-accent text-4xl md:text-6xl leading-none drop-shadow-[0_2px_8px_hsl(var(--accent)/0.25)]"
+                style={{
+                  fontFamily: "'Great Vibes', cursive",
+                  textShadow: "0 1px 0 hsl(var(--accent) / 0.15)",
+                }}
+              >
+                Renata Ramos Ribeiro
+              </span>
+              <span className="block mt-1 ml-2 text-[9px] uppercase tracking-[0.4em] text-muted-foreground/80">
+                Artesã · Mestre Joalheira
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* I — Modalidade */}
