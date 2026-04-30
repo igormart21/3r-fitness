@@ -28,7 +28,7 @@ export const Hero = () => {
         className="group absolute left-[8%] md:left-[12%] top-[70%] md:top-[72%] translate-x-[6px] inline-flex items-center gap-2 md:gap-3 px-6 md:px-12 py-3 md:py-5 overflow-hidden border border-black transition-all duration-500 hover:-translate-y-0.5"
         style={{
           background:
-            "linear-gradient(110deg, #B8860B 0%, #D4AF37 25%, #F4D77A 50%, #D4AF37 75%, #B8860B 100%)",
+            "linear-gradient(110deg, rgba(184,134,11,0.55) 0%, rgba(212,175,55,0.55) 25%, rgba(244,215,122,0.55) 50%, rgba(212,175,55,0.55) 75%, rgba(184,134,11,0.55) 100%)",
           backgroundSize: "300% 100%",
           animation: "hero-shimmer 4s linear infinite",
         }}
