@@ -678,6 +678,7 @@ const CriarMinhaJoia = () => {
         categoria={categoria} setCategoria={setCategoria}
         material={material} handleSelecionarMaterial={handleSelecionarMaterial}
         genero={genero} setGenero={setGenero}
+        perfilBike={perfilBike} setPerfilBike={setPerfilBike}
         tamanho={tamanho} setTamanho={setTamanho}
         estilo={estilo} setEstilo={setEstilo}
         nome={nome} setNome={setNome}
