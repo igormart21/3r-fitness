@@ -1,12 +1,13 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Upload, Check, Loader2, Sparkles, ChevronDown } from "lucide-react";
+import { ArrowLeft, Upload, Check, Loader2, Sparkles, ChevronDown, Camera, Wand2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useCartStore } from "@/stores/cartStore";
 import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/lib/shopify";
+import { supabase } from "@/integrations/supabase/client";
 import estiloUndergroundImg from "@/assets/estilo-underground.jpg";
 import estiloClassicoImg from "@/assets/estilo-classico.jpg";
 import materialPrataImg from "@/assets/material-prata.jpg";
@@ -277,6 +278,93 @@ const CriarMinhaJoia = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addItem = useCartStore((s) => s.addItem);
+
+  // ===== Seção VII — Foto → Pingente (inscrição independente) =====
+  const [pingenteNome, setPingenteNome] = useState("");
+  const [pingenteKm, setPingenteKm] = useState("");
+  const [pingenteData, setPingenteData] = useState("");
+  const [pingenteTempo, setPingenteTempo] = useState("");
+  const [openPingenteField, setOpenPingenteField] = useState<CtaFieldKey | null>(null);
+  const [gerandoPingente, setGerandoPingente] = useState(false);
+  const [pingenteGerado, setPingenteGerado] = useState<string | null>(null);
+  const [fotoPingente, setFotoPingente] = useState<string | null>(null);
+  const fotoPingenteInputRef = useRef<HTMLInputElement>(null);
+
+  const inscricaoPingenteEscolhida: CtaFieldKey | null = pingenteNome.trim()
+    ? "nome"
+    : pingenteKm
+    ? "km"
+    : pingenteData.trim()
+    ? "data"
+    : pingenteTempo.trim()
+    ? "tempo"
+    : null;
+
+  const inscricaoPingenteValor = () => {
+    if (pingenteNome.trim()) return pingenteNome.trim();
+    if (pingenteKm) return pingenteKm;
+    if (pingenteData.trim()) return pingenteData.trim();
+    if (pingenteTempo.trim()) return pingenteTempo.trim();
+    return "";
+  };
+
+  const limparInscricaoPingente = () => {
+    setPingenteNome("");
+    setPingenteKm("");
+    setPingenteData("");
+    setPingenteTempo("");
+  };
+
+  const abrirCampoPingenteExclusivo = (key: CtaFieldKey) => {
+    if (openPingenteField === key) {
+      setOpenPingenteField(null);
+      return;
+    }
+    if (inscricaoPingenteEscolhida && inscricaoPingenteEscolhida !== key) {
+      limparInscricaoPingente();
+    }
+    setOpenPingenteField(key);
+  };
+
+  const gerarPingenteDaFoto = async (dataUrl: string) => {
+    setPingenteGerado(null);
+    setGerandoPingente(true);
+    try {
+      const { data: result, error } = await supabase.functions.invoke("gerar-pingente", {
+        body: {
+          imageDataUrl: dataUrl,
+          material: material ?? "Prata 925",
+          estilo: estilo ?? "Clássico",
+          inscricao: inscricaoPingenteValor(),
+        },
+      });
+      if (error) throw error;
+      if (!result?.imageUrl) throw new Error("Imagem não retornada");
+      setPingenteGerado(result.imageUrl);
+      toast.success("Seu pingente foi modelado!");
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err?.message || "Não foi possível gerar o pingente. Tente novamente.");
+    } finally {
+      setGerandoPingente(false);
+    }
+  };
+
+  const handleFotoPingenteUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("A foto deve ter no máximo 5MB");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const dataUrl = reader.result as string;
+      setFotoPingente(dataUrl);
+      gerarPingenteDaFoto(dataUrl);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleFotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -670,6 +758,223 @@ const CriarMinhaJoia = () => {
               Trocar inscrição
             </button>
           )}
+        </div>
+
+        <Divider />
+
+        {/* VII — Sua foto eternizada em pingente */}
+        <SectionTitle
+          numeral="VII"
+          label="Sua foto em pingente"
+          hint="Envie uma pose · veja a peça moldada por IA"
+        />
+
+        <div className="mb-12 max-w-5xl mx-auto">
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Quadro 1 — Upload */}
+            <div className="relative border border-border/60 bg-card/30 p-6 md:p-8 min-h-[340px] flex flex-col">
+              <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
+              <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
+              <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
+              <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent" />
+
+              <p className="text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-2 text-center">
+                Etapa 01
+              </p>
+              <h3 className="font-display tracking-[0.18em] uppercase text-sm md:text-base text-center mb-4">
+                Envie sua foto
+              </h3>
+              <p className="text-xs text-muted-foreground/80 italic text-center mb-6 max-w-xs mx-auto leading-relaxed">
+                Escolha uma foto sua em pose marcante — corrida, salto, vitória.
+                Nossa IA transformará seu corpo em uma escultura miniatura.
+              </p>
+
+              <input
+                ref={fotoPingenteInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFotoPingenteUpload}
+                className="hidden"
+              />
+
+              <div className="flex-1 flex items-center justify-center">
+                {fotoPingente ? (
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="w-40 h-40 overflow-hidden border border-accent/40">
+                      <img src={fotoPingente} alt="Sua foto" className="w-full h-full object-cover" />
+                    </div>
+                    <button
+                      onClick={() => fotoPingenteInputRef.current?.click()}
+                      className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
+                    >
+                      Trocar foto
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => fotoPingenteInputRef.current?.click()}
+                    className="group flex flex-col items-center gap-3 px-6 py-8 border border-dashed border-accent/50 hover:border-accent transition-colors w-full max-w-xs"
+                  >
+                    <Camera className="h-8 w-8 text-accent group-hover:scale-110 transition-transform" />
+                    <span className="font-display tracking-[0.2em] uppercase text-xs text-accent">
+                      Subir foto
+                    </span>
+                    <span className="text-[10px] text-muted-foreground/70">JPG ou PNG · até 5MB</span>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Quadro 2 — Resultado */}
+            <div className="relative border border-border/60 bg-card/30 p-6 md:p-8 min-h-[340px] flex flex-col">
+              <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
+              <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
+              <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
+              <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent" />
+
+              <p className="text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-2 text-center">
+                Etapa 02
+              </p>
+              <h3 className="font-display tracking-[0.18em] uppercase text-sm md:text-base text-center mb-4">
+                Pingente moldado
+              </h3>
+
+              <div className="flex-1 flex items-center justify-center">
+                {gerandoPingente ? (
+                  <div className="flex flex-col items-center gap-4 text-center">
+                    <Loader2 className="h-10 w-10 text-accent animate-spin" />
+                    <p className="text-xs text-muted-foreground italic max-w-[200px] leading-relaxed">
+                      Esculpindo sua peça em {material === "Ouro 18K" ? "ouro 18K" : "prata 925"}…
+                    </p>
+                  </div>
+                ) : pingenteGerado ? (
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="w-52 h-52 overflow-hidden bg-black border border-accent/50">
+                      <img
+                        src={pingenteGerado}
+                        alt="Pingente personalizado gerado"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-accent/80">
+                      Prévia artística · IA
+                    </p>
+                    {fotoPingente && (
+                      <button
+                        onClick={() => fotoPingente && gerarPingenteDaFoto(fotoPingente)}
+                        className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
+                      >
+                        <Wand2 className="h-3 w-3" />
+                        Gerar novamente
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center gap-3 text-center opacity-60">
+                    <Sparkles className="h-8 w-8 text-accent/60" />
+                    <p className="text-xs text-muted-foreground italic max-w-[220px] leading-relaxed">
+                      Sua prévia aparecerá aqui assim que enviar a foto.
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Inscrição independente para o pingente */}
+          <div className="mt-10">
+            <p className="text-center text-[10px] md:text-xs uppercase tracking-[0.4em] text-accent/80 mb-5">
+              Inscrição gravada nesta peça
+            </p>
+
+            <div className="max-w-2xl mx-auto space-y-3">
+              <CtaField
+                label="Nome"
+                isOpen={openPingenteField === "nome"}
+                hasValue={!!pingenteNome.trim()}
+                disabled={!!inscricaoPingenteEscolhida && inscricaoPingenteEscolhida !== "nome"}
+                onToggle={() => abrirCampoPingenteExclusivo("nome")}
+              >
+                <Input
+                  autoFocus
+                  value={pingenteNome}
+                  onChange={(e) => setPingenteNome(e.target.value.slice(0, 50))}
+                  placeholder="Escreva o nome a ser gravado"
+                  maxLength={50}
+                  className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
+                />
+              </CtaField>
+
+              <CtaField
+                label="KM"
+                isOpen={openPingenteField === "km"}
+                hasValue={!!pingenteKm}
+                valuePreview={pingenteKm}
+                disabled={!!inscricaoPingenteEscolhida && inscricaoPingenteEscolhida !== "km"}
+                onToggle={() => abrirCampoPingenteExclusivo("km")}
+              >
+                <div className="flex flex-wrap gap-2.5 justify-center pt-1">
+                  {KM_OPCOES.map((opt) => (
+                    <LuxButton
+                      key={opt}
+                      selected={pingenteKm === opt}
+                      onClick={() => setPingenteKm(pingenteKm === opt ? "" : opt)}
+                    >
+                      {opt}
+                    </LuxButton>
+                  ))}
+                </div>
+              </CtaField>
+
+              <CtaField
+                label="Data da corrida"
+                isOpen={openPingenteField === "data"}
+                hasValue={!!pingenteData.trim()}
+                valuePreview={pingenteData}
+                disabled={!!inscricaoPingenteEscolhida && inscricaoPingenteEscolhida !== "data"}
+                onToggle={() => abrirCampoPingenteExclusivo("data")}
+              >
+                <Input
+                  autoFocus
+                  value={pingenteData}
+                  onChange={(e) => setPingenteData(e.target.value.slice(0, 30))}
+                  placeholder="Ex: 12/10/2025"
+                  maxLength={30}
+                  className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
+                />
+              </CtaField>
+
+              <CtaField
+                label="Tempo percorrido"
+                isOpen={openPingenteField === "tempo"}
+                hasValue={!!pingenteTempo.trim()}
+                valuePreview={pingenteTempo}
+                disabled={!!inscricaoPingenteEscolhida && inscricaoPingenteEscolhida !== "tempo"}
+                onToggle={() => abrirCampoPingenteExclusivo("tempo")}
+              >
+                <Input
+                  autoFocus
+                  value={pingenteTempo}
+                  onChange={(e) => setPingenteTempo(e.target.value.slice(0, 20))}
+                  placeholder="Ex: 1h 45min"
+                  maxLength={20}
+                  className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
+                />
+              </CtaField>
+
+              {inscricaoPingenteEscolhida && (
+                <button
+                  onClick={() => {
+                    limparInscricaoPingente();
+                    setOpenPingenteField(null);
+                  }}
+                  className="block mx-auto mt-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
+                >
+                  Trocar inscrição
+                </button>
+              )}
+            </div>
+          </div>
         </div>
 
         <div className="flex justify-end">
