@@ -102,6 +102,7 @@ const CriarMinhaJoia = () => {
         { name: "Material", value: material! },
         { name: "Estilo", value: estilo! },
         { name: "Tamanho", value: tamanho! },
+        { name: "Gênero", value: genero! },
         { name: "Nome gravado", value: nome },
         ...(data ? [{ name: "Data", value: data }] : []),
         ...(km ? [{ name: "KM", value: km }] : []),
