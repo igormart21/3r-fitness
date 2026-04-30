@@ -172,12 +172,14 @@ const MagnifierImage = ({
   className = "",
   zoom = 2.4,
   lensSize = 140,
+  fit = "cover",
 }: {
   src: string;
   alt: string;
   className?: string;
   zoom?: number;
   lensSize?: number;
+  fit?: "cover" | "contain";
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [show, setShow] = useState(false);
@@ -210,7 +212,7 @@ const MagnifierImage = ({
         src={src}
         alt={alt}
         loading="lazy"
-        className="w-full h-full object-cover select-none pointer-events-none"
+        className={`w-full h-full ${fit === "contain" ? "object-contain" : "object-cover"} select-none pointer-events-none`}
       />
       {show && box.w > 0 && (
         <div
@@ -1161,7 +1163,7 @@ const StepperExperience = (p: StepperProps) => {
                   </div>
                 </div>
 
-                <div className="relative border border-border/60 bg-card/30 p-5 md:p-6 min-h-[280px] flex flex-col">
+                <div className="relative border border-border/60 bg-card/30 p-5 md:p-6 min-h-[440px] flex flex-col">
                   <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
                   <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
                   <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
@@ -1177,10 +1179,15 @@ const StepperExperience = (p: StepperProps) => {
                         </p>
                       </div>
                     ) : p.pingenteGerado ? (
-                      <div className="flex flex-col items-center gap-3">
-                        <div className="w-40 h-40 overflow-hidden bg-black border border-accent/50">
-                          <img src={p.pingenteGerado} alt="Pingente gerado" className="w-full h-full object-contain" />
-                        </div>
+                      <div className="flex flex-col items-center gap-3 w-full">
+                        <MagnifierImage
+                          src={p.pingenteGerado}
+                          alt="Pingente gerado"
+                          className="w-full max-w-[360px] aspect-square bg-black border border-accent/50"
+                          zoom={2.6}
+                          lensSize={150}
+                          fit="contain"
+                        />
                         {p.fotoPingente && (
                           <button
                             onClick={() => p.fotoPingente && p.gerarPingenteDaFoto(p.fotoPingente)}
