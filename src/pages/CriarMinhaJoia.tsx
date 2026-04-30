@@ -1186,7 +1186,6 @@ const StepperExperience = (p: StepperProps) => {
                           lensSize={150}
                           fit="contain"
                         />
-                        </div>
                         {p.fotoPingente && (
                           <button
                             onClick={() => p.fotoPingente && p.gerarPingenteDaFoto(p.fotoPingente)}
