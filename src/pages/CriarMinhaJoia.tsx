@@ -800,7 +800,11 @@ const StepperExperience = (p: StepperProps) => {
                   <LuxButton
                     key={g}
                     selected={p.genero === g}
-                    onClick={() => p.setGenero(p.genero === g ? null : g)}
+                    onClick={() => {
+                      const desmarcar = p.genero === g;
+                      p.setGenero(desmarcar ? null : g);
+                      if (!desmarcar) setTimeout(() => autoAdvance(2), 280);
+                    }}
                     size="lg"
                   >
                     {g}
