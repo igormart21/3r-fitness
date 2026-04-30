@@ -573,6 +573,14 @@ const StepperExperience = (p: StepperProps) => {
 
   const goPrev = () => setStep((s) => Math.max(0, s - 1));
   const goNext = () => setStep((s) => Math.min(total - 1, s + 1));
+  const autoAdvance = (fromStep: number) => {
+    // Avança apenas se o usuário ainda está na etapa que acabou de preencher
+    setStep((s) => (s === fromStep && fromStep < total - 1 ? fromStep + 1 : s));
+  };
+  const withAdvance = (fromStep: number, fn: () => void) => () => {
+    fn();
+    setTimeout(() => autoAdvance(fromStep), 320);
+  };
 
   return (
     <main className="container mx-auto px-4 pt-8 pb-12 md:pt-10 md:pb-16 max-w-7xl">
@@ -712,7 +720,11 @@ const StepperExperience = (p: StepperProps) => {
                   <LuxButton
                     key={cat}
                     selected={p.categoria === cat}
-                    onClick={() => p.setCategoria(p.categoria === cat ? null : cat)}
+                    onClick={() => {
+                      const desmarcar = p.categoria === cat;
+                      p.setCategoria(desmarcar ? null : cat);
+                      if (!desmarcar) setTimeout(() => autoAdvance(0), 280);
+                    }}
                   >
                     {cat}
                   </LuxButton>
@@ -728,7 +740,11 @@ const StepperExperience = (p: StepperProps) => {
                   return (
                     <button
                       key={m}
-                      onClick={() => p.handleSelecionarMaterial(m)}
+                      onClick={() => {
+                        const desmarcar = p.material === m;
+                        p.handleSelecionarMaterial(m);
+                        if (!desmarcar) setTimeout(() => autoAdvance(1), 280);
+                      }}
                       className={`group relative flex flex-col items-center gap-3 p-3 md:p-4 transition-all duration-300 ${
                         selected ? "bg-accent/[0.06]" : "opacity-70 hover:opacity-100"
                       }`}
@@ -784,7 +800,11 @@ const StepperExperience = (p: StepperProps) => {
                   <LuxButton
                     key={g}
                     selected={p.genero === g}
-                    onClick={() => p.setGenero(p.genero === g ? null : g)}
+                    onClick={() => {
+                      const desmarcar = p.genero === g;
+                      p.setGenero(desmarcar ? null : g);
+                      if (!desmarcar) setTimeout(() => autoAdvance(2), 280);
+                    }}
                     size="lg"
                   >
                     {g}
@@ -799,7 +819,11 @@ const StepperExperience = (p: StepperProps) => {
                   <div key={t} className="flex flex-col items-center gap-2">
                     <LuxButton
                       selected={p.tamanho === t}
-                      onClick={() => p.setTamanho(p.tamanho === t ? null : t)}
+                      onClick={() => {
+                        const desmarcar = p.tamanho === t;
+                        p.setTamanho(desmarcar ? null : t);
+                        if (!desmarcar) setTimeout(() => autoAdvance(3), 280);
+                      }}
                       size="lg"
                     >
                       {t}
@@ -832,7 +856,11 @@ const StepperExperience = (p: StepperProps) => {
                     <LuxButton
                       key={e}
                       selected={p.estilo === e}
-                      onClick={() => p.setEstilo(p.estilo === e ? null : e)}
+                      onClick={() => {
+                        const desmarcar = p.estilo === e;
+                        p.setEstilo(desmarcar ? null : e);
+                        if (!desmarcar) setTimeout(() => autoAdvance(4), 280);
+                      }}
                       size="lg"
                     >
                       {e}
@@ -881,7 +909,11 @@ const StepperExperience = (p: StepperProps) => {
                       <LuxButton
                         key={opt}
                         selected={p.km === opt}
-                        onClick={() => p.setKm(p.km === opt ? "" : opt)}
+                        onClick={() => {
+                          const desmarcar = p.km === opt;
+                          p.setKm(desmarcar ? "" : opt);
+                          if (!desmarcar) setTimeout(() => autoAdvance(5), 280);
+                        }}
                       >
                         {opt}
                       </LuxButton>
