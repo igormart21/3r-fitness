@@ -720,7 +720,11 @@ const StepperExperience = (p: StepperProps) => {
                   <LuxButton
                     key={cat}
                     selected={p.categoria === cat}
-                    onClick={() => p.setCategoria(p.categoria === cat ? null : cat)}
+                    onClick={() => {
+                      const desmarcar = p.categoria === cat;
+                      p.setCategoria(desmarcar ? null : cat);
+                      if (!desmarcar) setTimeout(() => autoAdvance(0), 280);
+                    }}
                   >
                     {cat}
                   </LuxButton>
