@@ -18,7 +18,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { imageDataUrl, material, estilo, inscricao } = await req.json();
+    const { imageDataUrl, material, estilo, genero, inscricao } = await req.json();
 
     if (!imageDataUrl || typeof imageDataUrl !== "string") {
       return new Response(JSON.stringify({ error: "imageDataUrl é obrigatório" }), {
