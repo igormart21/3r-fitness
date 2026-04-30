@@ -165,7 +165,66 @@ const ShowcaseFrame = ({
 );
 
 
-const CriarMinhaJoia = () => {
+const CtaField = ({
+  label,
+  isOpen,
+  hasValue,
+  valuePreview,
+  onToggle,
+  children,
+}: {
+  label: string;
+  isOpen: boolean;
+  hasValue: boolean;
+  valuePreview?: string;
+  onToggle: () => void;
+  children: React.ReactNode;
+}) => (
+  <div
+    className={`relative border transition-all duration-300 ${
+      isOpen
+        ? "border-accent bg-accent/[0.04]"
+        : hasValue
+        ? "border-accent/60 bg-card/40"
+        : "border-border/60 bg-card/20 hover:border-accent/70"
+    }`}
+  >
+    <button
+      onClick={onToggle}
+      className="w-full flex items-center justify-between px-5 py-4 text-left group"
+    >
+      <span className="flex items-center gap-3">
+        <span
+          className={`h-5 w-5 rounded-full border flex items-center justify-center transition-colors ${
+            hasValue ? "border-accent bg-accent text-accent-foreground" : "border-border/70"
+          }`}
+        >
+          {hasValue && <Check className="h-3 w-3" strokeWidth={3} />}
+        </span>
+        <span className="font-display tracking-[0.2em] uppercase text-xs md:text-sm">
+          {label}
+        </span>
+        {valuePreview && !isOpen && (
+          <span className="text-xs text-accent/90 italic normal-case tracking-normal">
+            · {valuePreview}
+          </span>
+        )}
+      </span>
+      <ChevronDown
+        className={`h-4 w-4 text-accent transition-transform duration-300 ${
+          isOpen ? "rotate-180" : ""
+        }`}
+      />
+    </button>
+    {isOpen && (
+      <div className="px-5 pb-5 pt-1 animate-in fade-in slide-in-from-top-1 duration-200">
+        {children}
+      </div>
+    )}
+  </div>
+);
+
+
   const [categoria, setCategoria] = useState<Categoria | null>(null);
   const [material, setMaterial] = useState<Material | null>(null);
   const [estilo, setEstilo] = useState<Estilo | null>(null);
