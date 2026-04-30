@@ -1041,7 +1041,9 @@ const StepperExperience = (p: StepperProps) => {
                         e === "Underground"
                           ? p.categoria === "Musculação"
                             ? "Boné e relógio"
-                            : "Boné, óculos e relógio"
+                            : p.categoria === "Fisiculturismo"
+                              ? "Corpo definido"
+                              : "Boné, óculos e relógio"
                           : "Pingente puro";
                       const bonecoSrc =
                         (p.categoria && p.material && BONECOS[p.categoria]?.[p.material]?.[p.genero!]?.[e]) ||
