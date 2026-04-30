@@ -344,6 +344,7 @@ const CriarMinhaJoia = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addItem = useCartStore((s) => s.addItem);
+  const getCheckoutUrl = useCartStore((s) => s.getCheckoutUrl);
 
   // ===== Seção VII — Foto → Pingente (inscrição independente) =====
   const [pingenteNome, setPingenteNome] = useState("");
@@ -506,6 +507,19 @@ const CriarMinhaJoia = () => {
     }
   };
 
+  const handleProsseguirParaPagamento = async () => {
+    await handleAdicionarAoCarrinho();
+    // Aguarda o cart sincronizar e abre checkout
+    setTimeout(() => {
+      const url = getCheckoutUrl();
+      if (url) {
+        window.open(url, "_blank");
+      } else {
+        toast.error("Não foi possível abrir o checkout. Verifique sua sacola.");
+      }
+    }, 800);
+  };
+
   return (
     <div
       className="min-h-screen bg-background text-foreground"
@@ -572,6 +586,7 @@ const CriarMinhaJoia = () => {
         setOpenPingenteField={setOpenPingenteField}
         adicionando={adicionando}
         handleAdicionarAoCarrinho={handleAdicionarAoCarrinho}
+        handleProsseguirParaPagamento={handleProsseguirParaPagamento}
       />
     </div>
   );
@@ -608,6 +623,7 @@ type StepperProps = {
   setOpenPingenteField: (k: CtaFieldKey | null) => void;
   adicionando: boolean;
   handleAdicionarAoCarrinho: () => void;
+  handleProsseguirParaPagamento: () => void;
 };
 
 const STEP_LABELS = [
@@ -622,6 +638,7 @@ const STEP_LABELS = [
 
 const StepperExperience = (p: StepperProps) => {
   const [step, setStep] = useState(0);
+  const [showBalao, setShowBalao] = useState(false);
   const total = STEP_LABELS.length;
 
   const stepCompleted = useMemo(() => [
@@ -960,7 +977,44 @@ const StepperExperience = (p: StepperProps) => {
             </StepPanel>
 
             <StepPanel numeral="VI" label="Inscrição" hint="Escolha apenas UMA inscrição para sua joia">
-              <div className="max-w-2xl mx-auto space-y-3">
+              <div className="max-w-2xl mx-auto space-y-5">
+                {/* Informativo + escolha de caminho */}
+                <div className="border border-accent/30 bg-card/40 p-5 md:p-6 text-center relative">
+                  <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
+                  <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
+                  <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
+                  <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent" />
+                  <p className="text-sm md:text-base text-foreground/90 leading-relaxed">
+                    Quer uma joia com seu <span className="text-accent">estilo autêntico e único</span>?
+                    Pule para a próxima seção, envie uma foto sua e transforme em pingente exclusivo.
+                  </p>
+                  <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
+                    <Button
+                      onClick={() => setStep(6)}
+                      className="bg-accent hover:bg-accent/90 text-accent-foreground tracking-[0.2em] uppercase text-xs px-6"
+                    >
+                      <Camera className="h-4 w-4 mr-2" /> Anexar foto
+                    </Button>
+                    <Button
+                      onClick={() => setShowBalao(true)}
+                      variant="outline"
+                      className="border-accent text-accent hover:bg-accent/10 tracking-[0.2em] uppercase text-xs px-6"
+                    >
+                      Pingente do site
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Balão de fala */}
+                {showBalao && (
+                  <div className="relative mx-auto max-w-md animate-in fade-in slide-in-from-top-2 duration-300">
+                    <div className="relative bg-accent text-accent-foreground px-5 py-3 rounded-2xl shadow-lg text-sm font-medium text-center">
+                      Selecione uma inscrição abaixo para sua joia ✨
+                      <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rotate-45" />
+                    </div>
+                  </div>
+                )}
+
                 <CtaField
                   label="Nome"
                   isOpen={p.openField === "nome"}
@@ -1033,12 +1087,36 @@ const StepperExperience = (p: StepperProps) => {
                   />
                 </CtaField>
                 {p.personalizacaoEscolhida && (
-                  <button
-                    onClick={() => { p.limparPersonalizacao(); p.setOpenField(null); }}
-                    className="block mx-auto mt-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
-                  >
-                    Trocar inscrição
-                  </button>
+                  <>
+                    <button
+                      onClick={() => { p.limparPersonalizacao(); p.setOpenField(null); }}
+                      className="block mx-auto mt-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
+                    >
+                      Trocar inscrição
+                    </button>
+                    <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center animate-in fade-in slide-in-from-bottom-2 duration-400">
+                      <Button
+                        onClick={p.handleAdicionarAoCarrinho}
+                        disabled={p.adicionando}
+                        size="lg"
+                        className="bg-accent hover:bg-accent/90 text-black font-bold tracking-[0.15em] uppercase text-xs px-8"
+                      >
+                        {p.adicionando ? (
+                          <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Adicionando...</>
+                        ) : (
+                          <><Check className="h-4 w-4 mr-2" /> Adicionar ao carrinho</>
+                        )}
+                      </Button>
+                      <Button
+                        onClick={p.handleProsseguirParaPagamento}
+                        disabled={p.adicionando}
+                        size="lg"
+                        className="bg-accent hover:bg-accent/90 text-black font-bold tracking-[0.15em] uppercase text-xs px-8"
+                      >
+                        Prosseguir para pagamento
+                      </Button>
+                    </div>
+                  </>
                 )}
               </div>
             </StepPanel>
