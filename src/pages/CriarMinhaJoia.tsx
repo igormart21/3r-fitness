@@ -507,6 +507,19 @@ const CriarMinhaJoia = () => {
     }
   };
 
+  const handleProsseguirParaPagamento = async () => {
+    await handleAdicionarAoCarrinho();
+    // Aguarda o cart sincronizar e abre checkout
+    setTimeout(() => {
+      const url = getCheckoutUrl();
+      if (url) {
+        window.open(url, "_blank");
+      } else {
+        toast.error("Não foi possível abrir o checkout. Verifique sua sacola.");
+      }
+    }, 800);
+  };
+
   return (
     <div
       className="min-h-screen bg-background text-foreground"
