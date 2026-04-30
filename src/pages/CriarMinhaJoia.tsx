@@ -165,6 +165,72 @@ const ShowcaseFrame = ({
   </div>
 );
 
+/* Imagem com efeito lupa: ao passar o mouse, uma área circular ampliada segue o cursor */
+const MagnifierImage = ({
+  src,
+  alt,
+  className = "",
+  zoom = 2.4,
+  lensSize = 140,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  zoom?: number;
+  lensSize?: number;
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [show, setShow] = useState(false);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [box, setBox] = useState({ w: 0, h: 0 });
+
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setPos({ x, y });
+    setBox({ w: rect.width, h: rect.height });
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className={`relative overflow-hidden cursor-zoom-in ${className}`}
+      onMouseEnter={(e) => {
+        const rect = containerRef.current?.getBoundingClientRect();
+        if (rect) setBox({ w: rect.width, h: rect.height });
+        setShow(true);
+        onMove(e);
+      }}
+      onMouseMove={onMove}
+      onMouseLeave={() => setShow(false)}
+    >
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        className="w-full h-full object-cover select-none pointer-events-none"
+      />
+      {show && box.w > 0 && (
+        <div
+          className="pointer-events-none absolute rounded-full border-2 border-accent shadow-[0_8px_30px_-4px_hsl(var(--accent)/0.6)] hidden md:block"
+          style={{
+            width: lensSize,
+            height: lensSize,
+            top: pos.y - lensSize / 2,
+            left: pos.x - lensSize / 2,
+            backgroundImage: `url(${src})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: `${box.w * zoom}px ${box.h * zoom}px`,
+            backgroundPosition: `${-pos.x * zoom + lensSize / 2}px ${-pos.y * zoom + lensSize / 2}px`,
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
 
 const CtaField = ({
   label,
