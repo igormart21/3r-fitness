@@ -34,7 +34,7 @@ Deno.serve(async (req) => {
 
     const estiloDesc =
       estilo === "Underground"
-        ? "ESTILO UNDERGROUND OBRIGATÓRIO: a miniatura da pessoa DEVE aparecer usando acessórios urbanos visíveis e bem detalhados — correntes grossas no pescoço, boné, óculos escuros, piercings, tatuagens esculpidas em relevo, capuz/moletom ou jaqueta. Os acessórios são parte essencial do pingente e precisam ser claramente reconhecíveis na escultura, com texturas marcadas e detalhes ricos no metal."
+        ? "ESTILO UNDERGROUND OBRIGATÓRIO: a miniatura da pessoa DEVE aparecer usando APENAS estes três acessórios urbanos, claramente visíveis e bem esculpidos em relevo no metal: (1) BONÉ na cabeça, (2) ÓCULOS ESCUROS no rosto e (3) RELÓGIO de pulso no braço. PROIBIDO incluir correntes, colares, cordões no pescoço, piercings, tatuagens, capuz, moletom ou qualquer outro acessório além desses três. O pescoço, tronco e pele devem ficar limpos, sem qualquer corrente ou desenho de tatuagem. Apenas boné + óculos + relógio, nada mais."
         : "ESTILO CLÁSSICO: pingente puro e minimalista, apenas a silhueta da pessoa em pose limpa, SEM acessórios extras, contornos suaves e elegantes.";
 
     const inscricaoTexto = inscricao?.trim()
