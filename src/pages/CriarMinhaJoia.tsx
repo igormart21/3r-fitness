@@ -129,6 +129,7 @@ type Material = "Prata 925" | "Ouro 18K";
 type Estilo = "Botão Reta" | "Underground" | "Clássico";
 type Tamanho = "Grande" | "Médio" | "Pequeno";
 type Genero = "Masculino" | "Feminino";
+type PerfilBike = "Speed" | "Mountain Bike";
 
 const CATEGORIAS: Categoria[] = [
   "Corredores",
@@ -148,6 +149,20 @@ const TAMANHO_LEGENDAS: Record<Tamanho, string> = {
   Pequeno: "2 cm",
 };
 const GENEROS: Genero[] = ["Masculino", "Feminino"];
+const PERFIS_BIKE: PerfilBike[] = ["Speed", "Mountain Bike"];
+
+// Bikes do Ciclista por Perfil × Material × Estilo.
+// Underground (bike + boneco) ainda não enviado — usa a bike clássica como placeholder.
+const BIKES: Record<PerfilBike, Record<Material, Record<Estilo extends infer E ? "Clássico" | "Underground" : never, string>>> = {
+  Speed: {
+    "Ouro 18K": { "Clássico": bikeSpeedClassicoOuro, Underground: bikeSpeedClassicoOuro },
+    "Prata 925": { "Clássico": bikeSpeedClassicoPrata, Underground: bikeSpeedClassicoPrata },
+  },
+  "Mountain Bike": {
+    "Ouro 18K": { "Clássico": bikeMountainClassicoOuro, Underground: bikeMountainClassicoOuro },
+    "Prata 925": { "Clássico": bikeMountainClassicoPrata, Underground: bikeMountainClassicoPrata },
+  },
+};
 const KM_OPCOES = ["5K", "10K", "21K", "42K"] as const;
 type CtaFieldKey = "nome" | "km" | "data" | "tempo";
 
