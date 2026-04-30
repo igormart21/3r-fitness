@@ -1123,7 +1123,7 @@ const StepperExperience = (p: StepperProps) => {
               </div>
             </StepPanel>
 
-            <StepPanel numeral="VII" label="Sua foto em pingente" hint="Envie uma pose · veja a peça moldada por IA">
+            <StepPanel numeral="VII" label="Sua foto em pingente" hint="Envie uma pose · veja a peça moldada por IA" expanded>
               <div className="grid gap-5 md:grid-cols-2 max-w-4xl mx-auto">
                 <div className="relative border border-border/60 bg-card/30 p-5 md:p-6 min-h-[280px] flex flex-col">
                   <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
@@ -1324,11 +1324,17 @@ const StepperExperience = (p: StepperProps) => {
 };
 
 const StepPanel = ({
-  numeral, label, hint, children,
-}: { numeral: string; label: string; hint?: string; children: React.ReactNode }) => (
-  <section className="w-full flex-shrink-0 px-5 md:px-12 py-6 md:py-8 min-h-[320px] md:min-h-[380px] flex flex-col">
+  numeral, label, hint, children, expanded = false,
+}: { numeral: string; label: string; hint?: string; children: React.ReactNode; expanded?: boolean }) => (
+  <section
+    className={`w-full flex-shrink-0 px-5 md:px-12 flex flex-col ${
+      expanded
+        ? "py-6 md:py-8 min-h-[320px] md:min-h-[380px]"
+        : "py-3 md:py-4 min-h-0"
+    }`}
+  >
     <SectionTitle numeral={numeral} label={label} hint={hint} />
-    <div className="flex-1 flex items-start md:items-center justify-center w-full animate-in fade-in duration-500 pt-2">
+    <div className="flex-1 flex items-center justify-center w-full animate-in fade-in duration-500 pt-2">
       <div className="w-full">{children}</div>
     </div>
   </section>
