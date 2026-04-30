@@ -10,6 +10,7 @@ import Catalogo from "./pages/Catalogo.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { useCartSync } from "@/hooks/useCartSync";
 import { InstagramFloatingButton } from "@/components/InstagramFloatingButton";
+import { HomeFloatingButton } from "@/components/HomeFloatingButton";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
       <BrowserRouter>
         <AppRoutes />
         <InstagramFloatingButton />
+        <HomeFloatingButton />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
