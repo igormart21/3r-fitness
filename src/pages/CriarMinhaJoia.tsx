@@ -1057,7 +1057,7 @@ const StepperExperience = (p: StepperProps) => {
                   </p>
                   <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
                     <Button
-                      onClick={() => setStep(6)}
+                      onClick={() => setStep(5)}
                       className="bg-accent hover:bg-accent/90 text-accent-foreground tracking-[0.2em] uppercase text-xs px-6"
                     >
                       <Camera className="h-4 w-4 mr-2" /> Anexar foto
