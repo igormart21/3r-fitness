@@ -478,534 +478,638 @@ const CriarMinhaJoia = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-14 md:py-20 max-w-5xl">
-        {/* Cabeçalho editorial */}
-        <div className="text-center mb-16 md:mb-20 relative">
-          <div className="flex items-center justify-center gap-3 mb-5">
-            <span className="h-px w-10 bg-accent/60" />
-            <Sparkles className="h-4 w-4 text-accent" />
-            <span className="h-px w-10 bg-accent/60" />
-          </div>
-          <p className="text-[10px] md:text-xs uppercase tracking-[0.4em] text-accent/80 mb-3">
-            Atelier · Edição Personalizada
-          </p>
-          <h1 className="font-display text-4xl md:text-6xl tracking-tight mb-4">
-            Crie sua joia
-          </h1>
-          <p className="text-muted-foreground italic max-w-md mx-auto text-sm md:text-base">
-            Cada peça é composta à mão. Selecione abaixo os elementos que vão eternizar a sua história.
-          </p>
+      <StepperExperience
+        categoria={categoria} setCategoria={setCategoria}
+        material={material} handleSelecionarMaterial={handleSelecionarMaterial}
+        genero={genero} setGenero={setGenero}
+        tamanho={tamanho} setTamanho={setTamanho}
+        estilo={estilo} setEstilo={setEstilo}
+        nome={nome} setNome={setNome}
+        km={km} setKm={setKm}
+        data={data} setData={setData}
+        tempo={tempo} setTempo={setTempo}
+        openField={openField} abrirCampoExclusivo={abrirCampoExclusivo}
+        personalizacaoEscolhida={personalizacaoEscolhida}
+        limparPersonalizacao={limparPersonalizacao} setOpenField={setOpenField}
+        fotoPingente={fotoPingente} fotoPingenteInputRef={fotoPingenteInputRef}
+        handleFotoPingenteUpload={handleFotoPingenteUpload}
+        gerandoPingente={gerandoPingente} pingenteGerado={pingenteGerado}
+        gerarPingenteDaFoto={gerarPingenteDaFoto}
+        pingenteNome={pingenteNome} setPingenteNome={setPingenteNome}
+        pingenteKm={pingenteKm} setPingenteKm={setPingenteKm}
+        pingenteData={pingenteData} setPingenteData={setPingenteData}
+        pingenteTempo={pingenteTempo} setPingenteTempo={setPingenteTempo}
+        openPingenteField={openPingenteField}
+        abrirCampoPingenteExclusivo={abrirCampoPingenteExclusivo}
+        inscricaoPingenteEscolhida={inscricaoPingenteEscolhida}
+        limparInscricaoPingente={limparInscricaoPingente}
+        setOpenPingenteField={setOpenPingenteField}
+        adicionando={adicionando}
+        handleAdicionarAoCarrinho={handleAdicionarAoCarrinho}
+      />
+    </div>
+  );
+};
 
-          {/* Assinatura da artesã */}
-          <div className="mt-8 flex flex-col items-center">
-            <div className="flex items-center gap-3 mb-2">
-              <span className="h-px w-8 bg-accent/40" />
-              <span className="text-[9px] uppercase tracking-[0.45em] text-muted-foreground/70">
-                Assinado por
-              </span>
-              <span className="h-px w-8 bg-accent/40" />
-            </div>
-            <div className="relative inline-block">
-              <span
-                className="block text-white text-2xl md:text-3xl leading-none italic font-light tracking-wide"
-                style={{ fontFamily: "'Pinyon Script', 'Cormorant Garamond', serif" }}
+/* ===================== STEPPER HORIZONTAL DE LUXO ===================== */
+
+type StepperProps = {
+  categoria: Categoria | null; setCategoria: (v: Categoria | null) => void;
+  material: Material | null; handleSelecionarMaterial: (m: Material) => void;
+  genero: Genero | null; setGenero: (v: Genero | null) => void;
+  tamanho: Tamanho | null; setTamanho: (v: Tamanho | null) => void;
+  estilo: Estilo | null; setEstilo: (v: Estilo | null) => void;
+  nome: string; setNome: (v: string) => void;
+  km: string; setKm: (v: string) => void;
+  data: string; setData: (v: string) => void;
+  tempo: string; setTempo: (v: string) => void;
+  openField: CtaFieldKey | null; abrirCampoExclusivo: (k: CtaFieldKey) => void;
+  personalizacaoEscolhida: CtaFieldKey | null;
+  limparPersonalizacao: () => void; setOpenField: (k: CtaFieldKey | null) => void;
+  fotoPingente: string | null;
+  fotoPingenteInputRef: React.RefObject<HTMLInputElement>;
+  handleFotoPingenteUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  gerandoPingente: boolean; pingenteGerado: string | null;
+  gerarPingenteDaFoto: (dataUrl: string) => void;
+  pingenteNome: string; setPingenteNome: (v: string) => void;
+  pingenteKm: string; setPingenteKm: (v: string) => void;
+  pingenteData: string; setPingenteData: (v: string) => void;
+  pingenteTempo: string; setPingenteTempo: (v: string) => void;
+  openPingenteField: CtaFieldKey | null;
+  abrirCampoPingenteExclusivo: (k: CtaFieldKey) => void;
+  inscricaoPingenteEscolhida: CtaFieldKey | null;
+  limparInscricaoPingente: () => void;
+  setOpenPingenteField: (k: CtaFieldKey | null) => void;
+  adicionando: boolean;
+  handleAdicionarAoCarrinho: () => void;
+};
+
+const STEP_LABELS = [
+  "Modalidade",
+  "Material",
+  "Gênero",
+  "Tamanho",
+  "Estilo",
+  "Inscrição",
+  "Foto em pingente",
+];
+
+const StepperExperience = (p: StepperProps) => {
+  const [step, setStep] = useState(0);
+  const total = STEP_LABELS.length;
+
+  const stepCompleted = useMemo(() => [
+    !!p.categoria,
+    !!p.material,
+    !!p.genero,
+    !!p.tamanho,
+    !!p.estilo,
+    !!p.personalizacaoEscolhida,
+    true,
+  ], [p.categoria, p.material, p.genero, p.tamanho, p.estilo, p.personalizacaoEscolhida]);
+
+  const allReady =
+    !!p.categoria && !!p.material && !!p.genero && !!p.tamanho && !!p.estilo && !!p.personalizacaoEscolhida;
+
+  const goPrev = () => setStep((s) => Math.max(0, s - 1));
+  const goNext = () => setStep((s) => Math.min(total - 1, s + 1));
+
+  return (
+    <main className="container mx-auto px-4 pt-8 pb-32 md:pt-10 md:pb-36 max-w-7xl">
+      <div className="text-center mb-6 md:mb-8">
+        <div className="flex items-center justify-center gap-3 mb-3">
+          <span className="h-px w-8 bg-accent/60" />
+          <Sparkles className="h-3.5 w-3.5 text-accent" />
+          <span className="h-px w-8 bg-accent/60" />
+        </div>
+        <p className="text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-2">
+          Atelier · Edição Personalizada
+        </p>
+        <h1 className="font-display text-3xl md:text-4xl tracking-tight mb-2">
+          Crie sua joia
+        </h1>
+        <p
+          className="text-white text-lg md:text-xl italic font-light tracking-wide"
+          style={{ fontFamily: "'Pinyon Script', 'Cormorant Garamond', serif" }}
+        >
+          Renata Ramos Ribeiro
+        </p>
+      </div>
+
+      <div className="mb-8 md:mb-10 max-w-5xl mx-auto">
+        <div className="flex items-center justify-between gap-1.5 md:gap-2">
+          {STEP_LABELS.map((label, i) => {
+            const isActive = i === step;
+            const isDone = stepCompleted[i] && i !== step;
+            return (
+              <button
+                key={label}
+                onClick={() => setStep(i)}
+                className="group flex-1 flex flex-col items-center gap-1.5"
               >
-                Renata Ramos Ribeiro
-              </span>
-              <span className="block mt-2 text-[9px] uppercase tracking-[0.45em] text-center text-white">
-                Artesã · Mestre Joalheira
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* I — Modalidade */}
-        <SectionTitle numeral="I" label="Modalidade" />
-        <div className="mb-16 flex flex-wrap gap-2.5 justify-center">
-          {CATEGORIAS.map((cat) => (
-            <LuxButton
-              key={cat}
-              selected={categoria === cat}
-              onClick={() => setCategoria(categoria === cat ? null : cat)}
-            >
-              {cat}
-            </LuxButton>
-          ))}
-        </div>
-
-        <Divider />
-
-        {/* II — Material */}
-        <SectionTitle numeral="II" label="Material" hint="Escolha a essência" />
-        <div className="mb-16">
-          <div
-            className={`grid gap-8 items-center ${
-              material ? "md:grid-cols-[1fr,auto,1fr]" : "grid-cols-1"
-            }`}
-          >
-            <div className="flex justify-center md:justify-end min-h-[1px]">
-              {material === "Prata 925" && MATERIAL_IMAGENS[material] && (
-                <ShowcaseFrame
-                  src={MATERIAL_IMAGENS[material]}
-                  alt={`Mostruário ${material}`}
-                  caption="Prata 925 · Polimento Espelhado"
-                />
-              )}
-            </div>
-
-            <div className="flex flex-wrap gap-3 justify-center md:items-center">
-              {MATERIAIS.map((m) => (
-                <LuxButton
-                  key={m}
-                  selected={material === m}
-                  onClick={() => handleSelecionarMaterial(m)}
-                  size="lg"
-                >
-                  {m}
-                </LuxButton>
-              ))}
-            </div>
-
-            <div className="flex justify-center md:justify-start min-h-[1px]">
-              {material === "Ouro 18K" && MATERIAL_IMAGENS[material] && (
-                <ShowcaseFrame
-                  src={MATERIAL_IMAGENS[material]}
-                  alt={`Mostruário ${material}`}
-                  caption="Ouro 18K · Acabamento Premium"
-                />
-              )}
-            </div>
-          </div>
-        </div>
-
-        <Divider />
-
-        {/* III — Gênero */}
-        <SectionTitle numeral="III" label="Gênero" />
-        <div className="mb-16 flex flex-wrap gap-2.5 justify-center">
-          {GENEROS.map((g) => (
-            <LuxButton
-              key={g}
-              selected={genero === g}
-              onClick={() => setGenero(genero === g ? null : g)}
-            >
-              {g}
-            </LuxButton>
-          ))}
-        </div>
-
-        <Divider />
-
-        {/* IV — Tamanho */}
-        <SectionTitle numeral="IV" label="Tamanho" hint="Medida do pingente" />
-        <div className="mb-16 flex flex-wrap gap-5 justify-center">
-          {TAMANHOS.map((t) => (
-            <div key={t} className="flex flex-col items-center gap-2">
-              <LuxButton
-                selected={tamanho === t}
-                onClick={() => setTamanho(tamanho === t ? null : t)}
-              >
-                {t}
-              </LuxButton>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/80">
-                {TAMANHO_LEGENDAS[t]}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        <Divider />
-
-        {/* V — Estilo */}
-        <SectionTitle numeral="V" label="Estilo" hint="A alma da peça" />
-        <div className="mb-16">
-          <div
-            className={`grid gap-8 items-center ${
-              estilo ? "md:grid-cols-[1fr,auto,1fr]" : "grid-cols-1"
-            }`}
-          >
-            <div className="flex justify-center md:justify-end min-h-[1px]">
-              {estilo === "Underground" && ESTILO_IMAGENS[estilo] && (
-                <ShowcaseFrame
-                  src={ESTILO_IMAGENS[estilo]}
-                  alt={`Estilo ${estilo}`}
-                  caption="Underground · Pingente com acessórios"
-                />
-              )}
-            </div>
-
-            <div className="flex flex-wrap gap-3 justify-center md:items-center">
-              {ESTILOS.map((e) => (
-                <LuxButton
-                  key={e}
-                  selected={estilo === e}
-                  onClick={() => setEstilo(estilo === e ? null : e)}
-                  size="lg"
-                >
-                  {e}
-                </LuxButton>
-              ))}
-            </div>
-
-            <div className="flex justify-center md:justify-start min-h-[1px]">
-              {estilo === "Clássico" && ESTILO_IMAGENS[estilo] && (
-                <ShowcaseFrame
-                  src={ESTILO_IMAGENS[estilo]}
-                  alt={`Estilo ${estilo}`}
-                  caption="Clássico · Pingente puro"
-                />
-              )}
-            </div>
-          </div>
-        </div>
-
-        <Divider />
-
-        {/* VI — Termine sua personalização */}
-        <SectionTitle
-          numeral="VI"
-          label="Termine sua personalização"
-          hint="Escolha apenas UMA inscrição para sua joia"
-        />
-
-        <div className="mb-12 max-w-2xl mx-auto space-y-3">
-          {/* Nome */}
-          <CtaField
-            label="Nome"
-            isOpen={openField === "nome"}
-            hasValue={!!nome.trim()}
-            disabled={!!personalizacaoEscolhida && personalizacaoEscolhida !== "nome"}
-            onToggle={() => abrirCampoExclusivo("nome")}
-          >
-            <Input
-              autoFocus
-              value={nome}
-              onChange={(e) => setNome(e.target.value.slice(0, 50))}
-              placeholder="Escreva o nome a ser gravado"
-              maxLength={50}
-              className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
-            />
-          </CtaField>
-
-          {/* KM */}
-          <CtaField
-            label="KM"
-            isOpen={openField === "km"}
-            hasValue={!!km}
-            valuePreview={km}
-            disabled={!!personalizacaoEscolhida && personalizacaoEscolhida !== "km"}
-            onToggle={() => abrirCampoExclusivo("km")}
-          >
-            <div className="flex flex-wrap gap-2.5 justify-center pt-1">
-              {KM_OPCOES.map((opt) => (
-                <LuxButton
-                  key={opt}
-                  selected={km === opt}
-                  onClick={() => setKm(km === opt ? "" : opt)}
-                >
-                  {opt}
-                </LuxButton>
-              ))}
-            </div>
-          </CtaField>
-
-          {/* Data */}
-          <CtaField
-            label="Data da corrida"
-            isOpen={openField === "data"}
-            hasValue={!!data.trim()}
-            valuePreview={data}
-            disabled={!!personalizacaoEscolhida && personalizacaoEscolhida !== "data"}
-            onToggle={() => abrirCampoExclusivo("data")}
-          >
-            <Input
-              autoFocus
-              value={data}
-              onChange={(e) => setData(e.target.value.slice(0, 30))}
-              placeholder="Ex: 12/10/2025"
-              maxLength={30}
-              className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
-            />
-          </CtaField>
-
-          {/* Tempo */}
-          <CtaField
-            label="Tempo percorrido"
-            isOpen={openField === "tempo"}
-            hasValue={!!tempo.trim()}
-            valuePreview={tempo}
-            disabled={!!personalizacaoEscolhida && personalizacaoEscolhida !== "tempo"}
-            onToggle={() => abrirCampoExclusivo("tempo")}
-          >
-            <Input
-              autoFocus
-              value={tempo}
-              onChange={(e) => setTempo(e.target.value.slice(0, 20))}
-              placeholder="Ex: 1h 45min"
-              maxLength={20}
-              className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
-            />
-          </CtaField>
-
-          {personalizacaoEscolhida && (
-            <button
-              onClick={() => {
-                limparPersonalizacao();
-                setOpenField(null);
-              }}
-              className="block mx-auto mt-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
-            >
-              Trocar inscrição
-            </button>
-          )}
-        </div>
-
-        <Divider />
-
-        {/* VII — Sua foto eternizada em pingente */}
-        <SectionTitle
-          numeral="VII"
-          label="Sua foto em pingente"
-          hint="Envie uma pose · veja a peça moldada por IA"
-        />
-
-        <div className="mb-12 max-w-5xl mx-auto">
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* Quadro 1 — Upload */}
-            <div className="relative border border-border/60 bg-card/30 p-6 md:p-8 min-h-[340px] flex flex-col">
-              <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
-              <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
-              <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
-              <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent" />
-
-              <p className="text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-2 text-center">
-                Etapa 01
-              </p>
-              <h3 className="font-display tracking-[0.18em] uppercase text-sm md:text-base text-center mb-4">
-                Envie sua foto
-              </h3>
-              <p className="text-xs text-muted-foreground/80 italic text-center mb-6 max-w-xs mx-auto leading-relaxed">
-                Escolha uma foto sua em pose marcante — corrida, salto, vitória.
-                Nossa IA transformará seu corpo em uma escultura miniatura.
-              </p>
-
-              <input
-                ref={fotoPingenteInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFotoPingenteUpload}
-                className="hidden"
-              />
-
-              <div className="flex-1 flex items-center justify-center">
-                {fotoPingente ? (
-                  <div className="flex flex-col items-center gap-4">
-                    <div className="w-40 h-40 overflow-hidden border border-accent/40">
-                      <img src={fotoPingente} alt="Sua foto" className="w-full h-full object-cover" />
-                    </div>
-                    <button
-                      onClick={() => fotoPingenteInputRef.current?.click()}
-                      className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
-                    >
-                      Trocar foto
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => fotoPingenteInputRef.current?.click()}
-                    className="group flex flex-col items-center gap-3 px-6 py-8 border border-dashed border-accent/50 hover:border-accent transition-colors w-full max-w-xs"
+                <div className="w-full h-px bg-border/40 relative overflow-hidden">
+                  <span
+                    className={`absolute inset-0 bg-accent transition-transform duration-500 origin-left ${
+                      isActive || isDone ? "scale-x-100" : "scale-x-0"
+                    }`}
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`h-1.5 w-1.5 rounded-full transition-all ${
+                      isActive ? "bg-accent scale-150" : isDone ? "bg-accent" : "bg-border/60"
+                    }`}
+                  />
+                  <span
+                    className={`hidden md:inline text-[9px] uppercase tracking-[0.3em] transition-colors ${
+                      isActive ? "text-accent" : isDone ? "text-foreground/70" : "text-muted-foreground/50"
+                    }`}
                   >
-                    <Camera className="h-8 w-8 text-accent group-hover:scale-110 transition-transform" />
-                    <span className="font-display tracking-[0.2em] uppercase text-xs text-accent">
-                      Subir foto
-                    </span>
-                    <span className="text-[10px] text-muted-foreground/70">JPG ou PNG · até 5MB</span>
-                  </button>
-                )}
+                    {String(i + 1).padStart(2, "0")} · {label}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+        <p className="md:hidden text-center mt-3 text-[10px] uppercase tracking-[0.35em] text-accent">
+          {String(step + 1).padStart(2, "0")} · {STEP_LABELS[step]}
+        </p>
+      </div>
+
+      <div className="relative">
+        <button
+          onClick={goPrev}
+          disabled={step === 0}
+          aria-label="Anterior"
+          className="hidden md:flex absolute -left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-10 h-12 w-12 rounded-full border border-accent/40 bg-card/60 backdrop-blur items-center justify-center text-accent hover:bg-accent hover:text-accent-foreground transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button
+          onClick={goNext}
+          disabled={step === total - 1}
+          aria-label="Próximo"
+          className="hidden md:flex absolute -right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-10 h-12 w-12 rounded-full border border-accent/40 bg-card/60 backdrop-blur items-center justify-center text-accent hover:bg-accent hover:text-accent-foreground transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
+
+        <div className="overflow-hidden border border-border/40 bg-card/20 relative">
+          <span className="absolute top-0 left-0 h-4 w-4 border-t border-l border-accent/70 z-10" />
+          <span className="absolute top-0 right-0 h-4 w-4 border-t border-r border-accent/70 z-10" />
+          <span className="absolute bottom-0 left-0 h-4 w-4 border-b border-l border-accent/70 z-10" />
+          <span className="absolute bottom-0 right-0 h-4 w-4 border-b border-r border-accent/70 z-10" />
+
+          <div
+            className="flex transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${step * 100}%)` }}
+          >
+            <StepPanel numeral="I" label="Modalidade" hint="A sua jornada">
+              <div className="flex flex-wrap gap-2.5 justify-center max-w-2xl mx-auto">
+                {CATEGORIAS.map((cat) => (
+                  <LuxButton
+                    key={cat}
+                    selected={p.categoria === cat}
+                    onClick={() => p.setCategoria(p.categoria === cat ? null : cat)}
+                  >
+                    {cat}
+                  </LuxButton>
+                ))}
               </div>
-            </div>
+            </StepPanel>
 
-            {/* Quadro 2 — Resultado */}
-            <div className="relative border border-border/60 bg-card/30 p-6 md:p-8 min-h-[340px] flex flex-col">
-              <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
-              <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
-              <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
-              <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent" />
-
-              <p className="text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-2 text-center">
-                Etapa 02
-              </p>
-              <h3 className="font-display tracking-[0.18em] uppercase text-sm md:text-base text-center mb-4">
-                Pingente moldado
-              </h3>
-
-              <div className="flex-1 flex items-center justify-center">
-                {gerandoPingente ? (
-                  <div className="flex flex-col items-center gap-4 text-center">
-                    <Loader2 className="h-10 w-10 text-accent animate-spin" />
-                    <p className="text-xs text-muted-foreground italic max-w-[200px] leading-relaxed">
-                      Esculpindo sua peça em {material === "Ouro 18K" ? "ouro 18K" : "prata 925"}…
-                    </p>
-                  </div>
-                ) : pingenteGerado ? (
-                  <div className="flex flex-col items-center gap-4">
-                    <div className="w-52 h-52 overflow-hidden bg-black border border-accent/50">
-                      <img
-                        src={pingenteGerado}
-                        alt="Pingente personalizado gerado"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-accent/80">
-                      Prévia artística · IA
-                    </p>
-                    {fotoPingente && (
-                      <button
-                        onClick={() => fotoPingente && gerarPingenteDaFoto(fotoPingente)}
-                        className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
-                      >
-                        <Wand2 className="h-3 w-3" />
-                        Gerar novamente
-                      </button>
-                    )}
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center gap-3 text-center opacity-60">
-                    <Sparkles className="h-8 w-8 text-accent/60" />
-                    <p className="text-xs text-muted-foreground italic max-w-[220px] leading-relaxed">
-                      Sua prévia aparecerá aqui assim que enviar a foto.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Inscrição independente para o pingente */}
-          <div className="mt-10">
-            <p className="text-center text-[10px] md:text-xs uppercase tracking-[0.4em] text-accent/80 mb-5">
-              Inscrição gravada nesta peça
-            </p>
-
-            <div className="max-w-2xl mx-auto space-y-3">
-              <CtaField
-                label="Nome"
-                isOpen={openPingenteField === "nome"}
-                hasValue={!!pingenteNome.trim()}
-                disabled={!!inscricaoPingenteEscolhida && inscricaoPingenteEscolhida !== "nome"}
-                onToggle={() => abrirCampoPingenteExclusivo("nome")}
+            <StepPanel numeral="II" label="Material" hint="Escolha a essência">
+              <div
+                className={`grid gap-8 items-center ${
+                  p.material ? "md:grid-cols-[1fr,auto,1fr]" : "grid-cols-1"
+                }`}
               >
-                <Input
-                  autoFocus
-                  value={pingenteNome}
-                  onChange={(e) => setPingenteNome(e.target.value.slice(0, 50))}
-                  placeholder="Escreva o nome a ser gravado"
-                  maxLength={50}
-                  className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
-                />
-              </CtaField>
-
-              <CtaField
-                label="KM"
-                isOpen={openPingenteField === "km"}
-                hasValue={!!pingenteKm}
-                valuePreview={pingenteKm}
-                disabled={!!inscricaoPingenteEscolhida && inscricaoPingenteEscolhida !== "km"}
-                onToggle={() => abrirCampoPingenteExclusivo("km")}
-              >
-                <div className="flex flex-wrap gap-2.5 justify-center pt-1">
-                  {KM_OPCOES.map((opt) => (
+                <div className="flex justify-center md:justify-end min-h-[1px]">
+                  {p.material === "Prata 925" && MATERIAL_IMAGENS[p.material] && (
+                    <ShowcaseFrame
+                      src={MATERIAL_IMAGENS[p.material]}
+                      alt={`Mostruário ${p.material}`}
+                      caption="Prata 925 · Polimento Espelhado"
+                    />
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-3 justify-center md:items-center">
+                  {MATERIAIS.map((m) => (
                     <LuxButton
-                      key={opt}
-                      selected={pingenteKm === opt}
-                      onClick={() => setPingenteKm(pingenteKm === opt ? "" : opt)}
+                      key={m}
+                      selected={p.material === m}
+                      onClick={() => p.handleSelecionarMaterial(m)}
+                      size="lg"
                     >
-                      {opt}
+                      {m}
                     </LuxButton>
                   ))}
                 </div>
-              </CtaField>
+                <div className="flex justify-center md:justify-start min-h-[1px]">
+                  {p.material === "Ouro 18K" && MATERIAL_IMAGENS[p.material] && (
+                    <ShowcaseFrame
+                      src={MATERIAL_IMAGENS[p.material]}
+                      alt={`Mostruário ${p.material}`}
+                      caption="Ouro 18K · Acabamento Premium"
+                    />
+                  )}
+                </div>
+              </div>
+            </StepPanel>
 
-              <CtaField
-                label="Data da corrida"
-                isOpen={openPingenteField === "data"}
-                hasValue={!!pingenteData.trim()}
-                valuePreview={pingenteData}
-                disabled={!!inscricaoPingenteEscolhida && inscricaoPingenteEscolhida !== "data"}
-                onToggle={() => abrirCampoPingenteExclusivo("data")}
+            <StepPanel numeral="III" label="Gênero">
+              <div className="flex flex-wrap gap-3 justify-center">
+                {GENEROS.map((g) => (
+                  <LuxButton
+                    key={g}
+                    selected={p.genero === g}
+                    onClick={() => p.setGenero(p.genero === g ? null : g)}
+                    size="lg"
+                  >
+                    {g}
+                  </LuxButton>
+                ))}
+              </div>
+            </StepPanel>
+
+            <StepPanel numeral="IV" label="Tamanho" hint="Medida do pingente">
+              <div className="flex flex-wrap gap-6 justify-center">
+                {TAMANHOS.map((t) => (
+                  <div key={t} className="flex flex-col items-center gap-2">
+                    <LuxButton
+                      selected={p.tamanho === t}
+                      onClick={() => p.setTamanho(p.tamanho === t ? null : t)}
+                      size="lg"
+                    >
+                      {t}
+                    </LuxButton>
+                    <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/80">
+                      {TAMANHO_LEGENDAS[t]}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </StepPanel>
+
+            <StepPanel numeral="V" label="Estilo" hint="A alma da peça">
+              <div
+                className={`grid gap-8 items-center ${
+                  p.estilo ? "md:grid-cols-[1fr,auto,1fr]" : "grid-cols-1"
+                }`}
               >
-                <Input
-                  autoFocus
-                  value={pingenteData}
-                  onChange={(e) => setPingenteData(e.target.value.slice(0, 30))}
-                  placeholder="Ex: 12/10/2025"
-                  maxLength={30}
-                  className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
-                />
-              </CtaField>
+                <div className="flex justify-center md:justify-end min-h-[1px]">
+                  {p.estilo === "Underground" && ESTILO_IMAGENS[p.estilo] && (
+                    <ShowcaseFrame
+                      src={ESTILO_IMAGENS[p.estilo]}
+                      alt={`Estilo ${p.estilo}`}
+                      caption="Underground · Pingente com acessórios"
+                    />
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-3 justify-center md:items-center">
+                  {ESTILOS.map((e) => (
+                    <LuxButton
+                      key={e}
+                      selected={p.estilo === e}
+                      onClick={() => p.setEstilo(p.estilo === e ? null : e)}
+                      size="lg"
+                    >
+                      {e}
+                    </LuxButton>
+                  ))}
+                </div>
+                <div className="flex justify-center md:justify-start min-h-[1px]">
+                  {p.estilo === "Clássico" && ESTILO_IMAGENS[p.estilo] && (
+                    <ShowcaseFrame
+                      src={ESTILO_IMAGENS[p.estilo]}
+                      alt={`Estilo ${p.estilo}`}
+                      caption="Clássico · Pingente puro"
+                    />
+                  )}
+                </div>
+              </div>
+            </StepPanel>
 
-              <CtaField
-                label="Tempo percorrido"
-                isOpen={openPingenteField === "tempo"}
-                hasValue={!!pingenteTempo.trim()}
-                valuePreview={pingenteTempo}
-                disabled={!!inscricaoPingenteEscolhida && inscricaoPingenteEscolhida !== "tempo"}
-                onToggle={() => abrirCampoPingenteExclusivo("tempo")}
-              >
-                <Input
-                  autoFocus
-                  value={pingenteTempo}
-                  onChange={(e) => setPingenteTempo(e.target.value.slice(0, 20))}
-                  placeholder="Ex: 1h 45min"
-                  maxLength={20}
-                  className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
-                />
-              </CtaField>
-
-              {inscricaoPingenteEscolhida && (
-                <button
-                  onClick={() => {
-                    limparInscricaoPingente();
-                    setOpenPingenteField(null);
-                  }}
-                  className="block mx-auto mt-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
+            <StepPanel numeral="VI" label="Inscrição" hint="Escolha apenas UMA inscrição para sua joia">
+              <div className="max-w-2xl mx-auto space-y-3">
+                <CtaField
+                  label="Nome"
+                  isOpen={p.openField === "nome"}
+                  hasValue={!!p.nome.trim()}
+                  disabled={!!p.personalizacaoEscolhida && p.personalizacaoEscolhida !== "nome"}
+                  onToggle={() => p.abrirCampoExclusivo("nome")}
                 >
-                  Trocar inscrição
-                </button>
-              )}
-            </div>
+                  <Input
+                    autoFocus value={p.nome}
+                    onChange={(e) => p.setNome(e.target.value.slice(0, 50))}
+                    placeholder="Escreva o nome a ser gravado"
+                    maxLength={50}
+                    className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
+                  />
+                </CtaField>
+                <CtaField
+                  label="KM"
+                  isOpen={p.openField === "km"}
+                  hasValue={!!p.km}
+                  valuePreview={p.km}
+                  disabled={!!p.personalizacaoEscolhida && p.personalizacaoEscolhida !== "km"}
+                  onToggle={() => p.abrirCampoExclusivo("km")}
+                >
+                  <div className="flex flex-wrap gap-2.5 justify-center pt-1">
+                    {KM_OPCOES.map((opt) => (
+                      <LuxButton
+                        key={opt}
+                        selected={p.km === opt}
+                        onClick={() => p.setKm(p.km === opt ? "" : opt)}
+                      >
+                        {opt}
+                      </LuxButton>
+                    ))}
+                  </div>
+                </CtaField>
+                <CtaField
+                  label="Data da corrida"
+                  isOpen={p.openField === "data"}
+                  hasValue={!!p.data.trim()}
+                  valuePreview={p.data}
+                  disabled={!!p.personalizacaoEscolhida && p.personalizacaoEscolhida !== "data"}
+                  onToggle={() => p.abrirCampoExclusivo("data")}
+                >
+                  <Input
+                    autoFocus value={p.data}
+                    onChange={(e) => p.setData(e.target.value.slice(0, 30))}
+                    placeholder="Ex: 12/10/2025"
+                    maxLength={30}
+                    className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
+                  />
+                </CtaField>
+                <CtaField
+                  label="Tempo percorrido"
+                  isOpen={p.openField === "tempo"}
+                  hasValue={!!p.tempo.trim()}
+                  valuePreview={p.tempo}
+                  disabled={!!p.personalizacaoEscolhida && p.personalizacaoEscolhida !== "tempo"}
+                  onToggle={() => p.abrirCampoExclusivo("tempo")}
+                >
+                  <Input
+                    autoFocus value={p.tempo}
+                    onChange={(e) => p.setTempo(e.target.value.slice(0, 20))}
+                    placeholder="Ex: 1h 45min"
+                    maxLength={20}
+                    className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
+                  />
+                </CtaField>
+                {p.personalizacaoEscolhida && (
+                  <button
+                    onClick={() => { p.limparPersonalizacao(); p.setOpenField(null); }}
+                    className="block mx-auto mt-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
+                  >
+                    Trocar inscrição
+                  </button>
+                )}
+              </div>
+            </StepPanel>
+
+            <StepPanel numeral="VII" label="Sua foto em pingente" hint="Envie uma pose · veja a peça moldada por IA">
+              <div className="grid gap-5 md:grid-cols-2 max-w-4xl mx-auto">
+                <div className="relative border border-border/60 bg-card/30 p-5 md:p-6 min-h-[280px] flex flex-col">
+                  <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
+                  <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
+                  <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
+                  <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent" />
+                  <p className="text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-2 text-center">Etapa 01</p>
+                  <h3 className="font-display tracking-[0.18em] uppercase text-sm text-center mb-3">Envie sua foto</h3>
+                  <input
+                    ref={p.fotoPingenteInputRef} type="file" accept="image/*"
+                    onChange={p.handleFotoPingenteUpload} className="hidden"
+                  />
+                  <div className="flex-1 flex items-center justify-center">
+                    {p.fotoPingente ? (
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="w-32 h-32 overflow-hidden border border-accent/40">
+                          <img src={p.fotoPingente} alt="Sua foto" className="w-full h-full object-cover" />
+                        </div>
+                        <button
+                          onClick={() => p.fotoPingenteInputRef.current?.click()}
+                          className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
+                        >
+                          Trocar foto
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => p.fotoPingenteInputRef.current?.click()}
+                        className="group flex flex-col items-center gap-2 px-6 py-6 border border-dashed border-accent/50 hover:border-accent transition-colors w-full max-w-xs"
+                      >
+                        <Camera className="h-7 w-7 text-accent group-hover:scale-110 transition-transform" />
+                        <span className="font-display tracking-[0.2em] uppercase text-xs text-accent">Subir foto</span>
+                        <span className="text-[10px] text-muted-foreground/70">JPG ou PNG · até 5MB</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                <div className="relative border border-border/60 bg-card/30 p-5 md:p-6 min-h-[280px] flex flex-col">
+                  <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
+                  <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
+                  <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
+                  <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent" />
+                  <p className="text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-2 text-center">Etapa 02</p>
+                  <h3 className="font-display tracking-[0.18em] uppercase text-sm text-center mb-3">Pingente moldado</h3>
+                  <div className="flex-1 flex items-center justify-center">
+                    {p.gerandoPingente ? (
+                      <div className="flex flex-col items-center gap-3 text-center">
+                        <Loader2 className="h-8 w-8 text-accent animate-spin" />
+                        <p className="text-xs text-muted-foreground italic max-w-[200px]">
+                          Esculpindo sua peça em {p.material === "Ouro 18K" ? "ouro 18K" : "prata 925"}…
+                        </p>
+                      </div>
+                    ) : p.pingenteGerado ? (
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="w-40 h-40 overflow-hidden bg-black border border-accent/50">
+                          <img src={p.pingenteGerado} alt="Pingente gerado" className="w-full h-full object-contain" />
+                        </div>
+                        {p.fotoPingente && (
+                          <button
+                            onClick={() => p.fotoPingente && p.gerarPingenteDaFoto(p.fotoPingente)}
+                            className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
+                          >
+                            <Wand2 className="h-3 w-3" /> Gerar novamente
+                          </button>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center gap-2 text-center opacity-60">
+                        <Sparkles className="h-7 w-7 text-accent/60" />
+                        <p className="text-xs text-muted-foreground italic max-w-[200px]">
+                          Sua prévia aparecerá aqui assim que enviar a foto.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 max-w-2xl mx-auto">
+                <p className="text-center text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-3">
+                  Inscrição gravada nesta peça
+                </p>
+                <div className="space-y-2.5">
+                  <CtaField
+                    label="Nome"
+                    isOpen={p.openPingenteField === "nome"}
+                    hasValue={!!p.pingenteNome.trim()}
+                    disabled={!!p.inscricaoPingenteEscolhida && p.inscricaoPingenteEscolhida !== "nome"}
+                    onToggle={() => p.abrirCampoPingenteExclusivo("nome")}
+                  >
+                    <Input
+                      autoFocus value={p.pingenteNome}
+                      onChange={(e) => p.setPingenteNome(e.target.value.slice(0, 50))}
+                      placeholder="Escreva o nome a ser gravado"
+                      maxLength={50}
+                      className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
+                    />
+                  </CtaField>
+                  <CtaField
+                    label="KM"
+                    isOpen={p.openPingenteField === "km"}
+                    hasValue={!!p.pingenteKm}
+                    valuePreview={p.pingenteKm}
+                    disabled={!!p.inscricaoPingenteEscolhida && p.inscricaoPingenteEscolhida !== "km"}
+                    onToggle={() => p.abrirCampoPingenteExclusivo("km")}
+                  >
+                    <div className="flex flex-wrap gap-2.5 justify-center pt-1">
+                      {KM_OPCOES.map((opt) => (
+                        <LuxButton
+                          key={opt}
+                          selected={p.pingenteKm === opt}
+                          onClick={() => p.setPingenteKm(p.pingenteKm === opt ? "" : opt)}
+                        >
+                          {opt}
+                        </LuxButton>
+                      ))}
+                    </div>
+                  </CtaField>
+                  <CtaField
+                    label="Data da corrida"
+                    isOpen={p.openPingenteField === "data"}
+                    hasValue={!!p.pingenteData.trim()}
+                    valuePreview={p.pingenteData}
+                    disabled={!!p.inscricaoPingenteEscolhida && p.inscricaoPingenteEscolhida !== "data"}
+                    onToggle={() => p.abrirCampoPingenteExclusivo("data")}
+                  >
+                    <Input
+                      autoFocus value={p.pingenteData}
+                      onChange={(e) => p.setPingenteData(e.target.value.slice(0, 30))}
+                      placeholder="Ex: 12/10/2025"
+                      maxLength={30}
+                      className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
+                    />
+                  </CtaField>
+                  <CtaField
+                    label="Tempo percorrido"
+                    isOpen={p.openPingenteField === "tempo"}
+                    hasValue={!!p.pingenteTempo.trim()}
+                    valuePreview={p.pingenteTempo}
+                    disabled={!!p.inscricaoPingenteEscolhida && p.inscricaoPingenteEscolhida !== "tempo"}
+                    onToggle={() => p.abrirCampoPingenteExclusivo("tempo")}
+                  >
+                    <Input
+                      autoFocus value={p.pingenteTempo}
+                      onChange={(e) => p.setPingenteTempo(e.target.value.slice(0, 20))}
+                      placeholder="Ex: 1h 45min"
+                      maxLength={20}
+                      className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
+                    />
+                  </CtaField>
+                  {p.inscricaoPingenteEscolhida && (
+                    <button
+                      onClick={() => { p.limparInscricaoPingente(); p.setOpenPingenteField(null); }}
+                      className="block mx-auto mt-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
+                    >
+                      Trocar inscrição
+                    </button>
+                  )}
+                </div>
+              </div>
+            </StepPanel>
           </div>
         </div>
+      </div>
 
-        <div className="flex justify-end">
-          <Button
-            onClick={handleAdicionarAoCarrinho}
-            disabled={
-              adicionando ||
-              !categoria ||
-              !material ||
-              !estilo ||
-              !tamanho ||
-              !genero ||
-              !personalizacaoEscolhida
-            }
-            size="lg"
-            className="bg-accent hover:bg-accent/90 text-accent-foreground"
+      <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-accent/30 bg-background/95 backdrop-blur">
+        <div className="container mx-auto px-4 py-3 max-w-7xl flex items-center gap-3">
+          <button
+            onClick={goPrev}
+            disabled={step === 0}
+            aria-label="Anterior"
+            className="md:hidden h-10 w-10 rounded-full border border-accent/40 flex items-center justify-center text-accent disabled:opacity-30"
           >
-            {adicionando ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Adicionando...
-              </>
-            ) : (
-              <>
-                <Check className="h-4 w-4 mr-2" />
-                Adicionar ao carrinho
-              </>
-            )}
-          </Button>
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+
+          <div className="hidden md:flex flex-1 items-center gap-4 text-[10px] uppercase tracking-[0.25em] text-muted-foreground/80 overflow-hidden">
+            <Chip label="Mod." value={p.categoria} />
+            <Chip label="Mat." value={p.material} />
+            <Chip label="Gên." value={p.genero} />
+            <Chip label="Tam." value={p.tamanho} />
+            <Chip label="Estilo" value={p.estilo} />
+            <Chip label="Inscr." value={p.personalizacaoEscolhida ? "✓" : null} />
+          </div>
+
+          <div className="flex-1 md:hidden text-center text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+            {step + 1} / {total}
+          </div>
+
+          {step < total - 1 ? (
+            <Button
+              onClick={goNext}
+              size="lg"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground tracking-[0.2em] uppercase text-xs"
+            >
+              Próximo
+              <ChevronRight className="h-4 w-4 ml-2" />
+            </Button>
+          ) : (
+            <Button
+              onClick={p.handleAdicionarAoCarrinho}
+              disabled={p.adicionando || !allReady}
+              size="lg"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground tracking-[0.2em] uppercase text-xs"
+            >
+              {p.adicionando ? (
+                <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Adicionando...</>
+              ) : (
+                <><Check className="h-4 w-4 mr-2" /> Adicionar ao carrinho</>
+              )}
+            </Button>
+          )}
         </div>
-      </main>
+      </div>
+    </main>
+  );
+};
+
+const StepPanel = ({
+  numeral, label, hint, children,
+}: { numeral: string; label: string; hint?: string; children: React.ReactNode }) => (
+  <section className="w-full flex-shrink-0 px-5 md:px-12 py-10 md:py-14 min-h-[480px] md:min-h-[520px] flex flex-col">
+    <SectionTitle numeral={numeral} label={label} hint={hint} />
+    <div className="flex-1 flex items-center justify-center w-full animate-in fade-in duration-500">
+      <div className="w-full">{children}</div>
+    </div>
+  </section>
+);
+
+const Chip = ({ label, value }: { label: string; value: string | null }) => (
+  <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+    <span className="text-muted-foreground/50">{label}</span>
+    <span className={value ? "text-accent" : "text-muted-foreground/30"}>
+      {value || "—"}
+    </span>
+  </span>
+);
 
     </div>
   );
