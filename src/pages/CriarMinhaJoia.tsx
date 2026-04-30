@@ -675,18 +675,19 @@ const StepperExperience = (p: StepperProps) => {
           <Sparkles className="h-3.5 w-3.5 text-accent" />
           <span className="h-px w-8 bg-accent/60" />
         </div>
-        <p className="text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-2">
-          Atelier · Edição Personalizada
+        <p className="text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-2 flex items-center justify-center gap-2 flex-wrap">
+          <span>Atelier · Edição Personalizada</span>
+          <span className="text-accent/40">·</span>
+          <span
+            className="text-white text-base md:text-lg italic normal-case tracking-wide"
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
+          >
+            Renata Ramos Ribeiro
+          </span>
         </p>
         <h1 className="font-display text-3xl md:text-4xl tracking-tight mb-2">
           Crie sua joia
         </h1>
-        <p
-          className="text-white text-2xl md:text-3xl italic tracking-wide"
-          style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
-        >
-          Renata Ramos Ribeiro
-        </p>
       </div>
 
       <div className="mb-8 md:mb-10 max-w-5xl mx-auto">
