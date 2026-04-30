@@ -715,6 +715,7 @@ type StepperProps = {
   categoria: Categoria | null; setCategoria: (v: Categoria | null) => void;
   material: Material | null; handleSelecionarMaterial: (m: Material) => void;
   genero: Genero | null; setGenero: (v: Genero | null) => void;
+  perfilBike: PerfilBike | null; setPerfilBike: (v: PerfilBike | null) => void;
   tamanho: Tamanho | null; setTamanho: (v: Tamanho | null) => void;
   estilo: Estilo | null; setEstilo: (v: Estilo | null) => void;
   nome: string; setNome: (v: string) => void;
