@@ -770,11 +770,11 @@ const StepperExperience = (p: StepperProps) => {
         const escolhas: { stepIdx: number; label: string; value: string | null }[] = [
           { stepIdx: 0, label: "Modalidade", value: p.categoria },
           { stepIdx: 1, label: "Material", value: p.material },
-          { stepIdx: 2, label: "Gênero", value: p.genero },
-          { stepIdx: 3, label: "Tamanho", value: p.tamanho },
-          { stepIdx: 4, label: "Estilo", value: p.estilo },
+          { stepIdx: 2, label: "Tamanho", value: p.tamanho },
+          { stepIdx: 3, label: "Gênero", value: p.genero },
+          { stepIdx: 3, label: "Estilo", value: p.estilo },
           {
-            stepIdx: 5,
+            stepIdx: 4,
             label: "Inscrição",
             value: p.nome.trim() || p.km || p.data.trim() || p.tempo.trim() || null,
           },
