@@ -1330,11 +1330,11 @@ const StepPanel = ({
     className={`w-full flex-shrink-0 px-5 md:px-12 flex flex-col ${
       expanded
         ? "py-6 md:py-8 min-h-[320px] md:min-h-[380px]"
-        : "py-3 md:py-4 min-h-0"
+        : "py-2 md:py-3 min-h-0"
     }`}
   >
     <SectionTitle numeral={numeral} label={label} hint={hint} />
-    <div className="flex-1 flex items-center justify-center w-full animate-in fade-in duration-500 pt-2">
+    <div className={`flex-1 flex ${expanded ? "items-center" : "items-start"} justify-center w-full animate-in fade-in duration-500 pt-1`}>
       <div className="w-full">{children}</div>
     </div>
   </section>
