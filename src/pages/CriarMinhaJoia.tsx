@@ -153,7 +153,7 @@ const ShowcaseFrame = ({
           width={768}
           height={768}
           loading="lazy"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-500 ease-out hover:scale-110"
         />
       </div>
     </div>
@@ -773,7 +773,7 @@ const StepperExperience = (p: StepperProps) => {
                           <img
                             src={MATERIAL_IMAGENS[m]}
                             alt={`Mostruário ${m}`}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                             loading="lazy"
                           />
                         </div>
@@ -878,7 +878,7 @@ const StepperExperience = (p: StepperProps) => {
                           <img
                             src={ESTILO_IMAGENS[e]}
                             alt={`Estilo ${e}`}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                             loading="lazy"
                           />
                         </div>
@@ -1000,7 +1000,7 @@ const StepperExperience = (p: StepperProps) => {
                     {p.fotoPingente ? (
                       <div className="flex flex-col items-center gap-3">
                         <div className="w-32 h-32 overflow-hidden border border-accent/40">
-                          <img src={p.fotoPingente} alt="Sua foto" className="w-full h-full object-cover" />
+                          <img src={p.fotoPingente} alt="Sua foto" className="w-full h-full object-cover transition-transform duration-500 ease-out hover:scale-110" />
                         </div>
                         <button
                           onClick={() => p.fotoPingenteInputRef.current?.click()}
