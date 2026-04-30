@@ -637,6 +637,47 @@ const StepperExperience = (p: StepperProps) => {
         </p>
       </div>
 
+      {/* Carrossel de escolhas — clique para editar */}
+      {(() => {
+        const escolhas: { stepIdx: number; label: string; value: string | null }[] = [
+          { stepIdx: 0, label: "Modalidade", value: p.categoria },
+          { stepIdx: 1, label: "Material", value: p.material },
+          { stepIdx: 2, label: "Gênero", value: p.genero },
+          { stepIdx: 3, label: "Tamanho", value: p.tamanho },
+          { stepIdx: 4, label: "Estilo", value: p.estilo },
+          {
+            stepIdx: 5,
+            label: "Inscrição",
+            value: p.nome.trim() || p.km || p.data.trim() || p.tempo.trim() || null,
+          },
+        ];
+        const selecionadas = escolhas.filter((e) => !!e.value);
+        if (selecionadas.length === 0) return null;
+        return (
+          <div className="mb-5 max-w-5xl mx-auto">
+            <p className="text-center text-[9px] uppercase tracking-[0.4em] text-muted-foreground/70 mb-2.5">
+              Suas escolhas · clique para alterar
+            </p>
+            <div className="flex gap-2 overflow-x-auto pb-2 px-1 [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:bg-accent/30">
+              {selecionadas.map((e) => (
+                <button
+                  key={e.label}
+                  onClick={() => setStep(e.stepIdx)}
+                  className="group flex items-center gap-2 flex-shrink-0 px-3 py-1.5 border border-accent/40 hover:border-accent hover:bg-accent/[0.06] transition-all"
+                >
+                  <span className="text-[8px] uppercase tracking-[0.3em] text-muted-foreground/70 group-hover:text-accent/80">
+                    {String(e.stepIdx + 1).padStart(2, "0")} · {e.label}
+                  </span>
+                  <span className="text-[10px] tracking-[0.1em] text-accent font-display uppercase whitespace-nowrap">
+                    {e.value}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
+
       <div className="relative">
         <button
           onClick={goPrev}
