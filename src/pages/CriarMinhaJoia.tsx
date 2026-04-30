@@ -923,7 +923,7 @@ const StepperExperience = (p: StepperProps) => {
                 {ESTILOS.map((e) => {
                   const selected = p.estilo === e;
                   const legenda =
-                    e === "Underground" ? "Pingente com acessórios" : "Pingente puro";
+                    e === "Underground" ? "Boné, óculos e relógio" : "Pingente puro";
                   return (
                     <button
                       key={e}
