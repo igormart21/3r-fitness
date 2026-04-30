@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Upload, Check, Loader2, Sparkles } from "lucide-react";
+import { ArrowLeft, Upload, Check, Loader2, Sparkles, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -53,6 +53,8 @@ const TAMANHO_LEGENDAS: Record<Tamanho, string> = {
   Pequeno: "2 cm",
 };
 const GENEROS: Genero[] = ["Masculino", "Feminino"];
+const KM_OPCOES = ["5K", "10K", "21K", "42K"] as const;
+type CtaFieldKey = "nome" | "km" | "data" | "tempo";
 
 /* ----- Componentes auxiliares (visual de luxo) ----- */
 
