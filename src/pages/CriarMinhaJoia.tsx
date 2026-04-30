@@ -172,12 +172,14 @@ const MagnifierImage = ({
   className = "",
   zoom = 2.4,
   lensSize = 140,
+  fit = "cover",
 }: {
   src: string;
   alt: string;
   className?: string;
   zoom?: number;
   lensSize?: number;
+  fit?: "cover" | "contain";
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [show, setShow] = useState(false);
@@ -210,7 +212,7 @@ const MagnifierImage = ({
         src={src}
         alt={alt}
         loading="lazy"
-        className="w-full h-full object-cover select-none pointer-events-none"
+        className={`w-full h-full ${fit === "contain" ? "object-contain" : "object-cover"} select-none pointer-events-none`}
       />
       {show && box.w > 0 && (
         <div
