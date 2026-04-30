@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Upload, Check, Loader2 } from "lucide-react";
+import { ArrowLeft, Upload, Check, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -53,6 +53,115 @@ const TAMANHO_LEGENDAS: Record<Tamanho, string> = {
   Pequeno: "2 cm",
 };
 const GENEROS: Genero[] = ["Masculino", "Feminino"];
+
+/* ----- Componentes auxiliares (visual de luxo) ----- */
+
+const SectionTitle = ({
+  numeral,
+  label,
+  hint,
+}: {
+  numeral: string;
+  label: string;
+  hint?: string;
+}) => (
+  <div className="text-center mb-6 md:mb-8">
+    <div className="flex items-center justify-center gap-4 mb-3">
+      <span className="h-px w-12 md:w-20 bg-accent/40" />
+      <span className="font-display text-[10px] md:text-xs tracking-[0.5em] text-accent">
+        {numeral}
+      </span>
+      <span className="h-px w-12 md:w-20 bg-accent/40" />
+    </div>
+    <h2 className="font-display text-xl md:text-2xl tracking-[0.2em] uppercase">
+      {label}
+    </h2>
+    {hint && (
+      <p className="mt-1.5 text-[10px] md:text-xs uppercase tracking-[0.3em] text-muted-foreground/80 italic">
+        {hint}
+      </p>
+    )}
+  </div>
+);
+
+const Divider = () => (
+  <div className="flex items-center justify-center gap-3 my-12 md:my-14">
+    <span className="h-px w-16 bg-border" />
+    <span className="h-1 w-1 rounded-full bg-accent/60" />
+    <span className="h-px w-16 bg-border" />
+  </div>
+);
+
+const LuxButton = ({
+  selected,
+  onClick,
+  children,
+  size = "default",
+}: {
+  selected: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+  size?: "default" | "lg";
+}) => (
+  <button
+    onClick={onClick}
+    className={`relative font-display tracking-[0.15em] uppercase text-xs md:text-sm transition-all duration-300 border rounded-none ${
+      size === "lg" ? "px-7 py-3.5" : "px-5 py-2.5"
+    } ${
+      selected
+        ? "border-accent text-accent bg-accent/[0.04] shadow-[inset_0_0_0_1px_hsl(var(--accent)/0.4)]"
+        : "border-border/60 text-foreground/85 hover:border-accent/70 hover:text-accent"
+    }`}
+  >
+    {selected && (
+      <>
+        <span className="absolute -top-[5px] -left-[5px] h-2 w-2 border-t border-l border-accent" />
+        <span className="absolute -top-[5px] -right-[5px] h-2 w-2 border-t border-r border-accent" />
+        <span className="absolute -bottom-[5px] -left-[5px] h-2 w-2 border-b border-l border-accent" />
+        <span className="absolute -bottom-[5px] -right-[5px] h-2 w-2 border-b border-r border-accent" />
+        <span className="absolute -top-2.5 -right-2.5 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
+          <Check className="h-3 w-3" strokeWidth={3} />
+        </span>
+      </>
+    )}
+    {children}
+  </button>
+);
+
+const ShowcaseFrame = ({
+  src,
+  alt,
+  caption,
+}: {
+  src: string;
+  alt: string;
+  caption?: string;
+}) => (
+  <div className="animate-in fade-in zoom-in-95 duration-500">
+    <div className="relative p-3 bg-card">
+      <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
+      <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
+      <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
+      <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent" />
+      <div className="w-64 h-64 md:w-72 md:h-72 overflow-hidden bg-white">
+        <img
+          src={src}
+          alt={alt}
+          width={768}
+          height={768}
+          loading="lazy"
+          className="w-full h-full object-cover"
+        />
+      </div>
+    </div>
+    {caption && (
+      <p className="mt-3 text-center text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+        {caption}
+      </p>
+    )}
+  </div>
+);
+
 
 const CriarMinhaJoia = () => {
   const [categoria, setCategoria] = useState<Categoria | null>(null);
@@ -183,229 +292,162 @@ const CriarMinhaJoia = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-10 max-w-5xl">
-        <div className="text-center mb-8">
-          <h1 className="font-display text-3xl md:text-4xl mb-2">Crie sua joia</h1>
-          <p className="text-muted-foreground">
-            Personalize cada detalhe e finalize abaixo
+      <main className="container mx-auto px-4 py-14 md:py-20 max-w-5xl">
+        {/* Cabeçalho editorial */}
+        <div className="text-center mb-16 md:mb-20 relative">
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <span className="h-px w-10 bg-accent/60" />
+            <Sparkles className="h-4 w-4 text-accent" />
+            <span className="h-px w-10 bg-accent/60" />
+          </div>
+          <p className="text-[10px] md:text-xs uppercase tracking-[0.4em] text-accent/80 mb-3">
+            Atelier · Edição Personalizada
+          </p>
+          <h1 className="font-display text-4xl md:text-6xl tracking-tight mb-4">
+            Crie sua joia
+          </h1>
+          <p className="text-muted-foreground italic max-w-md mx-auto text-sm md:text-base">
+            Cada peça é composta à mão. Selecione abaixo os elementos que vão eternizar a sua história.
           </p>
         </div>
 
-        {/* Modalidade — fileira única, botões médios */}
-        <div className="mb-8">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3 text-center">
-            Modalidade
-          </h2>
-          <div className="flex flex-wrap gap-2 justify-center">
-            {CATEGORIAS.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setCategoria(categoria === cat ? null : cat)}
-                className={`relative px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
-                  categoria === cat
-                    ? "border-accent bg-accent/10 text-accent shadow-[0_0_0_1px_hsl(var(--accent))]"
-                    : "border-border bg-card"
-                }`}
-              >
-                {categoria === cat && (
-                  <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
-                    <Check className="h-3 w-3" strokeWidth={3} />
-                  </span>
-                )}
-                {cat}
-              </button>
-            ))}
-          </div>
+        {/* I — Modalidade */}
+        <SectionTitle numeral="I" label="Modalidade" />
+        <div className="mb-16 flex flex-wrap gap-2.5 justify-center">
+          {CATEGORIAS.map((cat) => (
+            <LuxButton
+              key={cat}
+              selected={categoria === cat}
+              onClick={() => setCategoria(categoria === cat ? null : cat)}
+            >
+              {cat}
+            </LuxButton>
+          ))}
         </div>
 
-        {/* Material */}
-        <div className="mb-8">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3 text-center">
-            Material
-          </h2>
+        <Divider />
 
+        {/* II — Material */}
+        <SectionTitle numeral="II" label="Material" hint="Escolha a essência" />
+        <div className="mb-16">
           <div
-            className={`grid gap-6 items-center ${
+            className={`grid gap-8 items-center ${
               material ? "md:grid-cols-[1fr,auto,1fr]" : "grid-cols-1"
             }`}
           >
-            {/* Mostruário Prata (esquerda) */}
             <div className="flex justify-center md:justify-end min-h-[1px]">
               {material === "Prata 925" && MATERIAL_IMAGENS[material] && (
-                <div className="w-64 h-64 md:w-72 md:h-72 rounded-lg overflow-hidden border-2 border-accent bg-background animate-in fade-in zoom-in-95">
-                  <img
-                    src={MATERIAL_IMAGENS[material]}
-                    alt={`Mostruário ${material}`}
-                    width={768}
-                    height={768}
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                <ShowcaseFrame
+                  src={MATERIAL_IMAGENS[material]}
+                  alt={`Mostruário ${material}`}
+                  caption="Prata 925 · Polimento Espelhado"
+                />
               )}
             </div>
 
-            {/* Botões (centro) */}
-            <div className="flex flex-wrap gap-2 justify-center md:items-center">
+            <div className="flex flex-wrap gap-3 justify-center md:items-center">
               {MATERIAIS.map((m) => (
-                <button
+                <LuxButton
                   key={m}
+                  selected={material === m}
                   onClick={() => handleSelecionarMaterial(m)}
-                  className={`relative px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
-                    material === m
-                      ? "border-accent bg-accent/10 text-accent shadow-[0_0_0_1px_hsl(var(--accent))]"
-                      : "border-border bg-card"
-                  }`}
+                  size="lg"
                 >
-                  {material === m && (
-                    <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
-                      <Check className="h-3 w-3" strokeWidth={3} />
-                    </span>
-                  )}
                   {m}
-                </button>
+                </LuxButton>
               ))}
             </div>
 
-            {/* Mostruário Ouro (direita) */}
             <div className="flex justify-center md:justify-start min-h-[1px]">
               {material === "Ouro 18K" && MATERIAL_IMAGENS[material] && (
-                <div className="w-64 h-64 md:w-72 md:h-72 rounded-lg overflow-hidden border-2 border-accent bg-background animate-in fade-in zoom-in-95">
-                  <img
-                    src={MATERIAL_IMAGENS[material]}
-                    alt={`Mostruário ${material}`}
-                    width={768}
-                    height={768}
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                <ShowcaseFrame
+                  src={MATERIAL_IMAGENS[material]}
+                  alt={`Mostruário ${material}`}
+                  caption="Ouro 18K · Acabamento Premium"
+                />
               )}
             </div>
           </div>
         </div>
 
-        {/* Estilo — com imagens, em quadrados menores */}
-        <div className="mb-8">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3 text-center">
-            Estilo
-          </h2>
+        <Divider />
+
+        {/* III — Gênero */}
+        <SectionTitle numeral="III" label="Gênero" />
+        <div className="mb-16 flex flex-wrap gap-2.5 justify-center">
+          {GENEROS.map((g) => (
+            <LuxButton
+              key={g}
+              selected={genero === g}
+              onClick={() => setGenero(genero === g ? null : g)}
+            >
+              {g}
+            </LuxButton>
+          ))}
+        </div>
+
+        <Divider />
+
+        {/* IV — Tamanho */}
+        <SectionTitle numeral="IV" label="Tamanho" hint="Medida do pingente" />
+        <div className="mb-16 flex flex-wrap gap-5 justify-center">
+          {TAMANHOS.map((t) => (
+            <div key={t} className="flex flex-col items-center gap-2">
+              <LuxButton
+                selected={tamanho === t}
+                onClick={() => setTamanho(tamanho === t ? null : t)}
+              >
+                {t}
+              </LuxButton>
+              <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/80">
+                {TAMANHO_LEGENDAS[t]}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <Divider />
+
+        {/* V — Estilo */}
+        <SectionTitle numeral="V" label="Estilo" hint="A alma da peça" />
+        <div className="mb-16">
           <div
-            className={`grid gap-6 items-center ${
+            className={`grid gap-8 items-center ${
               estilo ? "md:grid-cols-[1fr,auto,1fr]" : "grid-cols-1"
             }`}
           >
-            {/* Mostruário Underground (esquerda) */}
             <div className="flex justify-center md:justify-end min-h-[1px]">
               {estilo === "Underground" && ESTILO_IMAGENS[estilo] && (
-                <div className="w-64 h-64 md:w-72 md:h-72 rounded-lg overflow-hidden border-2 border-accent bg-background animate-in fade-in zoom-in-95">
-                  <img
-                    src={ESTILO_IMAGENS[estilo]}
-                    alt={`Estilo ${estilo}`}
-                    width={768}
-                    height={768}
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                <ShowcaseFrame
+                  src={ESTILO_IMAGENS[estilo]}
+                  alt={`Estilo ${estilo}`}
+                  caption="Underground · Pingente com acessórios"
+                />
               )}
             </div>
 
-            {/* Botões (centro) */}
-            <div className="flex flex-wrap gap-2 justify-center md:items-center">
+            <div className="flex flex-wrap gap-3 justify-center md:items-center">
               {ESTILOS.map((e) => (
-                <button
+                <LuxButton
                   key={e}
+                  selected={estilo === e}
                   onClick={() => setEstilo(estilo === e ? null : e)}
-                  className={`relative px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
-                    estilo === e
-                      ? "border-accent bg-accent/10 text-accent shadow-[0_0_0_1px_hsl(var(--accent))]"
-                      : "border-border bg-card"
-                  }`}
+                  size="lg"
                 >
-                  {estilo === e && (
-                    <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
-                      <Check className="h-3 w-3" strokeWidth={3} />
-                    </span>
-                  )}
                   {e}
-                </button>
+                </LuxButton>
               ))}
             </div>
 
-            {/* Mostruário Clássico (direita) */}
             <div className="flex justify-center md:justify-start min-h-[1px]">
               {estilo === "Clássico" && ESTILO_IMAGENS[estilo] && (
-                <div className="w-64 h-64 md:w-72 md:h-72 rounded-lg overflow-hidden border-2 border-accent bg-background animate-in fade-in zoom-in-95">
-                  <img
-                    src={ESTILO_IMAGENS[estilo]}
-                    alt={`Estilo ${estilo}`}
-                    width={768}
-                    height={768}
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                <ShowcaseFrame
+                  src={ESTILO_IMAGENS[estilo]}
+                  alt={`Estilo ${estilo}`}
+                  caption="Clássico · Pingente puro"
+                />
               )}
             </div>
-          </div>
-        </div>
-
-        {/* Gênero */}
-        <div className="mb-8">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3 text-center">
-            Gênero
-          </h2>
-          <div className="flex flex-wrap gap-2 justify-center">
-            {GENEROS.map((g) => (
-              <button
-                key={g}
-                onClick={() => setGenero(genero === g ? null : g)}
-                className={`relative px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
-                  genero === g
-                    ? "border-accent bg-accent/10 text-accent shadow-[0_0_0_1px_hsl(var(--accent))]"
-                    : "border-border bg-card"
-                }`}
-              >
-                {genero === g && (
-                  <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
-                    <Check className="h-3 w-3" strokeWidth={3} />
-                  </span>
-                )}
-                {g}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Tamanho */}
-        <div className="mb-10">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3 text-center">
-            Tamanho
-          </h2>
-          <div className="flex flex-wrap gap-4 justify-center">
-            {TAMANHOS.map((t) => (
-              <div key={t} className="flex flex-col items-center gap-1">
-                <button
-                  onClick={() => setTamanho(tamanho === t ? null : t)}
-                  className={`relative px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
-                    tamanho === t
-                      ? "border-accent bg-accent/10 text-accent shadow-[0_0_0_1px_hsl(var(--accent))]"
-                      : "border-border bg-card"
-                  }`}
-                >
-                  {tamanho === t && (
-                    <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
-                      <Check className="h-3 w-3" strokeWidth={3} />
-                    </span>
-                  )}
-                  {t}
-                </button>
-                <span className="text-xs text-muted-foreground">
-                  {TAMANHO_LEGENDAS[t]}
-                </span>
-              </div>
-            ))}
           </div>
         </div>
 
