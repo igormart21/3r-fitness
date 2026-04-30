@@ -270,36 +270,60 @@ const CriarMinhaJoia = () => {
           <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3 text-center">
             Estilo
           </h2>
-          <div className="flex flex-wrap gap-2 justify-center">
-            {ESTILOS.map((e) => (
-              <button
-                key={e}
-                onClick={() => setEstilo(e)}
-                className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
-                  estilo === e
-                    ? "border-accent bg-accent/5"
-                    : "border-border bg-card"
-                }`}
-              >
-                {e}
-              </button>
-            ))}
-          </div>
-
-          {estilo && ESTILO_IMAGENS[estilo] && (
-            <div className="mt-4 flex justify-center animate-in fade-in zoom-in-95">
-              <div className="w-48 h-48 md:w-56 md:h-56 rounded-lg overflow-hidden border-2 border-accent bg-background">
-                <img
-                  src={ESTILO_IMAGENS[estilo]}
-                  alt={`Estilo ${estilo}`}
-                  width={400}
-                  height={400}
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+          <div
+            className={`grid gap-6 items-center ${
+              estilo ? "md:grid-cols-[1fr,auto,1fr]" : "grid-cols-1"
+            }`}
+          >
+            {/* Mostruário Underground (esquerda) */}
+            <div className="flex justify-center md:justify-end min-h-[1px]">
+              {estilo === "Underground" && ESTILO_IMAGENS[estilo] && (
+                <div className="w-64 h-64 md:w-72 md:h-72 rounded-lg overflow-hidden border-2 border-accent bg-background animate-in fade-in zoom-in-95">
+                  <img
+                    src={ESTILO_IMAGENS[estilo]}
+                    alt={`Estilo ${estilo}`}
+                    width={768}
+                    height={768}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
             </div>
-          )}
+
+            {/* Botões (centro) */}
+            <div className="flex flex-wrap gap-2 justify-center md:items-center">
+              {ESTILOS.map((e) => (
+                <button
+                  key={e}
+                  onClick={() => setEstilo(e)}
+                  className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
+                    estilo === e
+                      ? "border-accent bg-accent/5"
+                      : "border-border bg-card"
+                  }`}
+                >
+                  {e}
+                </button>
+              ))}
+            </div>
+
+            {/* Mostruário Clássico (direita) */}
+            <div className="flex justify-center md:justify-start min-h-[1px]">
+              {estilo === "Clássico" && ESTILO_IMAGENS[estilo] && (
+                <div className="w-64 h-64 md:w-72 md:h-72 rounded-lg overflow-hidden border-2 border-accent bg-background animate-in fade-in zoom-in-95">
+                  <img
+                    src={ESTILO_IMAGENS[estilo]}
+                    alt={`Estilo ${estilo}`}
+                    width={768}
+                    height={768}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Tamanho */}
