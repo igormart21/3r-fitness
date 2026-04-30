@@ -1324,11 +1324,17 @@ const StepperExperience = (p: StepperProps) => {
 };
 
 const StepPanel = ({
-  numeral, label, hint, children,
-}: { numeral: string; label: string; hint?: string; children: React.ReactNode }) => (
-  <section className="w-full flex-shrink-0 px-5 md:px-12 py-6 md:py-8 min-h-[320px] md:min-h-[380px] flex flex-col">
+  numeral, label, hint, children, expanded = false,
+}: { numeral: string; label: string; hint?: string; children: React.ReactNode; expanded?: boolean }) => (
+  <section
+    className={`w-full flex-shrink-0 px-5 md:px-12 flex flex-col ${
+      expanded
+        ? "py-6 md:py-8 min-h-[320px] md:min-h-[380px]"
+        : "py-3 md:py-4 min-h-0"
+    }`}
+  >
     <SectionTitle numeral={numeral} label={label} hint={hint} />
-    <div className="flex-1 flex items-start md:items-center justify-center w-full animate-in fade-in duration-500 pt-2">
+    <div className="flex-1 flex items-center justify-center w-full animate-in fade-in duration-500 pt-2">
       <div className="w-full">{children}</div>
     </div>
   </section>
