@@ -960,7 +960,44 @@ const StepperExperience = (p: StepperProps) => {
             </StepPanel>
 
             <StepPanel numeral="VI" label="Inscrição" hint="Escolha apenas UMA inscrição para sua joia">
-              <div className="max-w-2xl mx-auto space-y-3">
+              <div className="max-w-2xl mx-auto space-y-5">
+                {/* Informativo + escolha de caminho */}
+                <div className="border border-accent/30 bg-card/40 p-5 md:p-6 text-center relative">
+                  <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
+                  <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
+                  <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
+                  <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent" />
+                  <p className="text-sm md:text-base text-foreground/90 leading-relaxed">
+                    Quer uma joia com seu <span className="text-accent">estilo autêntico e único</span>?
+                    Pule para a próxima seção, envie uma foto sua e transforme em pingente exclusivo.
+                  </p>
+                  <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
+                    <Button
+                      onClick={() => p.setStep(6)}
+                      className="bg-accent hover:bg-accent/90 text-accent-foreground tracking-[0.2em] uppercase text-xs px-6"
+                    >
+                      <Camera className="h-4 w-4 mr-2" /> Anexar foto
+                    </Button>
+                    <Button
+                      onClick={() => p.setShowBalao(true)}
+                      variant="outline"
+                      className="border-accent text-accent hover:bg-accent/10 tracking-[0.2em] uppercase text-xs px-6"
+                    >
+                      Pingente do site
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Balão de fala */}
+                {p.showBalao && (
+                  <div className="relative mx-auto max-w-md animate-in fade-in slide-in-from-top-2 duration-300">
+                    <div className="relative bg-accent text-accent-foreground px-5 py-3 rounded-2xl shadow-lg text-sm font-medium text-center">
+                      Selecione uma inscrição abaixo para sua joia ✨
+                      <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-accent rotate-45" />
+                    </div>
+                  </div>
+                )}
+
                 <CtaField
                   label="Nome"
                   isOpen={p.openField === "nome"}
