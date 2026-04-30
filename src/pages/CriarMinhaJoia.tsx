@@ -153,7 +153,7 @@ const PERFIS_BIKE: PerfilBike[] = ["Speed", "Mountain Bike"];
 
 // Bikes do Ciclista por Perfil × Material × Estilo.
 // Underground (bike + boneco) ainda não enviado — usa a bike clássica como placeholder.
-const BIKES: Record<PerfilBike, Record<Material, Record<Estilo extends infer E ? "Clássico" | "Underground" : never, string>>> = {
+const BIKES: Record<PerfilBike, Record<Material, Record<"Clássico" | "Underground", string>>> = {
   Speed: {
     "Ouro 18K": { "Clássico": bikeSpeedClassicoOuro, Underground: bikeSpeedClassicoOuro },
     "Prata 925": { "Clássico": bikeSpeedClassicoPrata, Underground: bikeSpeedClassicoPrata },
