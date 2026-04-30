@@ -1000,7 +1000,7 @@ const StepperExperience = (p: StepperProps) => {
                     {p.fotoPingente ? (
                       <div className="flex flex-col items-center gap-3">
                         <div className="w-32 h-32 overflow-hidden border border-accent/40">
-                          <img src={p.fotoPingente} alt="Sua foto" className="w-full h-full object-cover" />
+                          <img src={p.fotoPingente} alt="Sua foto" className="w-full h-full object-cover transition-transform duration-500 ease-out hover:scale-110" />
                         </div>
                         <button
                           onClick={() => p.fotoPingenteInputRef.current?.click()}
