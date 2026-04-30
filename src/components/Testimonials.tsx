@@ -145,9 +145,9 @@ export const Testimonials = () => {
         style={{ background: t.topLine }}
       />
 
-      {/* Modelos laterais — visíveis em todos os tamanhos */}
+      {/* Modelos laterais — apenas em telas médias+ (no mobile aparecem acima do depoimento) */}
       <div
-        className="absolute left-0 top-1/2 w-[40%] sm:w-[32%] lg:w-[22%] max-w-[320px] pointer-events-none select-none opacity-25 sm:opacity-40 lg:opacity-100"
+        className="hidden md:block absolute left-0 top-1/2 w-[32%] lg:w-[22%] max-w-[320px] pointer-events-none select-none opacity-60 lg:opacity-100"
         style={{
           transform: "translateY(-50%) rotate(-4deg)",
           filter: "drop-shadow(0 30px 40px hsl(20 14% 15% / 0.18))",
@@ -162,7 +162,7 @@ export const Testimonials = () => {
         />
       </div>
       <div
-        className="absolute right-0 top-1/2 w-[40%] sm:w-[32%] lg:w-[22%] max-w-[320px] pointer-events-none select-none opacity-25 sm:opacity-40 lg:opacity-100"
+        className="hidden md:block absolute right-0 top-1/2 w-[32%] lg:w-[22%] max-w-[320px] pointer-events-none select-none opacity-60 lg:opacity-100"
         style={{
           transform: "translateY(-50%) rotate(4deg)",
           filter: "drop-shadow(0 30px 40px hsl(20 14% 15% / 0.18))",
@@ -175,6 +175,38 @@ export const Testimonials = () => {
           className="w-full h-auto object-contain rounded-sm"
           loading="lazy"
         />
+      </div>
+
+      {/* Mobile: fotos lado a lado acima do depoimento, sem sobreposição com o texto */}
+      <div className="md:hidden container max-w-md px-6 mb-8 flex items-end justify-center gap-4">
+        <div
+          className="w-[42%] max-w-[160px]"
+          style={{
+            transform: "rotate(-3deg)",
+            filter: "drop-shadow(0 18px 24px hsl(20 14% 15% / 0.18))",
+          }}
+        >
+          <img
+            src={modelLeft}
+            alt=""
+            className="w-full h-auto object-contain rounded-sm"
+            loading="lazy"
+          />
+        </div>
+        <div
+          className="w-[42%] max-w-[160px]"
+          style={{
+            transform: "rotate(3deg)",
+            filter: "drop-shadow(0 18px 24px hsl(20 14% 15% / 0.18))",
+          }}
+        >
+          <img
+            src={modelRight}
+            alt=""
+            className="w-full h-auto object-contain rounded-sm"
+            loading="lazy"
+          />
+        </div>
       </div>
 
       <div className="container max-w-4xl text-center relative px-6 sm:px-8">
