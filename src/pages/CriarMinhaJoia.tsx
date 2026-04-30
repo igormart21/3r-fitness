@@ -797,11 +797,8 @@ const StepperExperience = (p: StepperProps) => {
           <span className="absolute bottom-0 left-0 h-4 w-4 border-b border-l border-accent/70 z-10" />
           <span className="absolute bottom-0 right-0 h-4 w-4 border-b border-r border-accent/70 z-10" />
 
-          <div
-            className="flex transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${step * 100}%)` }}
-          >
-            <StepPanel numeral="I" label="Modalidade" hint="A sua jornada">
+          <div className="relative">
+            <StepPanel index={0} step={step} numeral="I" label="Modalidade" hint="A sua jornada">
               <div className="flex flex-wrap gap-2.5 justify-center max-w-2xl mx-auto">
                 {CATEGORIAS.map((cat) => (
                   <LuxButton
@@ -819,7 +816,7 @@ const StepperExperience = (p: StepperProps) => {
               </div>
             </StepPanel>
 
-            <StepPanel numeral="II" label="Material" hint="Escolha a essência">
+            <StepPanel index={1} step={step} numeral="II" label="Material" hint="Escolha a essência">
               <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-8 lg:gap-16 max-w-6xl mx-auto">
                 {MATERIAIS.map((m) => {
                   const selected = p.material === m;
@@ -878,7 +875,7 @@ const StepperExperience = (p: StepperProps) => {
               </div>
             </StepPanel>
 
-            <StepPanel numeral="III" label="Gênero">
+            <StepPanel index={2} step={step} numeral="III" label="Gênero">
               <div className="flex flex-wrap gap-3 justify-center">
                 {GENEROS.map((g) => (
                   <LuxButton
@@ -897,7 +894,7 @@ const StepperExperience = (p: StepperProps) => {
               </div>
             </StepPanel>
 
-            <StepPanel numeral="IV" label="Tamanho" hint="Medida do pingente">
+            <StepPanel index={3} step={step} numeral="IV" label="Tamanho" hint="Medida do pingente">
               <div className="flex flex-wrap gap-6 justify-center">
                 {TAMANHOS.map((t) => (
                   <div key={t} className="flex flex-col items-center gap-2">
@@ -920,7 +917,7 @@ const StepperExperience = (p: StepperProps) => {
               </div>
             </StepPanel>
 
-            <StepPanel numeral="V" label="Estilo" hint="A alma da peça">
+            <StepPanel index={4} step={step} numeral="V" label="Estilo" hint="A alma da peça">
               <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-8 lg:gap-16 max-w-6xl mx-auto">
                 {ESTILOS.map((e) => {
                   const selected = p.estilo === e;
@@ -980,7 +977,7 @@ const StepperExperience = (p: StepperProps) => {
               </div>
             </StepPanel>
 
-            <StepPanel numeral="VI" label="Inscrição" hint="Escolha apenas UMA inscrição para sua joia">
+            <StepPanel index={5} step={step} numeral="VI" label="Inscrição" hint="Escolha apenas UMA inscrição para sua joia">
               <div className="max-w-2xl mx-auto space-y-5">
                 {/* Informativo + escolha de caminho */}
                 <div className="border border-accent/30 bg-card/40 p-5 md:p-6 text-center relative">
@@ -1126,7 +1123,7 @@ const StepperExperience = (p: StepperProps) => {
               </div>
             </StepPanel>
 
-            <StepPanel numeral="VII" label="Sua foto em pingente" hint="Envie uma pose · veja a peça moldada por IA" expanded>
+            <StepPanel index={6} step={step} numeral="VII" label="Sua foto em pingente" hint="Envie uma pose · veja a peça moldada por IA" expanded>
               <div className="grid gap-5 md:grid-cols-2 max-w-4xl mx-auto">
                 <div className="relative border border-border/60 bg-card/30 p-5 md:p-6 min-h-[280px] flex flex-col">
                   <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
@@ -1327,21 +1324,23 @@ const StepperExperience = (p: StepperProps) => {
 };
 
 const StepPanel = ({
-  numeral, label, hint, children, expanded = false,
-}: { numeral: string; label: string; hint?: string; children: React.ReactNode; expanded?: boolean }) => (
-  <section
-    className={`w-full flex-shrink-0 px-5 md:px-12 flex flex-col ${
-      expanded
-        ? "py-6 md:py-8 min-h-[320px] md:min-h-[380px]"
-        : "py-2 md:py-3 min-h-0"
-    }`}
-  >
-    <SectionTitle numeral={numeral} label={label} hint={hint} />
-    <div className={`flex-1 flex ${expanded ? "items-center" : "items-start"} justify-center w-full animate-in fade-in duration-500 pt-1`}>
-      <div className="w-full">{children}</div>
-    </div>
-  </section>
-);
+  index, step, numeral, label, hint, children, expanded = false,
+}: { index: number; step: number; numeral: string; label: string; hint?: string; children: React.ReactNode; expanded?: boolean }) => {
+  const isActive = index === step;
+  return (
+    <section
+      aria-hidden={!isActive}
+      className={`w-full px-5 md:px-12 flex-col ${isActive ? "flex animate-in fade-in duration-500" : "hidden"} ${
+        expanded ? "py-6 md:py-8 min-h-[320px] md:min-h-[380px]" : "py-2 md:py-3"
+      }`}
+    >
+      <SectionTitle numeral={numeral} label={label} hint={hint} />
+      <div className={`flex ${expanded ? "items-center" : "items-start"} justify-center w-full pt-1`}>
+        <div className="w-full">{children}</div>
+      </div>
+    </section>
+  );
+};
 
 const Chip = ({ label, value }: { label: string; value: string | null }) => (
   <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
