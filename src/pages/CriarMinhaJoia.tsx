@@ -586,6 +586,7 @@ const CriarMinhaJoia = () => {
         setOpenPingenteField={setOpenPingenteField}
         adicionando={adicionando}
         handleAdicionarAoCarrinho={handleAdicionarAoCarrinho}
+        handleProsseguirParaPagamento={handleProsseguirParaPagamento}
       />
     </div>
   );
