@@ -209,11 +209,15 @@ const CriarMinhaJoia = () => {
             Material
           </h2>
 
-          <div className={`grid gap-6 items-start ${material ? "md:grid-cols-[auto,1fr]" : "grid-cols-1"}`}>
-            {/* Mostruário (lado esquerdo) */}
-            {material && MATERIAL_IMAGENS[material] && (
-              <div className="flex justify-center md:justify-start animate-in fade-in zoom-in-95">
-                <div className="w-64 h-64 md:w-72 md:h-72 rounded-lg overflow-hidden border-2 border-accent bg-background">
+          <div
+            className={`grid gap-6 items-center ${
+              material ? "md:grid-cols-[1fr,auto,1fr]" : "grid-cols-1"
+            }`}
+          >
+            {/* Mostruário Prata (esquerda) */}
+            <div className="flex justify-center md:justify-end min-h-[1px]">
+              {material === "Prata 925" && MATERIAL_IMAGENS[material] && (
+                <div className="w-64 h-64 md:w-72 md:h-72 rounded-lg overflow-hidden border-2 border-accent bg-background animate-in fade-in zoom-in-95">
                   <img
                     src={MATERIAL_IMAGENS[material]}
                     alt={`Mostruário ${material}`}
@@ -223,11 +227,11 @@ const CriarMinhaJoia = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-              </div>
-            )}
+              )}
+            </div>
 
-            {/* Botões */}
-            <div className="flex flex-wrap gap-2 justify-center md:justify-start md:items-center">
+            {/* Botões (centro) */}
+            <div className="flex flex-wrap gap-2 justify-center md:items-center">
               {MATERIAIS.map((m) => (
                 <button
                   key={m}
@@ -241,6 +245,22 @@ const CriarMinhaJoia = () => {
                   {m}
                 </button>
               ))}
+            </div>
+
+            {/* Mostruário Ouro (direita) */}
+            <div className="flex justify-center md:justify-start min-h-[1px]">
+              {material === "Ouro 18K" && MATERIAL_IMAGENS[material] && (
+                <div className="w-64 h-64 md:w-72 md:h-72 rounded-lg overflow-hidden border-2 border-accent bg-background animate-in fade-in zoom-in-95">
+                  <img
+                    src={MATERIAL_IMAGENS[material]}
+                    alt={`Mostruário ${material}`}
+                    width={768}
+                    height={768}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
