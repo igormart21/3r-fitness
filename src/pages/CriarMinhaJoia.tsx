@@ -166,9 +166,8 @@ const CriarMinhaJoia = () => {
         {step === 1 && (
           <section>
             <div className="text-center mb-10">
-              <h1 className="font-display text-4xl md:text-5xl mb-3">Crie sua joia</h1>
               <p className="text-muted-foreground text-lg">
-                Comece escolhendo a sua categoria
+                Comece escolhendo sua modalidade
               </p>
             </div>
 
