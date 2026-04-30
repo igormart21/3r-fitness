@@ -669,7 +669,6 @@ type StepperProps = {
 const STEP_LABELS = [
   "Modalidade",
   "Material",
-  "Gênero",
   "Tamanho",
   "Estilo",
   "Inscrição",
