@@ -49,6 +49,11 @@ import bonecoFisiFemClassicoPrata from "@/assets/boneco-fisiculturismo-fem-class
 import bonecoFisiFemUndergroundPrata from "@/assets/boneco-fisiculturismo-fem-underground-prata.jpg";
 import bonecoFisiMascClassicoPrata from "@/assets/boneco-fisiculturismo-masc-classico-prata.jpg";
 import bonecoFisiMascUndergroundPrata from "@/assets/boneco-fisiculturismo-masc-underground-prata.jpg";
+// Bikes CICLISTA (Speed = pneu liso, Mountain = pneu com ranhuras)
+import bikeSpeedClassicoOuro from "@/assets/bike-speed-classico-ouro.jpg";
+import bikeSpeedClassicoPrata from "@/assets/bike-speed-classico-prata.jpg";
+import bikeMountainClassicoOuro from "@/assets/bike-mountain-classico-ouro.jpg";
+import bikeMountainClassicoPrata from "@/assets/bike-mountain-classico-prata.jpg";
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
@@ -124,6 +129,7 @@ type Material = "Prata 925" | "Ouro 18K";
 type Estilo = "Botão Reta" | "Underground" | "Clássico";
 type Tamanho = "Grande" | "Médio" | "Pequeno";
 type Genero = "Masculino" | "Feminino";
+type PerfilBike = "Speed" | "Mountain Bike";
 
 const CATEGORIAS: Categoria[] = [
   "Corredores",
@@ -143,6 +149,20 @@ const TAMANHO_LEGENDAS: Record<Tamanho, string> = {
   Pequeno: "2 cm",
 };
 const GENEROS: Genero[] = ["Masculino", "Feminino"];
+const PERFIS_BIKE: PerfilBike[] = ["Speed", "Mountain Bike"];
+
+// Bikes do Ciclista por Perfil × Material × Estilo.
+// Underground (bike + boneco) ainda não enviado — usa a bike clássica como placeholder.
+const BIKES: Record<PerfilBike, Record<Material, Record<"Clássico" | "Underground", string>>> = {
+  Speed: {
+    "Ouro 18K": { "Clássico": bikeSpeedClassicoOuro, Underground: bikeSpeedClassicoOuro },
+    "Prata 925": { "Clássico": bikeSpeedClassicoPrata, Underground: bikeSpeedClassicoPrata },
+  },
+  "Mountain Bike": {
+    "Ouro 18K": { "Clássico": bikeMountainClassicoOuro, Underground: bikeMountainClassicoOuro },
+    "Prata 925": { "Clássico": bikeMountainClassicoPrata, Underground: bikeMountainClassicoPrata },
+  },
+};
 const KM_OPCOES = ["5K", "10K", "21K", "42K"] as const;
 type CtaFieldKey = "nome" | "km" | "data" | "tempo";
 
@@ -394,6 +414,7 @@ const CriarMinhaJoia = () => {
   const [estilo, setEstilo] = useState<Estilo | null>(null);
   const [tamanho, setTamanho] = useState<Tamanho | null>(null);
   const [genero, setGenero] = useState<Genero | null>(null);
+  const [perfilBike, setPerfilBike] = useState<PerfilBike | null>(null);
 
   const [foto, setFoto] = useState<string | null>(null);
   const [nome, setNome] = useState("");
@@ -657,6 +678,7 @@ const CriarMinhaJoia = () => {
         categoria={categoria} setCategoria={setCategoria}
         material={material} handleSelecionarMaterial={handleSelecionarMaterial}
         genero={genero} setGenero={setGenero}
+        perfilBike={perfilBike} setPerfilBike={setPerfilBike}
         tamanho={tamanho} setTamanho={setTamanho}
         estilo={estilo} setEstilo={setEstilo}
         nome={nome} setNome={setNome}
@@ -693,6 +715,7 @@ type StepperProps = {
   categoria: Categoria | null; setCategoria: (v: Categoria | null) => void;
   material: Material | null; handleSelecionarMaterial: (m: Material) => void;
   genero: Genero | null; setGenero: (v: Genero | null) => void;
+  perfilBike: PerfilBike | null; setPerfilBike: (v: PerfilBike | null) => void;
   tamanho: Tamanho | null; setTamanho: (v: Tamanho | null) => void;
   estilo: Estilo | null; setEstilo: (v: Estilo | null) => void;
   nome: string; setNome: (v: string) => void;
@@ -1014,10 +1037,12 @@ const StepperExperience = (p: StepperProps) => {
                         const desmarcar = p.genero === g;
                         if (desmarcar) {
                           p.setGenero(null);
+                          p.setPerfilBike(null);
                         } else {
                           p.setGenero(g);
-                          // Ao trocar de gênero, limpa estilo anteriormente escolhido
+                          // Ao trocar de gênero, limpa estilo e perfil de bike
                           if (p.estilo) p.setEstilo(null);
+                          p.setPerfilBike(null);
                         }
                       }}
                       size="lg"
@@ -1028,11 +1053,40 @@ const StepperExperience = (p: StepperProps) => {
                 </div>
               </div>
 
-              {/* 2º — Estilo (só após gênero) */}
-              {p.genero && (
+              {/* 1.5º — Perfil da bike (somente Ciclista) */}
+              {p.genero && p.categoria === "Ciclista" && (
+                <div className="mb-8 animate-in fade-in slide-in-from-bottom-2 duration-400">
+                  <p className="text-center text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-4">
+                    02 · Selecione o perfil da bike
+                  </p>
+                  <div className="flex flex-wrap gap-3 justify-center">
+                    {PERFIS_BIKE.map((perfil) => (
+                      <LuxButton
+                        key={perfil}
+                        selected={p.perfilBike === perfil}
+                        onClick={() => {
+                          const desmarcar = p.perfilBike === perfil;
+                          if (desmarcar) {
+                            p.setPerfilBike(null);
+                          } else {
+                            p.setPerfilBike(perfil);
+                            if (p.estilo) p.setEstilo(null);
+                          }
+                        }}
+                        size="lg"
+                      >
+                        {perfil}
+                      </LuxButton>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* 2º — Estilo (só após gênero — e, se Ciclista, após perfil da bike) */}
+              {p.genero && (p.categoria !== "Ciclista" || p.perfilBike) && (
                 <div className="animate-in fade-in slide-in-from-bottom-2 duration-400">
                   <p className="text-center text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-4">
-                    02 · Escolha o estilo
+                    {p.categoria === "Ciclista" ? "03" : "02"} · Escolha o estilo
                   </p>
                   <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-8 lg:gap-16 max-w-6xl mx-auto">
                     {ESTILOS.map((e) => {
@@ -1043,9 +1097,18 @@ const StepperExperience = (p: StepperProps) => {
                             ? "Boné e relógio"
                             : p.categoria === "Fisiculturismo"
                               ? "Corpo definido"
-                              : "Boné, óculos e relógio"
-                          : "Pingente puro";
+                              : p.categoria === "Ciclista"
+                                ? "Bike + boneco"
+                                : "Boné, óculos e relógio"
+                          : p.categoria === "Ciclista"
+                            ? "Apenas a bike"
+                            : "Pingente puro";
+                      const bikeSrc =
+                        p.categoria === "Ciclista" && p.perfilBike && p.material
+                          ? BIKES[p.perfilBike][p.material][e as "Clássico" | "Underground"]
+                          : null;
                       const bonecoSrc =
+                        bikeSrc ||
                         (p.categoria && p.material && BONECOS[p.categoria]?.[p.material]?.[p.genero!]?.[e]) ||
                         ESTILO_IMAGENS[e];
                       return (
