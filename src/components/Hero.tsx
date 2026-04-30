@@ -4,11 +4,11 @@ import heroImage from "@/assets/hero-3r-fitness.png";
 
 export const Hero = () => {
   return (
-    <section className="relative overflow-hidden bg-background">
+    <section className="relative overflow-hidden bg-background flex items-center justify-center">
       <img
         src={heroImage}
         alt="3R Fitness - Cada quilômetro tem uma história"
-        className="w-full block h-[82vh] sm:h-[88vh] md:h-auto object-contain md:object-cover object-center"
+        className="w-full block h-[82vh] sm:h-[88vh] md:h-auto object-contain md:object-cover object-center mx-auto"
         loading="eager"
       />
       <style>{`
