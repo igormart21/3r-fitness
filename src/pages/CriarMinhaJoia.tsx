@@ -819,7 +819,11 @@ const StepperExperience = (p: StepperProps) => {
                   <div key={t} className="flex flex-col items-center gap-2">
                     <LuxButton
                       selected={p.tamanho === t}
-                      onClick={() => p.setTamanho(p.tamanho === t ? null : t)}
+                      onClick={() => {
+                        const desmarcar = p.tamanho === t;
+                        p.setTamanho(desmarcar ? null : t);
+                        if (!desmarcar) setTimeout(() => autoAdvance(3), 280);
+                      }}
                       size="lg"
                     >
                       {t}
