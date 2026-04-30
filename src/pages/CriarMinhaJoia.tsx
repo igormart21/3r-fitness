@@ -908,26 +908,7 @@ const StepperExperience = (p: StepperProps) => {
               </div>
             </StepPanel>
 
-            <StepPanel index={2} step={step} numeral="III" label="Gênero">
-              <div className="flex flex-wrap gap-3 justify-center">
-                {GENEROS.map((g) => (
-                  <LuxButton
-                    key={g}
-                    selected={p.genero === g}
-                    onClick={() => {
-                      const desmarcar = p.genero === g;
-                      p.setGenero(desmarcar ? null : g);
-                      if (!desmarcar) setTimeout(() => autoAdvance(2), 280);
-                    }}
-                    size="lg"
-                  >
-                    {g}
-                  </LuxButton>
-                ))}
-              </div>
-            </StepPanel>
-
-            <StepPanel index={3} step={step} numeral="IV" label="Tamanho" hint="Medida do pingente">
+            <StepPanel index={2} step={step} numeral="III" label="Tamanho" hint="Medida do pingente">
               <div className="flex flex-wrap gap-6 justify-center">
                 {TAMANHOS.map((t) => (
                   <div key={t} className="flex flex-col items-center gap-2">
@@ -936,7 +917,7 @@ const StepperExperience = (p: StepperProps) => {
                       onClick={() => {
                         const desmarcar = p.tamanho === t;
                         p.setTamanho(desmarcar ? null : t);
-                        if (!desmarcar) setTimeout(() => autoAdvance(3), 280);
+                        if (!desmarcar) setTimeout(() => autoAdvance(2), 280);
                       }}
                       size="lg"
                     >
@@ -950,7 +931,7 @@ const StepperExperience = (p: StepperProps) => {
               </div>
             </StepPanel>
 
-            <StepPanel index={4} step={step} numeral="V" label="Estilo" hint="A alma da peça">
+            <StepPanel index={3} step={step} numeral="IV" label="Estilo" hint="Escolha o gênero e o estilo da peça">
               <div className="max-w-2xl mx-auto mb-5 md:mb-6 px-4 py-3 border border-accent/40 bg-accent/[0.06] text-center relative">
                 <span className="absolute top-0 left-0 h-2.5 w-2.5 border-t border-l border-accent" />
                 <span className="absolute top-0 right-0 h-2.5 w-2.5 border-t border-r border-accent" />
@@ -963,66 +944,106 @@ const StepperExperience = (p: StepperProps) => {
                   A cor e o material do seu pingente será igual ao <span className="text-accent">material escolhido</span> na etapa 2.
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-8 lg:gap-16 max-w-6xl mx-auto">
-                {ESTILOS.map((e) => {
-                  const selected = p.estilo === e;
-                  const legenda =
-                    e === "Underground" ? "Boné, óculos e relógio" : "Pingente puro";
-                  return (
-                    <button
-                      key={e}
+
+              {/* 1º — Gênero */}
+              <div className="mb-8">
+                <p className="text-center text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-4">
+                  01 · Selecione o gênero
+                </p>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  {GENEROS.map((g) => (
+                    <LuxButton
+                      key={g}
+                      selected={p.genero === g}
                       onClick={() => {
-                        const desmarcar = p.estilo === e;
-                        p.setEstilo(desmarcar ? null : e);
-                        if (!desmarcar) setTimeout(() => autoAdvance(4), 280);
+                        const desmarcar = p.genero === g;
+                        if (desmarcar) {
+                          p.setGenero(null);
+                        } else {
+                          p.setGenero(g);
+                          // Ao trocar de gênero, limpa estilo anteriormente escolhido
+                          if (p.estilo) p.setEstilo(null);
+                        }
                       }}
-                      className={`group relative flex flex-col items-center gap-3 p-3 md:p-4 transition-all duration-300 ${
-                        selected ? "bg-accent/[0.06]" : "opacity-70 hover:opacity-100"
-                      }`}
+                      size="lg"
                     >
-                      {selected && (
-                        <>
-                          <span className="absolute -top-[5px] -left-[5px] h-2.5 w-2.5 border-t border-l border-accent" />
-                          <span className="absolute -top-[5px] -right-[5px] h-2.5 w-2.5 border-t border-r border-accent" />
-                          <span className="absolute -bottom-[5px] -left-[5px] h-2.5 w-2.5 border-b border-l border-accent" />
-                          <span className="absolute -bottom-[5px] -right-[5px] h-2.5 w-2.5 border-b border-r border-accent" />
-                          <span className="absolute -top-2.5 -right-2.5 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md z-10">
-                            <Check className="h-3 w-3" strokeWidth={3} />
-                          </span>
-                        </>
-                      )}
-                      <div
-                        className={`relative p-2 md:p-3 bg-card transition-all ${
-                          selected ? "" : "grayscale-[40%] group-hover:grayscale-0"
-                        }`}
-                      >
-                        <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent/70" />
-                        <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent/70" />
-                        <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent/70" />
-                        <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent/70" />
-                        <MagnifierImage
-                          src={ESTILO_IMAGENS[e]}
-                          alt={`Estilo ${e}`}
-                          className="w-36 h-36 sm:w-48 sm:h-48 md:w-72 md:h-72 lg:w-[26rem] lg:h-[26rem] xl:w-[32rem] xl:h-[32rem] bg-white"
-                        />
-                      </div>
-                      <span
-                        className={`font-display tracking-[0.25em] uppercase text-xs md:text-sm transition-colors ${
-                          selected ? "text-accent" : "text-foreground/85 group-hover:text-accent"
-                        }`}
-                      >
-                        {e}
-                      </span>
-                      <span className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-muted-foreground/80">
-                        {legenda}
-                      </span>
-                    </button>
-                  );
-                })}
+                      {g}
+                    </LuxButton>
+                  ))}
+                </div>
               </div>
+
+              {/* 2º — Estilo (só após gênero) */}
+              {p.genero && (
+                <div className="animate-in fade-in slide-in-from-bottom-2 duration-400">
+                  <p className="text-center text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-4">
+                    02 · Escolha o estilo
+                  </p>
+                  <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-8 lg:gap-16 max-w-6xl mx-auto">
+                    {ESTILOS.map((e) => {
+                      const selected = p.estilo === e;
+                      const legenda =
+                        e === "Underground" ? "Boné, óculos e relógio" : "Pingente puro";
+                      const bonecoSrc =
+                        (p.categoria && BONECOS[p.categoria]?.[p.genero!]?.[e]) ||
+                        ESTILO_IMAGENS[e];
+                      return (
+                        <button
+                          key={e}
+                          onClick={() => {
+                            const desmarcar = p.estilo === e;
+                            p.setEstilo(desmarcar ? null : e);
+                            if (!desmarcar) setTimeout(() => autoAdvance(3), 280);
+                          }}
+                          className={`group relative flex flex-col items-center gap-3 p-3 md:p-4 transition-all duration-300 ${
+                            selected ? "bg-accent/[0.06]" : "opacity-70 hover:opacity-100"
+                          }`}
+                        >
+                          {selected && (
+                            <>
+                              <span className="absolute -top-[5px] -left-[5px] h-2.5 w-2.5 border-t border-l border-accent" />
+                              <span className="absolute -top-[5px] -right-[5px] h-2.5 w-2.5 border-t border-r border-accent" />
+                              <span className="absolute -bottom-[5px] -left-[5px] h-2.5 w-2.5 border-b border-l border-accent" />
+                              <span className="absolute -bottom-[5px] -right-[5px] h-2.5 w-2.5 border-b border-r border-accent" />
+                              <span className="absolute -top-2.5 -right-2.5 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md z-10">
+                                <Check className="h-3 w-3" strokeWidth={3} />
+                              </span>
+                            </>
+                          )}
+                          <div
+                            className={`relative p-2 md:p-3 bg-card transition-all ${
+                              selected ? "" : "grayscale-[40%] group-hover:grayscale-0"
+                            }`}
+                          >
+                            <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent/70" />
+                            <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent/70" />
+                            <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent/70" />
+                            <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent/70" />
+                            <MagnifierImage
+                              src={bonecoSrc}
+                              alt={`Estilo ${e} ${p.genero}`}
+                              className="w-36 h-36 sm:w-48 sm:h-48 md:w-72 md:h-72 lg:w-[26rem] lg:h-[26rem] xl:w-[32rem] xl:h-[32rem] bg-white"
+                            />
+                          </div>
+                          <span
+                            className={`font-display tracking-[0.25em] uppercase text-xs md:text-sm transition-colors ${
+                              selected ? "text-accent" : "text-foreground/85 group-hover:text-accent"
+                            }`}
+                          >
+                            {e}
+                          </span>
+                          <span className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-muted-foreground/80">
+                            {legenda}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </StepPanel>
 
-            <StepPanel index={5} step={step} numeral="VI" label="Inscrição" hint="Escolha apenas UMA inscrição para sua joia">
+            <StepPanel index={4} step={step} numeral="V" label="Inscrição" hint="Escolha apenas UMA inscrição para sua joia">
               <div className="max-w-2xl mx-auto space-y-5">
                 {/* Informativo + escolha de caminho */}
                 <div className="border border-accent/30 bg-card/40 p-5 md:p-6 text-center relative">
