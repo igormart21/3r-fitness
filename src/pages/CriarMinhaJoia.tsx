@@ -575,7 +575,7 @@ const StepperExperience = (p: StepperProps) => {
   const goNext = () => setStep((s) => Math.min(total - 1, s + 1));
 
   return (
-    <main className="container mx-auto px-4 pt-8 pb-32 md:pt-10 md:pb-36 max-w-7xl">
+    <main className="container mx-auto px-4 pt-8 pb-44 md:pt-10 md:pb-48 max-w-7xl">
       <div className="text-center mb-6 md:mb-8">
         <div className="flex items-center justify-center gap-3 mb-3">
           <span className="h-px w-8 bg-accent/60" />
