@@ -34,8 +34,8 @@ Deno.serve(async (req) => {
 
     const estiloDesc =
       estilo === "Underground"
-        ? "estilo underground, pingente com pequenos acessórios e detalhes texturizados"
-        : "estilo clássico, pingente puro, contornos limpos e elegantes";
+        ? "ESTILO UNDERGROUND OBRIGATÓRIO: a miniatura da pessoa DEVE aparecer usando acessórios urbanos visíveis e bem detalhados — correntes grossas no pescoço, boné, óculos escuros, piercings, tatuagens esculpidas em relevo, capuz/moletom ou jaqueta. Os acessórios são parte essencial do pingente e precisam ser claramente reconhecíveis na escultura, com texturas marcadas e detalhes ricos no metal."
+        : "ESTILO CLÁSSICO: pingente puro e minimalista, apenas a silhueta da pessoa em pose limpa, SEM acessórios extras, contornos suaves e elegantes.";
 
     const inscricaoTexto = inscricao?.trim()
       ? `Grave delicadamente a inscrição "${inscricao}" na base ou borda do pingente, em tipografia serifada fina e refinada.`
