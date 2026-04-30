@@ -16,6 +16,10 @@ export const Hero = () => {
           0% { background-position: 200% 0; }
           100% { background-position: -200% 0; }
         }
+        @keyframes hero-shine {
+          0% { transform: translateX(-150%) skewX(-20deg); }
+          60%, 100% { transform: translateX(250%) skewX(-20deg); }
+        }
       `}</style>
       {/* CTA sobreposto logo abaixo da coroa */}
       <Link
@@ -29,6 +33,16 @@ export const Hero = () => {
           animation: "hero-shimmer 4s linear infinite",
         }}
       >
+        {/* Faixa de luz que cruza o botão continuamente */}
+        <span
+          className="pointer-events-none absolute top-0 left-0 h-full w-1/3"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.85) 50%, transparent 100%)",
+            animation: "hero-shine 3.5s ease-in-out infinite",
+            mixBlendMode: "screen",
+          }}
+        />
         <Sparkles className="h-3.5 w-3.5 md:h-4 md:w-4 text-black relative z-10" strokeWidth={1.5} />
         <span className="relative z-10 font-display text-xs md:text-sm tracking-[0.4em] uppercase text-black">
           Criar minha joia
