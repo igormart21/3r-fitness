@@ -41,7 +41,11 @@ Deno.serve(async (req) => {
       ? `Grave delicadamente a inscrição "${inscricao}" na base ou borda do pingente, em tipografia serifada fina e refinada.`
       : "";
 
-    const prompt = `Transforme a pessoa/pose desta foto em uma escultura miniatura tridimensional em ${metalCor}, no formato de um pingente de joia de luxo pendurado por uma argolinha pequena no topo. Mantenha fielmente a silhueta, postura e proporções da pessoa da foto original. ${estiloDesc}. Acabamento joalheiro premium, reflexos metálicos sutis, sombras suaves. ${inscricaoTexto} Fundo neutro preto profundo, iluminação editorial de catálogo de joalheria. Apenas o pingente isolado em destaque, fotografia macro de produto.`;
+    const corEnfase = isOuro
+      ? "O PINGENTE INTEIRO DEVE SER 100% DOURADO (ouro amarelo). Cor obrigatória: amarelo-ouro brilhante. Proibido qualquer tom prateado, cinza ou branco no metal."
+      : "O PINGENTE INTEIRO DEVE SER 100% PRATEADO (prata polida). Cor obrigatória: prata cromada brilhante. Proibido qualquer tom dourado, amarelo ou cobre no metal.";
+
+    const prompt = `Transforme a pessoa/pose desta foto em uma escultura miniatura tridimensional feita em ${metalCor}, no formato de um pingente de joia de luxo pendurado por uma argolinha pequena no topo. ${corEnfase} Mantenha fielmente a silhueta, postura e proporções da pessoa da foto original. ${estiloDesc}. Acabamento joalheiro premium, reflexos metálicos coerentes com a cor do metal especificado, sombras suaves. ${inscricaoTexto} Fundo neutro preto profundo, iluminação editorial de catálogo de joalheria. Apenas o pingente isolado em destaque, fotografia macro de produto.`;
 
     const aiResponse = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",
