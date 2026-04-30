@@ -1087,12 +1087,36 @@ const StepperExperience = (p: StepperProps) => {
                   />
                 </CtaField>
                 {p.personalizacaoEscolhida && (
-                  <button
-                    onClick={() => { p.limparPersonalizacao(); p.setOpenField(null); }}
-                    className="block mx-auto mt-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
-                  >
-                    Trocar inscrição
-                  </button>
+                  <>
+                    <button
+                      onClick={() => { p.limparPersonalizacao(); p.setOpenField(null); }}
+                      className="block mx-auto mt-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
+                    >
+                      Trocar inscrição
+                    </button>
+                    <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center animate-in fade-in slide-in-from-bottom-2 duration-400">
+                      <Button
+                        onClick={p.handleAdicionarAoCarrinho}
+                        disabled={p.adicionando}
+                        size="lg"
+                        className="bg-accent hover:bg-accent/90 text-black font-bold tracking-[0.15em] uppercase text-xs px-8"
+                      >
+                        {p.adicionando ? (
+                          <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Adicionando...</>
+                        ) : (
+                          <><Check className="h-4 w-4 mr-2" /> Adicionar ao carrinho</>
+                        )}
+                      </Button>
+                      <Button
+                        onClick={p.handleProsseguirParaPagamento}
+                        disabled={p.adicionando}
+                        size="lg"
+                        className="bg-accent hover:bg-accent/90 text-black font-bold tracking-[0.15em] uppercase text-xs px-8"
+                      >
+                        Prosseguir para pagamento
+                      </Button>
+                    </div>
+                  </>
                 )}
               </div>
             </StepPanel>
