@@ -176,10 +176,10 @@ const CriarMinhaJoia = () => {
 
         {/* Modalidade — fileira única, botões médios */}
         <div className="mb-8">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
+          <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3 text-center">
             Modalidade
           </h2>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 justify-center">
             {CATEGORIAS.map((cat) => (
               <button
                 key={cat}
@@ -198,10 +198,10 @@ const CriarMinhaJoia = () => {
 
         {/* Material */}
         <div className="mb-8">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
+          <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3 text-center">
             Material
           </h2>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 justify-center">
             {MATERIAIS.map((m) => (
               <button
                 key={m}
