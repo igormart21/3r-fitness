@@ -1,5 +1,5 @@
 import { useState, useRef, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Upload, Check, Loader2, Sparkles, ChevronDown, Camera, Wand2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -347,6 +347,7 @@ const CriarMinhaJoia = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addItem = useCartStore((s) => s.addItem);
   const getCheckoutUrl = useCartStore((s) => s.getCheckoutUrl);
+  const navigate = useNavigate();
 
   // ===== Seção VII — Foto → Pingente (inscrição independente) =====
   const [pingenteNome, setPingenteNome] = useState("");
@@ -501,6 +502,8 @@ const CriarMinhaJoia = () => {
       });
 
       toast.success("Joia personalizada adicionada ao carrinho!");
+      // Redireciona para o catálogo para o cliente continuar comprando
+      setTimeout(() => navigate("/catalogo"), 600);
     } catch (err) {
       console.error(err);
       toast.error("Não foi possível adicionar ao carrinho. Tente novamente.");
