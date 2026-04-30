@@ -18,7 +18,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { imageDataUrl, material, estilo, inscricao } = await req.json();
+    const { imageDataUrl, material, estilo, genero, inscricao } = await req.json();
 
     if (!imageDataUrl || typeof imageDataUrl !== "string") {
       return new Response(JSON.stringify({ error: "imageDataUrl é obrigatório" }), {
@@ -45,7 +45,12 @@ Deno.serve(async (req) => {
       ? "O PINGENTE INTEIRO DEVE SER 100% DOURADO (ouro amarelo). Cor obrigatória: amarelo-ouro brilhante. Proibido qualquer tom prateado, cinza ou branco no metal."
       : "O PINGENTE INTEIRO DEVE SER 100% PRATEADO (prata polida). Cor obrigatória: prata cromada brilhante. Proibido qualquer tom dourado, amarelo ou cobre no metal.";
 
-    const prompt = `Transforme a pessoa/pose desta foto em uma escultura miniatura tridimensional feita em ${metalCor}, no formato de um pingente de joia de luxo pendurado por uma argolinha pequena no topo. ${corEnfase} Mantenha fielmente a silhueta, postura e proporções da pessoa da foto original. ${estiloDesc}. Acabamento joalheiro premium, reflexos metálicos coerentes com a cor do metal especificado, sombras suaves. ${inscricaoTexto} Fundo neutro preto profundo, iluminação editorial de catálogo de joalheria. Apenas o pingente isolado em destaque, fotografia macro de produto.`;
+    const generoTexto =
+      genero === "Feminino"
+        ? "A figura DEVE ser claramente FEMININA, com silhueta, traços e proporções de uma mulher."
+        : "A figura DEVE ser claramente MASCULINA, com silhueta, traços e proporções de um homem.";
+
+    const prompt = `Transforme a pessoa/pose desta foto em uma escultura miniatura tridimensional feita em ${metalCor}, no formato de um pingente de joia de luxo pendurado por uma argolinha pequena no topo. ${corEnfase} ${generoTexto} Mantenha fielmente a silhueta, postura e proporções da pessoa da foto original. ${estiloDesc}. Acabamento joalheiro premium, reflexos metálicos coerentes com a cor do metal especificado, sombras suaves. ${inscricaoTexto} Fundo neutro preto profundo, iluminação editorial de catálogo de joalheria. Apenas o pingente isolado em destaque, fotografia macro de produto.`;
 
     const aiResponse = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",
