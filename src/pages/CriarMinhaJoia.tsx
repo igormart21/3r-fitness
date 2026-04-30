@@ -740,7 +740,11 @@ const StepperExperience = (p: StepperProps) => {
                   return (
                     <button
                       key={m}
-                      onClick={() => p.handleSelecionarMaterial(m)}
+                      onClick={() => {
+                        const desmarcar = p.material === m;
+                        p.handleSelecionarMaterial(m);
+                        if (!desmarcar) setTimeout(() => autoAdvance(1), 280);
+                      }}
                       className={`group relative flex flex-col items-center gap-3 p-3 md:p-4 transition-all duration-300 ${
                         selected ? "bg-accent/[0.06]" : "opacity-70 hover:opacity-100"
                       }`}
