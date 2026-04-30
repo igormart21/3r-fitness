@@ -1111,8 +1111,4 @@ const Chip = ({ label, value }: { label: string; value: string | null }) => (
   </span>
 );
 
-    </div>
-  );
-};
-
 export default CriarMinhaJoia;
