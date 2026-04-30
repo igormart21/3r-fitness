@@ -733,7 +733,7 @@ const StepperExperience = (p: StepperProps) => {
             </StepPanel>
 
             <StepPanel numeral="II" label="Material" hint="Escolha a essência">
-              <div className="grid grid-cols-2 gap-4 md:gap-8 max-w-3xl mx-auto">
+              <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-8 lg:gap-12 max-w-4xl mx-auto">
                 {MATERIAIS.map((m) => {
                   const selected = p.material === m;
                   const legenda = m === "Prata 925" ? "Polimento Espelhado" : "Acabamento Premium";
