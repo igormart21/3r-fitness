@@ -835,14 +835,11 @@ const StepperExperience = (p: StepperProps) => {
                         <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent/70" />
                         <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent/70" />
                         <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent/70" />
-                        <div className="w-36 h-36 sm:w-48 sm:h-48 md:w-72 md:h-72 lg:w-[26rem] lg:h-[26rem] xl:w-[32rem] xl:h-[32rem] overflow-hidden bg-white">
-                          <img
-                            src={MATERIAL_IMAGENS[m]}
-                            alt={`Mostruário ${m}`}
-                            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-                            loading="lazy"
-                          />
-                        </div>
+                        <MagnifierImage
+                          src={MATERIAL_IMAGENS[m]}
+                          alt={`Mostruário ${m}`}
+                          className="w-36 h-36 sm:w-48 sm:h-48 md:w-72 md:h-72 lg:w-[26rem] lg:h-[26rem] xl:w-[32rem] xl:h-[32rem] bg-white"
+                        />
                       </div>
                       <span
                         className={`font-display tracking-[0.25em] uppercase text-xs md:text-sm transition-colors ${
