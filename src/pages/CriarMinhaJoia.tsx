@@ -856,7 +856,11 @@ const StepperExperience = (p: StepperProps) => {
                     <LuxButton
                       key={e}
                       selected={p.estilo === e}
-                      onClick={() => p.setEstilo(p.estilo === e ? null : e)}
+                      onClick={() => {
+                        const desmarcar = p.estilo === e;
+                        p.setEstilo(desmarcar ? null : e);
+                        if (!desmarcar) setTimeout(() => autoAdvance(4), 280);
+                      }}
                       size="lg"
                     >
                       {e}
