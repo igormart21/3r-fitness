@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
-import modelLeft from "@/assets/model-3r.png";
+import modelLeft from "@/assets/model-left-new.png";
 import modelRight from "@/assets/model-original.jpg";
 
 // 👇 TROQUE AQUI PARA TESTAR: "offwhite" | "preto" | "grafite" | "bokeh"
