@@ -7,13 +7,6 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useCartStore } from "@/stores/cartStore";
 import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/lib/shopify";
-import estiloUndergroundImg from "@/assets/estilo-underground.jpg";
-import estiloClassicoImg from "@/assets/estilo-classico.jpg";
-
-const ESTILO_IMAGENS: Record<string, string> = {
-  Underground: estiloUndergroundImg,
-  "Clássico": estiloClassicoImg,
-};
 
 type Categoria =
   | "Corredores"
@@ -36,7 +29,7 @@ const CATEGORIAS: Categoria[] = [
 ];
 
 const MATERIAIS: Material[] = ["Prata 925", "Ouro 18K"];
-const ESTILOS: Estilo[] = ["Underground", "Clássico"];
+const ESTILOS: Estilo[] = ["Botão Reta", "Underground", "Clássico"];
 
 const CriarMinhaJoia = () => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -122,29 +115,7 @@ const CriarMinhaJoia = () => {
   };
 
   return (
-    <div
-      className="min-h-screen bg-background text-foreground"
-      style={{
-        // Preto fosco + dourado (escopado a esta página)
-        ["--background" as any]: "0 0% 7%",
-        ["--foreground" as any]: "43 65% 70%",
-        ["--card" as any]: "0 0% 9%",
-        ["--card-foreground" as any]: "43 65% 70%",
-        ["--popover" as any]: "0 0% 9%",
-        ["--popover-foreground" as any]: "43 65% 70%",
-        ["--primary" as any]: "43 65% 55%",
-        ["--primary-foreground" as any]: "0 0% 7%",
-        ["--secondary" as any]: "0 0% 12%",
-        ["--secondary-foreground" as any]: "43 65% 70%",
-        ["--muted" as any]: "0 0% 12%",
-        ["--muted-foreground" as any]: "43 30% 60%",
-        ["--accent" as any]: "43 65% 55%",
-        ["--accent-foreground" as any]: "0 0% 7%",
-        ["--border" as any]: "43 55% 45%",
-        ["--input" as any]: "43 55% 45%",
-        ["--ring" as any]: "43 65% 55%",
-      }}
-    >
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border bg-card/50 backdrop-blur sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -173,8 +144,9 @@ const CriarMinhaJoia = () => {
         {step === 1 && (
           <section>
             <div className="text-center mb-10">
+              <h1 className="font-display text-4xl md:text-5xl mb-3">Crie sua joia</h1>
               <p className="text-muted-foreground text-lg">
-                Comece escolhendo sua modalidade
+                Comece escolhendo a sua categoria
               </p>
             </div>
 
@@ -247,29 +219,17 @@ const CriarMinhaJoia = () => {
                 <h2 className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
                   Estilo
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {ESTILOS.map((e) => (
                     <button
                       key={e}
                       onClick={() => setEstilo(e)}
-                      className={`rounded-lg border-2 p-4 text-center transition-all hover:border-accent overflow-hidden ${
+                      className={`rounded-lg border-2 p-6 text-center transition-all hover:border-accent ${
                         estilo === e
                           ? "border-accent bg-accent/5"
                           : "border-border bg-card"
                       }`}
                     >
-                      {ESTILO_IMAGENS[e] && (
-                        <div className="aspect-square mb-3 rounded-md overflow-hidden bg-background">
-                          <img
-                            src={ESTILO_IMAGENS[e]}
-                            alt={`Estilo ${e}`}
-                            width={768}
-                            height={768}
-                            loading="lazy"
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      )}
                       <p className="font-display text-xl">{e}</p>
                     </button>
                   ))}
