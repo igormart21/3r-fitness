@@ -26,6 +26,7 @@ type Categoria =
 type Material = "Prata 925" | "Ouro 18K";
 type Estilo = "Botão Reta" | "Underground" | "Clássico";
 type Tamanho = "Grande" | "Médio" | "Pequeno";
+type Genero = "Masculino" | "Feminino";
 
 const CATEGORIAS: Categoria[] = [
   "Corredores",
@@ -39,13 +40,14 @@ const CATEGORIAS: Categoria[] = [
 const MATERIAIS: Material[] = ["Prata 925", "Ouro 18K"];
 const ESTILOS: Estilo[] = ["Underground", "Clássico"];
 const TAMANHOS: Tamanho[] = ["Grande", "Médio", "Pequeno"];
+const GENEROS: Genero[] = ["Masculino", "Feminino"];
 
 const CriarMinhaJoia = () => {
-  const [step, setStep] = useState<1 | 2 | 3>(1);
   const [categoria, setCategoria] = useState<Categoria | null>(null);
   const [material, setMaterial] = useState<Material | null>(null);
   const [estilo, setEstilo] = useState<Estilo | null>(null);
   const [tamanho, setTamanho] = useState<Tamanho | null>(null);
+  const [genero, setGenero] = useState<Genero | null>(null);
 
   const [foto, setFoto] = useState<string | null>(null);
   const [nome, setNome] = useState("");
