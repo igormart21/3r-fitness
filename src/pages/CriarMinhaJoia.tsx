@@ -682,8 +682,8 @@ const StepperExperience = (p: StepperProps) => {
           Crie sua joia
         </h1>
         <p
-          className="text-white text-lg md:text-xl italic font-light tracking-wide"
-          style={{ fontFamily: "'Pinyon Script', 'Cormorant Garamond', serif" }}
+          className="text-white text-2xl md:text-3xl italic tracking-wide"
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
         >
           Renata Ramos Ribeiro
         </p>
