@@ -12,10 +12,44 @@ import estiloUndergroundImg from "@/assets/estilo-underground.jpg";
 import estiloClassicoImg from "@/assets/estilo-classico.jpg";
 import materialPrataImg from "@/assets/material-prata.jpg";
 import materialOuroImg from "@/assets/material-ouro.jpg";
+import bonecoMascClassico from "@/assets/boneco-masc-classico.jpg";
+import bonecoMascUnderground from "@/assets/boneco-masc-underground.jpg";
+import bonecoFemClassico from "@/assets/boneco-fem-classico.jpg";
+import bonecoFemUnderground from "@/assets/boneco-fem-underground.jpg";
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
   "Clássico": estiloClassicoImg,
+};
+
+// Bonecos por Modalidade × Gênero × Estilo.
+// Por enquanto cada combinação aponta para um placeholder compartilhado por gênero+estilo.
+// Para customizar uma modalidade, basta substituir o import correspondente abaixo.
+const BONECOS: Record<string, Record<string, Record<string, string>>> = {
+  Corredores: {
+    Masculino: { "Clássico": bonecoMascClassico, Underground: bonecoMascUnderground },
+    Feminino: { "Clássico": bonecoFemClassico, Underground: bonecoFemUnderground },
+  },
+  "Musculação": {
+    Masculino: { "Clássico": bonecoMascClassico, Underground: bonecoMascUnderground },
+    Feminino: { "Clássico": bonecoFemClassico, Underground: bonecoFemUnderground },
+  },
+  Fisiculturismo: {
+    Masculino: { "Clássico": bonecoMascClassico, Underground: bonecoMascUnderground },
+    Feminino: { "Clássico": bonecoFemClassico, Underground: bonecoFemUnderground },
+  },
+  Ciclista: {
+    Masculino: { "Clássico": bonecoMascClassico, Underground: bonecoMascUnderground },
+    Feminino: { "Clássico": bonecoFemClassico, Underground: bonecoFemUnderground },
+  },
+  Crossfit: {
+    Masculino: { "Clássico": bonecoMascClassico, Underground: bonecoMascUnderground },
+    Feminino: { "Clássico": bonecoFemClassico, Underground: bonecoFemUnderground },
+  },
+  Triatlon: {
+    Masculino: { "Clássico": bonecoMascClassico, Underground: bonecoMascUnderground },
+    Feminino: { "Clássico": bonecoFemClassico, Underground: bonecoFemUnderground },
+  },
 };
 
 const MATERIAL_IMAGENS: Record<string, string> = {
