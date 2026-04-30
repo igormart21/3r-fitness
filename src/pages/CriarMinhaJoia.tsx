@@ -909,7 +909,11 @@ const StepperExperience = (p: StepperProps) => {
                       <LuxButton
                         key={opt}
                         selected={p.km === opt}
-                        onClick={() => p.setKm(p.km === opt ? "" : opt)}
+                        onClick={() => {
+                          const desmarcar = p.km === opt;
+                          p.setKm(desmarcar ? "" : opt);
+                          if (!desmarcar) setTimeout(() => autoAdvance(5), 280);
+                        }}
                       >
                         {opt}
                       </LuxButton>
