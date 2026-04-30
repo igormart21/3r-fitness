@@ -243,7 +243,37 @@ const CriarMinhaJoia = () => {
   const [km, setKm] = useState("");
   const [tempo, setTempo] = useState("");
   const [adicionando, setAdicionando] = useState(false);
-  const [openField, setOpenField] = useState<CtaFieldKey | null>("nome");
+  const [openField, setOpenField] = useState<CtaFieldKey | null>(null);
+
+  // Apenas UMA opção de personalização final pode ser preenchida por joia
+  const personalizacaoEscolhida: CtaFieldKey | null = nome.trim()
+    ? "nome"
+    : km
+    ? "km"
+    : data.trim()
+    ? "data"
+    : tempo.trim()
+    ? "tempo"
+    : null;
+
+  const limparPersonalizacao = () => {
+    setNome("");
+    setKm("");
+    setData("");
+    setTempo("");
+  };
+
+  const abrirCampoExclusivo = (key: CtaFieldKey) => {
+    if (openField === key) {
+      setOpenField(null);
+      return;
+    }
+    // Se já existe valor em outro campo, limpa antes de trocar
+    if (personalizacaoEscolhida && personalizacaoEscolhida !== key) {
+      limparPersonalizacao();
+    }
+    setOpenField(key);
+  };
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addItem = useCartStore((s) => s.addItem);
