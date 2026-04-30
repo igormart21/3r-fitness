@@ -1046,7 +1046,8 @@ const StepperExperience = (p: StepperProps) => {
                         onClick={() => {
                           const desmarcar = p.km === opt;
                           p.setKm(desmarcar ? "" : opt);
-                          if (!desmarcar) setTimeout(() => autoAdvance(5), 280);
+                          // Não avança automaticamente: o cliente deve permanecer na Seção 6
+                          // para clicar nos botões dourados (Adicionar ao carrinho / Prosseguir).
                         }}
                       >
                         {opt}
