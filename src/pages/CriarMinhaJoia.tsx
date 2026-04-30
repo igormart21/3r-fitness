@@ -678,12 +678,7 @@ const StepperExperience = (p: StepperProps) => {
         <p className="text-[10px] uppercase tracking-[0.4em] text-accent/80 mb-2 flex items-center justify-center gap-2 flex-wrap">
           <span>Atelier · Edição Personalizada</span>
           <span className="text-accent/40">·</span>
-          <span
-            className="text-white text-base md:text-lg italic normal-case tracking-wide"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
-          >
-            Renata Ramos Ribeiro
-          </span>
+          <span className="text-accent/80">Renata Ramos Ribeiro</span>
         </p>
         <h1 className="font-display text-3xl md:text-4xl tracking-tight mb-2">
           Crie sua joia
