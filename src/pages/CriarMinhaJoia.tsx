@@ -29,7 +29,7 @@ const CATEGORIAS: Categoria[] = [
 ];
 
 const MATERIAIS: Material[] = ["Prata 925", "Ouro 18K"];
-const ESTILOS: Estilo[] = ["Botão Reta", "Underground", "Clássico"];
+const ESTILOS: Estilo[] = ["Underground", "Clássico"];
 
 const CriarMinhaJoia = () => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
