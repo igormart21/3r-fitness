@@ -878,7 +878,7 @@ const StepperExperience = (p: StepperProps) => {
                           <img
                             src={ESTILO_IMAGENS[e]}
                             alt={`Estilo ${e}`}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                             loading="lazy"
                           />
                         </div>
