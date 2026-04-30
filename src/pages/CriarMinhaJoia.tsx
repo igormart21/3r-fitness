@@ -1178,8 +1178,11 @@ const StepperExperience = (p: StepperProps) => {
                           </span>
                         </button>
                       );
-                    })}
+                     })}
                   </div>
+                  <p className="mt-6 text-center text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-accent/80">
+                    Pingentes legítimos em Ouro 18K e Prata 925
+                  </p>
                 </div>
               )}
             </StepPanel>
