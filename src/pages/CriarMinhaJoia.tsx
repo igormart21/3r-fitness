@@ -1182,10 +1182,10 @@ const StepperExperience = (p: StepperProps) => {
                         <MagnifierImage
                           src={p.pingenteGerado}
                           alt="Pingente gerado"
-                          className="w-full max-w-[360px] aspect-square bg-black border border-accent/50"
+                          className="w-full max-w-[320px] aspect-square bg-black border border-accent/50"
                           zoom={3.2}
                           lensSize={150}
-                          fit="cover"
+                          fit="contain"
                         />
                         {p.fotoPingente && (
                           <button
