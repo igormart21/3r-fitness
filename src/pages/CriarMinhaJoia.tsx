@@ -12,44 +12,45 @@ import estiloUndergroundImg from "@/assets/estilo-underground.jpg";
 import estiloClassicoImg from "@/assets/estilo-classico.jpg";
 import materialPrataImg from "@/assets/material-prata.jpg";
 import materialOuroImg from "@/assets/material-ouro.jpg";
-import bonecoMascClassico from "@/assets/boneco-masc-classico.jpg";
-import bonecoMascUnderground from "@/assets/boneco-masc-underground.jpg";
-import bonecoFemClassico from "@/assets/boneco-fem-classico.jpg";
-import bonecoFemUnderground from "@/assets/boneco-fem-underground.jpg";
+// Bonecos OURO (Ouro 18K)
+import bonecoMascClassicoOuro from "@/assets/boneco-masc-classico-ouro.jpg";
+import bonecoMascUndergroundOuro from "@/assets/boneco-masc-underground-ouro.jpg";
+import bonecoFemClassicoOuro from "@/assets/boneco-fem-classico-ouro.jpg";
+import bonecoFemUndergroundOuro from "@/assets/boneco-fem-underground-ouro.jpg";
+// Bonecos PRATA (Prata 925)
+import bonecoMascClassicoPrata from "@/assets/boneco-masc-classico-prata.jpg";
+import bonecoMascUndergroundPrata from "@/assets/boneco-masc-underground-prata.jpg";
+import bonecoFemClassicoPrata from "@/assets/boneco-fem-classico-prata.jpg";
+import bonecoFemUndergroundPrata from "@/assets/boneco-fem-underground-prata.jpg";
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
   "Clássico": estiloClassicoImg,
 };
 
-// Bonecos por Modalidade × Gênero × Estilo.
-// Por enquanto cada combinação aponta para um placeholder compartilhado por gênero+estilo.
-// Para customizar uma modalidade, basta substituir o import correspondente abaixo.
-const BONECOS: Record<string, Record<string, Record<string, string>>> = {
-  Corredores: {
-    Masculino: { "Clássico": bonecoMascClassico, Underground: bonecoMascUnderground },
-    Feminino: { "Clássico": bonecoFemClassico, Underground: bonecoFemUnderground },
+// Mapa padrão de bonecos por Material × Gênero × Estilo (fallback compartilhado).
+// Usado quando uma modalidade ainda não tem ilustrações próprias.
+const BONECOS_DEFAULT: Record<string, Record<string, Record<string, string>>> = {
+  "Ouro 18K": {
+    Masculino: { "Clássico": bonecoMascClassicoOuro, Underground: bonecoMascUndergroundOuro },
+    Feminino: { "Clássico": bonecoFemClassicoOuro, Underground: bonecoFemUndergroundOuro },
   },
-  "Musculação": {
-    Masculino: { "Clássico": bonecoMascClassico, Underground: bonecoMascUnderground },
-    Feminino: { "Clássico": bonecoFemClassico, Underground: bonecoFemUnderground },
+  "Prata 925": {
+    Masculino: { "Clássico": bonecoMascClassicoPrata, Underground: bonecoMascUndergroundPrata },
+    Feminino: { "Clássico": bonecoFemClassicoPrata, Underground: bonecoFemUndergroundPrata },
   },
-  Fisiculturismo: {
-    Masculino: { "Clássico": bonecoMascClassico, Underground: bonecoMascUnderground },
-    Feminino: { "Clássico": bonecoFemClassico, Underground: bonecoFemUnderground },
-  },
-  Ciclista: {
-    Masculino: { "Clássico": bonecoMascClassico, Underground: bonecoMascUnderground },
-    Feminino: { "Clássico": bonecoFemClassico, Underground: bonecoFemUnderground },
-  },
-  Crossfit: {
-    Masculino: { "Clássico": bonecoMascClassico, Underground: bonecoMascUnderground },
-    Feminino: { "Clássico": bonecoFemClassico, Underground: bonecoFemUnderground },
-  },
-  Triatlon: {
-    Masculino: { "Clássico": bonecoMascClassico, Underground: bonecoMascUnderground },
-    Feminino: { "Clássico": bonecoFemClassico, Underground: bonecoFemUnderground },
-  },
+};
+
+// Bonecos por Modalidade × Material × Gênero × Estilo.
+// Para customizar uma modalidade específica, sobrescreva aqui.
+// Estrutura: BONECOS[modalidade][material][genero][estilo] = imagem
+const BONECOS: Record<string, Record<string, Record<string, Record<string, string>>>> = {
+  Corredores: BONECOS_DEFAULT,
+  "Musculação": BONECOS_DEFAULT,
+  Fisiculturismo: BONECOS_DEFAULT,
+  Ciclista: BONECOS_DEFAULT,
+  Crossfit: BONECOS_DEFAULT,
+  Triatlon: BONECOS_DEFAULT,
 };
 
 const MATERIAL_IMAGENS: Record<string, string> = {
@@ -985,7 +986,7 @@ const StepperExperience = (p: StepperProps) => {
                       const legenda =
                         e === "Underground" ? "Boné, óculos e relógio" : "Pingente puro";
                       const bonecoSrc =
-                        (p.categoria && BONECOS[p.categoria]?.[p.genero!]?.[e]) ||
+                        (p.categoria && p.material && BONECOS[p.categoria]?.[p.material]?.[p.genero!]?.[e]) ||
                         ESTILO_IMAGENS[e];
                       return (
                         <button
