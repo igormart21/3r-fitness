@@ -79,6 +79,11 @@ const CriarMinhaJoia = () => {
   };
 
   const handleSelecionarMaterial = (m: Material) => {
+    if (material === m) {
+      setMaterial(null);
+      setEstilo(null);
+      return;
+    }
     setMaterial(m);
     setEstilo(null);
   };
@@ -296,7 +301,7 @@ const CriarMinhaJoia = () => {
               {ESTILOS.map((e) => (
                 <button
                   key={e}
-                  onClick={() => setEstilo(e)}
+                  onClick={() => setEstilo(estilo === e ? null : e)}
                   className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
                     estilo === e
                       ? "border-accent bg-accent/5"
