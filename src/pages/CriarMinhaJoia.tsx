@@ -683,12 +683,11 @@ const StepperExperience = (p: StepperProps) => {
   const stepCompleted = useMemo(() => [
     !!p.categoria,
     !!p.material,
-    !!p.genero,
     !!p.tamanho,
-    !!p.estilo,
+    !!p.estilo && !!p.genero,
     !!p.personalizacaoEscolhida,
     true,
-  ], [p.categoria, p.material, p.genero, p.tamanho, p.estilo, p.personalizacaoEscolhida]);
+  ], [p.categoria, p.material, p.tamanho, p.estilo, p.genero, p.personalizacaoEscolhida]);
 
   const allReady =
     !!p.categoria && !!p.material && !!p.genero && !!p.tamanho && !!p.estilo && !!p.personalizacaoEscolhida;
