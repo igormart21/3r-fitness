@@ -918,6 +918,18 @@ const StepperExperience = (p: StepperProps) => {
             </StepPanel>
 
             <StepPanel index={4} step={step} numeral="V" label="Estilo" hint="A alma da peça">
+              <div className="max-w-2xl mx-auto mb-5 md:mb-6 px-4 py-3 border border-accent/40 bg-accent/[0.06] text-center relative">
+                <span className="absolute top-0 left-0 h-2.5 w-2.5 border-t border-l border-accent" />
+                <span className="absolute top-0 right-0 h-2.5 w-2.5 border-t border-r border-accent" />
+                <span className="absolute bottom-0 left-0 h-2.5 w-2.5 border-b border-l border-accent" />
+                <span className="absolute bottom-0 right-0 h-2.5 w-2.5 border-b border-r border-accent" />
+                <p className="text-[11px] md:text-xs tracking-[0.15em] uppercase text-accent font-medium">
+                  Imagens meramente ilustrativas
+                </p>
+                <p className="text-[11px] md:text-sm text-foreground/85 mt-1 normal-case tracking-normal">
+                  A cor do seu pingente será a do <span className="text-accent">material escolhido</span> na etapa anterior.
+                </p>
+              </div>
               <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-8 lg:gap-16 max-w-6xl mx-auto">
                 {ESTILOS.map((e) => {
                   const selected = p.estilo === e;
