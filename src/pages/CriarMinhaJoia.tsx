@@ -1020,7 +1020,11 @@ const StepperExperience = (p: StepperProps) => {
                     {ESTILOS.map((e) => {
                       const selected = p.estilo === e;
                       const legenda =
-                        e === "Underground" ? "Boné, óculos e relógio" : "Pingente puro";
+                        e === "Underground"
+                          ? p.categoria === "Musculação"
+                            ? "Boné e relógio"
+                            : "Boné, óculos e relógio"
+                          : "Pingente puro";
                       const bonecoSrc =
                         (p.categoria && p.material && BONECOS[p.categoria]?.[p.material]?.[p.genero!]?.[e]) ||
                         ESTILO_IMAGENS[e];
