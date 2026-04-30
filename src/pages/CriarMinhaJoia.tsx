@@ -301,8 +301,8 @@ const CriarMinhaJoia = () => {
   };
 
   const handleAdicionarAoCarrinho = async () => {
-    if (!nome.trim()) {
-      toast.error("Por favor, preencha seu nome");
+    if (!personalizacaoEscolhida) {
+      toast.error("Escolha uma inscrição para sua joia (Nome, KM, Data ou Tempo)");
       return;
     }
 
