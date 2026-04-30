@@ -974,13 +974,13 @@ const StepperExperience = (p: StepperProps) => {
                   </p>
                   <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
                     <Button
-                      onClick={() => p.setStep(6)}
+                      onClick={() => setStep(6)}
                       className="bg-accent hover:bg-accent/90 text-accent-foreground tracking-[0.2em] uppercase text-xs px-6"
                     >
                       <Camera className="h-4 w-4 mr-2" /> Anexar foto
                     </Button>
                     <Button
-                      onClick={() => p.setShowBalao(true)}
+                      onClick={() => setShowBalao(true)}
                       variant="outline"
                       className="border-accent text-accent hover:bg-accent/10 tracking-[0.2em] uppercase text-xs px-6"
                     >
@@ -990,7 +990,7 @@ const StepperExperience = (p: StepperProps) => {
                 </div>
 
                 {/* Balão de fala */}
-                {p.showBalao && (
+                {showBalao && (
                   <div className="relative mx-auto max-w-md animate-in fade-in slide-in-from-top-2 duration-300">
                     <div className="relative bg-accent text-accent-foreground px-5 py-3 rounded-2xl shadow-lg text-sm font-medium text-center">
                       Selecione uma inscrição abaixo para sua joia ✨
