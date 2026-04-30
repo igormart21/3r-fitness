@@ -40,7 +40,7 @@ export const Header = () => {
         </div>
         <nav className="hidden md:flex items-center gap-8 text-sm">
           <Link to="/" className="hover:text-accent transition-smooth">Loja</Link>
-          <a href="#sobre" className="hover:text-accent transition-smooth">Sobre</a>
+          <Link to="/nossa-historia" className="hover:text-accent transition-smooth">Nossa História</Link>
           <a href="#contato" className="hover:text-accent transition-smooth">Contato</a>
         </nav>
         <CartDrawer />
