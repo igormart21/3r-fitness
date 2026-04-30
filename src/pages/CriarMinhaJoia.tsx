@@ -797,11 +797,8 @@ const StepperExperience = (p: StepperProps) => {
           <span className="absolute bottom-0 left-0 h-4 w-4 border-b border-l border-accent/70 z-10" />
           <span className="absolute bottom-0 right-0 h-4 w-4 border-b border-r border-accent/70 z-10" />
 
-          <div
-            className="flex transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${step * 100}%)` }}
-          >
-            <StepPanel numeral="I" label="Modalidade" hint="A sua jornada">
+          <div className="relative">
+            <StepPanel index={0} step={step} numeral="I" label="Modalidade" hint="A sua jornada">
               <div className="flex flex-wrap gap-2.5 justify-center max-w-2xl mx-auto">
                 {CATEGORIAS.map((cat) => (
                   <LuxButton
