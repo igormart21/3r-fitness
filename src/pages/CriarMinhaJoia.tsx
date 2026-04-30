@@ -225,6 +225,7 @@ const CtaField = ({
 );
 
 
+const CriarMinhaJoia = () => {
   const [categoria, setCategoria] = useState<Categoria | null>(null);
   const [material, setMaterial] = useState<Material | null>(null);
   const [estilo, setEstilo] = useState<Estilo | null>(null);
@@ -237,6 +238,7 @@ const CtaField = ({
   const [km, setKm] = useState("");
   const [tempo, setTempo] = useState("");
   const [adicionando, setAdicionando] = useState(false);
+  const [openField, setOpenField] = useState<CtaFieldKey | null>("nome");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addItem = useCartStore((s) => s.addItem);
