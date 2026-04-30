@@ -9,10 +9,17 @@ import { useCartStore } from "@/stores/cartStore";
 import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/lib/shopify";
 import estiloUndergroundImg from "@/assets/estilo-underground.jpg";
 import estiloClassicoImg from "@/assets/estilo-classico.jpg";
+import materialPrataImg from "@/assets/material-prata.jpg";
+import materialOuroImg from "@/assets/material-ouro.jpg";
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
   "Clássico": estiloClassicoImg,
+};
+
+const MATERIAL_IMAGENS: Record<string, string> = {
+  "Prata 925": materialPrataImg,
+  "Ouro 18K": materialOuroImg,
 };
 
 type Categoria =
@@ -201,20 +208,40 @@ const CriarMinhaJoia = () => {
           <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-3 text-center">
             Material
           </h2>
-          <div className="flex flex-wrap gap-2 justify-center">
-            {MATERIAIS.map((m) => (
-              <button
-                key={m}
-                onClick={() => handleSelecionarMaterial(m)}
-                className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
-                  material === m
-                    ? "border-accent bg-accent/5"
-                    : "border-border bg-card"
-                }`}
-              >
-                {m}
-              </button>
-            ))}
+
+          <div className={`grid gap-6 items-start ${material ? "md:grid-cols-[auto,1fr]" : "grid-cols-1"}`}>
+            {/* Mostruário (lado esquerdo) */}
+            {material && MATERIAL_IMAGENS[material] && (
+              <div className="flex justify-center md:justify-start animate-in fade-in zoom-in-95">
+                <div className="w-64 h-64 md:w-72 md:h-72 rounded-lg overflow-hidden border-2 border-accent bg-background">
+                  <img
+                    src={MATERIAL_IMAGENS[material]}
+                    alt={`Mostruário ${material}`}
+                    width={768}
+                    height={768}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Botões */}
+            <div className="flex flex-wrap gap-2 justify-center md:justify-start md:items-center">
+              {MATERIAIS.map((m) => (
+                <button
+                  key={m}
+                  onClick={() => handleSelecionarMaterial(m)}
+                  className={`px-4 py-2.5 rounded-md border-2 text-sm md:text-base font-display transition-all hover:border-accent ${
+                    material === m
+                      ? "border-accent bg-accent/5"
+                      : "border-border bg-card"
+                  }`}
+                >
+                  {m}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
