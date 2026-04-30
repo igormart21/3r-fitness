@@ -115,7 +115,29 @@ const CriarMinhaJoia = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div
+      className="min-h-screen bg-background text-foreground"
+      style={{
+        // Preto fosco + dourado (escopado a esta página)
+        ["--background" as any]: "0 0% 7%",
+        ["--foreground" as any]: "43 65% 70%",
+        ["--card" as any]: "0 0% 9%",
+        ["--card-foreground" as any]: "43 65% 70%",
+        ["--popover" as any]: "0 0% 9%",
+        ["--popover-foreground" as any]: "43 65% 70%",
+        ["--primary" as any]: "43 65% 55%",
+        ["--primary-foreground" as any]: "0 0% 7%",
+        ["--secondary" as any]: "0 0% 12%",
+        ["--secondary-foreground" as any]: "43 65% 70%",
+        ["--muted" as any]: "0 0% 12%",
+        ["--muted-foreground" as any]: "43 30% 60%",
+        ["--accent" as any]: "43 65% 55%",
+        ["--accent-foreground" as any]: "0 0% 7%",
+        ["--border" as any]: "43 55% 45%",
+        ["--input" as any]: "43 55% 45%",
+        ["--ring" as any]: "43 65% 55%",
+      }}
+    >
       {/* Header */}
       <header className="border-b border-border bg-card/50 backdrop-blur sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
