@@ -1822,6 +1822,42 @@ const StepperExperience = (p: StepperProps) => {
         </div>
       </div>
 
+      <Dialog open={p.askGravacaoSiteOpen} onOpenChange={p.setAskGravacaoSiteOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Deseja adicionar uma gravação?</DialogTitle>
+            <DialogDescription>
+              A gravação na joia é opcional. Você pode finalizar apenas com o pingente do site,
+              ou adicionar uma inscrição (Nome, KM, Data ou Tempo) para gravar na peça.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-3">
+            <Button
+              variant="outline"
+              onClick={() => {
+                p.limparPersonalizacao();
+                p.setOpenField(null);
+                p.setSemGravacaoSite(true);
+                p.setAskGravacaoSiteOpen(false);
+                setShowBalao(false);
+              }}
+              className="w-full sm:w-auto"
+            >
+              Não, sem gravação
+            </Button>
+            <Button
+              onClick={() => {
+                p.setSemGravacaoSite(false);
+                p.setAskGravacaoSiteOpen(false);
+                setShowBalao(true);
+              }}
+              className="w-full sm:w-auto"
+            >
+              Sim, quero gravar algo
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </main>
   );
 };
