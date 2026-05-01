@@ -144,10 +144,7 @@ Fundo neutro preto profundo, iluminação editorial de catálogo de joalheria, f
           messages: [
             {
               role: "user",
-              content: [
-                { type: "text", text: prompt },
-                { type: "image_url", image_url: { url: imageDataUrl } },
-              ],
+              content: userContent,
             },
           ],
           modalities: ["image", "text"],
