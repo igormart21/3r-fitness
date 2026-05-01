@@ -37,8 +37,12 @@ Deno.serve(async (req) => {
         ? "ESTILO UNDERGROUND OBRIGATÓRIO: a miniatura da pessoa DEVE aparecer usando APENAS estes três acessórios urbanos, claramente visíveis e bem esculpidos em relevo no metal: (1) BONÉ na cabeça, (2) ÓCULOS ESCUROS no rosto e (3) RELÓGIO de pulso no braço. PROIBIDO incluir correntes, colares, cordões no pescoço, piercings, tatuagens, capuz, moletom ou qualquer outro acessório além desses três. O pescoço, tronco e pele devem ficar limpos, sem qualquer corrente ou desenho de tatuagem. Apenas boné + óculos + relógio, nada mais."
         : "ESTILO CLÁSSICO: pingente puro e minimalista, apenas a silhueta da pessoa em pose limpa, SEM acessórios extras, contornos suaves e elegantes.";
 
+    const corFio = isOuro
+      ? "fio dourado tom-sobre-tom (ouro sobre ouro)"
+      : "fio prateado tom-sobre-tom (prata sobre prata)";
+
     const inscricaoTexto = inscricao?.trim()
-      ? `Grave delicadamente a inscrição "${inscricao}" na base ou borda do pingente, em tipografia serifada fina e refinada.`
+      ? `OBRIGATÓRIO: grave a inscrição "${inscricao}" CENTRALIZADA NO PEITO da figura, em letras serifadas elegantes, COMPLETAMENTE RETAS (sem inclinação, sem curvatura, sem arco), alinhamento horizontal perfeito. A gravação deve simular um BORDADO em ${corFio}, com CONTORNO PRETO FINO e UNIFORME em volta de cada letra (espessura idêntica em letras finas como "1", "I", "l" e em letras largas como "M", "W"). Letras nítidas, legíveis, com leve relevo de fio bordado. Nada de gravação no rosto, nas pernas ou no fundo — APENAS no peito da figura. Cuide dos mínimos detalhes e da perfeição do acabamento.`
       : "";
 
     const corEnfase = isOuro
