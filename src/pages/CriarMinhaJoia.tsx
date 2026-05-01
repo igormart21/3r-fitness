@@ -1870,14 +1870,15 @@ const PreviewPingente = ({
                     color: fioCor,
                     fontSize: inscricaoValor.length > 14 ? 11 : inscricaoValor.length > 8 ? 14 : 18,
                     letterSpacing: "0.08em",
-                    // Efeito de fio bordado: relevo + brilho do fio + sombra interna
+                    // Contorno preto suave + relevo de fio bordado
+                    WebkitTextStroke: "0.4px rgba(0,0,0,0.55)",
                     textShadow: `
+                      0 0 1px rgba(0,0,0,0.45),
                       0 0.5px 0 ${fioBrilho},
                       0 -0.5px 0 ${fioSombra},
                       0.5px 0 0 ${fioSombra},
                       -0.5px 0 0 ${fioBrilho},
-                      0 1px 1.5px ${fioSombra},
-                      0 0 2px ${fioCor}
+                      0 1px 1.5px ${fioSombra}
                     `,
                     filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.5))",
                     
@@ -1897,7 +1898,9 @@ const PreviewPingente = ({
                     color: fioCor,
                     fontSize: inscricaoValor.length > 14 ? 13 : 18,
                     letterSpacing: "0.08em",
+                    WebkitTextStroke: "0.4px rgba(0,0,0,0.55)",
                     textShadow: `
+                      0 0 1px rgba(0,0,0,0.45),
                       0 0.5px 0 ${fioBrilho},
                       0 -0.5px 0 ${fioSombra},
                       0 1px 1.5px ${fioSombra}
