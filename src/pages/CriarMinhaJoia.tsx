@@ -564,6 +564,7 @@ const CriarMinhaJoia = () => {
   const fotoPingenteInputRef = useRef<HTMLInputElement>(null);
   const [askGravacaoOpen, setAskGravacaoOpen] = useState(false);
   const [fotoPendente, setFotoPendente] = useState<string | null>(null);
+  const [comGravacaoFoto, setComGravacaoFoto] = useState(false);
   const [askGravacaoSiteOpen, setAskGravacaoSiteOpen] = useState(false);
   const [semGravacaoSite, setSemGravacaoSite] = useState(false);
 
