@@ -1518,6 +1518,24 @@ const StepperExperience = (p: StepperProps) => {
                     >
                       Trocar inscrição
                     </button>
+
+                    {/* Prévia do pingente personalizado */}
+                    {p.categoria && p.material && p.estilo && (
+                      <PreviewPingente
+                        categoria={p.categoria}
+                        material={p.material}
+                        estilo={p.estilo}
+                        tamanho={p.tamanho}
+                        inscricaoTipo={p.personalizacaoEscolhida}
+                        inscricaoValor={
+                          p.personalizacaoEscolhida === "nome" ? p.nome :
+                          p.personalizacaoEscolhida === "km" ? p.km :
+                          p.personalizacaoEscolhida === "data" ? p.data :
+                          p.personalizacaoEscolhida === "tempo" ? p.tempo : ""
+                        }
+                      />
+                    )}
+
                     <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center animate-in fade-in slide-in-from-bottom-2 duration-400">
                       <Button
                         onClick={p.handleAdicionarAoCarrinho}
@@ -1772,6 +1790,117 @@ const Chip = ({ label, value }: { label: string; value: string | null }) => (
       {value || "—"}
     </span>
   </span>
+);
+
+/* ===================== PRÉVIA DO PINGENTE PERSONALIZADO ===================== */
+const PreviewPingente = ({
+  categoria, material, estilo, tamanho, inscricaoTipo, inscricaoValor,
+}: {
+  categoria: string;
+  material: string;
+  estilo: string;
+  tamanho: string | null;
+  inscricaoTipo: string | null;
+  inscricaoValor: string;
+}) => {
+  const isOuro = material === "Ouro 18K";
+  const metalGradient = isOuro
+    ? "linear-gradient(135deg, #f9e29c 0%, #d4af37 35%, #a8821a 65%, #f0d878 100%)"
+    : "linear-gradient(135deg, #f4f4f4 0%, #c8c8c8 35%, #8a8a8a 65%, #e8e8e8 100%)";
+  const metalShadow = isOuro
+    ? "0 10px 30px -8px rgba(212,175,55,0.45), inset 0 2px 6px rgba(255,255,255,0.4), inset 0 -3px 8px rgba(0,0,0,0.3)"
+    : "0 10px 30px -8px rgba(192,192,192,0.45), inset 0 2px 6px rgba(255,255,255,0.5), inset 0 -3px 8px rgba(0,0,0,0.25)";
+  const textColor = isOuro ? "#3a2a05" : "#2a2a2a";
+
+  const inscricaoLabel =
+    inscricaoTipo === "nome" ? "Nome"
+    : inscricaoTipo === "km" ? "Distância"
+    : inscricaoTipo === "data" ? "Data"
+    : inscricaoTipo === "tempo" ? "Tempo"
+    : "";
+
+  return (
+    <div className="mt-6 animate-in fade-in slide-in-from-bottom-3 duration-500">
+      <div className="relative border border-accent/30 bg-card/40 p-6 md:p-8">
+        <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
+        <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
+        <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
+        <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-accent" />
+
+        <p className="text-[10px] uppercase tracking-[0.4em] text-accent text-center mb-5">
+          Prévia da sua joia
+        </p>
+
+        <div className="flex flex-col md:flex-row gap-6 items-center">
+          {/* Pingente visual */}
+          <div className="flex-shrink-0 flex items-center justify-center">
+            <div className="relative" style={{ width: 180, height: 220 }}>
+              {/* Argolinha */}
+              <div
+                className="absolute left-1/2 -translate-x-1/2 top-2 rounded-full border-[3px]"
+                style={{
+                  width: 22, height: 22,
+                  borderColor: isOuro ? "#d4af37" : "#bdbdbd",
+                  background: "transparent",
+                  boxShadow: metalShadow,
+                }}
+              />
+              {/* Pingente circular */}
+              <div
+                className="absolute left-1/2 -translate-x-1/2 top-8 rounded-full flex flex-col items-center justify-center text-center px-3"
+                style={{
+                  width: 170, height: 170,
+                  background: metalGradient,
+                  boxShadow: metalShadow,
+                  color: textColor,
+                }}
+              >
+                <span className="text-[8px] uppercase tracking-[0.3em] opacity-70">
+                  3R Fitness
+                </span>
+                <span className="text-[10px] uppercase tracking-[0.25em] mt-1 opacity-80">
+                  {categoria}
+                </span>
+                {inscricaoValor && (
+                  <span
+                    className="mt-2 font-serif font-semibold leading-tight break-words max-w-full"
+                    style={{ fontSize: inscricaoValor.length > 12 ? 14 : 18 }}
+                  >
+                    {inscricaoValor}
+                  </span>
+                )}
+                <span className="mt-2 text-[8px] uppercase tracking-[0.3em] opacity-60">
+                  {estilo}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Resumo */}
+          <div className="flex-1 w-full space-y-2 text-sm">
+            <ResumoLinha label="Modalidade" value={categoria} />
+            <ResumoLinha label="Material" value={material} />
+            {tamanho && <ResumoLinha label="Tamanho" value={tamanho} />}
+            <ResumoLinha label="Estilo" value={estilo} />
+            {inscricaoValor && (
+              <ResumoLinha label={inscricaoLabel} value={inscricaoValor} />
+            )}
+          </div>
+        </div>
+
+        <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70 text-center mt-5">
+          Imagem ilustrativa · peça final feita à mão
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const ResumoLinha = ({ label, value }: { label: string; value: string }) => (
+  <div className="flex items-center justify-between border-b border-accent/15 pb-1.5">
+    <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">{label}</span>
+    <span className="text-accent font-medium">{value}</span>
+  </div>
 );
 
 export default CriarMinhaJoia;
