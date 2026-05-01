@@ -564,6 +564,8 @@ const CriarMinhaJoia = () => {
   const fotoPingenteInputRef = useRef<HTMLInputElement>(null);
   const [askGravacaoOpen, setAskGravacaoOpen] = useState(false);
   const [fotoPendente, setFotoPendente] = useState<string | null>(null);
+  const [askGravacaoSiteOpen, setAskGravacaoSiteOpen] = useState(false);
+  const [semGravacaoSite, setSemGravacaoSite] = useState(false);
 
   const inscricaoPingenteEscolhida: CtaFieldKey | null = pingenteNome.trim()
     ? "nome"
@@ -685,7 +687,7 @@ const CriarMinhaJoia = () => {
 
   const handleAdicionarAoCarrinho = async () => {
     const usandoFotoPingente = !!fotoPingente || !!pingenteGerado;
-    if (!personalizacaoEscolhida && !usandoFotoPingente) {
+    if (!personalizacaoEscolhida && !usandoFotoPingente && !semGravacaoSite) {
       toast.error("Escolha uma inscrição para sua joia ou envie uma foto para gerar o pingente");
       return;
     }
@@ -719,6 +721,7 @@ const CriarMinhaJoia = () => {
         ...(foto ? [{ name: "Foto (referência)", value: "Anexada pelo cliente" }] : []),
         ...(usandoFotoPingente ? [{ name: "Pingente por foto", value: "Gerado por IA" }] : []),
         ...(usandoFotoPingente && inscricaoFoto ? [{ name: "Gravação no pingente", value: inscricaoFoto }] : []),
+        ...(!usandoFotoPingente && !personalizacaoEscolhida && semGravacaoSite ? [{ name: "Gravação", value: "Sem gravação" }] : []),
       ];
 
       await addItem({
@@ -939,6 +942,10 @@ const CriarMinhaJoia = () => {
         adicionando={adicionando}
         handleAdicionarAoCarrinho={handleAdicionarAoCarrinho}
         handleProsseguirParaPagamento={handleProsseguirParaPagamento}
+        askGravacaoSiteOpen={askGravacaoSiteOpen}
+        setAskGravacaoSiteOpen={setAskGravacaoSiteOpen}
+        semGravacaoSite={semGravacaoSite}
+        setSemGravacaoSite={setSemGravacaoSite}
       />
 
       <Dialog open={askGravacaoOpen} onOpenChange={setAskGravacaoOpen}>
@@ -997,6 +1004,10 @@ type StepperProps = {
   adicionando: boolean;
   handleAdicionarAoCarrinho: () => void;
   handleProsseguirParaPagamento: () => void;
+  askGravacaoSiteOpen: boolean;
+  setAskGravacaoSiteOpen: (v: boolean) => void;
+  semGravacaoSite: boolean;
+  setSemGravacaoSite: (v: boolean) => void;
 };
 
 const STEP_LABELS = [
@@ -1465,7 +1476,7 @@ const StepperExperience = (p: StepperProps) => {
                       <Camera className="h-4 w-4 mr-2" /> Anexar foto
                     </Button>
                     <Button
-                      onClick={() => setShowBalao(true)}
+                      onClick={() => p.setAskGravacaoSiteOpen(true)}
                       variant="outline"
                       className="border-accent text-accent hover:bg-accent/10 tracking-[0.2em] uppercase text-xs px-6"
                     >
@@ -1556,13 +1567,17 @@ const StepperExperience = (p: StepperProps) => {
                     className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
                   />
                 </CtaField>
-                {p.personalizacaoEscolhida && (
+                {(p.personalizacaoEscolhida || p.semGravacaoSite) && (
                   <>
                     <button
-                      onClick={() => { p.limparPersonalizacao(); p.setOpenField(null); }}
+                      onClick={() => {
+                        p.limparPersonalizacao();
+                        p.setOpenField(null);
+                        p.setSemGravacaoSite(false);
+                      }}
                       className="block mx-auto mt-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
                     >
-                      Trocar inscrição
+                      {p.semGravacaoSite && !p.personalizacaoEscolhida ? "Adicionar gravação" : "Trocar inscrição"}
                     </button>
 
                     {/* Prévia do pingente personalizado */}
@@ -1807,6 +1822,42 @@ const StepperExperience = (p: StepperProps) => {
         </div>
       </div>
 
+      <Dialog open={p.askGravacaoSiteOpen} onOpenChange={p.setAskGravacaoSiteOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Deseja adicionar uma gravação?</DialogTitle>
+            <DialogDescription>
+              A gravação na joia é opcional. Você pode finalizar apenas com o pingente do site,
+              ou adicionar uma inscrição (Nome, KM, Data ou Tempo) para gravar na peça.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-3">
+            <Button
+              variant="outline"
+              onClick={() => {
+                p.limparPersonalizacao();
+                p.setOpenField(null);
+                p.setSemGravacaoSite(true);
+                p.setAskGravacaoSiteOpen(false);
+                setShowBalao(false);
+              }}
+              className="w-full sm:w-auto"
+            >
+              Não, sem gravação
+            </Button>
+            <Button
+              onClick={() => {
+                p.setSemGravacaoSite(false);
+                p.setAskGravacaoSiteOpen(false);
+                setShowBalao(true);
+              }}
+              className="w-full sm:w-auto"
+            >
+              Sim, quero gravar algo
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </main>
   );
 };
