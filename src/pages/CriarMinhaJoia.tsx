@@ -1527,6 +1527,8 @@ const StepperExperience = (p: StepperProps) => {
                         estilo={p.estilo}
                         genero={p.genero}
                         perfilBike={p.perfilBike}
+                        tamanho={p.tamanho}
+                        inscricaoTipo={p.personalizacaoEscolhida}
                         inscricaoValor={
                           p.personalizacaoEscolhida === "nome" ? p.nome :
                           p.personalizacaoEscolhida === "km" ? p.km :
@@ -1794,13 +1796,15 @@ const Chip = ({ label, value }: { label: string; value: string | null }) => (
 
 /* ===================== PRÉVIA DO PINGENTE PERSONALIZADO ===================== */
 const PreviewPingente = ({
-  categoria, material, estilo, genero, perfilBike, inscricaoValor,
+  categoria, material, estilo, genero, perfilBike, tamanho, inscricaoTipo, inscricaoValor,
 }: {
   categoria: Categoria;
   material: Material;
   estilo: Estilo;
   genero: Genero;
   perfilBike: PerfilBike | null;
+  tamanho: Tamanho | null;
+  inscricaoTipo: CtaFieldKey | null;
   inscricaoValor: string;
 }) => {
   const isOuro = material === "Ouro 18K";
@@ -1814,7 +1818,19 @@ const PreviewPingente = ({
   const bonecoSrc =
     bikeSrc || BONECOS[categoria]?.[material]?.[genero]?.[estiloKey] || null;
 
-  const inscricaoColor = isOuro ? "#5a3a05" : "#1a1a1a";
+  // Cor "bordada" — fio contrastante sobre o metal da joia
+  // Ouro → fio escuro avermelhado/bordô (clássico bordado em peça dourada)
+  // Prata → fio dourado (efeito bordado dourado em prata)
+  const fioCor = isOuro ? "#7a1f1f" : "#c9a24a";
+  const fioSombra = isOuro ? "rgba(40,8,8,0.7)" : "rgba(60,40,5,0.7)";
+  const fioBrilho = isOuro ? "rgba(220,140,140,0.55)" : "rgba(255,225,150,0.6)";
+
+  const inscricaoLabel =
+    inscricaoTipo === "nome" ? "Nome"
+    : inscricaoTipo === "km" ? "Distância"
+    : inscricaoTipo === "data" ? "Data"
+    : inscricaoTipo === "tempo" ? "Tempo"
+    : "Inscrição";
 
   return (
     <div className="mt-6 animate-in fade-in slide-in-from-bottom-3 duration-500">
@@ -1828,46 +1844,107 @@ const PreviewPingente = ({
           Prévia da sua joia
         </p>
 
-        <div className="relative mx-auto w-full max-w-[340px] aspect-square overflow-hidden bg-black/40">
-          {bonecoSrc ? (
-            <img
-              src={bonecoSrc}
-              alt={`Pingente ${categoria} ${estilo} ${material}`}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs">
-              Boneco indisponível
-            </div>
-          )}
+        <div className="grid gap-5 md:grid-cols-[1fr_1fr] items-center">
+          {/* Boneco com inscrição "bordada" no peito */}
+          <div className="relative mx-auto w-full max-w-[320px] aspect-square overflow-hidden bg-black/40">
+            {bonecoSrc ? (
+              <img
+                src={bonecoSrc}
+                alt={`Pingente ${categoria} ${estilo} ${material}`}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs">
+                Boneco indisponível
+              </div>
+            )}
 
-          {/* Inscrição gravada por cima do boneco */}
-          {inscricaoValor && (
-            <div className="absolute inset-x-0 bottom-[8%] flex justify-center pointer-events-none">
-              <span
-                className="font-serif font-bold tracking-wide px-3 py-1"
-                style={{
-                  color: inscricaoColor,
-                  fontSize: inscricaoValor.length > 14 ? 16 : inscricaoValor.length > 8 ? 20 : 26,
-                  textShadow: isOuro
-                    ? "0 1px 0 rgba(255,230,150,0.8), 0 -1px 0 rgba(120,80,0,0.6)"
-                    : "0 1px 0 rgba(255,255,255,0.7), 0 -1px 0 rgba(60,60,60,0.6)",
-                  letterSpacing: "0.05em",
-                  filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.4))",
-                }}
+            {/* Inscrição "bordada" no peito do boneco */}
+            {inscricaoValor && categoria !== "Ciclista" && (
+              <div
+                className="absolute inset-x-0 flex justify-center pointer-events-none"
+                style={{ top: "42%" }}
               >
-                {inscricaoValor}
-              </span>
-            </div>
-          )}
+                <span
+                  className="font-serif font-bold"
+                  style={{
+                    color: fioCor,
+                    fontSize: inscricaoValor.length > 14 ? 11 : inscricaoValor.length > 8 ? 14 : 18,
+                    letterSpacing: "0.08em",
+                    // Efeito de fio bordado: relevo + brilho do fio + sombra interna
+                    textShadow: `
+                      0 0.5px 0 ${fioBrilho},
+                      0 -0.5px 0 ${fioSombra},
+                      0.5px 0 0 ${fioSombra},
+                      -0.5px 0 0 ${fioBrilho},
+                      0 1px 1.5px ${fioSombra},
+                      0 0 2px ${fioCor}
+                    `,
+                    filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.5))",
+                    transform: "rotate(-1.5deg)",
+                  }}
+                >
+                  {inscricaoValor}
+                </span>
+              </div>
+            )}
+
+            {/* Para Ciclista (bike), inscrição vai na parte de baixo */}
+            {inscricaoValor && categoria === "Ciclista" && (
+              <div className="absolute inset-x-0 bottom-[10%] flex justify-center pointer-events-none">
+                <span
+                  className="font-serif font-bold"
+                  style={{
+                    color: fioCor,
+                    fontSize: inscricaoValor.length > 14 ? 13 : 18,
+                    letterSpacing: "0.08em",
+                    textShadow: `
+                      0 0.5px 0 ${fioBrilho},
+                      0 -0.5px 0 ${fioSombra},
+                      0 1px 1.5px ${fioSombra}
+                    `,
+                  }}
+                >
+                  {inscricaoValor}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Legenda lateral com tudo que o cliente escolheu */}
+          <div className="w-full space-y-2.5">
+            <p className="text-[10px] uppercase tracking-[0.35em] text-accent/80 mb-3 border-b border-accent/20 pb-2">
+              Sua seleção
+            </p>
+            <LegendaLinha label="Modalidade" value={categoria} />
+            <LegendaLinha label="Material" value={material} />
+            {tamanho && <LegendaLinha label="Tamanho" value={tamanho} />}
+            <LegendaLinha label="Gênero" value={genero} />
+            <LegendaLinha label="Estilo" value={estilo} />
+            {categoria === "Ciclista" && perfilBike && (
+              <LegendaLinha label="Perfil" value={perfilBike} />
+            )}
+            {inscricaoValor && (
+              <LegendaLinha label={inscricaoLabel} value={inscricaoValor} highlight />
+            )}
+          </div>
         </div>
 
-        <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70 text-center mt-4">
+        <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70 text-center mt-5">
           Imagem ilustrativa · peça final feita à mão
         </p>
       </div>
     </div>
   );
 };
+
+const LegendaLinha = ({ label, value, highlight = false }: { label: string; value: string; highlight?: boolean }) => (
+  <div className="flex items-center justify-between gap-3 border-b border-accent/10 pb-1.5">
+    <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">{label}</span>
+    <span className={`text-sm ${highlight ? "text-accent font-bold" : "text-foreground/90 font-medium"}`}>
+      {value}
+    </span>
+  </div>
+);
 
 export default CriarMinhaJoia;
