@@ -969,7 +969,14 @@ const StepperExperience = (p: StepperProps) => {
   };
 
   return (
-    <main className="container mx-auto px-4 pt-8 pb-12 md:pt-10 md:pb-16 max-w-7xl">
+    <main className="container mx-auto px-4 pt-8 pb-12 md:pt-10 md:pb-16 max-w-7xl relative">
+      {/* Decorativo: mão segurando colar 3R Fitness no canto superior direito */}
+      <img
+        src={maoColar3RFitness}
+        alt="Pingente 3R Fitness em colar de ouro 18K"
+        className="hidden md:block pointer-events-none select-none absolute top-0 right-2 lg:right-6 w-40 lg:w-56 xl:w-64 z-20 drop-shadow-[0_20px_40px_rgba(212,175,55,0.35)] opacity-95"
+        style={{ animation: "joia-fade-down 1.2s ease-out both" }}
+      />
       <div className="text-center mb-6 md:mb-8">
         <div className="flex items-center justify-center gap-3 mb-3">
           <span className="h-px w-8 bg-accent/60" />
