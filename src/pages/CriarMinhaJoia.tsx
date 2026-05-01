@@ -1518,6 +1518,24 @@ const StepperExperience = (p: StepperProps) => {
                     >
                       Trocar inscrição
                     </button>
+
+                    {/* Prévia do pingente personalizado */}
+                    {p.categoria && p.material && p.estilo && (
+                      <PreviewPingente
+                        categoria={p.categoria}
+                        material={p.material}
+                        estilo={p.estilo}
+                        tamanho={p.tamanho}
+                        inscricaoTipo={p.personalizacaoEscolhida}
+                        inscricaoValor={
+                          p.personalizacaoEscolhida === "nome" ? p.nome :
+                          p.personalizacaoEscolhida === "km" ? p.km :
+                          p.personalizacaoEscolhida === "data" ? p.data :
+                          p.personalizacaoEscolhida === "tempo" ? p.tempo : ""
+                        }
+                      />
+                    )}
+
                     <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center animate-in fade-in slide-in-from-bottom-2 duration-400">
                       <Button
                         onClick={p.handleAdicionarAoCarrinho}
