@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Upload, Check, Loader2, Sparkles, ChevronDown, Camera, Wand2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -564,6 +564,7 @@ const CriarMinhaJoia = () => {
   const fotoPingenteInputRef = useRef<HTMLInputElement>(null);
   const [askGravacaoOpen, setAskGravacaoOpen] = useState(false);
   const [fotoPendente, setFotoPendente] = useState<string | null>(null);
+  const [comGravacaoFoto, setComGravacaoFoto] = useState(false);
   const [askGravacaoSiteOpen, setAskGravacaoSiteOpen] = useState(false);
   const [semGravacaoSite, setSemGravacaoSite] = useState(false);
 
@@ -651,6 +652,7 @@ const CriarMinhaJoia = () => {
   const confirmarSemGravacao = () => {
     limparInscricaoPingente();
     setOpenPingenteField(null);
+    setComGravacaoFoto(false);
     setAskGravacaoOpen(false);
     if (fotoPendente) gerarPingenteDaFoto(fotoPendente);
     setFotoPendente(null);
@@ -658,10 +660,26 @@ const CriarMinhaJoia = () => {
 
   const confirmarComGravacao = () => {
     setAskGravacaoOpen(false);
-    setFotoPendente(null);
+    setComGravacaoFoto(true);
     setOpenPingenteField("nome");
-    toast.info("Escolha o que deseja gravar e clique em \"Gerar pingente\".");
+    toast.info("Escolha o que deseja gravar — o pingente será gerado automaticamente.");
   };
+
+  // Auto-gera o pingente após o cliente escolher uma inscrição (modo "com gravação")
+  useEffect(() => {
+    if (!comGravacaoFoto) return;
+    const foto = fotoPendente || fotoPingente;
+    if (!foto) return;
+    const valor = inscricaoPingenteValor();
+    if (!valor) return;
+    const timer = setTimeout(() => {
+      gerarPingenteDaFoto(foto);
+      setFotoPendente(null);
+      setComGravacaoFoto(false);
+    }, 700);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [comGravacaoFoto, pingenteNome, pingenteKm, pingenteData, pingenteTempo]);
 
   const handleFotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
