@@ -605,9 +605,11 @@ const CriarMinhaJoia = () => {
       const { data: result, error } = await supabase.functions.invoke("gerar-pingente", {
         body: {
           imageDataUrl: dataUrl,
+          categoria: categoria ?? "Corredores",
           material: material ?? "Prata 925",
           estilo: estilo ?? "Clássico",
           genero: genero ?? "Masculino",
+          perfilBike: perfilBike ?? null,
           inscricao: inscricaoPingenteValor(),
         },
       });
