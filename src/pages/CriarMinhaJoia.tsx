@@ -1896,12 +1896,12 @@ const PreviewPingente = ({
                     color: fioCor,
                     fontSize: inscricaoValor.length > 14 ? 13 : 18,
                     letterSpacing: "0.08em",
-                    WebkitTextStroke: "0.4px rgba(0,0,0,0.55)",
+                    WebkitTextStroke: "1.2px #000",
+                    paintOrder: "stroke fill" as any,
                     textShadow: `
-                      0 0 1px rgba(0,0,0,0.45),
                       0 0.5px 0 ${fioBrilho},
                       0 -0.5px 0 ${fioSombra},
-                      0 1px 1.5px ${fioSombra}
+                      0 1.5px 2px rgba(0,0,0,0.55)
                     `,
                   }}
                 >
