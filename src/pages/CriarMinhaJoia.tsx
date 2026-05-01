@@ -258,13 +258,16 @@ const SectionTitle = ({
 }) => (
   <div className="text-center mb-6 md:mb-8">
     <div className="flex items-center justify-center gap-4 mb-3">
-      <span className="h-px w-12 md:w-20 bg-accent/40" />
-      <span className="font-display text-[10px] md:text-xs tracking-[0.5em] text-accent">
+      <span className="h-px w-12 md:w-24 joia-gold-divider" />
+      <span
+        className="font-display text-[10px] md:text-xs tracking-[0.5em] joia-gold-text"
+        style={{ textShadow: "0 0 18px hsl(43 75% 55% / 0.45)" }}
+      >
         {numeral}
       </span>
-      <span className="h-px w-12 md:w-20 bg-accent/40" />
+      <span className="h-px w-12 md:w-24 joia-gold-divider" />
     </div>
-    <h2 className="font-display text-xl md:text-2xl tracking-[0.2em] uppercase">
+    <h2 className="font-display text-xl md:text-2xl tracking-[0.2em] uppercase joia-gold-text inline-block">
       {label}
     </h2>
     {hint && (
@@ -277,9 +280,9 @@ const SectionTitle = ({
 
 const Divider = () => (
   <div className="flex items-center justify-center gap-3 my-12 md:my-14">
-    <span className="h-px w-16 bg-border" />
-    <span className="h-1 w-1 rounded-full bg-accent/60" />
-    <span className="h-px w-16 bg-border" />
+    <span className="h-px w-20 joia-gold-divider" />
+    <span className="h-1.5 w-1.5 rounded-full bg-accent joia-glow-dot" />
+    <span className="h-px w-20 joia-gold-divider" />
   </div>
 );
 
