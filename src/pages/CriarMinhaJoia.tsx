@@ -936,6 +936,26 @@ const CriarMinhaJoia = () => {
         handleAdicionarAoCarrinho={handleAdicionarAoCarrinho}
         handleProsseguirParaPagamento={handleProsseguirParaPagamento}
       />
+
+      <Dialog open={askGravacaoOpen} onOpenChange={setAskGravacaoOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Deseja adicionar uma gravação?</DialogTitle>
+            <DialogDescription>
+              A gravação no peito é opcional. Você pode seguir apenas com a conversão da sua foto em pingente,
+              ou adicionar nome, KM, data ou tempo para gravar junto.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-3">
+            <Button variant="outline" onClick={confirmarSemGravacao} className="w-full sm:w-auto">
+              Não, só converter a foto
+            </Button>
+            <Button onClick={confirmarComGravacao} className="w-full sm:w-auto">
+              Sim, quero gravar algo
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
