@@ -79,7 +79,7 @@ import bonecoTriatlonMascClassicoOuro from "@/assets/boneco-triatlon-masc-classi
 import bonecoTriatlonMascUndergroundOuro from "@/assets/boneco-triatlon-masc-underground-ouro.jpg";
 import bonecoTriatlonFemClassicoOuro from "@/assets/boneco-triatlon-fem-classico-ouro.jpg";
 import bonecoTriatlonFemUndergroundOuro from "@/assets/boneco-triatlon-fem-underground-ouro.jpg";
-import maoColar3RFitness from "@/assets/mao-colar-3r-fitness.png";
+
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
