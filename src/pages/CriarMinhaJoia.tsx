@@ -1818,12 +1818,11 @@ const PreviewPingente = ({
   const bonecoSrc =
     bikeSrc || BONECOS[categoria]?.[material]?.[genero]?.[estiloKey] || null;
 
-  // Cor "bordada" — fio contrastante sobre o metal da joia
-  // Ouro → fio escuro avermelhado/bordô (clássico bordado em peça dourada)
-  // Prata → fio dourado (efeito bordado dourado em prata)
-  const fioCor = isOuro ? "#7a1f1f" : "#c9a24a";
-  const fioSombra = isOuro ? "rgba(40,8,8,0.7)" : "rgba(60,40,5,0.7)";
-  const fioBrilho = isOuro ? "rgba(220,140,140,0.55)" : "rgba(255,225,150,0.6)";
+  // Bordado tom-sobre-tom: ouro sobre ouro, prata sobre prata
+  // Fio um pouco mais claro que o metal + sombras escuras = ilusão de relevo bordado
+  const fioCor = isOuro ? "#f4d57a" : "#e8e8ec";
+  const fioSombra = isOuro ? "rgba(80,55,5,0.85)" : "rgba(40,40,45,0.85)";
+  const fioBrilho = isOuro ? "rgba(255,235,160,0.9)" : "rgba(255,255,255,0.9)";
 
   const inscricaoLabel =
     inscricaoTipo === "nome" ? "Nome"
