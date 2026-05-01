@@ -94,7 +94,7 @@ const BONECOS_DEFAULT: Record<string, Record<string, Record<string, string>>> = 
   },
   "Prata 925": {
     Masculino: { "Clássico": bonecoMascClassicoPrata, Underground: bonecoMascUndergroundPrata },
-    Feminino: { "Clássico": bonecoFemUndergroundPrata, Underground: bonecoFemClassicoPrata },
+    Feminino: { "Clássico": bonecoFemClassicoPrata, Underground: bonecoFemUndergroundPrata },
   },
 };
 
@@ -150,8 +150,8 @@ const BONECOS: Record<string, Record<string, Record<string, Record<string, strin
         Underground: bonecoCrossfitMascUndergroundPrata,
       },
       Feminino: {
-        "Clássico": bonecoCrossfitFemClassicoPrata,
-        Underground: bonecoCrossfitFemUndergroundPrata,
+        "Clássico": bonecoCrossfitFemUndergroundPrata,
+        Underground: bonecoCrossfitFemClassicoPrata,
       },
     },
   },
