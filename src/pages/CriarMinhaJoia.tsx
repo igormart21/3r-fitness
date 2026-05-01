@@ -4,6 +4,7 @@ import { ArrowLeft, Upload, Check, Loader2, Sparkles, ChevronDown, Camera, Wand2
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { useCartStore } from "@/stores/cartStore";
 import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/lib/shopify";
@@ -561,6 +562,8 @@ const CriarMinhaJoia = () => {
   const [pingenteGerado, setPingenteGerado] = useState<string | null>(null);
   const [fotoPingente, setFotoPingente] = useState<string | null>(null);
   const fotoPingenteInputRef = useRef<HTMLInputElement>(null);
+  const [askGravacaoOpen, setAskGravacaoOpen] = useState(false);
+  const [fotoPendente, setFotoPendente] = useState<string | null>(null);
 
   const inscricaoPingenteEscolhida: CtaFieldKey | null = pingenteNome.trim()
     ? "nome"
@@ -636,9 +639,26 @@ const CriarMinhaJoia = () => {
     reader.onloadend = () => {
       const dataUrl = reader.result as string;
       setFotoPingente(dataUrl);
-      gerarPingenteDaFoto(dataUrl);
+      setFotoPendente(dataUrl);
+      setAskGravacaoOpen(true);
     };
     reader.readAsDataURL(file);
+    e.target.value = "";
+  };
+
+  const confirmarSemGravacao = () => {
+    limparInscricaoPingente();
+    setOpenPingenteField(null);
+    setAskGravacaoOpen(false);
+    if (fotoPendente) gerarPingenteDaFoto(fotoPendente);
+    setFotoPendente(null);
+  };
+
+  const confirmarComGravacao = () => {
+    setAskGravacaoOpen(false);
+    setFotoPendente(null);
+    setOpenPingenteField("nome");
+    toast.info("Escolha o que deseja gravar e clique em \"Gerar pingente\".");
   };
 
   const handleFotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -916,6 +936,26 @@ const CriarMinhaJoia = () => {
         handleAdicionarAoCarrinho={handleAdicionarAoCarrinho}
         handleProsseguirParaPagamento={handleProsseguirParaPagamento}
       />
+
+      <Dialog open={askGravacaoOpen} onOpenChange={setAskGravacaoOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Deseja adicionar uma gravação?</DialogTitle>
+            <DialogDescription>
+              A gravação no peito é opcional. Você pode seguir apenas com a conversão da sua foto em pingente,
+              ou adicionar nome, KM, data ou tempo para gravar junto.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-3">
+            <Button variant="outline" onClick={confirmarSemGravacao} className="w-full sm:w-auto">
+              Não, só converter a foto
+            </Button>
+            <Button onClick={confirmarComGravacao} className="w-full sm:w-auto">
+              Sim, quero gravar algo
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
