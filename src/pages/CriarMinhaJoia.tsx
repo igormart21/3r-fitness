@@ -75,6 +75,10 @@ import bonecoTriatlonMascClassicoPrata from "@/assets/boneco-triatlon-masc-class
 import bonecoTriatlonMascUndergroundPrata from "@/assets/boneco-triatlon-masc-underground-prata.jpg";
 import bonecoTriatlonFemClassicoPrata from "@/assets/boneco-triatlon-fem-classico-prata.jpg";
 import bonecoTriatlonFemUndergroundPrata from "@/assets/boneco-triatlon-fem-underground-prata.jpg";
+import bonecoTriatlonMascClassicoOuro from "@/assets/boneco-triatlon-masc-classico-ouro.jpg";
+import bonecoTriatlonMascUndergroundOuro from "@/assets/boneco-triatlon-masc-underground-ouro.jpg";
+import bonecoTriatlonFemClassicoOuro from "@/assets/boneco-triatlon-fem-classico-ouro.jpg";
+import bonecoTriatlonFemUndergroundOuro from "@/assets/boneco-triatlon-fem-underground-ouro.jpg";
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
@@ -152,7 +156,16 @@ const BONECOS: Record<string, Record<string, Record<string, Record<string, strin
     },
   },
   Triatlon: {
-    "Ouro 18K": BONECOS_DEFAULT["Ouro 18K"],
+    "Ouro 18K": {
+      Masculino: {
+        "Clássico": bonecoTriatlonMascClassicoOuro,
+        Underground: bonecoTriatlonMascUndergroundOuro,
+      },
+      Feminino: {
+        "Clássico": bonecoTriatlonFemClassicoOuro,
+        Underground: bonecoTriatlonFemUndergroundOuro,
+      },
+    },
     "Prata 925": {
       Masculino: {
         "Clássico": bonecoTriatlonMascClassicoPrata,
