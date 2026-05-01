@@ -9,6 +9,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/lib/shopify";
 import { supabase } from "@/integrations/supabase/client";
 import estiloUndergroundImg from "@/assets/estilo-underground.jpg";
+import maoColar3RFitness from "@/assets/mao-colar-3r-fitness.png";
 import estiloClassicoImg from "@/assets/estilo-classico.jpg";
 import materialPrataImg from "@/assets/material-prata.jpg";
 import materialOuroImg from "@/assets/material-ouro.jpg";
