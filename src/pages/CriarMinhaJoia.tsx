@@ -794,6 +794,37 @@ const CriarMinhaJoia = () => {
         .joia-card-glow {
           background: radial-gradient(ellipse at top, hsl(43 65% 18% / 0.35), transparent 70%);
         }
+        .joia-glass {
+          position: relative;
+          background:
+            linear-gradient(135deg, hsl(0 0% 100% / 0.04) 0%, hsl(0 0% 100% / 0.015) 40%, hsl(43 65% 25% / 0.06) 100%);
+          -webkit-backdrop-filter: blur(14px) saturate(140%);
+          backdrop-filter: blur(14px) saturate(140%);
+          border: 1px solid hsl(43 65% 55% / 0.22);
+          box-shadow:
+            inset 0 1px 0 hsl(0 0% 100% / 0.06),
+            inset 0 -1px 0 hsl(0 0% 0% / 0.4),
+            0 20px 60px -20px hsl(0 0% 0% / 0.55),
+            0 0 0 1px hsl(43 65% 55% / 0.06);
+        }
+        .joia-glass::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background: linear-gradient(180deg, hsl(43 75% 65% / 0.08), transparent 30%);
+          mix-blend-mode: screen;
+        }
+        .joia-glass-soft {
+          background:
+            linear-gradient(135deg, hsl(0 0% 100% / 0.035) 0%, hsl(43 65% 25% / 0.05) 100%);
+          -webkit-backdrop-filter: blur(10px) saturate(130%);
+          backdrop-filter: blur(10px) saturate(130%);
+          border: 1px solid hsl(43 65% 55% / 0.25);
+          box-shadow:
+            inset 0 1px 0 hsl(0 0% 100% / 0.05),
+            0 8px 28px -12px hsl(0 0% 0% / 0.5);
+        }
         .joia-fade-down { animation: joia-fade-down 0.7s ease-out both; }
         .joia-step-enter { animation: joia-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
         .joia-stagger > * {
