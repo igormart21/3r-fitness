@@ -1476,7 +1476,7 @@ const StepperExperience = (p: StepperProps) => {
                       <Camera className="h-4 w-4 mr-2" /> Anexar foto
                     </Button>
                     <Button
-                      onClick={() => setShowBalao(true)}
+                      onClick={() => p.setAskGravacaoSiteOpen(true)}
                       variant="outline"
                       className="border-accent text-accent hover:bg-accent/10 tracking-[0.2em] uppercase text-xs px-6"
                     >
