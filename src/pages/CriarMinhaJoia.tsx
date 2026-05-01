@@ -562,6 +562,8 @@ const CriarMinhaJoia = () => {
   const [pingenteGerado, setPingenteGerado] = useState<string | null>(null);
   const [fotoPingente, setFotoPingente] = useState<string | null>(null);
   const fotoPingenteInputRef = useRef<HTMLInputElement>(null);
+  const [askGravacaoOpen, setAskGravacaoOpen] = useState(false);
+  const [fotoPendente, setFotoPendente] = useState<string | null>(null);
 
   const inscricaoPingenteEscolhida: CtaFieldKey | null = pingenteNome.trim()
     ? "nome"
