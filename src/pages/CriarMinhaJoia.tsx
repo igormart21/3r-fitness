@@ -794,6 +794,37 @@ const CriarMinhaJoia = () => {
         .joia-card-glow {
           background: radial-gradient(ellipse at top, hsl(43 65% 18% / 0.35), transparent 70%);
         }
+        .joia-glass {
+          position: relative;
+          background:
+            linear-gradient(135deg, hsl(0 0% 100% / 0.04) 0%, hsl(0 0% 100% / 0.015) 40%, hsl(43 65% 25% / 0.06) 100%);
+          -webkit-backdrop-filter: blur(14px) saturate(140%);
+          backdrop-filter: blur(14px) saturate(140%);
+          border: 1px solid hsl(43 65% 55% / 0.22);
+          box-shadow:
+            inset 0 1px 0 hsl(0 0% 100% / 0.06),
+            inset 0 -1px 0 hsl(0 0% 0% / 0.4),
+            0 20px 60px -20px hsl(0 0% 0% / 0.55),
+            0 0 0 1px hsl(43 65% 55% / 0.06);
+        }
+        .joia-glass::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background: linear-gradient(180deg, hsl(43 75% 65% / 0.08), transparent 30%);
+          mix-blend-mode: screen;
+        }
+        .joia-glass-soft {
+          background:
+            linear-gradient(135deg, hsl(0 0% 100% / 0.035) 0%, hsl(43 65% 25% / 0.05) 100%);
+          -webkit-backdrop-filter: blur(10px) saturate(130%);
+          backdrop-filter: blur(10px) saturate(130%);
+          border: 1px solid hsl(43 65% 55% / 0.25);
+          box-shadow:
+            inset 0 1px 0 hsl(0 0% 100% / 0.05),
+            0 8px 28px -12px hsl(0 0% 0% / 0.5);
+        }
         .joia-fade-down { animation: joia-fade-down 0.7s ease-out both; }
         .joia-step-enter { animation: joia-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
         .joia-stagger > * {
@@ -1025,7 +1056,7 @@ const StepperExperience = (p: StepperProps) => {
                 <button
                   key={e.label}
                   onClick={() => setStep(e.stepIdx)}
-                  className="group flex items-center gap-2 flex-shrink-0 px-3 py-1.5 border border-accent/40 hover:border-accent hover:bg-accent/[0.06] transition-all"
+                  className="group joia-glass-soft flex items-center gap-2 flex-shrink-0 px-3 py-1.5 rounded-sm hover:border-accent/60 hover:shadow-[0_0_18px_-4px_hsl(43_75%_55%/0.45)] transition-all"
                 >
                   <span className="text-[8px] uppercase tracking-[0.3em] text-muted-foreground/70 group-hover:text-accent/80">
                     {String(e.stepIdx + 1).padStart(2, "0")} · {e.label}
@@ -1058,7 +1089,7 @@ const StepperExperience = (p: StepperProps) => {
           <ChevronRight className="h-5 w-5" />
         </button>
 
-        <div className="overflow-hidden border border-border/40 bg-card/20 relative">
+        <div className="overflow-hidden joia-glass relative rounded-sm">
           <span className="absolute top-0 left-0 h-4 w-4 border-t border-l border-accent/70 z-10" />
           <span className="absolute top-0 right-0 h-4 w-4 border-t border-r border-accent/70 z-10" />
           <span className="absolute bottom-0 left-0 h-4 w-4 border-b border-l border-accent/70 z-10" />
@@ -1485,7 +1516,7 @@ const StepperExperience = (p: StepperProps) => {
 
             <StepPanel index={5} step={step} numeral="VI" label="Sua foto em pingente" hint="Envie uma pose · veja a peça moldada por IA" expanded>
               <div className="grid gap-5 md:grid-cols-2 max-w-4xl mx-auto">
-                <div className="relative border border-border/60 bg-card/30 p-5 md:p-6 min-h-[280px] flex flex-col">
+                <div className="relative joia-glass rounded-sm p-5 md:p-6 min-h-[280px] flex flex-col">
                   <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
                   <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
                   <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
@@ -1522,7 +1553,7 @@ const StepperExperience = (p: StepperProps) => {
                   </div>
                 </div>
 
-                <div className="relative border border-border/60 bg-card/30 p-5 md:p-6 min-h-[440px] flex flex-col">
+                <div className="relative joia-glass rounded-sm p-5 md:p-6 min-h-[440px] flex flex-col">
                   <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
                   <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
                   <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
