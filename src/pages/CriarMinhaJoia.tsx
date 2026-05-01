@@ -140,8 +140,8 @@ const BONECOS: Record<string, Record<string, Record<string, Record<string, strin
         Underground: bonecoCrossfitMascUndergroundOuro,
       },
       Feminino: {
-        "Clássico": bonecoCrossfitFemClassicoOuro,
-        Underground: bonecoCrossfitFemUndergroundOuro,
+        "Clássico": bonecoCrossfitFemUndergroundOuro,
+        Underground: bonecoCrossfitFemClassicoOuro,
       },
     },
     "Prata 925": {
