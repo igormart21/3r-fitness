@@ -1206,7 +1206,7 @@ const StepperExperience = (p: StepperProps) => {
         );
       })()}
 
-      <div className="relative">
+      <div className="relative max-w-4xl mx-auto">
         <button
           onClick={goPrev}
           disabled={step === 0}
