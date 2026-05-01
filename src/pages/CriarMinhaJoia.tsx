@@ -1880,7 +1880,7 @@ const PreviewPingente = ({
                       0 0 2px ${fioCor}
                     `,
                     filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.5))",
-                    transform: "rotate(-1.5deg)",
+                    
                   }}
                 >
                   {inscricaoValor}
