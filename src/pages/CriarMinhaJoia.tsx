@@ -1567,13 +1567,17 @@ const StepperExperience = (p: StepperProps) => {
                     className="bg-transparent border-0 border-b border-accent/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-accent text-foreground placeholder:text-muted-foreground/60"
                   />
                 </CtaField>
-                {p.personalizacaoEscolhida && (
+                {(p.personalizacaoEscolhida || p.semGravacaoSite) && (
                   <>
                     <button
-                      onClick={() => { p.limparPersonalizacao(); p.setOpenField(null); }}
+                      onClick={() => {
+                        p.limparPersonalizacao();
+                        p.setOpenField(null);
+                        p.setSemGravacaoSite(false);
+                      }}
                       className="block mx-auto mt-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground hover:text-accent transition-colors"
                     >
-                      Trocar inscrição
+                      {p.semGravacaoSite && !p.personalizacaoEscolhida ? "Adicionar gravação" : "Trocar inscrição"}
                     </button>
 
                     {/* Prévia do pingente personalizado */}
