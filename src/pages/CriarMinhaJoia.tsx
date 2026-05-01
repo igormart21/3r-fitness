@@ -782,8 +782,8 @@ const CriarMinhaJoia = () => {
       });
 
       toast.success("Joia personalizada adicionada ao carrinho!");
-      // Redireciona para o catálogo para o cliente continuar comprando
-      setTimeout(() => navigate("/catalogo"), 600);
+      // Redireciona para a coleção de joias prontas
+      setTimeout(() => navigate("/colecao"), 600);
     } catch (err) {
       console.error(err);
       toast.error("Não foi possível adicionar ao carrinho. Tente novamente.");
