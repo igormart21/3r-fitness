@@ -18,7 +18,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { imageDataUrl, categoria, material, estilo, genero, perfilBike, inscricao } = await req.json();
+    const { imageDataUrl, referenceImageDataUrl, categoria, material, estilo, genero, perfilBike, inscricao } = await req.json();
 
     if (!imageDataUrl || typeof imageDataUrl !== "string") {
       return new Response(JSON.stringify({ error: "imageDataUrl é obrigatório" }), {
