@@ -1689,14 +1689,15 @@ const StepPanel = ({
   const isActive = index === step;
   return (
     <section
+      key={isActive ? `active-${index}` : `inactive-${index}`}
       aria-hidden={!isActive}
-      className={`w-full px-5 md:px-12 flex-col ${isActive ? "flex animate-in fade-in duration-500" : "hidden"} ${
+      className={`w-full px-5 md:px-12 flex-col ${isActive ? "flex joia-step-enter" : "hidden"} ${
         expanded ? "py-6 md:py-8 min-h-[320px] md:min-h-[380px]" : "py-2 md:py-3"
       }`}
     >
       <SectionTitle numeral={numeral} label={label} hint={hint} />
       <div className={`flex ${expanded ? "items-center" : "items-start"} justify-center w-full pt-1`}>
-        <div className="w-full">{children}</div>
+        <div className="w-full joia-stagger">{children}</div>
       </div>
     </section>
   );
