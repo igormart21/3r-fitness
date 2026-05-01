@@ -1913,7 +1913,7 @@ const PreviewPingente = ({
 
           {/* Legenda lateral com tudo que o cliente escolheu */}
           <div className="w-full space-y-2.5">
-            <p className="text-[10px] uppercase tracking-[0.35em] text-accent/80 mb-3 border-b border-accent/20 pb-2">
+            <p className="text-[10px] uppercase tracking-[0.35em] text-white mb-3 border-b border-accent/20 pb-2">
               Sua seleção
             </p>
             <LegendaLinha label="Modalidade" value={categoria} />
