@@ -1180,7 +1180,9 @@ const StepperExperience = (p: StepperProps) => {
                                 ? "Bike + boneco"
                                 : p.categoria === "Triatlon"
                                   ? "Formato medalha"
-                                  : "Boné, óculos e relógio"
+                                  : p.categoria === "Crossfit"
+                                    ? "Formato medalha"
+                                    : "Boné, óculos e relógio"
                           : p.categoria === "Ciclista"
                             ? "Apenas a bike"
                             : "Pingente puro";
