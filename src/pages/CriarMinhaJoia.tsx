@@ -1553,7 +1553,7 @@ const StepperExperience = (p: StepperProps) => {
                   </div>
                 </div>
 
-                <div className="relative border border-border/60 bg-card/30 p-5 md:p-6 min-h-[440px] flex flex-col">
+                <div className="relative joia-glass rounded-sm p-5 md:p-6 min-h-[440px] flex flex-col">
                   <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-accent" />
                   <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-accent" />
                   <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-accent" />
