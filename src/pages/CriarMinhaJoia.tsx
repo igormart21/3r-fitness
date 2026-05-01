@@ -1941,7 +1941,7 @@ const PreviewPingente = ({
 const LegendaLinha = ({ label, value, highlight = false }: { label: string; value: string; highlight?: boolean }) => (
   <div className="flex items-center justify-between gap-3 border-b border-accent/10 pb-1.5">
     <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">{label}</span>
-    <span className={`text-sm ${highlight ? "text-accent font-bold" : "text-foreground/90 font-medium"}`}>
+    <span className={`text-sm font-bold ${highlight ? "text-accent" : "text-foreground"}`}>
       {value}
     </span>
   </div>
