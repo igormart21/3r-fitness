@@ -18,7 +18,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { imageDataUrl, material, estilo, genero, inscricao } = await req.json();
+    const { imageDataUrl, categoria, material, estilo, genero, perfilBike, inscricao } = await req.json();
 
     if (!imageDataUrl || typeof imageDataUrl !== "string") {
       return new Response(JSON.stringify({ error: "imageDataUrl é obrigatório" }), {
@@ -31,6 +31,37 @@ Deno.serve(async (req) => {
     const metalCor = isOuro
       ? "OURO 18K AMARELO maciço, tom dourado quente e brilhante (#D4AF37), polimento espelhado com reflexos amarelo-dourados intensos. NUNCA prateado, NUNCA cinza, NUNCA branco."
       : "PRATA 925 maciça, tom prateado frio e brilhante (#C0C0C0 / cromado), polimento espelhado com reflexos prateados. NUNCA dourado, NUNCA amarelo, NUNCA cobre.";
+
+    // ===== Categoria / modalidade esportiva =====
+    const generoLabel = genero === "Feminino" ? "mulher" : "homem";
+    let categoriaDesc = "";
+    switch (categoria) {
+      case "Corredores":
+        categoriaDesc = `MODALIDADE CORRIDA DE RUA: a miniatura DEVE representar um(a) ${generoLabel} CORREDOR(A), em pose dinâmica de corrida (uma perna à frente, braços flexionados em movimento de corrida), vestindo trajes esportivos leves de corredor (regata/camiseta técnica + shorts curtos de corrida + tênis de corrida claramente esculpidos nos pés). Corpo atlético e enxuto típico de corredor de rua.`;
+        break;
+      case "Musculação":
+        categoriaDesc = `MODALIDADE MUSCULAÇÃO: a miniatura DEVE representar um(a) ${generoLabel} praticante de musculação, em pose de academia (por exemplo, executando uma rosca de bíceps com halter na mão OU em pose flexionando o bíceps), corpo musculoso e definido, vestindo regata/top esportivo + shorts/bermuda de academia + tênis. Mostrar halter ou peso na mão se possível.`;
+        break;
+      case "Fisiculturismo":
+        categoriaDesc = `MODALIDADE FISICULTURISMO: a miniatura DEVE representar um(a) ${generoLabel} fisiculturista em POSE CLÁSSICA DE PALCO (front double biceps OU most muscular), físico extremamente musculoso e hipertrofiado, com músculos exagerados e definidos, vestindo APENAS sunga/posing trunk de competição. Pose de competição, não de academia.`;
+        break;
+      case "Ciclista": {
+        const bikeTipo =
+          perfilBike === "Mountain Bike"
+            ? "MOUNTAIN BIKE (quadro robusto, pneus largos com travas, suspensão dianteira visível, guidão reto)"
+            : "BICICLETA SPEED/ROAD (quadro fino aerodinâmico, pneus finos lisos, guidão drop curvado para baixo)";
+        categoriaDesc = `MODALIDADE CICLISMO: a miniatura DEVE representar um(a) ${generoLabel} CICLISTA EM CIMA DA BICICLETA, em posição de pedalada, vestindo macacão/camisa de ciclismo + bermuda de ciclismo + capacete aerodinâmico na cabeça + óculos esportivos. A bicicleta deve ser claramente uma ${bikeTipo}, esculpida em relevo no metal junto com o ciclista, ambos formando uma única peça do pingente. Sem capuz, sem moletom.`;
+        break;
+      }
+      case "Crossfit":
+        categoriaDesc = `MODALIDADE CROSSFIT: a miniatura DEVE representar um(a) ${generoLabel} atleta de crossfit em pose funcional intensa (por exemplo, segurando uma BARRA OLÍMPICA acima da cabeça em snatch/clean OU com KETTLEBELL na mão), corpo atlético e musculoso, vestindo regata/top + shorts curtos + tênis de crossfit. Mostre o equipamento (barra, anilhas ou kettlebell) esculpido junto.`;
+        break;
+      case "Triatlon":
+        categoriaDesc = `MODALIDADE TRIATLON: a miniatura DEVE representar um(a) ${generoLabel} TRIATLETA em pose de corrida com macacão/uniforme de triatlo (tri-suit colado ao corpo) + óculos esportivos, corpo extremamente atlético e enxuto. Pode incluir um sutil elemento de bicicleta ou óculos de natação ao lado, mas a figura central é o triatleta em movimento.`;
+        break;
+      default:
+        categoriaDesc = `Miniatura esportiva de um(a) ${generoLabel} atleta em pose dinâmica.`;
+    }
 
     const estiloDesc =
       estilo === "Underground"
