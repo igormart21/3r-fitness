@@ -763,6 +763,19 @@ const CriarMinhaJoia = () => {
           0%, 100% { opacity: 0.55; }
           50% { opacity: 1; }
         }
+        @keyframes joia-enter {
+          0% { opacity: 0; transform: translateY(18px) scale(0.985); filter: blur(6px); }
+          60% { filter: blur(0); }
+          100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+        @keyframes joia-fade-down {
+          0% { opacity: 0; transform: translateY(-12px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes joia-pop {
+          0% { opacity: 0; transform: translateY(10px) scale(0.96); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
         .joia-gold-text {
           background: linear-gradient(110deg, hsl(43 55% 45%) 0%, hsl(43 75% 65%) 25%, hsl(48 95% 82%) 50%, hsl(43 75% 65%) 75%, hsl(43 55% 45%) 100%);
           background-size: 200% auto;
@@ -781,10 +794,29 @@ const CriarMinhaJoia = () => {
         .joia-card-glow {
           background: radial-gradient(ellipse at top, hsl(43 65% 18% / 0.35), transparent 70%);
         }
+        .joia-fade-down { animation: joia-fade-down 0.7s ease-out both; }
+        .joia-step-enter { animation: joia-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .joia-stagger > * {
+          opacity: 0;
+          animation: joia-pop 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .joia-stagger > *:nth-child(1) { animation-delay: 0.05s; }
+        .joia-stagger > *:nth-child(2) { animation-delay: 0.12s; }
+        .joia-stagger > *:nth-child(3) { animation-delay: 0.19s; }
+        .joia-stagger > *:nth-child(4) { animation-delay: 0.26s; }
+        .joia-stagger > *:nth-child(5) { animation-delay: 0.33s; }
+        .joia-stagger > *:nth-child(6) { animation-delay: 0.40s; }
+        .joia-stagger > *:nth-child(7) { animation-delay: 0.47s; }
+        .joia-stagger > *:nth-child(8) { animation-delay: 0.54s; }
+        .joia-stagger > *:nth-child(n+9) { animation-delay: 0.6s; }
+        @media (prefers-reduced-motion: reduce) {
+          .joia-gold-text, .joia-glow-dot, .joia-fade-down, .joia-step-enter,
+          .joia-stagger > * { animation: none !important; opacity: 1 !important; }
+        }
       `}</style>
 
       {/* Header */}
-      <header className="border-b border-accent/20 bg-card/40 backdrop-blur-md sticky top-0 z-10 relative">
+      <header className="border-b border-accent/20 bg-card/40 backdrop-blur-md sticky top-0 z-10 relative joia-fade-down">
         <span className="absolute bottom-0 left-0 right-0 h-px joia-gold-divider" />
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link
