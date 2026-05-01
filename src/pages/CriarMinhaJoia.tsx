@@ -742,8 +742,39 @@ const CriarMinhaJoia = () => {
         ["--ring" as any]: "43 65% 55%",
       }}
     >
+      {/* Efeitos visuais escopados a esta página */}
+      <style>{`
+        @keyframes joia-shimmer {
+          0% { background-position: 200% 50%; }
+          100% { background-position: -200% 50%; }
+        }
+        @keyframes joia-glow-pulse {
+          0%, 100% { opacity: 0.55; }
+          50% { opacity: 1; }
+        }
+        .joia-gold-text {
+          background: linear-gradient(110deg, hsl(43 55% 45%) 0%, hsl(43 75% 65%) 25%, hsl(48 95% 82%) 50%, hsl(43 75% 65%) 75%, hsl(43 55% 45%) 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          animation: joia-shimmer 6s linear infinite;
+        }
+        .joia-gold-divider {
+          background: linear-gradient(90deg, transparent 0%, hsl(43 65% 55% / 0.6) 50%, transparent 100%);
+        }
+        .joia-glow-dot {
+          box-shadow: 0 0 12px hsl(43 75% 60% / 0.8), 0 0 4px hsl(48 95% 75%);
+          animation: joia-glow-pulse 2.8s ease-in-out infinite;
+        }
+        .joia-card-glow {
+          background: radial-gradient(ellipse at top, hsl(43 65% 18% / 0.35), transparent 70%);
+        }
+      `}</style>
+
       {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur sticky top-0 z-10">
+      <header className="border-b border-accent/20 bg-card/40 backdrop-blur-md sticky top-0 z-10 relative">
+        <span className="absolute bottom-0 left-0 right-0 h-px joia-gold-divider" />
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link
             to="/"
