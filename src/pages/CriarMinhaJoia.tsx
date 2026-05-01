@@ -750,7 +750,8 @@ const CriarMinhaJoia = () => {
       );
 
       if (!product) {
-        toast.error("Nenhum produto disponível para personalização. Cadastre uma joia na loja primeiro.");
+        toast.message("Abrindo nossa coleção de joias prontas para você escolher.");
+        setTimeout(() => navigate("/colecao"), 400);
         return;
       }
       const variant = product.node.variants.edges.find((v) => v.node.availableForSale)!.node;
