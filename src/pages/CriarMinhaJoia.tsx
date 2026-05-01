@@ -65,6 +65,8 @@ import bikeMountainUndergroundMascPrata from "@/assets/bike-mountain-underground
 // Bonecos CROSSFIT
 import bonecoCrossfitMascClassicoPrata from "@/assets/boneco-crossfit-masc-classico-prata.jpg";
 import bonecoCrossfitMascUndergroundPrata from "@/assets/boneco-crossfit-masc-underground-prata.jpg";
+import bonecoCrossfitMascClassicoOuro from "@/assets/boneco-crossfit-masc-classico-ouro.jpg";
+import bonecoCrossfitMascUndergroundOuro from "@/assets/boneco-crossfit-masc-underground-ouro.jpg";
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
@@ -120,7 +122,13 @@ const BONECOS: Record<string, Record<string, Record<string, Record<string, strin
   },
   Ciclista: BONECOS_DEFAULT,
   Crossfit: {
-    "Ouro 18K": BONECOS_DEFAULT["Ouro 18K"],
+    "Ouro 18K": {
+      Masculino: {
+        "Clássico": bonecoCrossfitMascClassicoOuro,
+        Underground: bonecoCrossfitMascUndergroundOuro,
+      },
+      Feminino: BONECOS_DEFAULT["Ouro 18K"].Feminino,
+    },
     "Prata 925": {
       Masculino: {
         "Clássico": bonecoCrossfitMascClassicoPrata,
