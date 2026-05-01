@@ -1917,7 +1917,7 @@ const StepPanel = ({
       key={isActive ? `active-${index}` : `inactive-${index}`}
       aria-hidden={!isActive}
       className={`w-full px-5 md:px-12 flex-col ${isActive ? "flex joia-step-enter" : "hidden"} ${
-        expanded ? "py-6 md:py-8 min-h-[320px] md:min-h-[380px]" : "py-2 md:py-3"
+        expanded ? "py-6 md:py-8 min-h-[320px] md:min-h-[380px]" : "py-1 md:py-1.5"
       }`}
     >
       <SectionTitle numeral={numeral} label={label} hint={hint} />
