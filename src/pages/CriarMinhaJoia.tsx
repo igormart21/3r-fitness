@@ -604,13 +604,43 @@ const CriarMinhaJoia = () => {
     setOpenPingenteField(key);
   };
 
+  const fetchAsDataUrl = async (url: string): Promise<string | null> => {
+    try {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      return await new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onloadend = () => resolve(r.result as string);
+        r.onerror = reject;
+        r.readAsDataURL(blob);
+      });
+    } catch (e) {
+      console.error("Falha ao carregar referência:", e);
+      return null;
+    }
+  };
+
+  const obterBonecoReferencia = (): string | null => {
+    const cat = categoria ?? "Corredores";
+    const mat = material ?? "Prata 925";
+    const gen = genero ?? "Masculino";
+    const est = (estilo === "Underground" ? "Underground" : "Clássico") as "Clássico" | "Underground";
+    if (cat === "Ciclista" && perfilBike) {
+      return BIKES[perfilBike]?.[gen]?.[mat]?.[est] ?? null;
+    }
+    return BONECOS[cat]?.[mat]?.[gen]?.[est] ?? null;
+  };
+
   const gerarPingenteDaFoto = async (dataUrl: string) => {
     setPingenteGerado(null);
     setGerandoPingente(true);
     try {
+      const refUrl = obterBonecoReferencia();
+      const referenceImageDataUrl = refUrl ? await fetchAsDataUrl(refUrl) : null;
       const { data: result, error } = await supabase.functions.invoke("gerar-pingente", {
         body: {
           imageDataUrl: dataUrl,
+          referenceImageDataUrl,
           categoria: categoria ?? "Corredores",
           material: material ?? "Prata 925",
           estilo: estilo ?? "Clássico",

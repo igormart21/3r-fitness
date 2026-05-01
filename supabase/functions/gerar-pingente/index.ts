@@ -18,7 +18,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { imageDataUrl, categoria, material, estilo, genero, perfilBike, inscricao } = await req.json();
+    const { imageDataUrl, referenceImageDataUrl, categoria, material, estilo, genero, perfilBike, inscricao } = await req.json();
 
     if (!imageDataUrl || typeof imageDataUrl !== "string") {
       return new Response(JSON.stringify({ error: "imageDataUrl é obrigatório" }), {
@@ -79,8 +79,8 @@ Deno.serve(async (req) => {
     const inscricaoFormatada = inscricaoLinhas.join(" / ");
 
     const inscricaoTexto = inscricaoLimpa
-      ? `OBRIGATÓRIO: grave a inscrição "${inscricaoFormatada}" CENTRALIZADA EXCLUSIVAMENTE NO RETÂNGULO SEGURO DO PEITO da figura. Antes de gravar, identifique visualmente a caixa interna do peito/tronco e aplique uma margem interna grande de segurança em todos os lados; a gravação deve ficar dentro dessa caixa menor, nunca encostando nas bordas do corpo. Use LETRAS CONDENSADAS/APERTADAS, estreitas na largura, com escala horizontal reduzida, como uma fonte compacta de bordado. Se qualquer linha tiver risco de passar da caixa do peito, APERTE mais as letras na horizontal e DIMINUA a fonte até caber; é obrigatório sacrificar tamanho para manter 100% do texto dentro do peito. Para texto longo, nome grande, data ou tempo, distribua em linhas retas paralelas centralizadas, seguindo esta separação visual: "${inscricaoFormatada}". Todas as linhas devem ser perfeitamente RETAS, horizontais, niveladas, sem inclinação, sem arco, sem curvatura e sem perspectiva torta. REGRA ABSOLUTA DE CONTENÇÃO: NENHUMA LETRA, NÚMERO, ACENTO, BARRA, PONTO OU TRAÇO pode sair para fora do boneco, do peito ou do tronco; não pode invadir ombros, braços, pescoço, rosto, pernas nem o fundo. Se não couber, reduza e comprima novamente até caber completamente. A gravação deve simular um BORDADO em ${corFio}, com CONTORNO PRETO FINO e UNIFORME em volta de cada letra e número (espessura idêntica em caracteres finos como "1", "I", "l", "/" e em caracteres largos como "M", "W", "0"). Letras e números nítidos, legíveis, alinhados pelo centro do peito, com espaçamento uniforme e acabamento perfeito.`
-      : "";
+      ? `OBRIGATÓRIO: grave EXATAMENTE E LITERALMENTE o seguinte texto, caractere por caractere, sem traduzir, sem reescrever, sem inventar palavras, sem trocar números, sem adicionar nada e sem remover nada: «${inscricaoLimpa}». PROIBIDO inventar nomes, frases, datas, números, tempos, distâncias ou qualquer outro caractere que não esteja entre as aspas acima. PROIBIDO completar, abreviar ou estilizar de forma que altere o conteúdo. Se houver "/", ":", letras maiúsculas, acentos ou números, mantenha-os IDÊNTICOS. Distribua o texto em até duas linhas retas paralelas centralizadas, se necessário, usando esta separação visual: "${inscricaoFormatada}". A gravação deve ficar CENTRALIZADA EXCLUSIVAMENTE NO RETÂNGULO SEGURO DO PEITO da figura. Antes de gravar, identifique visualmente a caixa interna do peito/tronco e aplique uma margem interna grande de segurança em todos os lados; a gravação deve ficar dentro dessa caixa menor, nunca encostando nas bordas do corpo. Use LETRAS CONDENSADAS/APERTADAS, estreitas na largura, com escala horizontal reduzida, como uma fonte compacta de bordado. Se qualquer linha tiver risco de passar da caixa do peito, APERTE mais as letras na horizontal e DIMINUA a fonte até caber; é obrigatório sacrificar tamanho para manter 100% do texto dentro do peito. Todas as linhas devem ser perfeitamente RETAS, horizontais, niveladas, sem inclinação, sem arco, sem curvatura e sem perspectiva torta. REGRA ABSOLUTA DE CONTENÇÃO: NENHUMA LETRA, NÚMERO, ACENTO, BARRA, PONTO OU TRAÇO pode sair para fora do boneco, do peito ou do tronco; não pode invadir ombros, braços, pescoço, rosto, pernas nem o fundo. A gravação deve simular um BORDADO em ${corFio}, com CONTORNO PRETO FINO e UNIFORME em volta de cada letra e número (espessura idêntica em caracteres finos como "1", "I", "l", "/" e em caracteres largos como "M", "W", "0"). Letras e números nítidos, legíveis, alinhados pelo centro do peito, com espaçamento uniforme e acabamento perfeito.`
+      : "ATENÇÃO: NÃO grave NENHUM texto, número, palavra, letra, símbolo ou inscrição no pingente. O peito e o tronco devem ficar completamente LIMPOS, sem qualquer marca, sem qualquer caractere, sem qualquer logo. Pingente liso, sem gravação alguma.";
 
     const corEnfase = isOuro
       ? "O PINGENTE INTEIRO DEVE SER 100% DOURADO (ouro amarelo). Cor obrigatória: amarelo-ouro brilhante. Proibido qualquer tom prateado, cinza ou branco no metal."
@@ -91,7 +91,17 @@ Deno.serve(async (req) => {
         ? "A figura DEVE ser claramente FEMININA, com silhueta, traços e proporções de uma mulher."
         : "A figura DEVE ser claramente MASCULINA, com silhueta, traços e proporções de um homem.";
 
-    const prompt = `Use a foto enviada APENAS COMO REFERÊNCIA DE IDENTIDADE (rosto, traços faciais, tipo de cabelo, cor de pele aproximada e biotipo geral) da pessoa.
+    const temReferencia = typeof referenceImageDataUrl === "string" && referenceImageDataUrl.length > 0;
+
+    const referenciaTexto = temReferencia
+      ? `IMAGEM 1 = PINGENTE DE REFERÊNCIA OFICIAL DO CATÁLOGO (a primeira imagem enviada). Esta imagem é a VERDADE ABSOLUTA do estilo da peça. Você DEVE COPIAR FIELMENTE desta referência: o traço escultural, as proporções (cabeça, tronco, braços, pernas), a POSE EXATA, as roupas, os acessórios esportivos, o equipamento, o tipo de acabamento metálico, o tom do metal, a iluminação, os reflexos, as sombras, o enquadramento, o tamanho da argolinha e o fundo. O pingente final DEVE PARECER O MESMO BONECO da referência, como se fosse a mesma peça do catálogo, apenas com o ROSTO trocado.
+
+IMAGEM 2 = FOTO DO CLIENTE (a segunda imagem enviada). Use APENAS COMO REFERÊNCIA DE IDENTIDADE FACIAL: rosto, traços faciais, tipo de cabelo, cor de pele aproximada. NÃO copie pose, roupas, fundo, iluminação, acessórios ou qualquer outra coisa da foto do cliente — TUDO ISSO vem da IMAGEM 1.
+
+REGRA DE OURO: o resultado deve ser VISUALMENTE IDÊNTICO à IMAGEM 1 (mesmo boneco, mesma pose, mesmas roupas, mesmo metal, mesmo estilo, mesmo enquadramento, mesmo fundo), apenas substituindo o rosto pelo rosto da pessoa da IMAGEM 2.`
+      : `Use a foto enviada APENAS COMO REFERÊNCIA DE IDENTIDADE (rosto, traços faciais, tipo de cabelo, cor de pele aproximada e biotipo geral) da pessoa.`;
+
+    const prompt = `${referenciaTexto}
 
 ESTILO VISUAL OBRIGATÓRIO DO PINGENTE (idêntico ao catálogo padrão da marca, mesmo traço dos bonecos pré-definidos):
 - Escultura miniatura 3D estilizada, proporções de pingente de joia de luxo (cabeça levemente maior que o realista, corpo atlético compacto), NÃO realista fotográfico, NÃO cartoon infantil — é uma MINIATURA JOALHEIRA esculpida.
@@ -106,13 +116,20 @@ ${generoTexto}
 
 ${categoriaDesc}
 
-A POSE, ROUPAS, ACESSÓRIOS E EQUIPAMENTOS ESPORTIVOS DEVEM SEGUIR EXATAMENTE A MODALIDADE ACIMA — não copie a pose nem as roupas da foto original, copie APENAS o ROSTO/IDENTIDADE da pessoa e aplique no boneco esportivo padrão da modalidade escolhida, mantendo o MESMO TRAÇO ESCULTURAL dos pingentes do catálogo.
+A POSE, ROUPAS, ACESSÓRIOS E EQUIPAMENTOS ESPORTIVOS DEVEM SER COPIADOS DA IMAGEM DE REFERÊNCIA DO CATÁLOGO (quando fornecida) — não copie a pose nem as roupas da foto do cliente. Copie APENAS o ROSTO/IDENTIDADE da pessoa e aplique no boneco do catálogo, mantendo o MESMO TRAÇO ESCULTURAL.
 
 ${estiloDesc}.
 
 ${inscricaoTexto}
 
 Fundo neutro preto profundo, iluminação editorial de catálogo de joalheria, fotografia macro de produto. Apenas o pingente isolado em destaque, centralizado, mesmo enquadramento dos pingentes da galeria de estilos.`;
+
+    const userContent: any[] = [{ type: "text", text: prompt }];
+    if (temReferencia) {
+      userContent.push({ type: "image_url", image_url: { url: referenceImageDataUrl } });
+    }
+    userContent.push({ type: "image_url", image_url: { url: imageDataUrl } });
+
 
     const aiResponse = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",
@@ -127,10 +144,7 @@ Fundo neutro preto profundo, iluminação editorial de catálogo de joalheria, f
           messages: [
             {
               role: "user",
-              content: [
-                { type: "text", text: prompt },
-                { type: "image_url", image_url: { url: imageDataUrl } },
-              ],
+              content: userContent,
             },
           ],
           modalities: ["image", "text"],
