@@ -1870,15 +1870,13 @@ const PreviewPingente = ({
                     color: fioCor,
                     fontSize: inscricaoValor.length > 14 ? 11 : inscricaoValor.length > 8 ? 14 : 18,
                     letterSpacing: "0.08em",
-                    // Contorno preto suave + relevo de fio bordado
-                    WebkitTextStroke: "0.4px rgba(0,0,0,0.55)",
+                    // Contorno preto uniforme (paint-order garante stroke por trás do fill)
+                    WebkitTextStroke: "1.2px #000",
+                    paintOrder: "stroke fill" as any,
                     textShadow: `
-                      0 0 1px rgba(0,0,0,0.45),
                       0 0.5px 0 ${fioBrilho},
                       0 -0.5px 0 ${fioSombra},
-                      0.5px 0 0 ${fioSombra},
-                      -0.5px 0 0 ${fioBrilho},
-                      0 1px 1.5px ${fioSombra}
+                      0 1.5px 2px rgba(0,0,0,0.55)
                     `,
                     filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.5))",
                     
