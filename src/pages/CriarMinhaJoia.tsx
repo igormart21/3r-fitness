@@ -1004,6 +1004,10 @@ type StepperProps = {
   adicionando: boolean;
   handleAdicionarAoCarrinho: () => void;
   handleProsseguirParaPagamento: () => void;
+  askGravacaoSiteOpen: boolean;
+  setAskGravacaoSiteOpen: (v: boolean) => void;
+  semGravacaoSite: boolean;
+  setSemGravacaoSite: (v: boolean) => void;
 };
 
 const STEP_LABELS = [
