@@ -971,6 +971,13 @@ const StepperExperience = (p: StepperProps) => {
 
   return (
     <main className="container mx-auto px-4 pt-8 pb-12 md:pt-10 md:pb-16 max-w-7xl relative">
+      {/* Mão com colar 3R FITNESS saindo da lateral direita */}
+      <img
+        src={maoColar3RFitness}
+        alt="Mão segurando colar 3R Fitness em ouro 18K"
+        className="hidden md:block pointer-events-none select-none absolute top-0 right-0 w-[280px] lg:w-[360px] xl:w-[420px] z-20 translate-x-[18%] -translate-y-2"
+        style={{ filter: "drop-shadow(0 20px 40px hsl(0 0% 0% / 0.5))" }}
+      />
       <div className="text-center mb-6 md:mb-8">
         <div className="flex items-center justify-center gap-3 mb-3">
           <span className="h-px w-8 bg-accent/60" />
