@@ -1520,13 +1520,13 @@ const StepperExperience = (p: StepperProps) => {
                     </button>
 
                     {/* Prévia do pingente personalizado */}
-                    {p.categoria && p.material && p.estilo && (
+                    {p.categoria && p.material && p.estilo && p.genero && (
                       <PreviewPingente
                         categoria={p.categoria}
                         material={p.material}
                         estilo={p.estilo}
-                        tamanho={p.tamanho}
-                        inscricaoTipo={p.personalizacaoEscolhida}
+                        genero={p.genero}
+                        perfilBike={p.perfilBike}
                         inscricaoValor={
                           p.personalizacaoEscolhida === "nome" ? p.nome :
                           p.personalizacaoEscolhida === "km" ? p.km :
