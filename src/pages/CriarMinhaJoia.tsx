@@ -1252,7 +1252,7 @@ const StepperExperience = (p: StepperProps) => {
                     style={{ fontFamily: "'Fraunces', serif", fontWeight: 400 }}
                     className="mt-6 text-center text-sm md:text-base tracking-[0.02em] text-white"
                   >
-                    Pingentes legítimos em Ouro 18K e Prata 925
+                    Pingentes legítimos em <span className="text-accent">Ouro 18K</span> e Prata 925
                   </p>
                 </div>
               )}
