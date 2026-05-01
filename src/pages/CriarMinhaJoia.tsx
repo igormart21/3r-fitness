@@ -843,25 +843,24 @@ const CriarMinhaJoia = () => {
         .joia-stagger > *:nth-child(8) { animation-delay: 0.54s; }
         .joia-stagger > *:nth-child(n+9) { animation-delay: 0.6s; }
         @keyframes mao-entrada {
-          0%   { opacity: 0; transform: translateX(120%) rotate(-18deg); }
-          60%  { opacity: 1; transform: translateX(0) rotate(-12deg); }
+          0%   { opacity: 0; transform: translateX(140%) rotate(-20deg); }
+          55%  { opacity: 1; transform: translateX(-4%) rotate(8deg); }
+          75%  { transform: translateX(2%) rotate(-4deg); }
           100% { opacity: 1; transform: translateX(0) rotate(0deg); }
         }
         @keyframes colar-balanco {
           0%   { transform: rotate(0deg); }
-          15%  { transform: rotate(14deg); }
-          30%  { transform: rotate(-11deg); }
-          45%  { transform: rotate(8deg); }
-          60%  { transform: rotate(-5deg); }
-          75%  { transform: rotate(3deg); }
-          88%  { transform: rotate(-1.5deg); }
+          25%  { transform: rotate(7deg); }
+          50%  { transform: rotate(0deg); }
+          75%  { transform: rotate(-7deg); }
           100% { transform: rotate(0deg); }
         }
         .mao-colar-anim {
-          transform-origin: 90% 18%; /* pulso, canto sup. direito da imagem */
+          transform-origin: 88% 22%;
           animation:
-            mao-entrada 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both,
-            colar-balanco 4.5s cubic-bezier(0.4, 0, 0.2, 1) 1.25s both;
+            mao-entrada 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both,
+            colar-balanco 4.5s ease-in-out 1.9s infinite;
+          will-change: transform, opacity;
         }
         @media (prefers-reduced-motion: reduce) {
           .joia-gold-text, .joia-glow-dot, .joia-fade-down, .joia-step-enter,
