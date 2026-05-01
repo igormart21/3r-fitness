@@ -1825,10 +1825,9 @@ const StepperExperience = (p: StepperProps) => {
       <Dialog open={p.askGravacaoSiteOpen} onOpenChange={p.setAskGravacaoSiteOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Deseja adicionar uma gravação?</DialogTitle>
+            <DialogTitle>Gostaria de eternizar ainda mais sua joia?</DialogTitle>
             <DialogDescription>
-              A gravação na joia é opcional. Você pode finalizar apenas com o pingente do site,
-              ou adicionar uma inscrição (Nome, KM, Data ou Tempo) para gravar na peça.
+              Grave com uma lembrança sua, veja as opções abaixo.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-3">
