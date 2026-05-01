@@ -91,7 +91,28 @@ Deno.serve(async (req) => {
         ? "A figura DEVE ser claramente FEMININA, com silhueta, traços e proporções de uma mulher."
         : "A figura DEVE ser claramente MASCULINA, com silhueta, traços e proporções de um homem.";
 
-    const prompt = `Use a foto enviada APENAS COMO REFERÊNCIA DE IDENTIDADE (rosto, traços faciais, tipo de cabelo, cor de pele aproximada e biotipo geral) da pessoa. Crie uma escultura miniatura tridimensional dessa pessoa no formato de um pingente de joia de luxo pendurado por uma argolinha pequena no topo, esculpida em ${metalCor}. ${corEnfase} ${generoTexto} ${categoriaDesc} A POSE, ROUPAS, ACESSÓRIOS E EQUIPAMENTOS ESPORTIVOS DEVEM SEGUIR EXATAMENTE A MODALIDADE ACIMA — não copie a pose nem as roupas da foto original, copie apenas o ROSTO/IDENTIDADE da pessoa e aplique no boneco esportivo da modalidade escolhida. ${estiloDesc}. Acabamento joalheiro premium, reflexos metálicos coerentes com a cor do metal especificado, sombras suaves, todo o conjunto (figura + equipamentos) esculpido em uma única peça do mesmo metal. ${inscricaoTexto} Fundo neutro preto profundo, iluminação editorial de catálogo de joalheria. Apenas o pingente isolado em destaque, fotografia macro de produto.`;
+    const prompt = `Use a foto enviada APENAS COMO REFERÊNCIA DE IDENTIDADE (rosto, traços faciais, tipo de cabelo, cor de pele aproximada e biotipo geral) da pessoa.
+
+ESTILO VISUAL OBRIGATÓRIO DO PINGENTE (idêntico ao catálogo padrão da marca, mesmo traço dos bonecos pré-definidos):
+- Escultura miniatura 3D estilizada, proporções de pingente de joia de luxo (cabeça levemente maior que o realista, corpo atlético compacto), NÃO realista fotográfico, NÃO cartoon infantil — é uma MINIATURA JOALHEIRA esculpida.
+- Traço limpo, contornos suaves e arredondados, superfícies polidas, volumes bem definidos com sombras metálicas suaves (mesmo acabamento dos bonecos exibidos na seleção de estilo).
+- Pingente único e isolado, pendurado por uma ARGOLINHA PEQUENA E DISCRETA no topo da cabeça.
+- Toda a peça (corpo, roupas, equipamentos, acessórios) esculpida em UMA ÚNICA PEÇA do mesmo metal, sem cores externas, sem pintura, apenas o tom do metal.
+- Acabamento idêntico em todos os pingentes: joalheiro premium, espelhado, reflexos coerentes, sombras editoriais.
+
+METAL: ${metalCor} ${corEnfase}
+
+${generoTexto}
+
+${categoriaDesc}
+
+A POSE, ROUPAS, ACESSÓRIOS E EQUIPAMENTOS ESPORTIVOS DEVEM SEGUIR EXATAMENTE A MODALIDADE ACIMA — não copie a pose nem as roupas da foto original, copie APENAS o ROSTO/IDENTIDADE da pessoa e aplique no boneco esportivo padrão da modalidade escolhida, mantendo o MESMO TRAÇO ESCULTURAL dos pingentes do catálogo.
+
+${estiloDesc}.
+
+${inscricaoTexto}
+
+Fundo neutro preto profundo, iluminação editorial de catálogo de joalheria, fotografia macro de produto. Apenas o pingente isolado em destaque, centralizado, mesmo enquadramento dos pingentes da galeria de estilos.`;
 
     const aiResponse = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",
