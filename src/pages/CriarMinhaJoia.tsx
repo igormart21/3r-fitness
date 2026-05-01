@@ -79,7 +79,7 @@ import bonecoTriatlonMascClassicoOuro from "@/assets/boneco-triatlon-masc-classi
 import bonecoTriatlonMascUndergroundOuro from "@/assets/boneco-triatlon-masc-underground-ouro.jpg";
 import bonecoTriatlonFemClassicoOuro from "@/assets/boneco-triatlon-fem-classico-ouro.jpg";
 import bonecoTriatlonFemUndergroundOuro from "@/assets/boneco-triatlon-fem-underground-ouro.jpg";
-import maoColar3RFitness from "@/assets/mao-colar-3r-fitness.png";
+
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
@@ -971,13 +971,6 @@ const StepperExperience = (p: StepperProps) => {
 
   return (
     <main className="container mx-auto px-4 pt-8 pb-12 md:pt-10 md:pb-16 max-w-7xl relative">
-      {/* Decorativo: mão segurando colar 3R Fitness entrando pela borda direita */}
-      <img
-        src={maoColar3RFitness}
-        alt="Pingente 3R Fitness em colar de ouro 18K"
-        className="hidden md:block pointer-events-none select-none fixed top-0 right-0 w-48 lg:w-64 xl:w-72 z-20 drop-shadow-[0_20px_40px_rgba(212,175,55,0.35)] opacity-95"
-        style={{ animation: "joia-fade-down 1.2s ease-out both", transform: "translateX(8%)" }}
-      />
       <div className="text-center mb-6 md:mb-8">
         <div className="flex items-center justify-center gap-3 mb-3">
           <span className="h-px w-8 bg-accent/60" />
