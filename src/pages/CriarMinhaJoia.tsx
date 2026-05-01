@@ -1231,20 +1231,27 @@ const StepperExperience = (p: StepperProps) => {
                             />
                           </div>
                           <span
-                            className={`font-display tracking-[0.25em] uppercase text-xs md:text-sm transition-colors ${
+                            style={{ fontFamily: "'Inter', sans-serif" }}
+                            className={`tracking-[0.25em] uppercase text-xs md:text-sm transition-colors ${
                               selected ? "text-accent" : "text-foreground/85 group-hover:text-accent"
                             }`}
                           >
                             {e}
                           </span>
-                          <span className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-muted-foreground/80">
+                          <span
+                            style={{ fontFamily: "'Inter', sans-serif" }}
+                            className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-muted-foreground/80"
+                          >
                             {legenda}
                           </span>
                         </button>
                       );
                      })}
                   </div>
-                  <p className="mt-6 text-center text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-white">
+                  <p
+                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    className="mt-6 text-center text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-white"
+                  >
                     Pingentes legítimos em Ouro 18K e Prata 925
                   </p>
                 </div>
