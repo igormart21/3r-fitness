@@ -41,8 +41,14 @@ Deno.serve(async (req) => {
       ? "fio dourado tom-sobre-tom (ouro sobre ouro)"
       : "fio prateado tom-sobre-tom (prata sobre prata)";
 
-    const inscricaoTexto = inscricao?.trim()
-      ? `OBRIGATÓRIO: grave a inscrição "${inscricao}" CENTRALIZADA NO PEITO da figura, em letras serifadas elegantes, COMPLETAMENTE RETAS (sem inclinação, sem curvatura, sem arco), alinhamento horizontal perfeito em uma única linha reta (ou em múltiplas linhas retas paralelas se o texto for longo). ENQUADRAMENTO OBRIGATÓRIO: AJUSTE AUTOMATICAMENTE O TAMANHO DAS LETRAS para que TODO o texto (nome, data e/ou tempo) caiba PERFEITAMENTE DENTRO DA ÁREA DO PEITO da figura, com margem de segurança nas bordas. Se o texto for grande (nome longo, data completa ou tempo), DIMINUA proporcionalmente as letras até que tudo encaixe sem ULTRAPASSAR os limites do peito/tronco. NENHUMA LETRA, NÚMERO OU CARACTERE pode sair para fora do corpo da figura, nem invadir os ombros, braços, pescoço, rosto, pernas ou fundo. Todo o conteúdo gravado fica 100% contido na área do peito. Mantenha espaçamento uniforme entre letras e entre linhas, alinhamento centralizado e perfeitamente reto. A gravação deve simular um BORDADO em ${corFio}, com CONTORNO PRETO FINO e UNIFORME em volta de cada letra e número (espessura idêntica em caracteres finos como "1", "I", "l", "/" e em caracteres largos como "M", "W", "0"). Letras e números nítidos, legíveis, com leve relevo de fio bordado. Cuide dos mínimos detalhes e da perfeição do acabamento.`
+    const inscricaoLimpa = typeof inscricao === "string" ? inscricao.trim().replace(/\s+/g, " ") : "";
+    const inscricaoLinhas = inscricaoLimpa
+      ? inscricaoLimpa.match(/.{1,12}(?:\s|$)|\S{1,12}/g)?.map((linha) => linha.trim()).filter(Boolean) ?? [inscricaoLimpa]
+      : [];
+    const inscricaoFormatada = inscricaoLinhas.join(" / ");
+
+    const inscricaoTexto = inscricaoLimpa
+      ? `OBRIGATÓRIO: grave a inscrição "${inscricaoFormatada}" CENTRALIZADA EXCLUSIVAMENTE NO RETÂNGULO SEGURO DO PEITO da figura. Antes de gravar, identifique visualmente a caixa interna do peito/tronco e aplique uma margem interna grande de segurança em todos os lados; a gravação deve ficar dentro dessa caixa menor, nunca encostando nas bordas do corpo. Use LETRAS CONDENSADAS/APERTADAS, estreitas na largura, com escala horizontal reduzida, como uma fonte compacta de bordado. Se qualquer linha tiver risco de passar da caixa do peito, APERTE mais as letras na horizontal e DIMINUA a fonte até caber; é obrigatório sacrificar tamanho para manter 100% do texto dentro do peito. Para texto longo, nome grande, data ou tempo, distribua em linhas retas paralelas centralizadas, seguindo esta separação visual: "${inscricaoFormatada}". Todas as linhas devem ser perfeitamente RETAS, horizontais, niveladas, sem inclinação, sem arco, sem curvatura e sem perspectiva torta. REGRA ABSOLUTA DE CONTENÇÃO: NENHUMA LETRA, NÚMERO, ACENTO, BARRA, PONTO OU TRAÇO pode sair para fora do boneco, do peito ou do tronco; não pode invadir ombros, braços, pescoço, rosto, pernas nem o fundo. Se não couber, reduza e comprima novamente até caber completamente. A gravação deve simular um BORDADO em ${corFio}, com CONTORNO PRETO FINO e UNIFORME em volta de cada letra e número (espessura idêntica em caracteres finos como "1", "I", "l", "/" e em caracteres largos como "M", "W", "0"). Letras e números nítidos, legíveis, alinhados pelo centro do peito, com espaçamento uniforme e acabamento perfeito.`
       : "";
 
     const corEnfase = isOuro
@@ -65,7 +71,7 @@ Deno.serve(async (req) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "google/gemini-2.5-flash-image",
+          model: "google/gemini-3.1-flash-image-preview",
           messages: [
             {
               role: "user",
