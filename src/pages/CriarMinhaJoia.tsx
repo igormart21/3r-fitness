@@ -258,13 +258,16 @@ const SectionTitle = ({
 }) => (
   <div className="text-center mb-6 md:mb-8">
     <div className="flex items-center justify-center gap-4 mb-3">
-      <span className="h-px w-12 md:w-20 bg-accent/40" />
-      <span className="font-display text-[10px] md:text-xs tracking-[0.5em] text-accent">
+      <span className="h-px w-12 md:w-24 joia-gold-divider" />
+      <span
+        className="font-display text-[10px] md:text-xs tracking-[0.5em] joia-gold-text"
+        style={{ textShadow: "0 0 18px hsl(43 75% 55% / 0.45)" }}
+      >
         {numeral}
       </span>
-      <span className="h-px w-12 md:w-20 bg-accent/40" />
+      <span className="h-px w-12 md:w-24 joia-gold-divider" />
     </div>
-    <h2 className="font-display text-xl md:text-2xl tracking-[0.2em] uppercase">
+    <h2 className="font-display text-xl md:text-2xl tracking-[0.2em] uppercase joia-gold-text inline-block">
       {label}
     </h2>
     {hint && (
@@ -277,9 +280,9 @@ const SectionTitle = ({
 
 const Divider = () => (
   <div className="flex items-center justify-center gap-3 my-12 md:my-14">
-    <span className="h-px w-16 bg-border" />
-    <span className="h-1 w-1 rounded-full bg-accent/60" />
-    <span className="h-px w-16 bg-border" />
+    <span className="h-px w-20 joia-gold-divider" />
+    <span className="h-1.5 w-1.5 rounded-full bg-accent joia-glow-dot" />
+    <span className="h-px w-20 joia-gold-divider" />
   </div>
 );
 
@@ -300,9 +303,17 @@ const LuxButton = ({
       size === "lg" ? "px-7 py-3.5" : "px-5 py-2.5"
     } ${
       selected
-        ? "border-accent text-accent bg-accent/[0.04] shadow-[inset_0_0_0_1px_hsl(var(--accent)/0.4)]"
-        : "border-border/60 text-foreground/85 hover:border-accent/70 hover:text-accent"
+        ? "border-accent text-accent-foreground shadow-[0_0_24px_-4px_hsl(var(--accent)/0.55),inset_0_0_0_1px_hsl(var(--accent)/0.5)]"
+        : "border-border/60 text-foreground/85 hover:border-accent/70 hover:text-accent hover:shadow-[0_0_18px_-6px_hsl(var(--accent)/0.4)]"
     }`}
+    style={
+      selected
+        ? {
+            backgroundImage:
+              "linear-gradient(135deg, hsl(43 65% 22% / 0.9) 0%, hsl(43 75% 35% / 0.85) 50%, hsl(43 65% 22% / 0.9) 100%)",
+          }
+        : undefined
+    }
   >
     {selected && (
       <>
@@ -717,9 +728,12 @@ const CriarMinhaJoia = () => {
 
   return (
     <div
-      className="min-h-screen bg-background text-foreground"
+      className="min-h-screen text-foreground relative overflow-hidden"
       style={{
         // Preto fosco + dourado (escopado a esta página)
+        backgroundColor: "hsl(0 0% 7%)",
+        backgroundImage:
+          "radial-gradient(ellipse 80% 50% at 50% -10%, hsl(43 65% 18% / 0.55), transparent 60%), radial-gradient(ellipse 60% 40% at 90% 30%, hsl(43 65% 14% / 0.4), transparent 65%), radial-gradient(ellipse 50% 35% at 10% 75%, hsl(43 65% 12% / 0.35), transparent 70%)",
         ["--background" as any]: "0 0% 7%",
         ["--foreground" as any]: "43 65% 70%",
         ["--card" as any]: "0 0% 9%",
@@ -739,8 +753,39 @@ const CriarMinhaJoia = () => {
         ["--ring" as any]: "43 65% 55%",
       }}
     >
+      {/* Efeitos visuais escopados a esta página */}
+      <style>{`
+        @keyframes joia-shimmer {
+          0% { background-position: 200% 50%; }
+          100% { background-position: -200% 50%; }
+        }
+        @keyframes joia-glow-pulse {
+          0%, 100% { opacity: 0.55; }
+          50% { opacity: 1; }
+        }
+        .joia-gold-text {
+          background: linear-gradient(110deg, hsl(43 55% 45%) 0%, hsl(43 75% 65%) 25%, hsl(48 95% 82%) 50%, hsl(43 75% 65%) 75%, hsl(43 55% 45%) 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          animation: joia-shimmer 6s linear infinite;
+        }
+        .joia-gold-divider {
+          background: linear-gradient(90deg, transparent 0%, hsl(43 65% 55% / 0.6) 50%, transparent 100%);
+        }
+        .joia-glow-dot {
+          box-shadow: 0 0 12px hsl(43 75% 60% / 0.8), 0 0 4px hsl(48 95% 75%);
+          animation: joia-glow-pulse 2.8s ease-in-out infinite;
+        }
+        .joia-card-glow {
+          background: radial-gradient(ellipse at top, hsl(43 65% 18% / 0.35), transparent 70%);
+        }
+      `}</style>
+
       {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur sticky top-0 z-10">
+      <header className="border-b border-accent/20 bg-card/40 backdrop-blur-md sticky top-0 z-10 relative">
+        <span className="absolute bottom-0 left-0 right-0 h-px joia-gold-divider" />
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link
             to="/"
@@ -876,7 +921,7 @@ const StepperExperience = (p: StepperProps) => {
             <span className="mt-1 h-px w-full bg-accent/70" />
           </span>
         </p>
-        <h1 className="font-display text-3xl md:text-4xl tracking-tight mb-2">
+        <h1 className="font-display text-3xl md:text-5xl tracking-tight mb-2 joia-gold-text inline-block">
           Crie sua joia
         </h1>
       </div>
