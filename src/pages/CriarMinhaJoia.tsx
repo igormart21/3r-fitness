@@ -1527,6 +1527,8 @@ const StepperExperience = (p: StepperProps) => {
                         estilo={p.estilo}
                         genero={p.genero}
                         perfilBike={p.perfilBike}
+                        tamanho={p.tamanho}
+                        inscricaoTipo={p.personalizacaoEscolhida}
                         inscricaoValor={
                           p.personalizacaoEscolhida === "nome" ? p.nome :
                           p.personalizacaoEscolhida === "km" ? p.km :
