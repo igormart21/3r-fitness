@@ -1089,7 +1089,7 @@ const StepperExperience = (p: StepperProps) => {
           <ChevronRight className="h-5 w-5" />
         </button>
 
-        <div className="overflow-hidden border border-border/40 bg-card/20 relative">
+        <div className="overflow-hidden joia-glass relative rounded-sm">
           <span className="absolute top-0 left-0 h-4 w-4 border-t border-l border-accent/70 z-10" />
           <span className="absolute top-0 right-0 h-4 w-4 border-t border-r border-accent/70 z-10" />
           <span className="absolute bottom-0 left-0 h-4 w-4 border-b border-l border-accent/70 z-10" />
