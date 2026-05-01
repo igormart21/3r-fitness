@@ -303,9 +303,17 @@ const LuxButton = ({
       size === "lg" ? "px-7 py-3.5" : "px-5 py-2.5"
     } ${
       selected
-        ? "border-accent text-accent bg-accent/[0.04] shadow-[inset_0_0_0_1px_hsl(var(--accent)/0.4)]"
-        : "border-border/60 text-foreground/85 hover:border-accent/70 hover:text-accent"
+        ? "border-accent text-accent-foreground shadow-[0_0_24px_-4px_hsl(var(--accent)/0.55),inset_0_0_0_1px_hsl(var(--accent)/0.5)]"
+        : "border-border/60 text-foreground/85 hover:border-accent/70 hover:text-accent hover:shadow-[0_0_18px_-6px_hsl(var(--accent)/0.4)]"
     }`}
+    style={
+      selected
+        ? {
+            backgroundImage:
+              "linear-gradient(135deg, hsl(43 65% 22% / 0.9) 0%, hsl(43 75% 35% / 0.85) 50%, hsl(43 65% 22% / 0.9) 100%)",
+          }
+        : undefined
+    }
   >
     {selected && (
       <>
