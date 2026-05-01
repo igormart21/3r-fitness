@@ -687,7 +687,7 @@ const CriarMinhaJoia = () => {
 
   const handleAdicionarAoCarrinho = async () => {
     const usandoFotoPingente = !!fotoPingente || !!pingenteGerado;
-    if (!personalizacaoEscolhida && !usandoFotoPingente) {
+    if (!personalizacaoEscolhida && !usandoFotoPingente && !semGravacaoSite) {
       toast.error("Escolha uma inscrição para sua joia ou envie uma foto para gerar o pingente");
       return;
     }
