@@ -910,7 +910,7 @@ const StepperExperience = (p: StepperProps) => {
             <span className="mt-1 h-px w-full bg-accent/70" />
           </span>
         </p>
-        <h1 className="font-display text-3xl md:text-4xl tracking-tight mb-2">
+        <h1 className="font-display text-3xl md:text-5xl tracking-tight mb-2 joia-gold-text inline-block">
           Crie sua joia
         </h1>
       </div>
