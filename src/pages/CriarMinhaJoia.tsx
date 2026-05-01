@@ -684,8 +684,9 @@ const CriarMinhaJoia = () => {
   };
 
   const handleAdicionarAoCarrinho = async () => {
-    if (!personalizacaoEscolhida) {
-      toast.error("Escolha uma inscrição para sua joia (Nome, KM, Data ou Tempo)");
+    const usandoFotoPingente = !!fotoPingente || !!pingenteGerado;
+    if (!personalizacaoEscolhida && !usandoFotoPingente) {
+      toast.error("Escolha uma inscrição para sua joia ou envie uma foto para gerar o pingente");
       return;
     }
 
@@ -704,17 +705,20 @@ const CriarMinhaJoia = () => {
       }
       const variant = product.node.variants.edges.find((v) => v.node.availableForSale)!.node;
 
+      const inscricaoFoto = inscricaoPingenteValor();
       const personalizacao = [
         { name: "Categoria", value: categoria! },
         { name: "Material", value: material! },
         { name: "Estilo", value: estilo! },
         { name: "Tamanho", value: tamanho! },
         { name: "Gênero", value: genero! },
-        { name: "Nome gravado", value: nome },
+        ...(nome ? [{ name: "Nome gravado", value: nome }] : []),
         ...(data ? [{ name: "Data", value: data }] : []),
         ...(km ? [{ name: "KM", value: km }] : []),
         ...(tempo ? [{ name: "Tempo", value: tempo }] : []),
-        ...(foto ? [{ name: "Foto", value: "Anexada pelo cliente" }] : []),
+        ...(foto ? [{ name: "Foto (referência)", value: "Anexada pelo cliente" }] : []),
+        ...(usandoFotoPingente ? [{ name: "Pingente por foto", value: "Gerado por IA" }] : []),
+        ...(usandoFotoPingente && inscricaoFoto ? [{ name: "Gravação no pingente", value: inscricaoFoto }] : []),
       ];
 
       await addItem({
