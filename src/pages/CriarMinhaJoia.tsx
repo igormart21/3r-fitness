@@ -942,6 +942,10 @@ const CriarMinhaJoia = () => {
         adicionando={adicionando}
         handleAdicionarAoCarrinho={handleAdicionarAoCarrinho}
         handleProsseguirParaPagamento={handleProsseguirParaPagamento}
+        askGravacaoSiteOpen={askGravacaoSiteOpen}
+        setAskGravacaoSiteOpen={setAskGravacaoSiteOpen}
+        semGravacaoSite={semGravacaoSite}
+        setSemGravacaoSite={setSemGravacaoSite}
       />
 
       <Dialog open={askGravacaoOpen} onOpenChange={setAskGravacaoOpen}>
