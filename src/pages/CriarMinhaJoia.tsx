@@ -721,6 +721,7 @@ const CriarMinhaJoia = () => {
         ...(foto ? [{ name: "Foto (referência)", value: "Anexada pelo cliente" }] : []),
         ...(usandoFotoPingente ? [{ name: "Pingente por foto", value: "Gerado por IA" }] : []),
         ...(usandoFotoPingente && inscricaoFoto ? [{ name: "Gravação no pingente", value: inscricaoFoto }] : []),
+        ...(!usandoFotoPingente && !personalizacaoEscolhida && semGravacaoSite ? [{ name: "Gravação", value: "Sem gravação" }] : []),
       ];
 
       await addItem({
