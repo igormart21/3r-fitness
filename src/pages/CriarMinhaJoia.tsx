@@ -67,6 +67,10 @@ import bonecoCrossfitMascClassicoPrata from "@/assets/boneco-crossfit-masc-class
 import bonecoCrossfitMascUndergroundPrata from "@/assets/boneco-crossfit-masc-underground-prata.jpg";
 import bonecoCrossfitMascClassicoOuro from "@/assets/boneco-crossfit-masc-classico-ouro.jpg";
 import bonecoCrossfitMascUndergroundOuro from "@/assets/boneco-crossfit-masc-underground-ouro.jpg";
+import bonecoCrossfitFemClassicoPrata from "@/assets/boneco-crossfit-fem-classico-prata.jpg";
+import bonecoCrossfitFemUndergroundPrata from "@/assets/boneco-crossfit-fem-underground-prata.jpg";
+import bonecoCrossfitFemClassicoOuro from "@/assets/boneco-crossfit-fem-classico-ouro.jpg";
+import bonecoCrossfitFemUndergroundOuro from "@/assets/boneco-crossfit-fem-underground-ouro.jpg";
 
 const ESTILO_IMAGENS: Record<string, string> = {
   Underground: estiloUndergroundImg,
@@ -127,14 +131,20 @@ const BONECOS: Record<string, Record<string, Record<string, Record<string, strin
         "Clássico": bonecoCrossfitMascClassicoOuro,
         Underground: bonecoCrossfitMascUndergroundOuro,
       },
-      Feminino: BONECOS_DEFAULT["Ouro 18K"].Feminino,
+      Feminino: {
+        "Clássico": bonecoCrossfitFemClassicoOuro,
+        Underground: bonecoCrossfitFemUndergroundOuro,
+      },
     },
     "Prata 925": {
       Masculino: {
         "Clássico": bonecoCrossfitMascClassicoPrata,
         Underground: bonecoCrossfitMascUndergroundPrata,
       },
-      Feminino: BONECOS_DEFAULT["Prata 925"].Feminino,
+      Feminino: {
+        "Clássico": bonecoCrossfitFemClassicoPrata,
+        Underground: bonecoCrossfitFemUndergroundPrata,
+      },
     },
   },
   Triatlon: BONECOS_DEFAULT,
