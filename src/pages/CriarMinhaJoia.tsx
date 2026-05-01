@@ -976,7 +976,7 @@ const StepperExperience = (p: StepperProps) => {
       <img
         src={maoColar3RFitness}
         alt="Mão segurando colar 3R Fitness em ouro 18K"
-        className="hidden md:block pointer-events-none select-none absolute top-0 right-0 w-[280px] lg:w-[360px] xl:w-[420px] z-20 translate-x-[45%] -translate-y-2"
+        className="hidden md:block pointer-events-none select-none absolute top-0 right-0 w-[220px] lg:w-[280px] xl:w-[320px] z-20 translate-x-[45%] -translate-y-2"
         style={{ filter: "drop-shadow(0 20px 40px hsl(0 0% 0% / 0.5))" }}
       />
       <div className="text-center mb-6 md:mb-8">
