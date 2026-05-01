@@ -717,9 +717,12 @@ const CriarMinhaJoia = () => {
 
   return (
     <div
-      className="min-h-screen bg-background text-foreground"
+      className="min-h-screen text-foreground relative overflow-hidden"
       style={{
         // Preto fosco + dourado (escopado a esta página)
+        backgroundColor: "hsl(0 0% 7%)",
+        backgroundImage:
+          "radial-gradient(ellipse 80% 50% at 50% -10%, hsl(43 65% 18% / 0.55), transparent 60%), radial-gradient(ellipse 60% 40% at 90% 30%, hsl(43 65% 14% / 0.4), transparent 65%), radial-gradient(ellipse 50% 35% at 10% 75%, hsl(43 65% 12% / 0.35), transparent 70%)",
         ["--background" as any]: "0 0% 7%",
         ["--foreground" as any]: "43 65% 70%",
         ["--card" as any]: "0 0% 9%",
