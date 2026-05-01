@@ -1056,7 +1056,7 @@ const StepperExperience = (p: StepperProps) => {
                 <button
                   key={e.label}
                   onClick={() => setStep(e.stepIdx)}
-                  className="group flex items-center gap-2 flex-shrink-0 px-3 py-1.5 border border-accent/40 hover:border-accent hover:bg-accent/[0.06] transition-all"
+                  className="group joia-glass-soft flex items-center gap-2 flex-shrink-0 px-3 py-1.5 rounded-sm hover:border-accent/60 hover:shadow-[0_0_18px_-4px_hsl(43_75%_55%/0.45)] transition-all"
                 >
                   <span className="text-[8px] uppercase tracking-[0.3em] text-muted-foreground/70 group-hover:text-accent/80">
                     {String(e.stepIdx + 1).padStart(2, "0")} · {e.label}
