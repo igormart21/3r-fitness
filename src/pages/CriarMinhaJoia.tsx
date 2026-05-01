@@ -639,9 +639,26 @@ const CriarMinhaJoia = () => {
     reader.onloadend = () => {
       const dataUrl = reader.result as string;
       setFotoPingente(dataUrl);
-      gerarPingenteDaFoto(dataUrl);
+      setFotoPendente(dataUrl);
+      setAskGravacaoOpen(true);
     };
     reader.readAsDataURL(file);
+    e.target.value = "";
+  };
+
+  const confirmarSemGravacao = () => {
+    limparInscricaoPingente();
+    setOpenPingenteField(null);
+    setAskGravacaoOpen(false);
+    if (fotoPendente) gerarPingenteDaFoto(fotoPendente);
+    setFotoPendente(null);
+  };
+
+  const confirmarComGravacao = () => {
+    setAskGravacaoOpen(false);
+    setFotoPendente(null);
+    setOpenPingenteField("nome");
+    toast.info("Escolha o que deseja gravar e clique em \"Gerar pingente\".");
   };
 
   const handleFotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
