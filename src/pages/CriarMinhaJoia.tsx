@@ -951,10 +951,9 @@ const CriarMinhaJoia = () => {
       <Dialog open={askGravacaoOpen} onOpenChange={setAskGravacaoOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Deseja adicionar uma gravação?</DialogTitle>
+            <DialogTitle>Gostaria de eternizar ainda mais sua joia?</DialogTitle>
             <DialogDescription>
-              A gravação no peito é opcional. Você pode seguir apenas com a conversão da sua foto em pingente,
-              ou adicionar nome, KM, data ou tempo para gravar junto.
+              Grave com uma lembrança sua, veja as opções abaixo.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-3">
