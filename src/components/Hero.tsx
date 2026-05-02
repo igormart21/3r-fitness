@@ -30,10 +30,12 @@ export const Hero = () => {
             filter: brightness(1.15);
           }
         }
-        /* Reflexo cruzando o texto */
+        /* Reflexo: entra pela borda esquerda, atravessa as letras, sai pela direita */
         @keyframes essencia-sheen {
-          0% { transform: translateX(-120%) skewX(-25deg); }
-          70%, 100% { transform: translateX(220%) skewX(-25deg); }
+          0% { left: -40%; opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { left: 100%; opacity: 0; }
         }
         /* Letra revelando: sobe + fade + brilho */
         @keyframes essencia-letter {
