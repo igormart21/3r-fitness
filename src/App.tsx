@@ -15,6 +15,7 @@ import { useCartSync } from "@/hooks/useCartSync";
 import { InstagramFloatingButton } from "@/components/InstagramFloatingButton";
 import { WhatsappFloatingButton } from "@/components/WhatsappFloatingButton";
 import { HomeFloatingButton } from "@/components/HomeFloatingButton";
+import { AuthFloatingButton } from "@/components/AuthFloatingButton";
 
 const queryClient = new QueryClient();
 
