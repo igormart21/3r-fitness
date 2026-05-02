@@ -265,13 +265,13 @@ export const Hero = () => {
           {/* Grid de 6 cards com contorno dourado */}
           <div className="relative w-full max-w-6xl mx-auto grid grid-cols-6 gap-1.5 sm:gap-2 md:gap-3">
             {[
-              { nome: "Fisiculturismo", img: sportFisiculturismo },
-              { nome: "Musculação", img: sportMusculacao },
-              { nome: "Triathlon", img: sportTriathlon },
-              { nome: "Ciclismo", img: sportCiclismo },
-              { nome: "Crossfit", img: sportCrossfit },
-              { nome: "Corrida", img: sportCorrida },
-            ].map(({ nome, img }, i) => (
+              { nome: "Fisiculturismo", img: sportFisiculturismo, frase: "O corpo é a sua obra" },
+              { nome: "Musculação", img: sportMusculacao, frase: "Força que se constrói em silêncio" },
+              { nome: "Triathlon", img: sportTriathlon, frase: "Resistência em todos os níveis" },
+              { nome: "Ciclismo", img: sportCiclismo, frase: "Vá mais longe do que ontem" },
+              { nome: "Crossfit", img: sportCrossfit, frase: "Intensidade define quem você é" },
+              { nome: "Corrida", img: sportCorrida, frase: "Cada passo constrói quem você se torna" },
+            ].map(({ nome, img, frase }, i) => (
               <div key={i} className="flex flex-col items-center gap-2 md:gap-3">
                 {/* Título da categoria - tipografia luxo */}
                 <h3
