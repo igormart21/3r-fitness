@@ -58,10 +58,10 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
 /* ===================== Componentes auxiliares ===================== */
 
 const SectionTitle = ({ numeral, label }: { numeral: string; label: string }) => (
-  <div className="flex items-center gap-3 mb-4">
-    <span className="font-display text-[10px] tracking-[0.5em] text-accent">{numeral}</span>
+  <div className="flex items-center gap-3 mb-2.5">
+    <span className="font-display text-[9px] tracking-[0.5em] text-accent">{numeral}</span>
     <span className="h-px flex-1 bg-gradient-to-r from-accent/60 to-transparent" />
-    <h3 className="font-display text-sm md:text-base tracking-[0.25em] uppercase text-accent whitespace-nowrap">
+    <h3 className="font-display text-[11px] md:text-xs tracking-[0.25em] uppercase text-accent whitespace-nowrap">
       {label}
     </h3>
     <span className="h-px flex-1 bg-gradient-to-l from-accent/60 to-transparent" />
