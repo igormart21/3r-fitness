@@ -298,16 +298,20 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
     rotate?: number;
   };
   const overlayPos: OverlayStyle = useMemo(() => {
+    const fem = genero === "Feminino";
     switch (config.slug) {
       case "musculacao":
-        if (genero === "Feminino") {
-          return { top: "48%", left: "50%", width: "18%", transform: "translate(-50%,-50%)" };
-        }
-        return { top: "46%", left: "48%", width: "22%", transform: "translate(-50%,-50%)" };
+        if (fem) return { top: "48%", left: "47%", width: "16%", transform: "translate(-50%,-50%)" };
+        return { top: "46%", left: "47%", width: "22%", transform: "translate(-50%,-50%)" };
       case "corrida":
-        return { top: "46%", left: "48%", width: "22%", transform: "translate(-50%,-50%)" };
+        if (fem) return { top: "48%", left: "47%", width: "16%", transform: "translate(-50%,-50%)" };
+        return { top: "46%", left: "47%", width: "22%", transform: "translate(-50%,-50%)" };
+      case "fisiculturismo":
+        if (fem) return { top: "48%", left: "47%", width: "16%", transform: "translate(-50%,-50%)" };
+        return { top: "46%", left: "47%", width: "22%", transform: "translate(-50%,-50%)" };
       case "triathlon":
-        return { top: "48%", left: "44%", width: "22%", transform: "translate(-50%,-50%) rotate(-8deg)" };
+        if (fem) return { top: "48%", left: "42%", width: "16%", transform: "translate(-50%,-50%) rotate(-8deg)" };
+        return { top: "48%", left: "43%", width: "22%", transform: "translate(-50%,-50%) rotate(-8deg)" };
       case "crossfit":
         return { top: "88%", left: "50%", width: "44%", transform: "translate(-50%,-50%)" };
       default:
