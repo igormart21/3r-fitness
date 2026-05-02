@@ -610,6 +610,9 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* V — Para os mais exclusivos */}
             <section>
               <SectionTitle numeral="V" label="Torne isso único" />
+              <p className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 mb-2 italic text-center">
+                Transforme em uma jóia que só você tem
+              </p>
 
               <div className="grid grid-cols-2 gap-3">
                 {/* Upload */}
