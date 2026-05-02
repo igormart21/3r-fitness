@@ -501,7 +501,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
           <div className="space-y-3">
             {/* I — Gênero */}
             <section>
-              <SectionTitle numeral="I" label="Gênero" />
+              <SectionTitle numeral="I" label="Escolha quem você se tornou" />
               <div className="flex gap-2 flex-wrap">
                 {(["Masculino", "Feminino"] as Genero[]).map((g) => (
                   <ChoiceButton key={g} selected={genero === g} onClick={() => setGenero(genero === g ? null : g)}>
@@ -513,7 +513,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
 
             {/* II — Metal */}
             <section>
-              <SectionTitle numeral="II" label="Escolha o metal" />
+              <SectionTitle numeral="II" label="Defina o material da sua conquista" />
               <div className="flex gap-2 flex-wrap">
                 {(["Ouro 18K", "Prata 925"] as Material[]).map((m) => (
                   <ChoiceButton key={m} selected={material === m} onClick={() => setMaterial(material === m ? null : m)}>
@@ -537,9 +537,9 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
 
             {/* IV — Gravação */}
             <section>
-              <SectionTitle numeral="IV" label="Grave seu significado" />
+              <SectionTitle numeral="IV" label="Dê significado à sua peça" />
               <p className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 mb-2 italic text-center">
-                Abrevie pra digitar · escolha apenas uma opção
+                Transforme em uma jóia que só você tem
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {config.camposGravacao.includes("nome") && (
@@ -614,7 +614,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
 
             {/* V — Para os mais exclusivos */}
             <section>
-              <SectionTitle numeral="V" label="Para os mais exclusivos" />
+              <SectionTitle numeral="V" label="Torne isso único" />
               <p
                 className="font-serif italic text-xs text-accent/90 mb-2 text-center"
                 style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
