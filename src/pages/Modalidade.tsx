@@ -57,6 +57,16 @@ import bonecoCrossFemUndergroundPrata from "@/assets/boneco-crossfit-fem-undergr
 import bonecoCrossMascClassicoPrata from "@/assets/boneco-crossfit-masc-classico-prata.jpg";
 import bonecoCrossMascUndergroundPrata from "@/assets/boneco-crossfit-masc-underground-prata.jpg";
 
+// Bonecos CORRIDA
+import bonecoCorrFemClassicoOuro from "@/assets/boneco-corredores-fem-classico-ouro.jpg";
+import bonecoCorrFemUndergroundOuro from "@/assets/boneco-corredores-fem-underground-ouro.jpg";
+import bonecoCorrMascClassicoOuro from "@/assets/boneco-corredores-masc-classico-ouro.jpg";
+import bonecoCorrMascUndergroundOuro from "@/assets/boneco-corredores-masc-underground-ouro.jpg";
+import bonecoCorrFemClassicoPrata from "@/assets/boneco-corredores-fem-classico-prata.jpg";
+import bonecoCorrFemUndergroundPrata from "@/assets/boneco-corredores-fem-underground-prata.jpg";
+import bonecoCorrMascClassicoPrata from "@/assets/boneco-corredores-masc-classico-prata.jpg";
+import bonecoCorrMascUndergroundPrata from "@/assets/boneco-corredores-masc-underground-prata.jpg";
+
 /* ===================== Configuração por modalidade ===================== */
 
 type Genero = "Masculino" | "Feminino";
@@ -154,7 +164,22 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     },
     camposGravacao: ["nome", "palavra", "data"],
   },
-  // próxima: Corrida=6
+  "6": {
+    slug: "corrida",
+    nome: "Corrida",
+    fraseImpacto: "Cada quilômetro, uma conquista.",
+    bonecos: {
+      "Ouro 18K": {
+        Masculino: { "Clássico": bonecoCorrMascClassicoOuro, Underground: bonecoCorrMascUndergroundOuro },
+        Feminino: { "Clássico": bonecoCorrFemClassicoOuro, Underground: bonecoCorrFemUndergroundOuro },
+      },
+      "Prata 925": {
+        Masculino: { "Clássico": bonecoCorrMascClassicoPrata, Underground: bonecoCorrMascUndergroundPrata },
+        Feminino: { "Clássico": bonecoCorrFemClassicoPrata, Underground: bonecoCorrFemUndergroundPrata },
+      },
+    },
+    camposGravacao: ["nome", "palavra", "km", "data", "tempo"],
+  },
 };
 
 /* ===================== Componentes auxiliares ===================== */
