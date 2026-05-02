@@ -28,10 +28,19 @@ export const Hero = () => {
         </div>
 
         {/* Divisor dourado horizontal */}
-        <div className="relative w-full flex items-center justify-center py-6 md:py-10 bg-background">
-          <div className="container flex items-center justify-center gap-4">
+        <div
+          className="relative w-full flex flex-col items-center justify-center py-10 md:py-16 overflow-hidden"
+          style={{
+            backgroundImage: [
+              "radial-gradient(ellipse 70% 100% at 50% 50%, rgba(212,175,55,0.10) 0%, transparent 70%)",
+              "linear-gradient(180deg, #050505 0%, #0a0a0a 50%, #050505 100%)",
+            ].join(", "),
+          }}
+        >
+          {/* Linha dourada superior */}
+          <div className="container flex items-center justify-center gap-4 mb-6 md:mb-8">
             <div
-              className="h-px flex-1 max-w-md"
+              className="h-px flex-1 max-w-xs"
               style={{
                 background:
                   "linear-gradient(90deg, transparent 0%, rgba(184,134,11,0.3) 30%, rgba(244,215,122,0.9) 50%, rgba(184,134,11,0.3) 70%, transparent 100%)",
@@ -46,7 +55,49 @@ export const Hero = () => {
               }}
             />
             <div
-              className="h-px flex-1 max-w-md"
+              className="h-px flex-1 max-w-xs"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent 0%, rgba(184,134,11,0.3) 30%, rgba(244,215,122,0.9) 50%, rgba(184,134,11,0.3) 70%, transparent 100%)",
+              }}
+            />
+          </div>
+
+          {/* Frase tópico */}
+          <h2
+            className="relative text-center font-serif italic font-light text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-[0.15em] md:tracking-[0.2em] uppercase"
+            style={{
+              fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif',
+              background:
+                "linear-gradient(180deg, #f4d77a 0%, #d4af37 45%, #b8860b 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              textShadow: "0 0 30px rgba(212,175,55,0.25)",
+            }}
+          >
+            Sua Essência
+          </h2>
+
+          {/* Linha dourada inferior */}
+          <div className="container flex items-center justify-center gap-4 mt-6 md:mt-8">
+            <div
+              className="h-px flex-1 max-w-xs"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent 0%, rgba(184,134,11,0.3) 30%, rgba(244,215,122,0.9) 50%, rgba(184,134,11,0.3) 70%, transparent 100%)",
+              }}
+            />
+            <span
+              className="block h-1.5 w-1.5 rotate-45"
+              style={{
+                background:
+                  "linear-gradient(135deg, #d4af37 0%, #f4d77a 50%, #b8860b 100%)",
+                boxShadow: "0 0 10px rgba(212,175,55,0.5)",
+              }}
+            />
+            <div
+              className="h-px flex-1 max-w-xs"
               style={{
                 background:
                   "linear-gradient(90deg, transparent 0%, rgba(184,134,11,0.3) 30%, rgba(244,215,122,0.9) 50%, rgba(184,134,11,0.3) 70%, transparent 100%)",
