@@ -610,12 +610,6 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* V — Para os mais exclusivos */}
             <section>
               <SectionTitle numeral="V" label="Torne isso único" />
-              <p
-                className="font-serif italic text-xs text-accent/90 mb-2 text-center"
-                style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
-              >
-                "Transforme você em uma joia única"
-              </p>
 
               <div className="grid grid-cols-2 gap-3">
                 {/* Upload */}
