@@ -84,10 +84,10 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
 /* ===================== Componentes auxiliares ===================== */
 
 const SectionTitle = ({ numeral, label }: { numeral: string; label: string }) => (
-  <div className="flex items-center gap-3 mb-2.5">
-    <span className="font-display text-[9px] tracking-[0.5em] text-accent">{numeral}</span>
+  <div className="flex items-center gap-2 mb-1.5">
+    <span className="font-display text-[8px] tracking-[0.5em] text-accent">{numeral}</span>
     <span className="h-px flex-1 bg-gradient-to-r from-accent/60 to-transparent" />
-    <h3 className="font-display text-[11px] md:text-xs tracking-[0.25em] uppercase text-accent whitespace-nowrap">
+    <h3 className="font-display text-[9px] md:text-[10px] tracking-[0.25em] uppercase text-accent whitespace-nowrap">
       {label}
     </h3>
     <span className="h-px flex-1 bg-gradient-to-l from-accent/60 to-transparent" />
@@ -105,7 +105,7 @@ const ChoiceButton = ({
 }) => (
   <button
     onClick={onClick}
-    className={`relative font-display tracking-[0.2em] uppercase text-[10px] md:text-xs transition-all duration-300 border rounded-none px-4 py-2.5 ${
+    className={`relative font-display tracking-[0.2em] uppercase text-[9px] md:text-[10px] transition-all duration-300 border rounded-none px-2.5 py-1.5 ${
       selected
         ? "border-accent text-accent-foreground shadow-[0_0_24px_-4px_hsl(var(--accent)/0.55)]"
         : "border-border/60 text-foreground/85 hover:border-accent/70 hover:text-accent"
@@ -120,8 +120,8 @@ const ChoiceButton = ({
     }
   >
     {selected && (
-      <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
-        <Check className="h-3 w-3" strokeWidth={3} />
+      <span className="absolute -top-1.5 -right-1.5 h-4 w-4 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
+        <Check className="h-2.5 w-2.5" strokeWidth={3} />
       </span>
     )}
     {children}
@@ -445,8 +445,8 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       )}
 
       {/* Conteúdo principal: 2 colunas */}
-      <main className="container mx-auto px-4 pt-4 pb-16 max-w-6xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-5 lg:gap-8">
+      <main className="container mx-auto px-4 pt-3 pb-10 max-w-6xl">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-3 lg:gap-6">
           {/* COLUNA ESQUERDA — Preview sticky */}
           <div className="lg:sticky lg:top-4 lg:self-start max-w-[280px] mx-auto lg:mx-0 w-full">
             <div
@@ -498,11 +498,11 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
           </div>
 
           {/* COLUNA DIREITA — Escolhas em sequência */}
-          <div className="space-y-5">
+          <div className="space-y-3">
             {/* I — Gênero */}
             <section>
               <SectionTitle numeral="I" label="Gênero" />
-              <div className="flex gap-3 flex-wrap">
+              <div className="flex gap-2 flex-wrap">
                 {(["Masculino", "Feminino"] as Genero[]).map((g) => (
                   <ChoiceButton key={g} selected={genero === g} onClick={() => setGenero(genero === g ? null : g)}>
                     {g}
@@ -514,7 +514,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* II — Metal */}
             <section>
               <SectionTitle numeral="II" label="Escolha o metal" />
-              <div className="flex gap-3 flex-wrap">
+              <div className="flex gap-2 flex-wrap">
                 {(["Ouro 18K", "Prata 925"] as Material[]).map((m) => (
                   <ChoiceButton key={m} selected={material === m} onClick={() => setMaterial(material === m ? null : m)}>
                     {m}
@@ -526,14 +526,14 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* III — Estilo */}
             <section>
               <SectionTitle numeral="III" label="Forma da sua história" />
-              <div className="flex gap-3 flex-wrap">
+              <div className="flex gap-2 flex-wrap">
                 {(["Clássico", "Underground"] as Estilo[]).map((e) => (
                   <ChoiceButton key={e} selected={estilo === e} onClick={() => setEstilo(estilo === e ? null : e)}>
                     {e === "Underground" ? "Personalizado" : e}
                   </ChoiceButton>
                 ))}
               </div>
-              <p className="mt-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70 italic">
+              <p className="mt-1.5 text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 italic">
                 Clássico: linhas tradicionais · Personalizado: traço Underground
               </p>
             </section>
@@ -541,66 +541,66 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* IV — Gravação */}
             <section>
               <SectionTitle numeral="IV" label="Grave seu significado" />
-              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70 mb-4 italic">
+              <p className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 mb-2 italic">
                 Abrevie pra digitar · escolha apenas uma opção
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {config.camposGravacao.includes("nome") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1.5">Nome</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">Nome</label>
                     <Input
                       value={nome}
                       maxLength={20}
                       onChange={(e) => setExclusivo("nome", e.target.value)}
                       placeholder="Ex: Renata"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent"
+                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
                     />
                   </div>
                 )}
                 {config.camposGravacao.includes("palavra") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1.5">Palavra</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">Palavra</label>
                     <Input
                       value={palavra}
                       maxLength={15}
                       onChange={(e) => setExclusivo("palavra", e.target.value)}
                       placeholder="Ex: Força"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent"
+                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
                     />
                   </div>
                 )}
                 {config.camposGravacao.includes("km") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1.5">KM</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">KM</label>
                     <Input
                       value={km}
                       onChange={(e) => setExclusivo("km", e.target.value)}
                       placeholder="Ex: 21K"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent"
+                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
                     />
                   </div>
                 )}
                 {config.camposGravacao.includes("data") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1.5">Data</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">Data</label>
                     <Input
                       value={data}
                       maxLength={10}
                       onChange={(e) => setExclusivo("data", e.target.value)}
                       placeholder="DD/MM/AAAA"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent"
+                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
                     />
                   </div>
                 )}
                 {config.camposGravacao.includes("tempo") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1.5">Tempo</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">Tempo</label>
                     <Input
                       value={tempo}
                       maxLength={10}
                       onChange={(e) => setExclusivo("tempo", e.target.value)}
                       placeholder="Ex: 1h45"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent"
+                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
                     />
                   </div>
                 )}
@@ -619,7 +619,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             <section>
               <SectionTitle numeral="V" label="Para os mais exclusivos" />
               <p
-                className="font-serif italic text-sm text-accent/90 mb-3 text-center"
+                className="font-serif italic text-xs text-accent/90 mb-2 text-center"
                 style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
               >
                 "Transforme você em uma joia única"
@@ -681,17 +681,16 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             </section>
 
             {/* CTA Final */}
-            <section className="pt-4 border-t border-accent/20">
-              <div className="flex items-center justify-between mb-5">
-                <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Investimento</span>
-                <span className="font-display text-2xl gold-text">a partir de R$ 890</span>
+            <section className="pt-2 border-t border-accent/20">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">Investimento</span>
+                <span className="font-display text-lg gold-text">a partir de R$ 890</span>
               </div>
 
               <Button
                 onClick={handleAdicionar}
                 disabled={adicionando || !podeAdicionar}
-                size="lg"
-                className="w-full bg-gradient-to-r from-[#b8860b] via-[#d4af37] to-[#b8860b] text-black hover:opacity-90 font-display tracking-[0.3em] uppercase text-sm py-6"
+                className="w-full bg-gradient-to-r from-[#b8860b] via-[#d4af37] to-[#b8860b] text-black hover:opacity-90 font-display tracking-[0.3em] uppercase text-xs py-3 h-auto"
               >
                 {adicionando ? (
                   <>
@@ -709,7 +708,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
               <button
                 onClick={handleComprar}
                 disabled={adicionando || !podeAdicionar}
-                className="mt-3 w-full text-center text-xs uppercase tracking-[0.3em] text-accent/80 hover:text-accent disabled:opacity-40 underline-offset-4 hover:underline"
+                className="mt-2 w-full text-center text-[10px] uppercase tracking-[0.3em] text-accent/80 hover:text-accent disabled:opacity-40 underline-offset-4 hover:underline"
               >
                 Comprar agora
               </button>
