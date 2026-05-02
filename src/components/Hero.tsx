@@ -130,7 +130,7 @@ export const Hero = () => {
           />
 
           {/* Grid de 6 cards com contorno dourado */}
-          <div className="relative w-full max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 md:gap-5">
+          <div className="relative w-full max-w-6xl mx-auto grid grid-cols-6 gap-1.5 sm:gap-2 md:gap-3">
             {Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
