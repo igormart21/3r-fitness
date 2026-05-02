@@ -45,6 +45,7 @@ const App = () => (
         <InstagramFloatingButton />
         <WhatsappFloatingButton />
         <HomeFloatingButton />
+        <AuthFloatingButton />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
