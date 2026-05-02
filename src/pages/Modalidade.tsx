@@ -539,7 +539,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
               <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5">
                 {config.camposGravacao.includes("nome") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">Nome</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">Nome</label>
                     <Input
                       value={nome}
                       maxLength={20}
@@ -551,7 +551,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                 )}
                 {config.camposGravacao.includes("palavra") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">Palavra</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">Palavra</label>
                     <Input
                       value={palavra}
                       maxLength={15}
@@ -563,7 +563,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                 )}
                 {config.camposGravacao.includes("km") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">KM</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">KM</label>
                     <Input
                       value={km}
                       onChange={(e) => setExclusivo("km", e.target.value)}
@@ -574,7 +574,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                 )}
                 {config.camposGravacao.includes("data") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">Data</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">Data</label>
                     <Input
                       value={data}
                       maxLength={10}
@@ -586,7 +586,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                 )}
                 {config.camposGravacao.includes("tempo") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">Tempo</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">Tempo</label>
                     <Input
                       value={tempo}
                       maxLength={10}
