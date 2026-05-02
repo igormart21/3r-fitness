@@ -454,7 +454,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
           </div>
 
           {/* COLUNA DIREITA — Escolhas em sequência */}
-          <div className="space-y-7">
+          <div className="space-y-5">
             {/* I — Gênero */}
             <section>
               <SectionTitle numeral="I" label="Gênero" />
