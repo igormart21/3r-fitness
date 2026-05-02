@@ -98,7 +98,7 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
         Feminino: { "Clássico": bonecoFisiFemClassicoPrata, Underground: bonecoFisiFemUndergroundPrata },
       },
     },
-    camposGravacao: ["nome", "palavra", "data"],
+    camposGravacao: [],
   },
   "2": {
     slug: "musculacao",
@@ -635,6 +635,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             </section>
 
             {/* IV — Gravação */}
+            {config.camposGravacao.length > 0 && (
             <section>
               <SectionTitle numeral="IV" label="Dê significado à sua peça" />
               <div className="flex flex-wrap gap-1.5 justify-center">
@@ -707,6 +708,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                 </button>
               )}
             </section>
+            )}
 
             {/* V — Para os mais exclusivos */}
             <section>
