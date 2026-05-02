@@ -353,7 +353,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
         <section className="relative w-full overflow-hidden" style={{ backgroundColor: "#0a0a0a" }}>
           <div
             className="relative w-full"
-            style={{ height: "clamp(220px, 32vw, 380px)" }}
+            style={{ height: "clamp(180px, 22vw, 260px)" }}
           >
             {/* Imagem de fundo desfocada preenchendo as laterais */}
             <img
