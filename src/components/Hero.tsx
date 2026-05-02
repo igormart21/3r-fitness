@@ -35,6 +35,22 @@ export const Hero = () => {
           0% { transform: translateX(-120%) skewX(-25deg); }
           70%, 100% { transform: translateX(220%) skewX(-25deg); }
         }
+        /* Letra revelando: sobe + fade + brilho */
+        @keyframes essencia-letter {
+          0% {
+            opacity: 0;
+            transform: translateY(18px);
+            filter: blur(6px) brightness(2);
+          }
+          60% {
+            filter: blur(0) brightness(1.4);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0) brightness(1);
+          }
+        }
       `}</style>
 
       {/* Dois blocos empilhados na vertical: 1 em cima, 2 embaixo */}
