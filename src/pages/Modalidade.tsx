@@ -19,6 +19,16 @@ import bonecoFisiFemUndergroundPrata from "@/assets/boneco-fisiculturismo-fem-un
 import bonecoFisiMascClassicoPrata from "@/assets/boneco-fisiculturismo-masc-classico-prata.jpg";
 import bonecoFisiMascUndergroundPrata from "@/assets/boneco-fisiculturismo-masc-underground-prata.jpg";
 
+// Bonecos MUSCULAÇÃO
+import bonecoMuscFemClassicoOuro from "@/assets/boneco-musculacao-fem-classico-ouro.jpg";
+import bonecoMuscFemUndergroundOuro from "@/assets/boneco-musculacao-fem-underground-ouro.jpg";
+import bonecoMuscMascClassicoOuro from "@/assets/boneco-musculacao-masc-classico-ouro.jpg";
+import bonecoMuscMascUndergroundOuro from "@/assets/boneco-musculacao-masc-underground-ouro.jpg";
+import bonecoMuscFemClassicoPrata from "@/assets/boneco-musculacao-fem-classico-prata.jpg";
+import bonecoMuscFemUndergroundPrata from "@/assets/boneco-musculacao-fem-underground-prata.jpg";
+import bonecoMuscMascClassicoPrata from "@/assets/boneco-musculacao-masc-classico-prata.jpg";
+import bonecoMuscMascUndergroundPrata from "@/assets/boneco-musculacao-masc-underground-prata.jpg";
+
 /* ===================== Configuração por modalidade ===================== */
 
 type Genero = "Masculino" | "Feminino";
@@ -52,7 +62,23 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     },
     camposGravacao: ["nome", "palavra", "data"],
   },
-  // próximas modalidades virão aqui (Musculação=2, Triathlon=3, Ciclismo=4, Crossfit=5, Corrida=6)
+  "2": {
+    slug: "musculacao",
+    nome: "Musculação",
+    fraseImpacto: "Cada repetição é uma promessa cumprida.",
+    bonecos: {
+      "Ouro 18K": {
+        Masculino: { "Clássico": bonecoMuscMascClassicoOuro, Underground: bonecoMuscMascUndergroundOuro },
+        Feminino: { "Clássico": bonecoMuscFemClassicoOuro, Underground: bonecoMuscFemUndergroundOuro },
+      },
+      "Prata 925": {
+        Masculino: { "Clássico": bonecoMuscMascClassicoPrata, Underground: bonecoMuscMascUndergroundPrata },
+        Feminino: { "Clássico": bonecoMuscFemClassicoPrata, Underground: bonecoMuscFemUndergroundPrata },
+      },
+    },
+    camposGravacao: ["nome", "palavra", "data"],
+  },
+  // próximas: Triathlon=3, Ciclismo=4, Crossfit=5, Corrida=6
 };
 
 /* ===================== Componentes auxiliares ===================== */
@@ -349,7 +375,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       </Link>
 
       {/* Hero da modalidade — atletas completos + frase sobreposta à esquerda */}
-      {config.slug === "fisiculturismo" && (
+      {config.slug === "fisiculturismo" ? (
         <section className="relative w-full overflow-hidden" style={{ backgroundColor: "#0a0a0a" }}>
           <div
             className="relative w-full"
@@ -395,6 +421,32 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                   {config.fraseImpacto}
                 </h1>
               </div>
+            </div>
+          </div>
+        </section>
+      ) : (
+        // Espaço reservado no topo para foto horizontal da modalidade (será anexada depois)
+        <section
+          className="relative w-full overflow-hidden border-b border-accent/10"
+          style={{
+            backgroundColor: "#0a0a0a",
+            height: "clamp(180px, 22vw, 260px)",
+          }}
+          aria-label={`Espaço reservado para foto de ${config.nome}`}
+        >
+          {/* Frase de impacto sobreposta — canto esquerdo */}
+          <div className="absolute inset-y-0 left-0 z-20 flex items-center pl-4 sm:pl-8 md:pl-12 max-w-[55%]">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="h-3 w-3 text-accent" />
+                <span className="h-px w-8 bg-accent/60" />
+              </div>
+              <h1
+                className="font-serif italic text-base sm:text-xl md:text-2xl tracking-[0.04em] gold-text leading-tight"
+                style={{ fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif' }}
+              >
+                {config.fraseImpacto}
+              </h1>
             </div>
           </div>
         </section>
