@@ -702,7 +702,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             </section>
 
             {/* IV — Gravação */}
-            {config.camposGravacao.length > 0 && (
+            {gravacaoLiberada && (
             <section>
               <SectionTitle numeral="IV" label="Dê significado à sua peça" />
               <div className="flex flex-wrap gap-1.5 justify-center">
