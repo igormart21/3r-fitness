@@ -285,6 +285,47 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
 
   const valorGravacao = () => nome || palavra || km || data || tempo || "";
 
+  // Regra: para crossfit e triathlon, só liberar gravação no estilo "Personalizado" (Underground)
+  const exigeUnderground = config.slug === "crossfit" || config.slug === "triathlon";
+  const gravacaoLiberada = config.camposGravacao.length > 0 && (!exigeUnderground || estilo === "Underground");
+
+  // Posicionamento da gravação em tempo real sobre o pingente (preview)
+  type OverlayStyle = {
+    top: string;
+    left: string;
+    width: string;
+    transform?: string;
+    rotate?: number;
+  };
+  const overlayPos: OverlayStyle = useMemo(() => {
+    switch (config.slug) {
+      case "musculacao":
+        return { top: "42%", left: "50%", width: "26%", transform: "translate(-50%,-50%)" };
+      case "corrida":
+        return { top: "40%", left: "50%", width: "24%", transform: "translate(-50%,-50%)" };
+      case "triathlon":
+        // costela lateral
+        return { top: "48%", left: "44%", width: "22%", transform: "translate(-50%,-50%) rotate(-8deg)" };
+      case "crossfit":
+        // base do círculo do pingente — substitui a palavra "CROSSFIT"
+        return { top: "88%", left: "50%", width: "44%", transform: "translate(-50%,-50%)" };
+      default:
+        return { top: "45%", left: "50%", width: "26%", transform: "translate(-50%,-50%)" };
+    }
+  }, [config.slug]);
+
+  const overlayTexto = (gravacaoLiberada ? valorGravacao() : "").trim();
+  // Ajuste automático: quanto mais caracteres, menor a fonte (cabe sempre dentro do boneco)
+  const overlayFontSize = useMemo(() => {
+    const len = Math.max(overlayTexto.length, 1);
+    // mapa: 1-4 chars => 14px, 5-8 => 11px, 9-12 => 9px, 13+ => 7-8px
+    if (len <= 4) return 14;
+    if (len <= 8) return 11;
+    if (len <= 12) return 9;
+    if (len <= 16) return 8;
+    return 7;
+  }, [overlayTexto]);
+
   // Foto → pingente IA
   const fotoInputRef = useRef<HTMLInputElement>(null);
   const [fotoCliente, setFotoCliente] = useState<string | null>(null);
