@@ -319,11 +319,11 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
   const overlayFontSize = useMemo(() => {
     const len = Math.max(overlayTexto.length, 1);
     // mapa: 1-4 chars => 14px, 5-8 => 11px, 9-12 => 9px, 13+ => 7-8px
-    if (len <= 4) return 14;
-    if (len <= 8) return 11;
-    if (len <= 12) return 9;
-    if (len <= 16) return 8;
-    return 7;
+    if (len <= 4) return 18;
+    if (len <= 8) return 14;
+    if (len <= 12) return 11;
+    if (len <= 16) return 9;
+    return 8;
   }, [overlayTexto]);
 
   // Foto → pingente IA
