@@ -645,8 +645,8 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                       color: material === "Ouro 18K" ? "#d4af37" : "#c0c0c0",
                       fontWeight: 700,
                       letterSpacing: "0.02em",
-                      WebkitTextStroke: "0.15px rgba(0,0,0,0.55)",
-                      textShadow: "0 0 0.5px rgba(0,0,0,0.45)",
+                      WebkitTextStroke: "0.5px rgba(0,0,0,0.95)",
+                      textShadow: "0 0 1px rgba(0,0,0,0.9), 0 1px 1px rgba(0,0,0,0.8)",
                     }}
                   >
                     {overlayTexto}
