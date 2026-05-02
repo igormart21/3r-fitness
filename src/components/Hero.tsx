@@ -77,6 +77,19 @@ export const Hero = () => {
             ].join(", "),
           }}
         >
+          {/* Reflexo de luz: percorre o divisor inteiro, da borda esquerda da página até a direita, passando por cima das letras */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute top-0 bottom-0 z-20"
+            style={{
+              width: "22%",
+              background:
+                "linear-gradient(100deg, transparent 0%, rgba(255,247,214,0.25) 30%, rgba(255,255,240,0.85) 50%, rgba(255,247,214,0.25) 70%, transparent 100%)",
+              transform: "skewX(-20deg)",
+              animation: "essencia-sheen 5s ease-in-out infinite",
+              mixBlendMode: "screen",
+            }}
+          />
           {/* Linha dourada superior */}
           <div className="container flex items-center justify-center gap-4 mb-3 md:mb-4">
             <div
