@@ -15,44 +15,18 @@ export const Hero = () => {
         }
       `}</style>
 
-      {/* Dois blocos horizontais (lado a lado no desktop, empilhados no mobile) */}
-      <div className="relative w-full flex flex-col md:flex-row items-stretch min-h-[70vh] md:min-h-[80vh]">
-        {/* Bloco 1 - esquerda */}
-        <div className="relative flex-1 flex items-center justify-center bg-background min-h-[40vh] md:min-h-full p-8">
+      {/* Dois blocos empilhados na vertical: 1 em cima, 2 embaixo */}
+      <div className="relative w-full flex flex-col items-stretch">
+        {/* Bloco 1 - topo */}
+        <div className="relative w-full flex items-center justify-center bg-background min-h-[45vh] md:min-h-[55vh] p-8">
           <p className="font-display text-xs tracking-[0.4em] uppercase text-muted-foreground/40">
             Bloco 1
           </p>
         </div>
 
-        {/* Divisor dourado vertical (desktop) / horizontal (mobile) */}
-        <div className="relative flex items-center justify-center md:py-0 py-6">
-          {/* Desktop: vertical */}
-          <div className="hidden md:flex flex-col items-center justify-center h-full gap-4 px-2">
-            <div
-              className="w-px flex-1 max-h-72"
-              style={{
-                background:
-                  "linear-gradient(180deg, transparent 0%, rgba(184,134,11,0.3) 30%, rgba(244,215,122,0.9) 50%, rgba(184,134,11,0.3) 70%, transparent 100%)",
-              }}
-            />
-            <span
-              className="block h-2 w-2 rotate-45"
-              style={{
-                background:
-                  "linear-gradient(135deg, #d4af37 0%, #f4d77a 50%, #b8860b 100%)",
-                boxShadow: "0 0 12px rgba(212,175,55,0.6)",
-              }}
-            />
-            <div
-              className="w-px flex-1 max-h-72"
-              style={{
-                background:
-                  "linear-gradient(180deg, transparent 0%, rgba(184,134,11,0.3) 30%, rgba(244,215,122,0.9) 50%, rgba(184,134,11,0.3) 70%, transparent 100%)",
-              }}
-            />
-          </div>
-          {/* Mobile: horizontal */}
-          <div className="md:hidden flex items-center justify-center w-full gap-4 px-6">
+        {/* Divisor dourado horizontal */}
+        <div className="relative w-full flex items-center justify-center py-6 md:py-10 bg-background">
+          <div className="container flex items-center justify-center gap-4">
             <div
               className="h-px flex-1 max-w-md"
               style={{
@@ -78,8 +52,8 @@ export const Hero = () => {
           </div>
         </div>
 
-        {/* Bloco 2 - direita */}
-        <div className="relative flex-1 flex items-center justify-center bg-background min-h-[40vh] md:min-h-full p-8">
+        {/* Bloco 2 - embaixo */}
+        <div className="relative w-full flex items-center justify-center bg-background min-h-[45vh] md:min-h-[55vh] p-8">
           <p className="font-display text-xs tracking-[0.4em] uppercase text-muted-foreground/40">
             Bloco 2
           </p>
