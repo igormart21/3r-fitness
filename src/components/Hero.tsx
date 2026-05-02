@@ -55,9 +55,28 @@ export const Hero = () => {
           </div>
         </div>
 
-        {/* Bloco 2 - embaixo */}
-        <div className="relative w-full flex items-center justify-center bg-background min-h-[45vh] md:min-h-[55vh] p-8">
-          <p className="font-display text-xs tracking-[0.4em] uppercase text-muted-foreground/40">
+        {/* Bloco 2 - embaixo - fundo preto fosco com luzes douradas */}
+        <div
+          className="relative w-full flex items-center justify-center min-h-[45vh] md:min-h-[55vh] p-8 overflow-hidden"
+          style={{
+            backgroundColor: "#0a0a0a",
+            backgroundImage: [
+              "radial-gradient(ellipse 60% 45% at 18% 25%, rgba(212,175,55,0.22) 0%, rgba(212,175,55,0.08) 35%, transparent 70%)",
+              "radial-gradient(ellipse 55% 40% at 82% 75%, rgba(244,215,122,0.18) 0%, rgba(184,134,11,0.06) 40%, transparent 75%)",
+              "radial-gradient(ellipse 40% 30% at 50% 50%, rgba(212,175,55,0.10) 0%, transparent 70%)",
+              "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)",
+            ].join(", "),
+          }}
+        >
+          {/* Brilho sutil de partículas/luzes */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-40 mix-blend-screen"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 30% 60%, rgba(244,215,122,0.15) 0%, transparent 8%), radial-gradient(circle at 70% 30%, rgba(212,175,55,0.12) 0%, transparent 6%), radial-gradient(circle at 85% 80%, rgba(244,215,122,0.10) 0%, transparent 5%)",
+            }}
+          />
+          <p className="relative font-display text-xs tracking-[0.4em] uppercase text-[#d4af37]/50">
             Bloco 2
           </p>
         </div>
