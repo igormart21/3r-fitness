@@ -79,7 +79,7 @@ const ChoiceButton = ({
 }) => (
   <button
     onClick={onClick}
-    className={`relative font-display tracking-[0.2em] uppercase text-xs md:text-sm transition-all duration-300 border rounded-none px-5 py-3 ${
+    className={`relative font-display tracking-[0.2em] uppercase text-[10px] md:text-xs transition-all duration-300 border rounded-none px-4 py-2.5 ${
       selected
         ? "border-accent text-accent-foreground shadow-[0_0_24px_-4px_hsl(var(--accent)/0.55)]"
         : "border-border/60 text-foreground/85 hover:border-accent/70 hover:text-accent"
@@ -348,52 +348,53 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
         Voltar
       </Link>
 
-      {/* Hero da modalidade — faixa horizontal fina */}
+      {/* Hero da modalidade — atletas completos + frase sobreposta à esquerda */}
       {config.slug === "fisiculturismo" && (
         <section className="relative w-full overflow-hidden">
           <div
             className="relative w-full"
-            style={{ height: "clamp(140px, 22vw, 260px)" }}
+            style={{ height: "clamp(220px, 32vw, 380px)", backgroundColor: "#0a0a0a" }}
           >
             <img
               src={fisiculturismoHero}
               alt={`Atletas de ${config.nome}`}
-              className="absolute inset-0 w-full h-full object-cover object-center select-none"
+              className="absolute inset-0 w-full h-full object-contain object-center select-none"
               draggable={false}
             />
-            {/* Fades para fusão perfeita com o fundo preto fosco */}
+            {/* Fades laterais e inferior para fusão com o fundo preto fosco */}
             <div
               aria-hidden
               className="pointer-events-none absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(to bottom, #0a0a0a 0%, transparent 18%, transparent 70%, #0a0a0a 100%), linear-gradient(to right, #0a0a0a 0%, transparent 10%, transparent 90%, #0a0a0a 100%)",
+                  "linear-gradient(to bottom, transparent 60%, #0a0a0a 100%), linear-gradient(to right, #0a0a0a 0%, transparent 8%, transparent 92%, #0a0a0a 100%)",
               }}
             />
+
+            {/* Frase de impacto sobreposta — canto esquerdo */}
+            <div className="absolute inset-y-0 left-0 z-20 flex items-center pl-4 sm:pl-8 md:pl-12 max-w-[55%]">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Sparkles className="h-3 w-3 text-accent" />
+                  <span className="h-px w-8 bg-accent/60" />
+                </div>
+                <h1
+                  className="font-serif italic text-base sm:text-xl md:text-2xl tracking-[0.04em] gold-text leading-tight"
+                  style={{ fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif' }}
+                >
+                  {config.fraseImpacto}
+                </h1>
+              </div>
+            </div>
           </div>
         </section>
       )}
 
-      {/* Frase de impacto — centralizada abaixo da imagem */}
-      <section className="container mx-auto px-4 pt-3 md:pt-4 pb-4 text-center">
-        <div className="flex items-center justify-center gap-3 mb-2">
-          <span className="h-px w-10 bg-accent/60" />
-          <Sparkles className="h-3 w-3 text-accent" />
-          <span className="h-px w-10 bg-accent/60" />
-        </div>
-        <h1
-          className="font-serif italic text-xl sm:text-2xl md:text-3xl tracking-[0.05em] gold-text inline-block max-w-3xl mx-auto"
-          style={{ fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif' }}
-        >
-          {config.fraseImpacto}
-        </h1>
-      </section>
-
       {/* Conteúdo principal: 2 colunas */}
-      <main className="container mx-auto px-4 pb-20 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8 lg:gap-12">
+      <main className="container mx-auto px-4 pt-6 pb-20 max-w-5xl">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] gap-6 lg:gap-10">
           {/* COLUNA ESQUERDA — Preview sticky */}
-          <div className="lg:sticky lg:top-24 lg:self-start">
+          <div className="lg:sticky lg:top-6 lg:self-start max-w-sm mx-auto lg:mx-0 w-full">
             <div
               className="relative aspect-[4/5] w-full overflow-hidden border border-accent/30"
               style={{
@@ -443,7 +444,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
           </div>
 
           {/* COLUNA DIREITA — Escolhas em sequência */}
-          <div className="space-y-10">
+          <div className="space-y-7">
             {/* I — Gênero */}
             <section>
               <SectionTitle numeral="I" label="Gênero" />
