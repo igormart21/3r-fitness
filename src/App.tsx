@@ -12,6 +12,7 @@ import TesteBotoes from "./pages/TesteBotoes.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { useCartSync } from "@/hooks/useCartSync";
 import { InstagramFloatingButton } from "@/components/InstagramFloatingButton";
+import { WhatsappFloatingButton } from "@/components/WhatsappFloatingButton";
 import { HomeFloatingButton } from "@/components/HomeFloatingButton";
 
 const queryClient = new QueryClient();
