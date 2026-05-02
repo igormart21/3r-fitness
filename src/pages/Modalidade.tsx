@@ -300,7 +300,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
   const overlayPos: OverlayStyle = useMemo(() => {
     switch (config.slug) {
       case "musculacao":
-        return { top: "52%", left: "50%", width: "22%", transform: "translate(-50%,-50%)" };
+        return { top: "46%", left: "50%", width: "22%", transform: "translate(-50%,-50%)" };
       case "corrida":
         return { top: "40%", left: "50%", width: "24%", transform: "translate(-50%,-50%)" };
       case "triathlon":
