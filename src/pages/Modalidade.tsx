@@ -300,20 +300,18 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
 
   return (
     <div
-      className="min-h-screen text-foreground relative overflow-hidden"
+      className="min-h-screen text-foreground relative"
       style={{
-        backgroundColor: "hsl(0 0% 7%)",
-        backgroundImage:
-          "radial-gradient(ellipse 80% 50% at 50% -10%, hsl(43 65% 18% / 0.55), transparent 60%), radial-gradient(ellipse 60% 40% at 90% 30%, hsl(43 65% 14% / 0.4), transparent 65%)",
-        ["--background" as any]: "0 0% 7%",
+        backgroundColor: "#0a0a0a",
+        ["--background" as any]: "0 0% 4%",
         ["--foreground" as any]: "43 65% 70%",
-        ["--card" as any]: "0 0% 9%",
+        ["--card" as any]: "0 0% 6%",
         ["--card-foreground" as any]: "43 65% 70%",
         ["--primary" as any]: "43 65% 55%",
         ["--primary-foreground" as any]: "0 0% 7%",
-        ["--secondary" as any]: "0 0% 12%",
+        ["--secondary" as any]: "0 0% 10%",
         ["--secondary-foreground" as any]: "43 65% 70%",
-        ["--muted" as any]: "0 0% 12%",
+        ["--muted" as any]: "0 0% 10%",
         ["--muted-foreground" as any]: "43 30% 60%",
         ["--accent" as any]: "43 65% 55%",
         ["--accent-foreground" as any]: "0 0% 7%",
@@ -343,7 +341,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
 
       {/* Header */}
       <header className="border-b border-accent/20 bg-card/40 backdrop-blur-md sticky top-0 z-30">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
             <ArrowLeft className="h-4 w-4" />
             Voltar
@@ -352,23 +350,26 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
         </div>
       </header>
 
-      {/* Hero da modalidade — imagem full-width fundindo no preto */}
+      {/* Hero da modalidade — faixa horizontal fina */}
       {config.slug === "fisiculturismo" && (
         <section className="relative w-full overflow-hidden">
-          <div className="relative w-full">
+          <div
+            className="relative w-full"
+            style={{ height: "clamp(140px, 22vw, 260px)" }}
+          >
             <img
               src={fisiculturismoHero}
               alt={`Atletas de ${config.nome}`}
-              className="block w-full h-auto select-none"
+              className="absolute inset-0 w-full h-full object-cover object-center select-none"
               draggable={false}
             />
-            {/* Fades para fusão perfeita com o fundo preto */}
+            {/* Fades para fusão perfeita com o fundo preto fosco */}
             <div
               aria-hidden
               className="pointer-events-none absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(to bottom, hsl(0 0% 7%) 0%, transparent 12%, transparent 78%, hsl(0 0% 7%) 100%), linear-gradient(to right, hsl(0 0% 7%) 0%, transparent 8%, transparent 92%, hsl(0 0% 7%) 100%)",
+                  "linear-gradient(to bottom, #0a0a0a 0%, transparent 18%, transparent 70%, #0a0a0a 100%), linear-gradient(to right, #0a0a0a 0%, transparent 10%, transparent 90%, #0a0a0a 100%)",
               }}
             />
           </div>
@@ -376,14 +377,14 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       )}
 
       {/* Frase de impacto — centralizada abaixo da imagem */}
-      <section className="container mx-auto px-4 pt-6 md:pt-10 pb-8 text-center">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <span className="h-px w-12 bg-accent/60" />
-          <Sparkles className="h-3.5 w-3.5 text-accent" />
-          <span className="h-px w-12 bg-accent/60" />
+      <section className="container mx-auto px-4 pt-3 md:pt-4 pb-4 text-center">
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <span className="h-px w-10 bg-accent/60" />
+          <Sparkles className="h-3 w-3 text-accent" />
+          <span className="h-px w-10 bg-accent/60" />
         </div>
         <h1
-          className="font-serif italic text-2xl sm:text-3xl md:text-5xl tracking-[0.05em] gold-text inline-block max-w-3xl mx-auto"
+          className="font-serif italic text-xl sm:text-2xl md:text-3xl tracking-[0.05em] gold-text inline-block max-w-3xl mx-auto"
           style={{ fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif' }}
         >
           {config.fraseImpacto}
