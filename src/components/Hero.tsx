@@ -84,7 +84,7 @@ export const Hero = () => {
             style={{
               width: "22%",
               background:
-                "linear-gradient(100deg, transparent 0%, rgba(255,247,214,0.25) 30%, rgba(255,255,240,0.85) 50%, rgba(255,247,214,0.25) 70%, transparent 100%)",
+                "linear-gradient(100deg, transparent 0%, rgba(255,247,214,0.10) 30%, rgba(255,255,240,0.35) 50%, rgba(255,247,214,0.10) 70%, transparent 100%)",
               transform: "skewX(-20deg)",
               animation: "essencia-sheen 5s ease-in-out infinite",
               mixBlendMode: "screen",
