@@ -588,10 +588,10 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       <main className="container mx-auto px-4 pt-3 pb-10 max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-3 lg:gap-6">
           {/* COLUNA ESQUERDA — Preview sticky */}
-          <div className="lg:sticky lg:top-4 lg:self-start max-w-[280px] mx-auto lg:mx-0 w-full">
+          <div className="lg:sticky lg:top-4 lg:self-start max-w-[380px] mx-auto lg:mx-0 w-full">
             <div className="relative flex items-start gap-3">
               <div
-                className="relative aspect-[4/5] flex-1 overflow-hidden border border-accent/30"
+                className="relative aspect-[4/5] w-[280px] flex-shrink-0 overflow-hidden border border-accent/30"
                 style={{
                   backgroundColor: "#000",
                   boxShadow:
