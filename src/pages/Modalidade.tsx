@@ -47,6 +47,16 @@ import bikeSpeedUndergroundMascPrata from "@/assets/bike-speed-underground-mascu
 import bikeSpeedUndergroundFemOuro from "@/assets/bike-speed-underground-feminino-ouro.jpg";
 import bikeSpeedUndergroundFemPrata from "@/assets/bike-speed-underground-feminino-prata.jpg";
 
+// Bonecos CROSSFIT
+import bonecoCrossFemClassicoOuro from "@/assets/boneco-crossfit-fem-classico-ouro.jpg";
+import bonecoCrossFemUndergroundOuro from "@/assets/boneco-crossfit-fem-underground-ouro.jpg";
+import bonecoCrossMascClassicoOuro from "@/assets/boneco-crossfit-masc-classico-ouro.jpg";
+import bonecoCrossMascUndergroundOuro from "@/assets/boneco-crossfit-masc-underground-ouro.jpg";
+import bonecoCrossFemClassicoPrata from "@/assets/boneco-crossfit-fem-classico-prata.jpg";
+import bonecoCrossFemUndergroundPrata from "@/assets/boneco-crossfit-fem-underground-prata.jpg";
+import bonecoCrossMascClassicoPrata from "@/assets/boneco-crossfit-masc-classico-prata.jpg";
+import bonecoCrossMascUndergroundPrata from "@/assets/boneco-crossfit-masc-underground-prata.jpg";
+
 /* ===================== Configuração por modalidade ===================== */
 
 type Genero = "Masculino" | "Feminino";
@@ -128,7 +138,23 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     },
     camposGravacao: ["nome", "palavra", "km", "data", "tempo"],
   },
-  // próximas: Crossfit=5, Corrida=6
+  "5": {
+    slug: "crossfit",
+    nome: "Crossfit",
+    fraseImpacto: "Força forjada em cada movimento.",
+    bonecos: {
+      "Ouro 18K": {
+        Masculino: { "Clássico": bonecoCrossMascClassicoOuro, Underground: bonecoCrossMascUndergroundOuro },
+        Feminino: { "Clássico": bonecoCrossFemClassicoOuro, Underground: bonecoCrossFemUndergroundOuro },
+      },
+      "Prata 925": {
+        Masculino: { "Clássico": bonecoCrossMascClassicoPrata, Underground: bonecoCrossMascUndergroundPrata },
+        Feminino: { "Clássico": bonecoCrossFemClassicoPrata, Underground: bonecoCrossFemUndergroundPrata },
+      },
+    },
+    camposGravacao: ["nome", "palavra", "data"],
+  },
+  // próxima: Corrida=6
 };
 
 /* ===================== Componentes auxiliares ===================== */
