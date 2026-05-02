@@ -401,10 +401,10 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       )}
 
       {/* Conteúdo principal: 2 colunas */}
-      <main className="container mx-auto px-4 pt-6 pb-20 max-w-5xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] gap-6 lg:gap-10">
+      <main className="container mx-auto px-4 pt-4 pb-16 max-w-6xl">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-5 lg:gap-8">
           {/* COLUNA ESQUERDA — Preview sticky */}
-          <div className="lg:sticky lg:top-6 lg:self-start max-w-sm mx-auto lg:mx-0 w-full">
+          <div className="lg:sticky lg:top-4 lg:self-start max-w-[280px] mx-auto lg:mx-0 w-full">
             <div
               className="relative aspect-[4/5] w-full overflow-hidden border border-accent/30"
               style={{
