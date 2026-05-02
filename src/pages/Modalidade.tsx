@@ -301,13 +301,13 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
     const fem = genero === "Feminino";
     switch (config.slug) {
       case "musculacao":
-        if (fem) return { top: "48%", left: "47%", width: "16%", transform: "translate(-50%,-50%)" };
+        if (fem) return { top: "48%", left: "50%", width: "16%", transform: "translate(-50%,-50%)" };
         return { top: "46%", left: "47%", width: "22%", transform: "translate(-50%,-50%)" };
       case "corrida":
-        if (fem) return { top: "48%", left: "47%", width: "16%", transform: "translate(-50%,-50%)" };
+        if (fem) return { top: "48%", left: "50%", width: "16%", transform: "translate(-50%,-50%)" };
         return { top: "46%", left: "47%", width: "22%", transform: "translate(-50%,-50%)" };
       case "fisiculturismo":
-        if (fem) return { top: "48%", left: "47%", width: "16%", transform: "translate(-50%,-50%)" };
+        if (fem) return { top: "48%", left: "50%", width: "16%", transform: "translate(-50%,-50%)" };
         return { top: "46%", left: "47%", width: "22%", transform: "translate(-50%,-50%)" };
       case "triathlon":
         if (fem) return { top: "48%", left: "42%", width: "16%", transform: "translate(-50%,-50%) rotate(-8deg)" };
