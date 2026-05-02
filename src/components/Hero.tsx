@@ -109,7 +109,7 @@ export const Hero = () => {
 
         {/* Bloco 2 - embaixo - fundo preto fosco com luzes douradas */}
         <div
-          className="relative w-full flex items-center justify-center min-h-[45vh] md:min-h-[55vh] p-8 overflow-hidden"
+          className="relative w-full flex items-center justify-center min-h-[45vh] md:min-h-[55vh] py-10 md:py-16 px-4 md:px-8 overflow-hidden"
           style={{
             backgroundColor: "#0a0a0a",
             backgroundImage: [
@@ -128,9 +128,36 @@ export const Hero = () => {
                 "radial-gradient(circle at 30% 60%, rgba(244,215,122,0.15) 0%, transparent 8%), radial-gradient(circle at 70% 30%, rgba(212,175,55,0.12) 0%, transparent 6%), radial-gradient(circle at 85% 80%, rgba(244,215,122,0.10) 0%, transparent 5%)",
             }}
           />
-          <p className="relative font-display text-xs tracking-[0.4em] uppercase text-[#d4af37]/50">
-            Bloco 2
-          </p>
+
+          {/* Grid de 6 cards com contorno dourado */}
+          <div className="relative w-full max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 md:gap-5">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div
+                key={i}
+                className="group relative aspect-[3/4] overflow-hidden bg-black/60 transition-all duration-500 hover:-translate-y-1"
+                style={{
+                  border: "1px solid rgba(212,175,55,0.55)",
+                  boxShadow:
+                    "0 0 0 1px rgba(212,175,55,0.15) inset, 0 8px 24px rgba(0,0,0,0.45), 0 0 18px rgba(212,175,55,0.12)",
+                }}
+              >
+                {/* Brilho dourado interno sutil */}
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-60"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,55,0.10) 0%, transparent 60%)",
+                  }}
+                />
+                {/* Placeholder para imagem futura */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="font-display text-[10px] tracking-[0.3em] uppercase text-[#d4af37]/40">
+                    Imagem
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
