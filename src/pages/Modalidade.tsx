@@ -626,6 +626,32 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                 className="absolute inset-0 w-full h-full object-contain z-5 transition-opacity duration-500"
               />
 
+              {/* Gravação em tempo real sobre o pingente */}
+              {overlayTexto && (
+                <div
+                  className="absolute z-20 pointer-events-none text-center"
+                  style={{
+                    top: overlayPos.top,
+                    left: overlayPos.left,
+                    width: overlayPos.width,
+                    transform: overlayPos.transform,
+                  }}
+                >
+                  <span
+                    className="block font-display uppercase tracking-[0.15em] leading-none whitespace-nowrap overflow-hidden"
+                    style={{
+                      fontSize: `${overlayFontSize}px`,
+                      color: material === "Ouro 18K" ? "#f4d77a" : "#e8e8e8",
+                      textShadow:
+                        "0 0 1px rgba(0,0,0,0.9), 0 1px 1px rgba(0,0,0,0.8), 0 0 3px rgba(0,0,0,0.6)",
+                      WebkitTextStroke: "0.3px rgba(0,0,0,0.85)",
+                    }}
+                  >
+                    {overlayTexto}
+                  </span>
+                </div>
+              )}
+
               {/* Legenda das escolhas */}
               {(genero || material || estilo) && (
                 <div className="absolute bottom-6 left-0 right-0 z-20 text-center px-4">
