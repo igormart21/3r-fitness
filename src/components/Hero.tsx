@@ -85,21 +85,38 @@ export const Hero = () => {
             />
           </div>
 
-          {/* Frase tópico */}
-          <h2
-            className="relative text-center font-serif italic font-light text-2xl sm:text-3xl md:text-4xl tracking-[0.15em] md:tracking-[0.2em] uppercase"
-            style={{
-              fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif',
-              background:
-                "linear-gradient(180deg, #f4d77a 0%, #d4af37 45%, #b8860b 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              textShadow: "0 0 30px rgba(212,175,55,0.25)",
-            }}
-          >
-            Sua Essência
-          </h2>
+          {/* Frase tópico - "Sua Essência" com efeito shimmer dourado + sheen */}
+          <div className="relative inline-block overflow-hidden">
+            <h2
+              className="relative text-center font-serif italic font-light text-2xl sm:text-3xl md:text-4xl tracking-[0.15em] md:tracking-[0.2em] uppercase px-2"
+              style={{
+                fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif',
+                background:
+                  "linear-gradient(90deg, #b8860b 0%, #d4af37 25%, #fff7d6 50%, #d4af37 75%, #b8860b 100%)",
+                backgroundSize: "200% auto",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                animation: "essencia-shimmer 4s linear infinite, essencia-glow 3.5s ease-in-out infinite",
+              }}
+            >
+              Sua Essência
+            </h2>
+            {/* Reflexo de luz cruzando */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent 0%, rgba(255,247,214,0.55) 50%, transparent 100%)",
+                width: "40%",
+                animation: "essencia-sheen 5s ease-in-out infinite",
+                mixBlendMode: "screen",
+                WebkitMaskImage: "linear-gradient(180deg, transparent 10%, black 50%, transparent 90%)",
+                maskImage: "linear-gradient(180deg, transparent 10%, black 50%, transparent 90%)",
+              }}
+            />
+          </div>
 
           {/* Linha dourada inferior */}
           <div className="container flex items-center justify-center gap-4 mt-3 md:mt-4">
