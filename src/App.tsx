@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -37,6 +37,23 @@ const AppRoutes = () => {
   );
 };
 
+const FloatingButtons = () => {
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
+  return (
+    <>
+      <HomeFloatingButton />
+      {isHome && (
+        <>
+          <InstagramFloatingButton />
+          <WhatsappFloatingButton />
+          <AuthFloatingButton />
+        </>
+      )}
+    </>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -44,10 +61,7 @@ const App = () => (
       <Sonner position="top-center" />
       <BrowserRouter>
         <AppRoutes />
-        <InstagramFloatingButton />
-        <WhatsappFloatingButton />
-        <HomeFloatingButton />
-        <AuthFloatingButton />
+        <FloatingButtons />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
