@@ -19,6 +19,16 @@ import bonecoFisiFemUndergroundPrata from "@/assets/boneco-fisiculturismo-fem-un
 import bonecoFisiMascClassicoPrata from "@/assets/boneco-fisiculturismo-masc-classico-prata.jpg";
 import bonecoFisiMascUndergroundPrata from "@/assets/boneco-fisiculturismo-masc-underground-prata.jpg";
 
+// Bonecos MUSCULAÇÃO
+import bonecoMuscFemClassicoOuro from "@/assets/boneco-musculacao-fem-classico-ouro.jpg";
+import bonecoMuscFemUndergroundOuro from "@/assets/boneco-musculacao-fem-underground-ouro.jpg";
+import bonecoMuscMascClassicoOuro from "@/assets/boneco-musculacao-masc-classico-ouro.jpg";
+import bonecoMuscMascUndergroundOuro from "@/assets/boneco-musculacao-masc-underground-ouro.jpg";
+import bonecoMuscFemClassicoPrata from "@/assets/boneco-musculacao-fem-classico-prata.jpg";
+import bonecoMuscFemUndergroundPrata from "@/assets/boneco-musculacao-fem-underground-prata.jpg";
+import bonecoMuscMascClassicoPrata from "@/assets/boneco-musculacao-masc-classico-prata.jpg";
+import bonecoMuscMascUndergroundPrata from "@/assets/boneco-musculacao-masc-underground-prata.jpg";
+
 /* ===================== Configuração por modalidade ===================== */
 
 type Genero = "Masculino" | "Feminino";
@@ -52,7 +62,23 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     },
     camposGravacao: ["nome", "palavra", "data"],
   },
-  // próximas modalidades virão aqui (Musculação=2, Triathlon=3, Ciclismo=4, Crossfit=5, Corrida=6)
+  "2": {
+    slug: "musculacao",
+    nome: "Musculação",
+    fraseImpacto: "Cada repetição é uma promessa cumprida.",
+    bonecos: {
+      "Ouro 18K": {
+        Masculino: { "Clássico": bonecoMuscMascClassicoOuro, Underground: bonecoMuscMascUndergroundOuro },
+        Feminino: { "Clássico": bonecoMuscFemClassicoOuro, Underground: bonecoMuscFemUndergroundOuro },
+      },
+      "Prata 925": {
+        Masculino: { "Clássico": bonecoMuscMascClassicoPrata, Underground: bonecoMuscMascUndergroundPrata },
+        Feminino: { "Clássico": bonecoMuscFemClassicoPrata, Underground: bonecoMuscFemUndergroundPrata },
+      },
+    },
+    camposGravacao: ["nome", "palavra", "data"],
+  },
+  // próximas: Triathlon=3, Ciclismo=4, Crossfit=5, Corrida=6
 };
 
 /* ===================== Componentes auxiliares ===================== */
