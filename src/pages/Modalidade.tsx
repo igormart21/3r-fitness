@@ -620,11 +620,22 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                 </div>
               )}
 
-              <img
-                src={previewSrc}
-                alt={`Pré-visualização de joia ${config.nome}`}
-                className="absolute inset-0 w-full h-full object-contain z-5 transition-opacity duration-500"
-              />
+              {(() => {
+                const bonecosGrandes = ["fisiculturismo", "musculacao", "corrida"];
+                const escala = bonecosGrandes.includes(config.slug) ? 1.25 : 1;
+                return (
+                  <div
+                    className="absolute inset-0 z-5"
+                    style={{ transform: `scale(${escala})`, transformOrigin: "center center" }}
+                  >
+                    <img
+                      src={previewSrc}
+                      alt={`Pré-visualização de joia ${config.nome}`}
+                      className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500"
+                    />
+                  </div>
+                );
+              })()}
 
               {/* Gravação em tempo real sobre o pingente */}
               {overlayTexto && (
