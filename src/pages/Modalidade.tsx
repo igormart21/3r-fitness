@@ -625,7 +625,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                 const bonecosGrandes = ["fisiculturismo", "musculacao", "corrida"];
                 let escala = bonecosGrandes.includes(config.slug) ? 1.25 : 1;
                 // Boneco feminino de musculação é menor no asset — compensa
-                if (config.slug === "musculacao" && genero === "Feminino") escala = 1.5;
+                if (config.slug === "musculacao" && genero === "Feminino") escala = 1.9;
                   return (
                     <div
                       className="absolute inset-0 z-5"
