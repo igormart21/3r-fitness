@@ -101,20 +101,35 @@ export const Hero = () => {
             />
           </div>
 
-          {/* Frase tópico - "Sua Essência" com glow pulsante sutil */}
+          {/* Frase tópico - "Sua Essência" com letras revelando uma a uma (cinematográfico) */}
           <h2
             className="relative text-center font-serif italic font-light text-2xl sm:text-3xl md:text-4xl tracking-[0.15em] md:tracking-[0.2em] uppercase"
             style={{
               fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif',
-              background:
-                "linear-gradient(180deg, #f4d77a 0%, #d4af37 45%, #b8860b 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              animation: "essencia-glow 3.5s ease-in-out infinite",
             }}
+            aria-label="Sua Essência"
           >
-            Sua Essência
+            {"Sua Essência".split("").map((char, i) => (
+              <span
+                key={i}
+                aria-hidden
+                className="inline-block"
+                style={{
+                  background:
+                    "linear-gradient(180deg, #f4d77a 0%, #d4af37 45%, #b8860b 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  textShadow: "0 0 25px rgba(212,175,55,0.30)",
+                  opacity: 0,
+                  animation: "essencia-letter 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+                  animationDelay: `${i * 0.12}s`,
+                  whiteSpace: "pre",
+                }}
+              >
+                {char}
+              </span>
+            ))}
           </h2>
 
           {/* Linha dourada inferior */}
