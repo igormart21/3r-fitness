@@ -547,60 +547,60 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {config.camposGravacao.includes("nome") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1.5">Nome</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">Nome</label>
                     <Input
                       value={nome}
                       maxLength={20}
                       onChange={(e) => setExclusivo("nome", e.target.value)}
                       placeholder="Ex: Renata"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent"
+                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
                     />
                   </div>
                 )}
                 {config.camposGravacao.includes("palavra") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1.5">Palavra</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">Palavra</label>
                     <Input
                       value={palavra}
                       maxLength={15}
                       onChange={(e) => setExclusivo("palavra", e.target.value)}
                       placeholder="Ex: Força"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent"
+                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
                     />
                   </div>
                 )}
                 {config.camposGravacao.includes("km") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1.5">KM</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">KM</label>
                     <Input
                       value={km}
                       onChange={(e) => setExclusivo("km", e.target.value)}
                       placeholder="Ex: 21K"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent"
+                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
                     />
                   </div>
                 )}
                 {config.camposGravacao.includes("data") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1.5">Data</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">Data</label>
                     <Input
                       value={data}
                       maxLength={10}
                       onChange={(e) => setExclusivo("data", e.target.value)}
                       placeholder="DD/MM/AAAA"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent"
+                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
                     />
                   </div>
                 )}
                 {config.camposGravacao.includes("tempo") && (
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1.5">Tempo</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1">Tempo</label>
                     <Input
                       value={tempo}
                       maxLength={10}
                       onChange={(e) => setExclusivo("tempo", e.target.value)}
                       placeholder="Ex: 1h45"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent"
+                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
                     />
                   </div>
                 )}
@@ -619,7 +619,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             <section>
               <SectionTitle numeral="V" label="Para os mais exclusivos" />
               <p
-                className="font-serif italic text-sm text-accent/90 mb-3 text-center"
+                className="font-serif italic text-xs text-accent/90 mb-2 text-center"
                 style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
               >
                 "Transforme você em uma joia única"
@@ -681,17 +681,16 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             </section>
 
             {/* CTA Final */}
-            <section className="pt-4 border-t border-accent/20">
-              <div className="flex items-center justify-between mb-5">
-                <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Investimento</span>
-                <span className="font-display text-2xl gold-text">a partir de R$ 890</span>
+            <section className="pt-2 border-t border-accent/20">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">Investimento</span>
+                <span className="font-display text-lg gold-text">a partir de R$ 890</span>
               </div>
 
               <Button
                 onClick={handleAdicionar}
                 disabled={adicionando || !podeAdicionar}
-                size="lg"
-                className="w-full bg-gradient-to-r from-[#b8860b] via-[#d4af37] to-[#b8860b] text-black hover:opacity-90 font-display tracking-[0.3em] uppercase text-sm py-6"
+                className="w-full bg-gradient-to-r from-[#b8860b] via-[#d4af37] to-[#b8860b] text-black hover:opacity-90 font-display tracking-[0.3em] uppercase text-xs py-3 h-auto"
               >
                 {adicionando ? (
                   <>
@@ -709,7 +708,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
               <button
                 onClick={handleComprar}
                 disabled={adicionando || !podeAdicionar}
-                className="mt-3 w-full text-center text-xs uppercase tracking-[0.3em] text-accent/80 hover:text-accent disabled:opacity-40 underline-offset-4 hover:underline"
+                className="mt-2 w-full text-center text-[10px] uppercase tracking-[0.3em] text-accent/80 hover:text-accent disabled:opacity-40 underline-offset-4 hover:underline"
               >
                 Comprar agora
               </button>
