@@ -194,16 +194,13 @@ export const Hero = () => {
               <div key={i} className="flex flex-col items-center gap-2 md:gap-3">
                 {/* Título da categoria - tipografia luxo */}
                 <h3
-                  className="text-center font-light uppercase text-[9px] sm:text-[10px] md:text-xs tracking-[0.28em] md:tracking-[0.32em] leading-tight"
+                  className="text-center uppercase text-[10px] sm:text-xs md:text-sm tracking-[0.2em] md:tracking-[0.25em] leading-tight"
                   style={{
                     fontFamily:
                       '"Inter", "Helvetica Neue", Arial, sans-serif',
-                    background:
-                      "linear-gradient(180deg, #f5f5f5 0%, #c0c0c0 50%, #8a8a8a 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    textShadow: "0 0 12px rgba(220,220,220,0.18)",
+                    fontWeight: 500,
+                    color: "#d9d9d9",
+                    textShadow: "0 1px 2px rgba(0,0,0,0.6)",
                   }}
                 >
                   {nome}
