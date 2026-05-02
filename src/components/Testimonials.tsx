@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Quote, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import modelLeft from "@/assets/model-left-new.png";
 import modelRight from "@/assets/model-original.jpg";
 
