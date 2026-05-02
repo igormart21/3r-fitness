@@ -391,8 +391,8 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       )}
 
       {/* Conteúdo principal: 2 colunas */}
-      <main className="container mx-auto px-4 pb-20 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8 lg:gap-12">
+      <main className="container mx-auto px-4 pt-6 pb-20 max-w-5xl">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] gap-6 lg:gap-10">
           {/* COLUNA ESQUERDA — Preview sticky */}
           <div className="lg:sticky lg:top-24 lg:self-start">
             <div
