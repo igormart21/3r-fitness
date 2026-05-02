@@ -375,7 +375,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       </Link>
 
       {/* Hero da modalidade — atletas completos + frase sobreposta à esquerda */}
-      {config.slug === "fisiculturismo" && (
+      {config.slug === "fisiculturismo" ? (
         <section className="relative w-full overflow-hidden" style={{ backgroundColor: "#0a0a0a" }}>
           <div
             className="relative w-full"
@@ -421,6 +421,32 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                   {config.fraseImpacto}
                 </h1>
               </div>
+            </div>
+          </div>
+        </section>
+      ) : (
+        // Espaço reservado no topo para foto horizontal da modalidade (será anexada depois)
+        <section
+          className="relative w-full overflow-hidden border-b border-accent/10"
+          style={{
+            backgroundColor: "#0a0a0a",
+            height: "clamp(180px, 22vw, 260px)",
+          }}
+          aria-label={`Espaço reservado para foto de ${config.nome}`}
+        >
+          {/* Frase de impacto sobreposta — canto esquerdo */}
+          <div className="absolute inset-y-0 left-0 z-20 flex items-center pl-4 sm:pl-8 md:pl-12 max-w-[55%]">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="h-3 w-3 text-accent" />
+                <span className="h-px w-8 bg-accent/60" />
+              </div>
+              <h1
+                className="font-serif italic text-base sm:text-xl md:text-2xl tracking-[0.04em] gold-text leading-tight"
+                style={{ fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif' }}
+              >
+                {config.fraseImpacto}
+              </h1>
             </div>
           </div>
         </section>
