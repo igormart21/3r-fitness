@@ -350,24 +350,34 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
 
       {/* Hero da modalidade — atletas completos + frase sobreposta à esquerda */}
       {config.slug === "fisiculturismo" && (
-        <section className="relative w-full overflow-hidden">
+        <section className="relative w-full overflow-hidden" style={{ backgroundColor: "#0a0a0a" }}>
           <div
             className="relative w-full"
-            style={{ height: "clamp(220px, 32vw, 380px)", backgroundColor: "#0a0a0a" }}
+            style={{ height: "clamp(220px, 32vw, 380px)" }}
           >
+            {/* Imagem de fundo desfocada preenchendo as laterais */}
+            <img
+              src={fisiculturismoHero}
+              alt=""
+              aria-hidden
+              className="absolute inset-0 w-full h-full object-cover object-center select-none"
+              style={{ filter: "blur(40px) brightness(0.45) saturate(0.7)", transform: "scale(1.15)" }}
+              draggable={false}
+            />
+            {/* Imagem principal por cima, com atletas completos */}
             <img
               src={fisiculturismoHero}
               alt={`Atletas de ${config.nome}`}
               className="absolute inset-0 w-full h-full object-contain object-center select-none"
               draggable={false}
             />
-            {/* Fades laterais e inferior para fusão com o fundo preto fosco */}
+            {/* Fade inferior suave para o fundo da página */}
             <div
               aria-hidden
               className="pointer-events-none absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(to bottom, transparent 60%, #0a0a0a 100%), linear-gradient(to right, #0a0a0a 0%, transparent 8%, transparent 92%, #0a0a0a 100%)",
+                  "linear-gradient(to bottom, transparent 75%, #0a0a0a 100%)",
               }}
             />
 
