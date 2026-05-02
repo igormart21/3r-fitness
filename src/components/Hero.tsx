@@ -19,11 +19,11 @@ export const Hero = () => {
       {/* Dois blocos empilhados na vertical: 1 em cima, 2 embaixo */}
       <div className="relative w-full flex flex-col items-stretch">
         {/* Bloco 1 - topo */}
-        <div className="relative w-full overflow-hidden bg-background">
+        <div className="relative w-full overflow-hidden bg-background max-h-[70vh]">
           <img
             src={heroBloco1}
             alt="3R Fitness - Joias que representam quem você se tornou"
-            className="w-full h-auto block"
+            className="w-full h-full max-h-[70vh] object-cover object-center block"
           />
         </div>
 
