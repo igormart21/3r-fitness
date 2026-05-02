@@ -105,7 +105,7 @@ const ChoiceButton = ({
 }) => (
   <button
     onClick={onClick}
-    className={`relative font-display tracking-[0.2em] uppercase text-[10px] md:text-xs transition-all duration-300 border rounded-none px-4 py-2.5 ${
+    className={`relative font-display tracking-[0.2em] uppercase text-[9px] md:text-[10px] transition-all duration-300 border rounded-none px-2.5 py-1.5 ${
       selected
         ? "border-accent text-accent-foreground shadow-[0_0_24px_-4px_hsl(var(--accent)/0.55)]"
         : "border-border/60 text-foreground/85 hover:border-accent/70 hover:text-accent"
@@ -120,8 +120,8 @@ const ChoiceButton = ({
     }
   >
     {selected && (
-      <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
-        <Check className="h-3 w-3" strokeWidth={3} />
+      <span className="absolute -top-1.5 -right-1.5 h-4 w-4 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
+        <Check className="h-2.5 w-2.5" strokeWidth={3} />
       </span>
     )}
     {children}
