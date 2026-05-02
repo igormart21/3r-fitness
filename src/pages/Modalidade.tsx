@@ -300,7 +300,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
   const overlayPos: OverlayStyle = useMemo(() => {
     switch (config.slug) {
       case "musculacao":
-        return { top: "46%", left: "50%", width: "22%", transform: "translate(-50%,-50%)" };
+        return { top: "46%", left: "48%", width: "22%", transform: "translate(-50%,-50%)" };
       case "corrida":
         return { top: "40%", left: "50%", width: "24%", transform: "translate(-50%,-50%)" };
       case "triathlon":
@@ -645,8 +645,8 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                       color: material === "Ouro 18K" ? "#d4af37" : "#c0c0c0",
                       fontWeight: 700,
                       letterSpacing: "0.02em",
-                      WebkitTextStroke: "0.15px rgba(0,0,0,0.55)",
-                      textShadow: "0 0 0.5px rgba(0,0,0,0.45)",
+                      WebkitTextStroke: "0.5px rgba(0,0,0,0.95)",
+                      textShadow: "0 0 1px rgba(0,0,0,0.9), 0 1px 1px rgba(0,0,0,0.8)",
                     }}
                   >
                     {overlayTexto}
