@@ -84,7 +84,7 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
 /* ===================== Componentes auxiliares ===================== */
 
 const SectionTitle = ({ numeral, label }: { numeral: string; label: string }) => (
-  <div className="flex items-center gap-2 mb-1.5">
+  <div className="flex items-center justify-center gap-2 mb-1.5 text-center">
     <span className="font-display text-[8px] tracking-[0.5em] text-accent">{numeral}</span>
     <h3 className="font-display text-[9px] md:text-[10px] tracking-[0.25em] uppercase text-accent whitespace-nowrap">
       {label}
