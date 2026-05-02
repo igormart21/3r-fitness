@@ -68,8 +68,83 @@ export const Hero = () => {
           <img
             src={heroBloco1}
             alt="3R Fitness - Joias que representam quem você se tornou"
-            className="w-full h-auto max-w-full object-contain block"
+            className="relative z-10 w-full h-auto max-w-full object-contain block"
             style={{ maxHeight: "calc(100vh - 220px)" }}
+          />
+
+          {/* Holofote dourado esquerdo - feixe vindo do canto superior esquerdo em direção ao casal */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute z-20 mix-blend-screen"
+            style={{
+              top: "-10%",
+              left: "-15%",
+              width: "85%",
+              height: "140%",
+              background:
+                "conic-gradient(from 110deg at 0% 0%, transparent 0deg, rgba(244,215,122,0.28) 14deg, rgba(212,175,55,0.18) 22deg, rgba(184,134,11,0.06) 30deg, transparent 38deg)",
+              filter: "blur(22px)",
+              opacity: 0.85,
+            }}
+          />
+          {/* Núcleo brilhante do holofote esquerdo (origem da luz) */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute z-20 mix-blend-screen"
+            style={{
+              top: "-6%",
+              left: "-6%",
+              width: "22%",
+              height: "22%",
+              background:
+                "radial-gradient(circle at 20% 20%, rgba(255,240,180,0.55) 0%, rgba(244,215,122,0.25) 35%, transparent 70%)",
+              filter: "blur(12px)",
+            }}
+          />
+
+          {/* Holofote dourado direito - feixe vindo do canto superior direito em direção ao casal */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute z-20 mix-blend-screen"
+            style={{
+              top: "-10%",
+              right: "-15%",
+              width: "75%",
+              height: "140%",
+              background:
+                "conic-gradient(from 200deg at 100% 0%, transparent 0deg, rgba(244,215,122,0.32) 14deg, rgba(212,175,55,0.20) 22deg, rgba(184,134,11,0.06) 30deg, transparent 38deg)",
+              filter: "blur(22px)",
+              opacity: 0.9,
+            }}
+          />
+          {/* Núcleo brilhante do holofote direito */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute z-20 mix-blend-screen"
+            style={{
+              top: "-6%",
+              right: "-6%",
+              width: "22%",
+              height: "22%",
+              background:
+                "radial-gradient(circle at 80% 20%, rgba(255,240,180,0.6) 0%, rgba(244,215,122,0.28) 35%, transparent 70%)",
+              filter: "blur(12px)",
+            }}
+          />
+
+          {/* Brilho difuso dourado realçando o casal (centro-direita) */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute z-[15] mix-blend-screen"
+            style={{
+              top: "10%",
+              left: "45%",
+              width: "55%",
+              height: "80%",
+              background:
+                "radial-gradient(ellipse 60% 70% at 50% 40%, rgba(244,215,122,0.18) 0%, rgba(212,175,55,0.08) 40%, transparent 75%)",
+              filter: "blur(30px)",
+            }}
           />
         </div>
 
