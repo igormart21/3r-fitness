@@ -3,8 +3,8 @@ import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import modelLeft from "@/assets/model-left-new.png";
 import modelRight from "@/assets/model-original.jpg";
 
-// 👇 TROQUE AQUI PARA TESTAR: "offwhite" | "preto" | "grafite" | "bokeh"
-const THEME: "offwhite" | "preto" | "grafite" | "bokeh" = "offwhite";
+// 👇 TROQUE AQUI PARA TESTAR: "offwhite" | "preto" | "grafite" | "bokeh" | "luxoBordo"
+const THEME: "offwhite" | "preto" | "grafite" | "bokeh" | "luxoBordo" = "luxoBordo";
 
 const themes = {
   offwhite: {
@@ -78,6 +78,26 @@ const themes = {
     dotActive: "hsl(40 80% 60%)",
     topLine: "linear-gradient(90deg, transparent, hsl(40 80% 60%), transparent)",
   },
+  luxoBordo: {
+    // Fundo bordô profundo com vinheta dourada e textura sutil — visual luxuoso e exclusivo
+    background:
+      "radial-gradient(ellipse 80% 60% at 50% 0%, hsl(40 70% 50% / 0.18) 0%, transparent 55%), radial-gradient(ellipse 70% 50% at 50% 100%, hsl(40 60% 45% / 0.12) 0%, transparent 60%), linear-gradient(180deg, hsl(350 45% 12%) 0%, hsl(350 50% 8%) 50%, hsl(350 55% 6%) 100%)",
+    overlay:
+      "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+    eyebrow: "hsl(42 75% 65%)",        // dourado claro - "Depoimentos"
+    title: "hsl(42 80% 70%)",          // título dourado luminoso
+    quoteIcon: "hsl(42 80% 62%)",
+    quote: "hsl(36 30% 94%)",          // depoimento off-white para contraste
+    line: "hsl(42 70% 55%)",
+    name: "hsl(42 75% 68%)",           // nome dourado (diferente do depoimento)
+    role: "hsl(36 15% 75%)",
+    accent: "hsl(42 85% 70%)",
+    border: "hsl(42 50% 40%)",
+    arrow: "hsl(42 70% 70%)",
+    dotInactive: "hsl(350 30% 25%)",
+    dotActive: "hsl(42 80% 60%)",
+    topLine: "linear-gradient(90deg, transparent, hsl(42 80% 60%), transparent)",
+  },
 };
 
 const testimonials = [
@@ -130,7 +150,7 @@ export const Testimonials = () => {
   return (
     <section
       id="depoimentos"
-      className="relative py-10 sm:py-16 md:py-32 overflow-hidden"
+      className="relative pt-2 sm:pt-4 md:pt-6 pb-10 sm:pb-16 md:pb-24 overflow-hidden"
       style={{ background: t.background }}
     >
       {t.overlay && (
