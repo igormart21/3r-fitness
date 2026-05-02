@@ -30,10 +30,12 @@ export const Hero = () => {
             filter: brightness(1.15);
           }
         }
-        /* Reflexo cruzando o texto */
+        /* Reflexo: entra pela borda esquerda, atravessa as letras, sai pela direita */
         @keyframes essencia-sheen {
-          0% { transform: translateX(-120%) skewX(-25deg); }
-          70%, 100% { transform: translateX(220%) skewX(-25deg); }
+          0% { left: -40%; opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { left: 100%; opacity: 0; }
         }
         /* Letra revelando: sobe + fade + brilho */
         @keyframes essencia-letter {
@@ -101,7 +103,7 @@ export const Hero = () => {
             />
           </div>
 
-          {/* Frase tópico - "Sua Essência" com reflexo de luz cruzando (metal polido) */}
+          {/* Frase tópico - "Sua Essência" com reflexo de luz cruzando da borda esquerda à direita */}
           <div className="relative inline-block overflow-hidden px-2">
             <h2
               className="relative text-center font-serif italic font-light text-2xl sm:text-3xl md:text-4xl tracking-[0.15em] md:tracking-[0.2em] uppercase"
@@ -117,18 +119,19 @@ export const Hero = () => {
             >
               Sua Essência
             </h2>
-            {/* Reflexo de luz cruzando */}
+            {/* Reflexo de luz: começa na borda esquerda, atravessa as letras, termina na borda direita */}
             <span
               aria-hidden
-              className="pointer-events-none absolute inset-0"
+              className="pointer-events-none absolute top-0 bottom-0"
               style={{
+                width: "40%",
                 background:
-                  "linear-gradient(90deg, transparent 0%, rgba(255,247,214,0.7) 50%, transparent 100%)",
-                width: "35%",
-                animation: "essencia-sheen 5s ease-in-out infinite",
+                  "linear-gradient(100deg, transparent 0%, rgba(255,247,214,0.35) 35%, rgba(255,255,240,0.85) 50%, rgba(255,247,214,0.35) 65%, transparent 100%)",
+                transform: "skewX(-20deg)",
+                animation: "essencia-sheen 4s ease-in-out infinite",
                 mixBlendMode: "screen",
-                WebkitMaskImage: "linear-gradient(180deg, transparent 10%, black 50%, transparent 90%)",
-                maskImage: "linear-gradient(180deg, transparent 10%, black 50%, transparent 90%)",
+                WebkitMaskImage: "linear-gradient(180deg, transparent 5%, black 50%, transparent 95%)",
+                maskImage: "linear-gradient(180deg, transparent 5%, black 50%, transparent 95%)",
               }}
             />
           </div>
