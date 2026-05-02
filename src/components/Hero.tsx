@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Sparkles } from "lucide-react";
 import heroBloco1 from "@/assets/hero-bloco1.png";
 import sportFisiculturismo from "@/assets/sport-fisiculturismo.jpg";
 import sportMusculacao from "@/assets/sport-musculacao.jpg";
