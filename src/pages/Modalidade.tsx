@@ -445,8 +445,8 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       )}
 
       {/* Conteúdo principal: 2 colunas */}
-      <main className="container mx-auto px-4 pt-4 pb-16 max-w-6xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-5 lg:gap-8">
+      <main className="container mx-auto px-4 pt-3 pb-10 max-w-6xl">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-3 lg:gap-6">
           {/* COLUNA ESQUERDA — Preview sticky */}
           <div className="lg:sticky lg:top-4 lg:self-start max-w-[280px] mx-auto lg:mx-0 w-full">
             <div
@@ -498,11 +498,11 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
           </div>
 
           {/* COLUNA DIREITA — Escolhas em sequência */}
-          <div className="space-y-5">
+          <div className="space-y-3">
             {/* I — Gênero */}
             <section>
               <SectionTitle numeral="I" label="Gênero" />
-              <div className="flex gap-3 flex-wrap">
+              <div className="flex gap-2 flex-wrap">
                 {(["Masculino", "Feminino"] as Genero[]).map((g) => (
                   <ChoiceButton key={g} selected={genero === g} onClick={() => setGenero(genero === g ? null : g)}>
                     {g}
@@ -514,7 +514,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* II — Metal */}
             <section>
               <SectionTitle numeral="II" label="Escolha o metal" />
-              <div className="flex gap-3 flex-wrap">
+              <div className="flex gap-2 flex-wrap">
                 {(["Ouro 18K", "Prata 925"] as Material[]).map((m) => (
                   <ChoiceButton key={m} selected={material === m} onClick={() => setMaterial(material === m ? null : m)}>
                     {m}
@@ -526,14 +526,14 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* III — Estilo */}
             <section>
               <SectionTitle numeral="III" label="Forma da sua história" />
-              <div className="flex gap-3 flex-wrap">
+              <div className="flex gap-2 flex-wrap">
                 {(["Clássico", "Underground"] as Estilo[]).map((e) => (
                   <ChoiceButton key={e} selected={estilo === e} onClick={() => setEstilo(estilo === e ? null : e)}>
                     {e === "Underground" ? "Personalizado" : e}
                   </ChoiceButton>
                 ))}
               </div>
-              <p className="mt-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70 italic">
+              <p className="mt-1.5 text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 italic">
                 Clássico: linhas tradicionais · Personalizado: traço Underground
               </p>
             </section>
@@ -541,10 +541,10 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* IV — Gravação */}
             <section>
               <SectionTitle numeral="IV" label="Grave seu significado" />
-              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70 mb-4 italic">
+              <p className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 mb-2 italic">
                 Abrevie pra digitar · escolha apenas uma opção
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {config.camposGravacao.includes("nome") && (
                   <div>
                     <label className="text-[10px] uppercase tracking-[0.3em] text-accent/80 block mb-1.5">Nome</label>
