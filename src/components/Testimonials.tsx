@@ -150,7 +150,7 @@ export const Testimonials = () => {
   return (
     <section
       id="depoimentos"
-      className="relative py-10 sm:py-16 md:py-32 overflow-hidden"
+      className="relative pt-2 sm:pt-4 md:pt-6 pb-10 sm:pb-16 md:pb-24 overflow-hidden"
       style={{ background: t.background }}
     >
       {t.overlay && (
