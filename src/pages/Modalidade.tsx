@@ -633,37 +633,36 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                       alt={`Pré-visualização de joia ${config.nome}`}
                       className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500"
                     />
+
+                    {overlayTexto && (
+                      <div
+                        className="absolute z-20 pointer-events-none text-center"
+                        style={{
+                          top: overlayPos.top,
+                          left: overlayPos.left,
+                          width: overlayPos.width,
+                          transform: overlayPos.transform,
+                        }}
+                      >
+                        <span
+                          className="block uppercase leading-none whitespace-nowrap overflow-hidden"
+                          style={{
+                            fontFamily: 'Arial, Helvetica, sans-serif',
+                            fontSize: `${overlayFontSize}px`,
+                            color: material === "Ouro 18K" ? "#d4af37" : "#c0c0c0",
+                            fontWeight: 700,
+                            letterSpacing: "0.02em",
+                            WebkitTextStroke: "0.5px rgba(0,0,0,0.95)",
+                            textShadow: "0 0 1px rgba(0,0,0,0.9), 0 1px 1px rgba(0,0,0,0.8)",
+                          }}
+                        >
+                          {overlayTexto}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 );
               })()}
-
-              {/* Gravação em tempo real sobre o pingente */}
-              {overlayTexto && (
-                <div
-                  className="absolute z-20 pointer-events-none text-center"
-                  style={{
-                    top: overlayPos.top,
-                    left: overlayPos.left,
-                    width: overlayPos.width,
-                    transform: overlayPos.transform,
-                  }}
-                >
-                  <span
-                    className="block uppercase leading-none whitespace-nowrap overflow-hidden"
-                    style={{
-                      fontFamily: 'Arial, Helvetica, sans-serif',
-                      fontSize: `${overlayFontSize}px`,
-                      color: material === "Ouro 18K" ? "#d4af37" : "#c0c0c0",
-                      fontWeight: 700,
-                      letterSpacing: "0.02em",
-                      WebkitTextStroke: "0.5px rgba(0,0,0,0.95)",
-                      textShadow: "0 0 1px rgba(0,0,0,0.9), 0 1px 1px rgba(0,0,0,0.8)",
-                    }}
-                  >
-                    {overlayTexto}
-                  </span>
-                </div>
-              )}
 
               {/* Legenda das escolhas */}
               {(genero || material || estilo) && (
