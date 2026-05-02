@@ -500,7 +500,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* I — Gênero */}
             <section>
               <SectionTitle numeral="I" label="Escolha quem você se tornou" />
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-2 flex-wrap justify-center">
                 {(["Masculino", "Feminino"] as Genero[]).map((g) => (
                   <ChoiceButton key={g} selected={genero === g} onClick={() => setGenero(genero === g ? null : g)}>
                     {g}
@@ -512,7 +512,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* II — Metal */}
             <section>
               <SectionTitle numeral="II" label="Defina o material da sua conquista" />
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-2 flex-wrap justify-center">
                 {(["Ouro 18K", "Prata 925"] as Material[]).map((m) => (
                   <ChoiceButton key={m} selected={material === m} onClick={() => setMaterial(material === m ? null : m)}>
                     {m}
@@ -524,7 +524,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* III — Estilo */}
             <section>
               <SectionTitle numeral="III" label="Forma da sua história" />
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-2 flex-wrap justify-center">
                 {(["Clássico", "Underground"] as Estilo[]).map((e) => (
                   <ChoiceButton key={e} selected={estilo === e} onClick={() => setEstilo(estilo === e ? null : e)}>
                     {e === "Underground" ? "Personalizado" : e}
