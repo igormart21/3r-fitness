@@ -132,9 +132,11 @@ export const Hero = () => {
           {/* Grid de 6 cards com contorno dourado */}
           <div className="relative w-full max-w-6xl mx-auto grid grid-cols-6 gap-1.5 sm:gap-2 md:gap-3">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div
+              <Link
                 key={i}
-                className="group relative aspect-[3/4] overflow-hidden bg-black/60 transition-all duration-500 hover:-translate-y-1"
+                to={`/modalidade/${i + 1}`}
+                aria-label={`Escolher Modalidade ${i + 1}`}
+                className="group relative aspect-[3/4] overflow-hidden bg-black/60 transition-all duration-500 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37]"
                 style={{
                   border: "1px solid rgba(212,175,55,0.55)",
                   boxShadow:
@@ -143,19 +145,22 @@ export const Hero = () => {
               >
                 {/* Brilho dourado interno sutil */}
                 <div
-                  className="pointer-events-none absolute inset-0 opacity-60"
+                  className="pointer-events-none absolute inset-0 opacity-60 transition-opacity duration-500 group-hover:opacity-100"
                   style={{
                     background:
-                      "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,55,0.10) 0%, transparent 60%)",
+                      "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,55,0.18) 0%, transparent 60%)",
                   }}
                 />
                 {/* Placeholder para imagem futura */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-display text-[10px] tracking-[0.3em] uppercase text-[#d4af37]/40">
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 px-1 text-center">
+                  <span className="font-display text-[8px] sm:text-[9px] md:text-[10px] tracking-[0.25em] uppercase text-[#d4af37]/50">
                     Imagem
                   </span>
+                  <span className="font-display text-[9px] sm:text-[10px] md:text-xs tracking-[0.2em] uppercase text-[#f4d77a]/80">
+                    Modalidade {i + 1}
+                  </span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
