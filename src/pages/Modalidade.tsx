@@ -536,9 +536,6 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* IV — Gravação */}
             <section>
               <SectionTitle numeral="IV" label="Dê significado à sua peça" />
-              <p className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 mb-2 italic text-center">
-                Transforme em uma jóia que só você tem
-              </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {config.camposGravacao.includes("nome") && (
                   <div>
