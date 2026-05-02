@@ -321,15 +321,16 @@ export const Hero = () => {
 
                 {/* Frase da modalidade - enquadrada na largura do card */}
                 <p
-                  className="w-full text-center italic leading-tight text-[8px] sm:text-[10px] md:text-xs px-0.5 hyphens-none break-words"
+                  className="w-full text-center leading-tight text-[8px] sm:text-[10px] md:text-xs px-0.5 hyphens-none break-words"
                   style={{
-                    fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif',
+                    fontFamily: '"Inter", "Helvetica Neue", Arial, sans-serif',
+                    fontWeight: 400,
                     background:
                       "linear-gradient(180deg, #f4d77a 0%, #d4af37 50%, #b8860b 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
-                    letterSpacing: "0.01em",
+                    letterSpacing: "0.02em",
                   }}
                 >
                   {frase}
