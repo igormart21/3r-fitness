@@ -638,8 +638,9 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                   }}
                 >
                   <span
-                    className="block font-display uppercase tracking-[0.15em] leading-none whitespace-nowrap overflow-hidden"
+                    className="block uppercase leading-none whitespace-nowrap overflow-hidden"
                     style={{
+                      fontFamily: 'Arial, Helvetica, sans-serif',
                       fontSize: `${overlayFontSize}px`,
                       color: material === "Ouro 18K" ? "#d4af37" : "#c0c0c0",
                       fontWeight: 700,
