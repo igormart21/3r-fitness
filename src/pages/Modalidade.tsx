@@ -641,10 +641,9 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                     className="block font-display uppercase tracking-[0.15em] leading-none whitespace-nowrap overflow-hidden"
                     style={{
                       fontSize: `${overlayFontSize}px`,
-                      color: material === "Ouro 18K" ? "#f4d77a" : "#e8e8e8",
-                      textShadow:
-                        "0 0 1px rgba(0,0,0,0.9), 0 1px 1px rgba(0,0,0,0.8), 0 0 3px rgba(0,0,0,0.6)",
-                      WebkitTextStroke: "0.3px rgba(0,0,0,0.85)",
+                      color: material === "Ouro 18K" ? "#1a1300" : "#0a0a0a",
+                      fontWeight: 700,
+                      letterSpacing: "0.12em",
                     }}
                   >
                     {overlayTexto}
