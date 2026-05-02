@@ -40,6 +40,7 @@ const App = () => (
       <BrowserRouter>
         <AppRoutes />
         <InstagramFloatingButton />
+        <WhatsappFloatingButton />
         <HomeFloatingButton />
       </BrowserRouter>
     </TooltipProvider>
