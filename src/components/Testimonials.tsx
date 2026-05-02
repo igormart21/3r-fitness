@@ -3,8 +3,8 @@ import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import modelLeft from "@/assets/model-left-new.png";
 import modelRight from "@/assets/model-original.jpg";
 
-// 👇 TROQUE AQUI PARA TESTAR: "offwhite" | "preto" | "grafite" | "bokeh"
-const THEME: "offwhite" | "preto" | "grafite" | "bokeh" = "offwhite";
+// 👇 TROQUE AQUI PARA TESTAR: "offwhite" | "preto" | "grafite" | "bokeh" | "luxoBordo"
+const THEME: "offwhite" | "preto" | "grafite" | "bokeh" | "luxoBordo" = "luxoBordo";
 
 const themes = {
   offwhite: {
