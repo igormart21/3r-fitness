@@ -19,17 +19,18 @@ export const Hero = () => {
       {/* Dois blocos empilhados na vertical: 1 em cima, 2 embaixo */}
       <div className="relative w-full flex flex-col items-stretch">
         {/* Bloco 1 - topo */}
-        <div className="relative w-full overflow-hidden bg-background max-h-[70vh]">
+        <div className="relative w-full overflow-hidden bg-background flex items-center justify-center" style={{ maxHeight: "calc(100vh - 220px)" }}>
           <img
             src={heroBloco1}
             alt="3R Fitness - Joias que representam quem você se tornou"
-            className="w-full h-full max-h-[70vh] object-cover object-center block"
+            className="w-full h-auto max-w-full object-contain block"
+            style={{ maxHeight: "calc(100vh - 220px)" }}
           />
         </div>
 
         {/* Divisor dourado horizontal */}
         <div
-          className="relative w-full flex flex-col items-center justify-center py-5 md:py-8 overflow-hidden"
+          className="relative w-full flex flex-col items-center justify-center py-3 md:py-5 overflow-hidden"
           style={{
             backgroundImage: [
               "radial-gradient(ellipse 70% 100% at 50% 50%, rgba(212,175,55,0.10) 0%, transparent 70%)",
