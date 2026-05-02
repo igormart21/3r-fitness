@@ -19,7 +19,7 @@ export const Hero = () => {
       {/* Dois blocos empilhados na vertical: 1 em cima, 2 embaixo */}
       <div className="relative w-full flex flex-col items-stretch">
         {/* Bloco 1 - topo */}
-        <div className="relative w-full overflow-hidden bg-background flex items-center justify-center" style={{ maxHeight: "calc(100vh - 220px)" }}>
+        <div className="relative w-full overflow-hidden flex items-center justify-center" style={{ maxHeight: "calc(100vh - 220px)", backgroundColor: "#000" }}>
           <img
             src={heroBloco1}
             alt="3R Fitness - Joias que representam quem você se tornou"
