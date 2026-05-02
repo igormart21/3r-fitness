@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import { Sparkles } from "lucide-react";
 import heroBloco1 from "@/assets/hero-bloco1.png";
+import sportFisiculturismo from "@/assets/sport-fisiculturismo.jpg";
+import sportMusculacao from "@/assets/sport-musculacao.jpg";
+import sportTriathlon from "@/assets/sport-triathlon.jpg";
+import sportCiclismo from "@/assets/sport-ciclismo.jpg";
+import sportCrossfit from "@/assets/sport-crossfit.jpg";
+import sportCorrida from "@/assets/sport-corrida.jpg";
 
 export const Hero = () => {
   return (
@@ -184,13 +190,13 @@ export const Hero = () => {
           {/* Grid de 6 cards com contorno dourado */}
           <div className="relative w-full max-w-6xl mx-auto grid grid-cols-6 gap-1.5 sm:gap-2 md:gap-3">
             {[
-              "Fisiculturismo",
-              "Musculação",
-              "Triathlon",
-              "Ciclismo",
-              "Crossfit",
-              "Corrida",
-            ].map((nome, i) => (
+              { nome: "Fisiculturismo", img: sportFisiculturismo },
+              { nome: "Musculação", img: sportMusculacao },
+              { nome: "Triathlon", img: sportTriathlon },
+              { nome: "Ciclismo", img: sportCiclismo },
+              { nome: "Crossfit", img: sportCrossfit },
+              { nome: "Corrida", img: sportCorrida },
+            ].map(({ nome, img }, i) => (
               <div key={i} className="flex flex-col items-center gap-2 md:gap-3">
                 {/* Título da categoria - tipografia luxo */}
                 <h3
@@ -217,6 +223,17 @@ export const Hero = () => {
                       "0 0 0 1px rgba(212,175,55,0.15) inset, 0 8px 24px rgba(0,0,0,0.45), 0 0 18px rgba(212,175,55,0.12)",
                   }}
                 >
+                  {/* Imagem do atleta */}
+                  <img
+                    src={img}
+                    alt={`Atleta de ${nome}`}
+                    loading="lazy"
+                    width={768}
+                    height={1024}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {/* Overlay escuro para legibilidade */}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   {/* Brilho dourado interno sutil */}
                   <div
                     className="pointer-events-none absolute inset-0 opacity-60 transition-opacity duration-500 group-hover:opacity-100"
@@ -225,12 +242,6 @@ export const Hero = () => {
                         "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,55,0.18) 0%, transparent 60%)",
                     }}
                   />
-                  {/* Placeholder para imagem futura */}
-                  <div className="absolute inset-0 flex items-center justify-center px-1 text-center">
-                    <span className="font-display text-[8px] sm:text-[9px] md:text-[10px] tracking-[0.25em] uppercase text-[#d4af37]/40">
-                      Imagem
-                    </span>
-                  </div>
                 </Link>
               </div>
             ))}
