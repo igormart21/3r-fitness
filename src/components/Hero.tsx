@@ -14,6 +14,27 @@ export const Hero = () => {
           0% { transform: translateX(-150%) skewX(-20deg); }
           60%, 100% { transform: translateX(250%) skewX(-20deg); }
         }
+        /* Texto shimmer dourado contínuo */
+        @keyframes essencia-shimmer {
+          0% { background-position: 200% center; }
+          100% { background-position: -200% center; }
+        }
+        /* Glow pulsante */
+        @keyframes essencia-glow {
+          0%, 100% {
+            text-shadow: 0 0 20px rgba(212,175,55,0.25), 0 0 40px rgba(212,175,55,0.10);
+            filter: brightness(1);
+          }
+          50% {
+            text-shadow: 0 0 35px rgba(244,215,122,0.55), 0 0 70px rgba(212,175,55,0.30);
+            filter: brightness(1.15);
+          }
+        }
+        /* Reflexo cruzando o texto */
+        @keyframes essencia-sheen {
+          0% { transform: translateX(-120%) skewX(-25deg); }
+          70%, 100% { transform: translateX(220%) skewX(-25deg); }
+        }
       `}</style>
 
       {/* Dois blocos empilhados na vertical: 1 em cima, 2 embaixo */}
