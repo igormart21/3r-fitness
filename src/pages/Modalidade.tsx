@@ -79,7 +79,7 @@ const ChoiceButton = ({
 }) => (
   <button
     onClick={onClick}
-    className={`relative font-display tracking-[0.2em] uppercase text-xs md:text-sm transition-all duration-300 border rounded-none px-5 py-3 ${
+    className={`relative font-display tracking-[0.2em] uppercase text-[10px] md:text-xs transition-all duration-300 border rounded-none px-4 py-2.5 ${
       selected
         ? "border-accent text-accent-foreground shadow-[0_0_24px_-4px_hsl(var(--accent)/0.55)]"
         : "border-border/60 text-foreground/85 hover:border-accent/70 hover:text-accent"
