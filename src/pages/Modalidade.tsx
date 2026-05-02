@@ -339,16 +339,14 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
         }
       `}</style>
 
-      {/* Header */}
-      <header className="border-b border-accent/20 bg-card/40 backdrop-blur-md sticky top-0 z-30">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-          <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-            <ArrowLeft className="h-4 w-4" />
-            Voltar
-          </Link>
-          <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground">{config.nome}</div>
-        </div>
-      </header>
+      {/* Botão voltar flutuante sobre a imagem */}
+      <Link
+        to="/"
+        className="absolute top-4 left-4 z-40 inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/80 hover:text-accent transition-colors bg-black/40 backdrop-blur-sm px-3 py-2 rounded-sm"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Voltar
+      </Link>
 
       {/* Hero da modalidade — faixa horizontal fina */}
       {config.slug === "fisiculturismo" && (
