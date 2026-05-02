@@ -538,7 +538,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* IV — Gravação */}
             <section>
               <SectionTitle numeral="IV" label="Grave seu significado" />
-              <p className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 mb-2 italic">
+              <p className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 mb-2 italic text-center">
                 Abrevie pra digitar · escolha apenas uma opção
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
