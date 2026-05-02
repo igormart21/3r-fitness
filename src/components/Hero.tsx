@@ -14,6 +14,27 @@ export const Hero = () => {
           0% { transform: translateX(-150%) skewX(-20deg); }
           60%, 100% { transform: translateX(250%) skewX(-20deg); }
         }
+        /* Texto shimmer dourado contínuo */
+        @keyframes essencia-shimmer {
+          0% { background-position: 200% center; }
+          100% { background-position: -200% center; }
+        }
+        /* Glow pulsante */
+        @keyframes essencia-glow {
+          0%, 100% {
+            text-shadow: 0 0 20px rgba(212,175,55,0.25), 0 0 40px rgba(212,175,55,0.10);
+            filter: brightness(1);
+          }
+          50% {
+            text-shadow: 0 0 35px rgba(244,215,122,0.55), 0 0 70px rgba(212,175,55,0.30);
+            filter: brightness(1.15);
+          }
+        }
+        /* Reflexo cruzando o texto */
+        @keyframes essencia-sheen {
+          0% { transform: translateX(-120%) skewX(-25deg); }
+          70%, 100% { transform: translateX(220%) skewX(-25deg); }
+        }
       `}</style>
 
       {/* Dois blocos empilhados na vertical: 1 em cima, 2 embaixo */}
@@ -64,21 +85,38 @@ export const Hero = () => {
             />
           </div>
 
-          {/* Frase tópico */}
-          <h2
-            className="relative text-center font-serif italic font-light text-2xl sm:text-3xl md:text-4xl tracking-[0.15em] md:tracking-[0.2em] uppercase"
-            style={{
-              fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif',
-              background:
-                "linear-gradient(180deg, #f4d77a 0%, #d4af37 45%, #b8860b 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              textShadow: "0 0 30px rgba(212,175,55,0.25)",
-            }}
-          >
-            Sua Essência
-          </h2>
+          {/* Frase tópico - "Sua Essência" com efeito shimmer dourado + sheen */}
+          <div className="relative inline-block overflow-hidden">
+            <h2
+              className="relative text-center font-serif italic font-light text-2xl sm:text-3xl md:text-4xl tracking-[0.15em] md:tracking-[0.2em] uppercase px-2"
+              style={{
+                fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif',
+                background:
+                  "linear-gradient(90deg, #b8860b 0%, #d4af37 25%, #fff7d6 50%, #d4af37 75%, #b8860b 100%)",
+                backgroundSize: "200% auto",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                animation: "essencia-shimmer 4s linear infinite, essencia-glow 3.5s ease-in-out infinite",
+              }}
+            >
+              Sua Essência
+            </h2>
+            {/* Reflexo de luz cruzando */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent 0%, rgba(255,247,214,0.55) 50%, transparent 100%)",
+                width: "40%",
+                animation: "essencia-sheen 5s ease-in-out infinite",
+                mixBlendMode: "screen",
+                WebkitMaskImage: "linear-gradient(180deg, transparent 10%, black 50%, transparent 90%)",
+                maskImage: "linear-gradient(180deg, transparent 10%, black 50%, transparent 90%)",
+              }}
+            />
+          </div>
 
           {/* Linha dourada inferior */}
           <div className="container flex items-center justify-center gap-4 mt-3 md:mt-4">
