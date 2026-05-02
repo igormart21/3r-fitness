@@ -589,88 +589,95 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-3 lg:gap-6">
           {/* COLUNA ESQUERDA — Preview sticky */}
           <div className="lg:sticky lg:top-4 lg:self-start max-w-[280px] mx-auto lg:mx-0 w-full">
-            <div
-              className="relative aspect-[4/5] w-full overflow-hidden border border-accent/30"
-              style={{
-                backgroundColor: "#000",
-                boxShadow:
-                  "0 30px 80px -20px rgba(0,0,0,0.8), 0 0 60px -20px hsl(43 65% 35% / 0.4)",
-              }}
-            >
-              {/* Holofotes douradas */}
+            <div className="relative flex items-start gap-3">
               <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 z-10 mix-blend-screen"
+                className="relative aspect-[4/5] flex-1 overflow-hidden border border-accent/30"
                 style={{
-                  background:
-                    "radial-gradient(ellipse 60% 50% at 50% 30%, hsl(43 75% 60% / 0.35) 0%, hsl(43 65% 30% / 0.15) 35%, transparent 70%)",
-                  animation: "spotlight-pulse 4s ease-in-out infinite",
+                  backgroundColor: "#000",
+                  boxShadow:
+                    "0 30px 80px -20px rgba(0,0,0,0.8), 0 0 60px -20px hsl(43 65% 35% / 0.4)",
                 }}
-              />
-              {/* Cantos dourados */}
-              <span className="absolute top-2 left-2 h-4 w-4 border-t border-l border-accent z-20" />
-              <span className="absolute top-2 right-2 h-4 w-4 border-t border-r border-accent z-20" />
-              <span className="absolute bottom-2 left-2 h-4 w-4 border-b border-l border-accent z-20" />
-              <span className="absolute bottom-2 right-2 h-4 w-4 border-b border-r border-accent z-20" />
+              >
+                {/* Holofotes douradas */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 z-10 mix-blend-screen"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse 60% 50% at 50% 30%, hsl(43 75% 60% / 0.35) 0%, hsl(43 65% 30% / 0.15) 35%, transparent 70%)",
+                    animation: "spotlight-pulse 4s ease-in-out infinite",
+                  }}
+                />
+                {/* Cantos dourados */}
+                <span className="absolute top-2 left-2 h-4 w-4 border-t border-l border-accent z-20" />
+                <span className="absolute top-2 right-2 h-4 w-4 border-t border-r border-accent z-20" />
+                <span className="absolute bottom-2 left-2 h-4 w-4 border-b border-l border-accent z-20" />
+                <span className="absolute bottom-2 right-2 h-4 w-4 border-b border-r border-accent z-20" />
 
-              {gerandoPingente && (
-                <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/70 backdrop-blur-sm gap-3">
-                  <Loader2 className="h-10 w-10 text-accent animate-spin" />
-                  <p className="text-xs uppercase tracking-[0.3em] text-accent">Modelando sua joia…</p>
-                </div>
-              )}
+                {gerandoPingente && (
+                  <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/70 backdrop-blur-sm gap-3">
+                    <Loader2 className="h-10 w-10 text-accent animate-spin" />
+                    <p className="text-xs uppercase tracking-[0.3em] text-accent">Modelando sua joia…</p>
+                  </div>
+                )}
 
-              {(() => {
-                const bonecosGrandes = ["fisiculturismo", "musculacao", "corrida"];
-                const escala = bonecosGrandes.includes(config.slug) ? 1.25 : 1;
-                return (
-                  <div
-                    className="absolute inset-0 z-5"
-                    style={{ transform: `scale(${escala})`, transformOrigin: "center center" }}
-                  >
-                    <img
-                      src={previewSrc}
-                      alt={`Pré-visualização de joia ${config.nome}`}
-                      className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500"
-                    />
+                {(() => {
+                  const bonecosGrandes = ["fisiculturismo", "musculacao", "corrida"];
+                  const escala = bonecosGrandes.includes(config.slug) ? 1.25 : 1;
+                  return (
+                    <div
+                      className="absolute inset-0 z-5"
+                      style={{ transform: `scale(${escala})`, transformOrigin: "center center" }}
+                    >
+                      <img
+                        src={previewSrc}
+                        alt={`Pré-visualização de joia ${config.nome}`}
+                        className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500"
+                      />
 
-                    {overlayTexto && (
-                      <div
-                        className="absolute z-20 pointer-events-none text-center"
-                        style={{
-                          top: overlayPos.top,
-                          left: overlayPos.left,
-                          width: overlayPos.width,
-                          transform: overlayPos.transform,
-                        }}
-                      >
-                        <span
-                          className="block uppercase leading-none whitespace-nowrap overflow-hidden"
+                      {overlayTexto && (
+                        <div
+                          className="absolute z-20 pointer-events-none text-center"
                           style={{
-                            fontFamily: 'Arial, Helvetica, sans-serif',
-                            fontSize: `${overlayFontSize}px`,
-                            color: material === "Ouro 18K" ? "#d4af37" : "#c0c0c0",
-                            fontWeight: 700,
-                            letterSpacing: "0.02em",
-                            WebkitTextStroke: "0.5px rgba(0,0,0,0.95)",
-                            textShadow: "0 0 1px rgba(0,0,0,0.9), 0 1px 1px rgba(0,0,0,0.8)",
+                            top: overlayPos.top,
+                            left: overlayPos.left,
+                            width: overlayPos.width,
+                            transform: overlayPos.transform,
                           }}
                         >
-                          {overlayTexto}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                );
-              })()}
+                          <span
+                            className="block uppercase leading-none whitespace-nowrap overflow-hidden"
+                            style={{
+                              fontFamily: 'Arial, Helvetica, sans-serif',
+                              fontSize: `${overlayFontSize}px`,
+                              color: material === "Ouro 18K" ? "#d4af37" : "#c0c0c0",
+                              fontWeight: 700,
+                              letterSpacing: "0.02em",
+                              WebkitTextStroke: "0.5px rgba(0,0,0,0.95)",
+                              textShadow: "0 0 1px rgba(0,0,0,0.9), 0 1px 1px rgba(0,0,0,0.8)",
+                            }}
+                          >
+                            {overlayTexto}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
+              </div>
 
-              {/* Legenda das escolhas */}
+              {/* Legenda lateral — fora do card, na sequência de seleção */}
               {(genero || material || estilo) && (
-                <div className="absolute bottom-6 left-0 right-0 z-20 text-center px-4">
-                  <p className="text-[10px] uppercase tracking-[0.4em] text-accent/90">
-                    {[material, genero, estilo].filter(Boolean).join(" · ")}
-                  </p>
-                </div>
+                <ul className="flex flex-col gap-1.5 pt-2 min-w-[80px]">
+                  {[genero, material, estilo].filter(Boolean).map((item, i) => (
+                    <li
+                      key={i}
+                      className="text-[9px] uppercase tracking-[0.25em] text-accent/90 whitespace-nowrap"
+                    >
+                      • {item}
+                    </li>
+                  ))}
+                </ul>
               )}
             </div>
           </div>
