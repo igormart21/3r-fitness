@@ -365,14 +365,6 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
         }
       `}</style>
 
-      {/* Botão voltar flutuante sobre a imagem */}
-      <Link
-        to="/"
-        className="absolute top-4 left-4 z-40 inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/80 hover:text-accent transition-colors bg-black/40 backdrop-blur-sm px-3 py-2 rounded-sm"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Voltar
-      </Link>
 
       {/* Hero da modalidade — atletas completos + frase sobreposta à esquerda */}
       {config.slug === "fisiculturismo" ? (
