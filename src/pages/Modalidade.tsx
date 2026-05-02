@@ -533,9 +533,6 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                   </ChoiceButton>
                 ))}
               </div>
-              <p className="mt-1.5 text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 italic">
-                Clássico: linhas tradicionais · Personalizado: traço Underground
-              </p>
             </section>
 
             {/* IV — Gravação */}
