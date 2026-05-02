@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Sparkles } from "lucide-react";
+import heroBloco1 from "@/assets/hero-bloco1.png";
 
 export const Hero = () => {
   return (
@@ -18,10 +19,12 @@ export const Hero = () => {
       {/* Dois blocos empilhados na vertical: 1 em cima, 2 embaixo */}
       <div className="relative w-full flex flex-col items-stretch">
         {/* Bloco 1 - topo */}
-        <div className="relative w-full flex items-center justify-center bg-background min-h-[45vh] md:min-h-[55vh] p-8">
-          <p className="font-display text-xs tracking-[0.4em] uppercase text-muted-foreground/40">
-            Bloco 1
-          </p>
+        <div className="relative w-full overflow-hidden bg-background">
+          <img
+            src={heroBloco1}
+            alt="3R Fitness - Joias que representam quem você se tornou"
+            className="w-full h-auto block"
+          />
         </div>
 
         {/* Divisor dourado horizontal */}
