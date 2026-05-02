@@ -300,19 +300,20 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
   const overlayPos: OverlayStyle = useMemo(() => {
     switch (config.slug) {
       case "musculacao":
+        if (genero === "Feminino") {
+          return { top: "48%", left: "50%", width: "18%", transform: "translate(-50%,-50%)" };
+        }
         return { top: "46%", left: "48%", width: "22%", transform: "translate(-50%,-50%)" };
       case "corrida":
         return { top: "46%", left: "48%", width: "22%", transform: "translate(-50%,-50%)" };
       case "triathlon":
-        // costela lateral
         return { top: "48%", left: "44%", width: "22%", transform: "translate(-50%,-50%) rotate(-8deg)" };
       case "crossfit":
-        // base do círculo do pingente — substitui a palavra "CROSSFIT"
         return { top: "88%", left: "50%", width: "44%", transform: "translate(-50%,-50%)" };
       default:
         return { top: "45%", left: "50%", width: "26%", transform: "translate(-50%,-50%)" };
     }
-  }, [config.slug]);
+  }, [config.slug, genero]);
 
   const overlayTexto = (gravacaoLiberada ? valorGravacao() : "").trim();
   // Ajuste automático: quanto mais caracteres, menor a fonte (cabe sempre dentro do boneco)
