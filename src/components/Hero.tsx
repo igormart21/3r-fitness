@@ -194,13 +194,14 @@ export const Hero = () => {
               <div key={i} className="flex flex-col items-center gap-2 md:gap-3">
                 {/* Título da categoria - tipografia luxo */}
                 <h3
-                  className="text-center uppercase text-[10px] sm:text-xs md:text-sm tracking-[0.2em] md:tracking-[0.25em] leading-tight"
+                  className="w-full text-center uppercase text-[10px] sm:text-xs md:text-sm leading-tight truncate"
                   style={{
                     fontFamily:
                       '"Inter", "Helvetica Neue", Arial, sans-serif',
                     fontWeight: 500,
                     color: "#d9d9d9",
                     textShadow: "0 1px 2px rgba(0,0,0,0.6)",
+                    letterSpacing: nome.length > 10 ? "0.05em" : "0.2em",
                   }}
                 >
                   {nome}
