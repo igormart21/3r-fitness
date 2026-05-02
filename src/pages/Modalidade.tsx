@@ -319,13 +319,19 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
   // Ajuste automático: quanto mais caracteres, menor a fonte (cabe sempre dentro do boneco)
   const overlayFontSize = useMemo(() => {
     const len = Math.max(overlayTexto.length, 1);
-    // mapa: 1-4 chars => 14px, 5-8 => 11px, 9-12 => 9px, 13+ => 7-8px
-    if (len <= 4) return 18;
-    if (len <= 8) return 14;
-    if (len <= 12) return 11;
-    if (len <= 16) return 9;
-    return 8;
-  }, [overlayTexto]);
+    // base
+    let size: number;
+    if (len <= 4) size = 18;
+    else if (len <= 8) size = 14;
+    else if (len <= 12) size = 11;
+    else if (len <= 16) size = 9;
+    else size = 8;
+    // Boneca feminina musculação tem peito menor — reduz pra caber
+    if (config.slug === "musculacao" && genero === "Feminino") {
+      size = Math.max(6, Math.round(size * 0.7));
+    }
+    return size;
+  }, [overlayTexto, config.slug, genero]);
 
   // Foto → pingente IA
   const fotoInputRef = useRef<HTMLInputElement>(null);
