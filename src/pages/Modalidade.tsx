@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useCartStore } from "@/stores/cartStore";
 import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/lib/shopify";
 import { supabase } from "@/integrations/supabase/client";
+import fisiculturismoHero from "@/assets/fisiculturismo-hero.png";
 
 // Bonecos FISICULTURISMO
 import bonecoFisiFemClassicoOuro from "@/assets/boneco-fisiculturismo-fem-classico-ouro.jpg";
@@ -351,15 +352,38 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
         </div>
       </header>
 
-      {/* Frase de impacto */}
-      <section className="container mx-auto px-4 pt-10 md:pt-16 pb-8 text-center">
+      {/* Hero da modalidade — imagem full-width fundindo no preto */}
+      {config.slug === "fisiculturismo" && (
+        <section className="relative w-full overflow-hidden">
+          <div className="relative w-full">
+            <img
+              src={fisiculturismoHero}
+              alt={`Atletas de ${config.nome}`}
+              className="block w-full h-auto select-none"
+              draggable={false}
+            />
+            {/* Fades para fusão perfeita com o fundo preto */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to bottom, hsl(0 0% 7%) 0%, transparent 12%, transparent 78%, hsl(0 0% 7%) 100%), linear-gradient(to right, hsl(0 0% 7%) 0%, transparent 8%, transparent 92%, hsl(0 0% 7%) 100%)",
+              }}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Frase de impacto — centralizada abaixo da imagem */}
+      <section className="container mx-auto px-4 pt-6 md:pt-10 pb-8 text-center">
         <div className="flex items-center justify-center gap-3 mb-4">
           <span className="h-px w-12 bg-accent/60" />
           <Sparkles className="h-3.5 w-3.5 text-accent" />
           <span className="h-px w-12 bg-accent/60" />
         </div>
         <h1
-          className="font-serif italic text-2xl sm:text-3xl md:text-5xl tracking-[0.05em] gold-text inline-block max-w-3xl"
+          className="font-serif italic text-2xl sm:text-3xl md:text-5xl tracking-[0.05em] gold-text inline-block max-w-3xl mx-auto"
           style={{ fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif' }}
         >
           {config.fraseImpacto}
