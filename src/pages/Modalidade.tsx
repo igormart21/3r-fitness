@@ -86,11 +86,9 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
 const SectionTitle = ({ numeral, label }: { numeral: string; label: string }) => (
   <div className="flex items-center gap-2 mb-1.5">
     <span className="font-display text-[8px] tracking-[0.5em] text-accent">{numeral}</span>
-    <span className="h-px flex-1 bg-gradient-to-r from-accent/60 to-transparent" />
     <h3 className="font-display text-[9px] md:text-[10px] tracking-[0.25em] uppercase text-accent whitespace-nowrap">
       {label}
     </h3>
-    <span className="h-px flex-1 bg-gradient-to-l from-accent/60 to-transparent" />
   </div>
 );
 
