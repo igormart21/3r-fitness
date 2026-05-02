@@ -331,7 +331,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
     else if (len <= 16) size = 9;
     else size = 8;
     // Boneca feminina musculação tem peito menor — reduz pra caber
-    if (config.slug === "musculacao" && genero === "Feminino") {
+    if (genero === "Feminino" && ["musculacao", "corrida", "fisiculturismo", "triathlon"].includes(config.slug)) {
       size = Math.max(5, Math.round(size * 0.5));
     }
     return size;
