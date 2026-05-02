@@ -29,6 +29,16 @@ import bonecoMuscFemUndergroundPrata from "@/assets/boneco-musculacao-fem-underg
 import bonecoMuscMascClassicoPrata from "@/assets/boneco-musculacao-masc-classico-prata.jpg";
 import bonecoMuscMascUndergroundPrata from "@/assets/boneco-musculacao-masc-underground-prata.jpg";
 
+// Bonecos TRIATHLON
+import bonecoTriFemClassicoOuro from "@/assets/boneco-triatlon-fem-classico-ouro.jpg";
+import bonecoTriFemUndergroundOuro from "@/assets/boneco-triatlon-fem-underground-ouro.jpg";
+import bonecoTriMascClassicoOuro from "@/assets/boneco-triatlon-masc-classico-ouro.jpg";
+import bonecoTriMascUndergroundOuro from "@/assets/boneco-triatlon-masc-underground-ouro.jpg";
+import bonecoTriFemClassicoPrata from "@/assets/boneco-triatlon-fem-classico-prata.jpg";
+import bonecoTriFemUndergroundPrata from "@/assets/boneco-triatlon-fem-underground-prata.jpg";
+import bonecoTriMascClassicoPrata from "@/assets/boneco-triatlon-masc-classico-prata.jpg";
+import bonecoTriMascUndergroundPrata from "@/assets/boneco-triatlon-masc-underground-prata.jpg";
+
 /* ===================== Configuração por modalidade ===================== */
 
 type Genero = "Masculino" | "Feminino";
@@ -78,7 +88,23 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     },
     camposGravacao: ["nome", "palavra", "data"],
   },
-  // próximas: Triathlon=3, Ciclismo=4, Crossfit=5, Corrida=6
+  "3": {
+    slug: "triathlon",
+    nome: "Triathlon",
+    fraseImpacto: "Resistência em todos os níveis.",
+    bonecos: {
+      "Ouro 18K": {
+        Masculino: { "Clássico": bonecoTriMascClassicoOuro, Underground: bonecoTriMascUndergroundOuro },
+        Feminino: { "Clássico": bonecoTriFemClassicoOuro, Underground: bonecoTriFemUndergroundOuro },
+      },
+      "Prata 925": {
+        Masculino: { "Clássico": bonecoTriMascClassicoPrata, Underground: bonecoTriMascUndergroundPrata },
+        Feminino: { "Clássico": bonecoTriFemClassicoPrata, Underground: bonecoTriFemUndergroundPrata },
+      },
+    },
+    camposGravacao: ["nome", "palavra", "data"],
+  },
+  // próximas: Ciclismo=4, Crossfit=5, Corrida=6
 };
 
 /* ===================== Componentes auxiliares ===================== */
