@@ -302,7 +302,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       case "musculacao":
         return { top: "46%", left: "48%", width: "22%", transform: "translate(-50%,-50%)" };
       case "corrida":
-        return { top: "40%", left: "50%", width: "24%", transform: "translate(-50%,-50%)" };
+        return { top: "46%", left: "48%", width: "22%", transform: "translate(-50%,-50%)" };
       case "triathlon":
         // costela lateral
         return { top: "48%", left: "44%", width: "22%", transform: "translate(-50%,-50%) rotate(-8deg)" };
