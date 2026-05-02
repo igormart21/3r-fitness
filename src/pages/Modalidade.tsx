@@ -536,7 +536,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             {/* IV — Gravação */}
             <section>
               <SectionTitle numeral="IV" label="Dê significado à sua peça" />
-              <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5">
+              <div className="flex flex-wrap gap-1.5 justify-center">
                 {config.camposGravacao.includes("nome") && (
                   <div>
                     <label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">Nome</label>
