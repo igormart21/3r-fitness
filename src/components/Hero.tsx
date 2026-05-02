@@ -197,13 +197,13 @@ export const Hero = () => {
                   className="text-center font-light uppercase text-[9px] sm:text-[10px] md:text-xs tracking-[0.28em] md:tracking-[0.32em] leading-tight"
                   style={{
                     fontFamily:
-                      '"Cormorant Garamond", "Playfair Display", Georgia, serif',
+                      '"Inter", "Helvetica Neue", Arial, sans-serif',
                     background:
-                      "linear-gradient(180deg, #f4d77a 0%, #d4af37 50%, #b8860b 100%)",
+                      "linear-gradient(180deg, #f5f5f5 0%, #c0c0c0 50%, #8a8a8a 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
-                    textShadow: "0 0 12px rgba(212,175,55,0.18)",
+                    textShadow: "0 0 12px rgba(220,220,220,0.18)",
                   }}
                 >
                   {nome}
