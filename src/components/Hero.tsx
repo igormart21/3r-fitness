@@ -77,6 +77,19 @@ export const Hero = () => {
             ].join(", "),
           }}
         >
+          {/* Reflexo de luz: percorre o divisor inteiro, da borda esquerda da página até a direita, passando por cima das letras */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute top-0 bottom-0 z-20"
+            style={{
+              width: "22%",
+              background:
+                "linear-gradient(100deg, transparent 0%, rgba(255,247,214,0.25) 30%, rgba(255,255,240,0.85) 50%, rgba(255,247,214,0.25) 70%, transparent 100%)",
+              transform: "skewX(-20deg)",
+              animation: "essencia-sheen 5s ease-in-out infinite",
+              mixBlendMode: "screen",
+            }}
+          />
           {/* Linha dourada superior */}
           <div className="container flex items-center justify-center gap-4 mb-3 md:mb-4">
             <div
@@ -103,38 +116,21 @@ export const Hero = () => {
             />
           </div>
 
-          {/* Frase tópico - "Sua Essência" com reflexo de luz cruzando da borda esquerda à direita */}
-          <div className="relative inline-block overflow-hidden px-2">
-            <h2
-              className="relative text-center font-serif italic font-light text-2xl sm:text-3xl md:text-4xl tracking-[0.15em] md:tracking-[0.2em] uppercase"
-              style={{
-                fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif',
-                background:
-                  "linear-gradient(180deg, #f4d77a 0%, #d4af37 45%, #b8860b 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                textShadow: "0 0 25px rgba(212,175,55,0.25)",
-              }}
-            >
-              Sua Essência
-            </h2>
-            {/* Reflexo de luz: começa na borda esquerda, atravessa as letras, termina na borda direita */}
-            <span
-              aria-hidden
-              className="pointer-events-none absolute top-0 bottom-0"
-              style={{
-                width: "40%",
-                background:
-                  "linear-gradient(100deg, transparent 0%, rgba(255,247,214,0.35) 35%, rgba(255,255,240,0.85) 50%, rgba(255,247,214,0.35) 65%, transparent 100%)",
-                transform: "skewX(-20deg)",
-                animation: "essencia-sheen 4s ease-in-out infinite",
-                mixBlendMode: "screen",
-                WebkitMaskImage: "linear-gradient(180deg, transparent 5%, black 50%, transparent 95%)",
-                maskImage: "linear-gradient(180deg, transparent 5%, black 50%, transparent 95%)",
-              }}
-            />
-          </div>
+          {/* Frase tópico - "Sua Essência" */}
+          <h2
+            className="relative text-center font-serif italic font-light text-2xl sm:text-3xl md:text-4xl tracking-[0.15em] md:tracking-[0.2em] uppercase"
+            style={{
+              fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif',
+              background:
+                "linear-gradient(180deg, #f4d77a 0%, #d4af37 45%, #b8860b 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              textShadow: "0 0 25px rgba(212,175,55,0.25)",
+            }}
+          >
+            Sua Essência
+          </h2>
 
           {/* Linha dourada inferior */}
           <div className="container flex items-center justify-center gap-4 mt-3 md:mt-4">
