@@ -58,10 +58,10 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
 /* ===================== Componentes auxiliares ===================== */
 
 const SectionTitle = ({ numeral, label }: { numeral: string; label: string }) => (
-  <div className="flex items-center gap-3 mb-4">
-    <span className="font-display text-[10px] tracking-[0.5em] text-accent">{numeral}</span>
+  <div className="flex items-center gap-3 mb-2.5">
+    <span className="font-display text-[9px] tracking-[0.5em] text-accent">{numeral}</span>
     <span className="h-px flex-1 bg-gradient-to-r from-accent/60 to-transparent" />
-    <h3 className="font-display text-sm md:text-base tracking-[0.25em] uppercase text-accent whitespace-nowrap">
+    <h3 className="font-display text-[11px] md:text-xs tracking-[0.25em] uppercase text-accent whitespace-nowrap">
       {label}
     </h3>
     <span className="h-px flex-1 bg-gradient-to-l from-accent/60 to-transparent" />
@@ -353,7 +353,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
         <section className="relative w-full overflow-hidden" style={{ backgroundColor: "#0a0a0a" }}>
           <div
             className="relative w-full"
-            style={{ height: "clamp(220px, 32vw, 380px)" }}
+            style={{ height: "clamp(180px, 22vw, 260px)" }}
           >
             {/* Imagem de fundo desfocada preenchendo as laterais */}
             <img
@@ -401,10 +401,10 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       )}
 
       {/* Conteúdo principal: 2 colunas */}
-      <main className="container mx-auto px-4 pt-6 pb-20 max-w-5xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] gap-6 lg:gap-10">
+      <main className="container mx-auto px-4 pt-4 pb-16 max-w-6xl">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-5 lg:gap-8">
           {/* COLUNA ESQUERDA — Preview sticky */}
-          <div className="lg:sticky lg:top-6 lg:self-start max-w-sm mx-auto lg:mx-0 w-full">
+          <div className="lg:sticky lg:top-4 lg:self-start max-w-[280px] mx-auto lg:mx-0 w-full">
             <div
               className="relative aspect-[4/5] w-full overflow-hidden border border-accent/30"
               style={{
@@ -454,7 +454,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
           </div>
 
           {/* COLUNA DIREITA — Escolhas em sequência */}
-          <div className="space-y-7">
+          <div className="space-y-5">
             {/* I — Gênero */}
             <section>
               <SectionTitle numeral="I" label="Gênero" />
@@ -575,33 +575,33 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             <section>
               <SectionTitle numeral="V" label="Para os mais exclusivos" />
               <p
-                className="font-serif italic text-base md:text-lg text-accent/90 mb-5 text-center"
+                className="font-serif italic text-sm text-accent/90 mb-3 text-center"
                 style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
               >
                 "Transforme você em uma joia única"
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3">
                 {/* Upload */}
                 <button
                   onClick={() => fotoInputRef.current?.click()}
                   disabled={!genero || !material || !estilo}
-                  className="relative aspect-square border border-dashed border-accent/40 hover:border-accent transition-all flex flex-col items-center justify-center gap-2 bg-card/20 hover:bg-card/40 disabled:opacity-40 disabled:cursor-not-allowed group"
+                  className="relative aspect-square border border-dashed border-accent/40 hover:border-accent transition-all flex flex-col items-center justify-center gap-1.5 bg-card/20 hover:bg-card/40 disabled:opacity-40 disabled:cursor-not-allowed group"
                 >
                   {fotoCliente ? (
                     <>
                       <img src={fotoCliente} alt="Sua foto" className="absolute inset-0 w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <span className="text-xs uppercase tracking-[0.3em] text-accent">Trocar foto</span>
+                        <span className="text-[10px] uppercase tracking-[0.3em] text-accent">Trocar foto</span>
                       </div>
                     </>
                   ) : (
                     <>
-                      <Upload className="h-8 w-8 text-accent/60" />
-                      <span className="text-[10px] uppercase tracking-[0.3em] text-accent/80">Upload da foto</span>
+                      <Upload className="h-6 w-6 text-accent/60" />
+                      <span className="text-[9px] uppercase tracking-[0.3em] text-accent/80">Upload da foto</span>
                       {(!genero || !material || !estilo) && (
-                        <span className="text-[9px] text-muted-foreground/60 px-2 text-center">
-                          Escolha gênero, metal e estilo antes
+                        <span className="text-[8px] text-muted-foreground/60 px-2 text-center leading-tight">
+                          Escolha gênero, metal e estilo
                         </span>
                       )}
                     </>
@@ -619,28 +619,21 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                 <div className="relative aspect-square border border-accent/30 bg-black/60 flex items-center justify-center overflow-hidden">
                   {gerandoPingente ? (
                     <div className="flex flex-col items-center gap-2">
-                      <Loader2 className="h-6 w-6 text-accent animate-spin" />
-                      <span className="text-[10px] uppercase tracking-[0.3em] text-accent">Gerando…</span>
+                      <Loader2 className="h-5 w-5 text-accent animate-spin" />
+                      <span className="text-[9px] uppercase tracking-[0.3em] text-accent">Gerando…</span>
                     </div>
                   ) : pingenteGerado ? (
                     <img src={pingenteGerado} alt="Pingente gerado por IA" className="w-full h-full object-contain" />
                   ) : (
-                    <div className="flex flex-col items-center gap-2 text-center px-4">
-                      <Camera className="h-7 w-7 text-accent/40" />
-                      <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/60">
-                        Prévia do boneco gerado por IA
+                    <div className="flex flex-col items-center gap-1.5 text-center px-3">
+                      <Camera className="h-5 w-5 text-accent/40" />
+                      <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground/60 leading-tight">
+                        Prévia IA
                       </span>
                     </div>
                   )}
                 </div>
               </div>
-
-              <p
-                className="mt-5 text-center font-serif italic text-sm text-muted-foreground/80 max-w-md mx-auto"
-                style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
-              >
-                Você está a um passo de materializar sua história em uma joia que só você tem.
-              </p>
             </section>
 
             {/* CTA Final */}
