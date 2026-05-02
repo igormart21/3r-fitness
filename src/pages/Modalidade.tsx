@@ -39,6 +39,14 @@ import bonecoTriFemUndergroundPrata from "@/assets/boneco-triatlon-fem-undergrou
 import bonecoTriMascClassicoPrata from "@/assets/boneco-triatlon-masc-classico-prata.jpg";
 import bonecoTriMascUndergroundPrata from "@/assets/boneco-triatlon-masc-underground-prata.jpg";
 
+// Bikes CICLISMO (Speed como default)
+import bikeSpeedClassicoOuro from "@/assets/bike-speed-classico-ouro.jpg";
+import bikeSpeedClassicoPrata from "@/assets/bike-speed-classico-prata.jpg";
+import bikeSpeedUndergroundMascOuro from "@/assets/bike-speed-underground-masculino-ouro.jpg";
+import bikeSpeedUndergroundMascPrata from "@/assets/bike-speed-underground-masculino-prata.jpg";
+import bikeSpeedUndergroundFemOuro from "@/assets/bike-speed-underground-feminino-ouro.jpg";
+import bikeSpeedUndergroundFemPrata from "@/assets/bike-speed-underground-feminino-prata.jpg";
+
 /* ===================== Configuração por modalidade ===================== */
 
 type Genero = "Masculino" | "Feminino";
@@ -104,7 +112,23 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     },
     camposGravacao: ["nome", "palavra", "data"],
   },
-  // próximas: Ciclismo=4, Crossfit=5, Corrida=6
+  "4": {
+    slug: "ciclismo",
+    nome: "Ciclismo",
+    fraseImpacto: "Cada pedalada conta uma história.",
+    bonecos: {
+      "Ouro 18K": {
+        Masculino: { "Clássico": bikeSpeedClassicoOuro, Underground: bikeSpeedUndergroundMascOuro },
+        Feminino: { "Clássico": bikeSpeedClassicoOuro, Underground: bikeSpeedUndergroundFemOuro },
+      },
+      "Prata 925": {
+        Masculino: { "Clássico": bikeSpeedClassicoPrata, Underground: bikeSpeedUndergroundMascPrata },
+        Feminino: { "Clássico": bikeSpeedClassicoPrata, Underground: bikeSpeedUndergroundFemPrata },
+      },
+    },
+    camposGravacao: ["nome", "palavra", "km", "data", "tempo"],
+  },
+  // próximas: Crossfit=5, Corrida=6
 };
 
 /* ===================== Componentes auxiliares ===================== */
