@@ -751,7 +751,8 @@ type LuxuryProps = {
 };
 
 const LuxuryConfigurator = (p: LuxuryProps) => {
-  const totalSteps = 7;
+  const totalSteps = 6;
+  const [iaAberta, setIaAberta] = useState(false);
   const next = () => p.setCurrentStep(Math.min(totalSteps, p.currentStep + 1));
   const prev = () => p.setCurrentStep(Math.max(1, p.currentStep - 1));
 
@@ -768,7 +769,7 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
   }, [p.pingenteGerado, p.material, p.genero, estiloEfetivo, p.config]);
 
   const stepTitles = [
-    "Identidade", "Modalidade", "Material", "Estilo", "Significado", "Sua imagem", "Resumo"
+    "Identidade", "Modalidade", "Material", "Estilo", "Significado", "Finalizar"
   ];
 
   return (
@@ -984,55 +985,11 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
                 </StepLayout>
               )}
 
-              {/* PASSO 6 — IA */}
+              {/* PASSO 6 — FINALIZAR (com upgrade IA opcional) */}
               {p.currentStep === 6 && (
                 <StepLayout
-                  title="Transforme você em símbolo"
-                  subtitle="Sua imagem está sendo transformada em uma peça única."
-                >
-                  <div className="grid grid-cols-2 gap-4 max-w-md">
-                    <button
-                      onClick={() => p.fotoInputRef.current?.click()}
-                      disabled={!p.genero || !p.material || !p.estilo}
-                      className="relative aspect-square border border-dashed transition-all duration-500 flex flex-col items-center justify-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed group hover:border-[#d4af37]"
-                      style={{ borderColor: "rgba(212,175,55,0.4)", background: "rgba(212,175,55,0.03)" }}
-                    >
-                      {p.fotoCliente ? (
-                        <img src={p.fotoCliente} alt="Sua foto" className="absolute inset-0 w-full h-full object-cover" />
-                      ) : (
-                        <>
-                          <Upload className="h-7 w-7" style={{ color: "rgba(212,175,55,0.7)" }} />
-                          <span className="text-[10px] tracking-[0.3em] uppercase" style={{ color: "rgba(212,175,55,0.8)" }}>
-                            Enviar sua foto
-                          </span>
-                        </>
-                      )}
-                      <input ref={p.fotoInputRef} type="file" accept="image/*" onChange={p.handleFotoUpload} className="hidden" />
-                    </button>
-                    <div className="relative aspect-square border flex items-center justify-center overflow-hidden" style={{ borderColor: "rgba(212,175,55,0.3)", background: "rgba(0,0,0,0.6)" }}>
-                      {p.gerandoPingente ? (
-                        <div className="flex flex-col items-center gap-2">
-                          <Loader2 className="h-6 w-6 animate-spin" style={{ color: "#d4af37" }} />
-                          <span className="text-[9px] tracking-[0.3em] uppercase" style={{ color: "#d4af37" }}>IA gerando…</span>
-                        </div>
-                      ) : p.pingenteGerado ? (
-                        <img src={p.pingenteGerado} alt="Prévia" className="w-full h-full object-contain" />
-                      ) : (
-                        <div className="flex flex-col items-center gap-1.5 px-3 text-center">
-                          <Sparkles className="h-6 w-6" style={{ color: "rgba(212,175,55,0.4)" }} />
-                          <span className="text-[9px] tracking-[0.3em] uppercase text-white/40">Prévia da peça</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </StepLayout>
-              )}
-
-              {/* PASSO 7 — RESUMO */}
-              {p.currentStep === 7 && (
-                <StepLayout
                   title="Sua peça está pronta para nascer"
-                  subtitle="Revise os traços que tornaram esta joia exclusivamente sua."
+                  subtitle="Agora você decide como deseja eternizar sua jornada."
                 >
                   <div className="space-y-3 max-w-md mb-6">
                     <ResumoLinha label="Modalidade" value={p.config.nome} />
@@ -1044,26 +1001,131 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
                     )}
                   </div>
 
-                  <div className="flex items-baseline gap-2 mb-5">
-                    <span className="text-[9px] tracking-[0.4em] uppercase text-white/40">Investimento da peça</span>
-                    <span className="font-display text-base gold-text">a partir de R$ 890</span>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  {/* OPÇÃO PRINCIPAL — DESIGN EXCLUSIVO 3R */}
+                  <div
+                    className="relative p-6 mb-5 border"
+                    style={{
+                      borderColor: "rgba(212,175,55,0.5)",
+                      background: "linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(0,0,0,0.4) 100%)",
+                      boxShadow: "0 0 40px rgba(212,175,55,0.08) inset",
+                    }}
+                  >
+                    <div className="absolute -top-2 left-4 px-2 text-[8px] tracking-[0.4em] uppercase" style={{ background: "#050505", color: "#d4af37" }}>
+                      Recomendado
+                    </div>
+                    <h3 className="font-display text-xl text-white mb-2">Finalizar com design exclusivo 3R</h3>
+                    <p className="text-[12px] text-white/60 leading-relaxed mb-4">
+                      Uma peça criada a partir da sua jornada, com acabamento premium e identidade definida.
+                    </p>
+                    <div className="flex items-baseline gap-2 mb-5">
+                      <span className="text-[9px] tracking-[0.4em] uppercase text-white/40">Investimento da peça</span>
+                      <span className="font-display text-base gold-text">a partir de R$ 890</span>
+                    </div>
                     <button
                       onClick={p.handleAdicionar}
                       disabled={p.adicionando || !p.podeAdicionar}
-                      className="px-8 py-4 font-display tracking-[0.3em] uppercase text-xs transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed hover:shadow-[0_0_30px_rgba(212,175,55,0.5)]"
+                      className="w-full px-8 py-4 font-display tracking-[0.3em] uppercase text-xs transition-all duration-500 disabled:opacity-40 disabled:cursor-not-allowed hover:shadow-[0_0_40px_rgba(212,175,55,0.6)]"
                       style={{ background: "linear-gradient(135deg, #b8860b 0%, #d4af37 50%, #b8860b 100%)", color: "#0a0a0a" }}
                     >
                       {p.adicionando ? "Enviando…" : "Solicitar criação da minha joia"}
                     </button>
+                  </div>
+
+                  {/* DIVISOR SUTIL */}
+                  <div className="flex items-center gap-3 my-6 max-w-md">
+                    <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.3), transparent)" }} />
+                    <span className="text-[8px] tracking-[0.5em] uppercase text-white/30">ou</span>
+                    <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.3), transparent)" }} />
+                  </div>
+
+                  {/* OPÇÃO PREMIUM — IA */}
+                  <div
+                    className="relative p-5 border transition-all duration-500"
+                    style={{
+                      borderColor: iaAberta ? "rgba(212,175,55,0.5)" : "rgba(212,175,55,0.2)",
+                      background: "rgba(212,175,55,0.02)",
+                    }}
+                  >
+                    <div className="flex items-start gap-3 mb-3">
+                      <Sparkles className="h-4 w-4 mt-1 shrink-0" style={{ color: "#d4af37" }} />
+                      <div>
+                        <h3 className="font-display text-base text-white/90 mb-1">Elevar ao nível máximo de exclusividade</h3>
+                        <p className="text-[12px] text-white/50 leading-relaxed">
+                          Transforme sua aparência em uma peça única, baseada em você.
+                        </p>
+                      </div>
+                    </div>
+
+                    {!iaAberta ? (
+                      <button
+                        onClick={() => setIaAberta(true)}
+                        className="mt-2 px-6 py-3 font-display tracking-[0.3em] uppercase text-[10px] border transition-all duration-500 hover:shadow-[0_0_25px_rgba(212,175,55,0.35)] hover:border-[#d4af37]"
+                        style={{ borderColor: "rgba(212,175,55,0.4)", color: "rgba(212,175,55,0.9)", background: "rgba(0,0,0,0.3)" }}
+                      >
+                        Transformar minha aparência em joia
+                      </button>
+                    ) : (
+                      <div className="mt-4 animate-in fade-in slide-in-from-top-2 duration-500">
+                        <div className="mb-4">
+                          <p className="font-display text-sm text-white/90 mb-1">Envie sua imagem</p>
+                          <p className="text-[11px] text-white/40 leading-relaxed">
+                            Sua foto será usada como referência para criar uma peça exclusiva baseada em você.
+                          </p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                          <button
+                            onClick={() => p.fotoInputRef.current?.click()}
+                            className="relative aspect-square border border-dashed transition-all duration-500 flex flex-col items-center justify-center gap-2 group hover:border-[#d4af37] hover:shadow-[0_0_25px_rgba(212,175,55,0.2)_inset]"
+                            style={{ borderColor: "rgba(212,175,55,0.4)", background: "rgba(212,175,55,0.03)" }}
+                          >
+                            {p.fotoCliente ? (
+                              <img src={p.fotoCliente} alt="Sua imagem" className="absolute inset-0 w-full h-full object-cover" />
+                            ) : (
+                              <>
+                                <Camera className="h-6 w-6" style={{ color: "rgba(212,175,55,0.7)" }} />
+                                <span className="text-[9px] tracking-[0.3em] uppercase" style={{ color: "rgba(212,175,55,0.8)" }}>
+                                  Enviar sua imagem
+                                </span>
+                              </>
+                            )}
+                            <input ref={p.fotoInputRef} type="file" accept="image/*" onChange={p.handleFotoUpload} className="hidden" />
+                          </button>
+                          <div className="relative aspect-square border flex items-center justify-center overflow-hidden" style={{ borderColor: "rgba(212,175,55,0.3)", background: "rgba(0,0,0,0.6)" }}>
+                            {p.gerandoPingente ? (
+                              <div className="flex flex-col items-center gap-2">
+                                <Loader2 className="h-5 w-5 animate-spin" style={{ color: "#d4af37" }} />
+                                <span className="text-[9px] tracking-[0.3em] uppercase" style={{ color: "#d4af37" }}>IA gerando…</span>
+                              </div>
+                            ) : p.pingenteGerado ? (
+                              <img src={p.pingenteGerado} alt="Prévia da peça" className="w-full h-full object-contain" />
+                            ) : (
+                              <div className="flex flex-col items-center gap-1.5 px-3 text-center">
+                                <Sparkles className="h-5 w-5" style={{ color: "rgba(212,175,55,0.4)" }} />
+                                <span className="text-[9px] tracking-[0.3em] uppercase text-white/40">Prévia da peça</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        {p.pingenteGerado && (
+                          <button
+                            onClick={p.handleAdicionar}
+                            disabled={p.adicionando}
+                            className="mt-4 w-full px-6 py-3 font-display tracking-[0.3em] uppercase text-[11px] border transition-all duration-500 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)]"
+                            style={{ borderColor: "#d4af37", color: "#d4af37", background: "rgba(212,175,55,0.06)" }}
+                          >
+                            {p.adicionando ? "Enviando…" : "Solicitar criação com minha imagem"}
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="mt-6">
                     <button
                       onClick={() => p.setCurrentStep(1)}
-                      className="px-6 py-4 font-display tracking-[0.3em] uppercase text-xs border transition-all duration-300 hover:border-[#d4af37] hover:text-[#d4af37]"
-                      style={{ borderColor: "rgba(212,175,55,0.4)", color: "rgba(212,175,55,0.8)" }}
+                      className="text-[10px] tracking-[0.4em] uppercase text-white/40 hover:text-white/80 transition-colors"
                     >
-                      Refinar minha peça
+                      ← Refinar minha peça
                     </button>
                   </div>
                 </StepLayout>
@@ -1071,7 +1133,7 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
             </div>
 
             {/* Navegação entre passos */}
-            {p.currentStep < 7 && (
+            {p.currentStep < 6 && (
               <div className="mt-10 flex items-center gap-4">
                 {p.currentStep > 1 && (
                   <button
