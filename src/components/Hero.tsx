@@ -345,11 +345,12 @@ export const Hero = () => {
       {/* Fade inferior — dissolve a seção no fundo preto (#050505) da próxima seção */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[2]"
+        className="pointer-events-none absolute inset-x-0 z-[5]"
         style={{
-          height: "180px",
+          bottom: "-120px",
+          height: "220px",
           background:
-            "linear-gradient(to bottom, rgba(5,5,5,0) 0%, rgba(5,5,5,0.18) 35%, rgba(5,5,5,0.55) 70%, rgba(5,5,5,1) 100%)",
+            "linear-gradient(to bottom, rgba(5,5,5,0) 0%, rgba(5,5,5,0.35) 35%, rgba(5,5,5,0.75) 70%, rgba(5,5,5,1) 100%)",
         }}
       />
     </section>
