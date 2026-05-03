@@ -46,19 +46,58 @@ export const ColecaoDestaque = ({
   }, [limit]);
 
   return (
-    <section className="relative w-full overflow-hidden">
-      {/* Imagem de fundo cobrindo toda a seção */}
+    <section
+      className="relative w-full overflow-hidden bg-black -mt-20 md:-mt-32 z-10"
+      style={{ backgroundColor: "#000" }}
+    >
+      {/* Fade superior: dissolve a seção anterior dentro do preto */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-32 md:-top-48 inset-x-0 h-32 md:h-48 z-20"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,1) 100%)",
+        }}
+      />
+
+      {/* Imagem de fundo cobrindo toda a seção (com leve parallax via transform) */}
       <img
         src={atelieCtaBg}
         alt="Coleções 3R Fitness — peças em ouro"
         loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover object-top"
+        className="absolute inset-0 w-full h-full object-cover object-top will-change-transform"
+        style={{ transform: "translateZ(0) scale(1.04)" }}
       />
+
+      {/* Fade interno no topo da imagem: cria sobreposição contínua com a seção anterior */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-48 md:h-64 z-10"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,1) 100%)",
+          backdropFilter: "blur(6px)",
+          WebkitBackdropFilter: "blur(6px)",
+        }}
+      />
+
+      {/* Glow dourado sutil na linha de transição */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 -top-px h-40 z-20 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 50% 100% at 50% 0%, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0.06) 35%, transparent 70%)",
+          mixBlendMode: "screen",
+        }}
+      />
+
+      {/* Overlay editorial geral + vinheta */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(90deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.15) 100%), radial-gradient(ellipse 60% 80% at 30% 50%, rgba(212,175,55,0.15) 0%, transparent 70%)",
+            "linear-gradient(90deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.15) 100%), radial-gradient(ellipse 60% 80% at 30% 50%, rgba(212,175,55,0.15) 0%, transparent 70%), radial-gradient(ellipse 100% 80% at 50% 100%, rgba(0,0,0,0.6) 0%, transparent 70%)",
         }}
       />
 
