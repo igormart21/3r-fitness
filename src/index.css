@@ -159,6 +159,20 @@
   background: #d4af37;
   color: #000;
 }
+.hero-editorial .luxury-cta--ghost {
+  color: #ededed;
+  border-color: rgba(237, 237, 237, 0.5);
+}
+.hero-editorial .luxury-cta--ghost:hover {
+  background: #ededed;
+  color: #000;
+}
+.hero-editorial .hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
 @media (max-width: 768px) {
   .hero-editorial {
     left: 50%;
@@ -168,7 +182,9 @@
     max-width: 88%;
     text-align: center;
   }
+  .hero-editorial .hero-cta-row { justify-content: center; }
   .hero-editorial .eyebrow { font-size: 11px; letter-spacing: 0.22em; margin-bottom: 12px; }
   .hero-editorial .headline { font-size: 36px; line-height: 1.08; }
   .hero-editorial .luxury-cta { margin-top: 28px; padding: 11px 24px; font-size: 11px; }
 }
+
