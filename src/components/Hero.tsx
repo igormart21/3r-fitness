@@ -10,7 +10,7 @@ import sportCorrida from "@/assets/sport-corrida.jpg";
 
 export const Hero = () => {
   return (
-    <section className="relative" style={{ backgroundColor: "#050505", paddingBottom: "140px", overflow: "hidden" }}>
+    <section className="relative z-[3]" style={{ backgroundColor: "#050505", paddingBottom: "40px", overflow: "visible" }}>
       <style>{`
         @keyframes hero-shimmer {
           0% { background-position: 200% 0; }
