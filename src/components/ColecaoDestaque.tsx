@@ -48,10 +48,10 @@ export const ColecaoDestaque = ({
   return (
     <section
       className="relative w-full overflow-hidden z-[1]"
-      style={{ backgroundColor: "#050505", marginTop: "-190px", paddingTop: 0 }}
+      style={{ backgroundColor: "#050505", marginTop: "-320px", paddingTop: 0 }}
     >
       {/* Hero coleções */}
-      <div className="relative overflow-hidden" style={{ minHeight: "82vh" }}>
+      <div className="relative overflow-hidden" style={{ minHeight: "92vh" }}>
         {/* Imagem de fundo */}
         <img
           src={atelieCtaBg}
@@ -61,18 +61,29 @@ export const ColecaoDestaque = ({
           style={{ objectPosition: "center 28%", transform: "translateZ(0) scale(1.04)" }}
         />
 
-        {/* Overlay suave (sem faixa retangular) */}
+        {/* Fade longo no topo da imagem — dissolve sem criar faixa retangular */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 pointer-events-none z-[2]"
+          style={{
+            height: "55%",
+            background:
+              "linear-gradient(to bottom, rgba(5,5,5,1) 0%, rgba(5,5,5,0.92) 12%, rgba(5,5,5,0.7) 28%, rgba(5,5,5,0.4) 50%, rgba(5,5,5,0.15) 75%, rgba(5,5,5,0) 100%)",
+          }}
+        />
+
+        {/* Vinheta + fade inferior sutis */}
         <div
           aria-hidden
           className="absolute inset-0 pointer-events-none z-[2]"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(5,5,5,0.75) 0%, rgba(5,5,5,0.45) 18%, rgba(5,5,5,0.12) 38%, rgba(5,5,5,0.08) 65%, rgba(5,5,5,0.9) 100%), radial-gradient(circle at 62% 45%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.88) 100%)",
+              "linear-gradient(to bottom, rgba(5,5,5,0) 55%, rgba(5,5,5,0.05) 75%, rgba(5,5,5,0.85) 100%), radial-gradient(circle at 62% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.7) 100%)",
           }}
         />
 
         {loading && (
-          <div className="relative z-[4] container mx-auto max-w-7xl px-4 min-h-[82vh] flex items-end justify-center pb-20 md:pb-32 pt-32">
+          <div className="relative z-[4] container mx-auto max-w-7xl px-4 min-h-[92vh] flex items-end justify-center pb-20 md:pb-32 pt-32">
             <Loader2 className="h-8 w-8 animate-spin" style={{ color: "#d4af37" }} />
           </div>
         )}
