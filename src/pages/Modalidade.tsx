@@ -249,6 +249,14 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
   const [genero, setGenero] = useState<Genero | null>(null);
   const [material, setMaterial] = useState<Material | null>(null);
   const [estilo, setEstilo] = useState<Estilo | null>(null);
+  const [estiloHover, setEstiloHover] = useState<Estilo | null>(null);
+
+  // Fisiculturismo — campos de significado + jornada guiada
+  const [eternizar, setEternizar] = useState("");
+  const [palavraSig, setPalavraSig] = useState("");
+  const [momento, setMomento] = useState("");
+  const [currentStep, setCurrentStep] = useState(1);
+  const isLuxury = config.slug === "fisiculturismo";
 
   // Gravação (apenas uma opção por joia)
   const [nome, setNome] = useState("");
