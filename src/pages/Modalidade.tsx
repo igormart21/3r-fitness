@@ -9,6 +9,11 @@ import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/l
 import { supabase } from "@/integrations/supabase/client";
 import fisiculturismoHero from "@/assets/fisiculturismo-hero.png";
 import fisiculturismoHeroBg from "@/assets/fisiculturismo-hero-bg.png";
+import ciclismoHeroBg from "@/assets/ciclismo-hero-bg.png";
+import corridaHeroBg from "@/assets/corrida-hero-bg.png";
+import crossfitHeroBg from "@/assets/crossfit-hero-bg.png";
+import musculacaoHeroBg from "@/assets/musculacao-hero-bg.png";
+import triathlonHeroBg from "@/assets/triathlon-hero-bg.png";
 
 // Bonecos FISICULTURISMO
 import bonecoFisiFemClassicoOuro from "@/assets/boneco-fisiculturismo-fem-classico-ouro.jpg";
