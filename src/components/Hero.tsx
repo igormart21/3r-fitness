@@ -342,17 +342,6 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* Fade inferior longo e suave */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 z-[5]"
-        style={{
-          bottom: "-170px",
-          height: "260px",
-          background:
-            "linear-gradient(to bottom, rgba(5,5,5,0) 0%, rgba(5,5,5,0.18) 30%, rgba(5,5,5,0.48) 60%, rgba(5,5,5,0.85) 85%, rgba(5,5,5,1) 100%)",
-        }}
-      />
     </section>
   );
 };
