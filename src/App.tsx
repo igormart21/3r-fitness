@@ -44,7 +44,7 @@ const FloatingButtons = () => {
   return (
     <>
       <HomeFloatingButton />
-      {isHome && (
+      {!isHome && (
         <>
           <InstagramFloatingButton />
           <WhatsappFloatingButton />
