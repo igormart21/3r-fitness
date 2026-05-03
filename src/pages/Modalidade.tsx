@@ -249,6 +249,14 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
   const [genero, setGenero] = useState<Genero | null>(null);
   const [material, setMaterial] = useState<Material | null>(null);
   const [estilo, setEstilo] = useState<Estilo | null>(null);
+  const [estiloHover, setEstiloHover] = useState<Estilo | null>(null);
+
+  // Fisiculturismo — campos de significado + jornada guiada
+  const [eternizar, setEternizar] = useState("");
+  const [palavraSig, setPalavraSig] = useState("");
+  const [momento, setMomento] = useState("");
+  const [currentStep, setCurrentStep] = useState(1);
+  const isLuxury = config.slug === "fisiculturismo";
 
   // Gravação (apenas uma opção por joia)
   const [nome, setNome] = useState("");
@@ -517,58 +525,55 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       `}</style>
 
 
-      {/* Hero da modalidade */}
-       {config.slug === "fisiculturismo" ? (
-         <section
-           className="relative overflow-hidden"
-           style={{
-             backgroundColor: "#0a0a0a",
-             width: "100vw",
-             maxWidth: "100vw",
-             marginLeft: "calc(50% - 50vw)",
-             marginRight: "calc(50% - 50vw)",
-             height: "300px",
-           }}
-           aria-label={`Foto de ${config.nome}`}
-         >
-           <img
-             src={fisiculturismoHero}
-             alt={`Atletas de ${config.nome}`}
-             className="block select-none pointer-events-none"
-             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
-             draggable={false}
-           />
-         </section>
-       ) : (
-        <section
-          className="relative w-full overflow-hidden border-b border-accent/10"
-          style={{ backgroundColor: "#0a0a0a", height: "clamp(180px, 22vw, 260px)" }}
-          aria-label={`Espaço reservado para foto de ${config.nome}`}
-        >
-          <div className="absolute inset-y-0 left-0 z-20 flex items-center pl-4 sm:pl-8 md:pl-12 max-w-[55%]">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Sparkles className="h-3 w-3 text-accent" />
-                <span className="h-px w-8 bg-accent/60" />
-              </div>
-              <h1
-                className="font-serif italic text-base sm:text-xl md:text-2xl tracking-[0.04em] gold-text leading-tight"
-                style={{ fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif' }}
-              >
-                {config.fraseImpacto}
-              </h1>
+      {/* ============== EXPERIÊNCIA LUXURY (Fisiculturismo) ============== */}
+      {isLuxury ? (
+        <LuxuryConfigurator
+          config={config}
+          previewSrc={previewSrc}
+          gerandoPingente={gerandoPingente}
+          pingenteGerado={pingenteGerado}
+          fotoCliente={fotoCliente}
+          fotoInputRef={fotoInputRef}
+          handleFotoUpload={handleFotoUpload}
+          genero={genero} setGenero={setGenero}
+          material={material} setMaterial={setMaterial}
+          estilo={estilo} setEstilo={setEstilo}
+          estiloHover={estiloHover} setEstiloHover={setEstiloHover}
+          eternizar={eternizar} setEternizar={setEternizar}
+          palavraSig={palavraSig} setPalavraSig={setPalavraSig}
+          momento={momento} setMomento={setMomento}
+          currentStep={currentStep} setCurrentStep={setCurrentStep}
+          handleAdicionar={handleAdicionar}
+          adicionando={adicionando}
+          podeAdicionar={podeAdicionar}
+        />
+      ) : (
+      <>
+      {/* Hero da modalidade (LEGADO outras modalidades) */}
+      <section
+        className="relative w-full overflow-hidden border-b border-accent/10"
+        style={{ backgroundColor: "#0a0a0a", height: "clamp(180px, 22vw, 260px)" }}
+        aria-label={`Espaço reservado para foto de ${config.nome}`}
+      >
+        <div className="absolute inset-y-0 left-0 z-20 flex items-center pl-4 sm:pl-8 md:pl-12 max-w-[55%]">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="h-3 w-3 text-accent" />
+              <span className="h-px w-8 bg-accent/60" />
             </div>
+            <h1
+              className="font-serif italic text-base sm:text-xl md:text-2xl tracking-[0.04em] gold-text leading-tight"
+              style={{ fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif' }}
+            >
+              {config.fraseImpacto}
+            </h1>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* Conteúdo principal: 3 colunas (Fisiculturismo) | 2 colunas (legado) */}
-      <main className={`container mx-auto px-4 pt-6 pb-10 ${config.slug === "fisiculturismo" ? "max-w-[1400px]" : "max-w-6xl"}`}>
-        <div className={
-          config.slug === "fisiculturismo"
-            ? "grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1fr)] gap-6 lg:gap-8"
-            : "grid grid-cols-1 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-3 lg:gap-6"
-        }>
+      {/* Conteúdo principal LEGADO (2 colunas) */}
+      <main className="container mx-auto px-4 pt-6 pb-10 max-w-6xl">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-3 lg:gap-6">
           {/* COLUNA ESQUERDA — Preview sticky */}
           <div className="lg:sticky lg:top-4 lg:self-start max-w-[380px] mx-auto lg:mx-0 w-full">
             <div className="relative flex items-start gap-3">
@@ -580,7 +585,6 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                     "0 30px 80px -20px rgba(0,0,0,0.8), 0 0 60px -20px hsl(43 65% 35% / 0.4)",
                 }}
               >
-                {/* Holofotes douradas */}
                 <div
                   aria-hidden
                   className="pointer-events-none absolute inset-0 z-10 mix-blend-screen"
@@ -590,7 +594,6 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                     animation: "spotlight-pulse 4s ease-in-out infinite",
                   }}
                 />
-                {/* Cantos dourados */}
                 <span className="absolute top-2 left-2 h-4 w-4 border-t border-l border-accent z-20" />
                 <span className="absolute top-2 right-2 h-4 w-4 border-t border-r border-accent z-20" />
                 <span className="absolute bottom-2 left-2 h-4 w-4 border-b border-l border-accent z-20" />
@@ -603,44 +606,16 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                   </div>
                 )}
 
-              {(() => {
-                const bonecosGrandes = ["fisiculturismo", "musculacao", "corrida"];
-                let escala = bonecosGrandes.includes(config.slug) ? 1.25 : 1;
-                // Boneco feminino de musculação é menor no asset — compensa
-                if (config.slug === "musculacao" && genero === "Feminino") escala = 1.9;
+                {(() => {
+                  const bonecosGrandes = ["fisiculturismo", "musculacao", "corrida"];
+                  let escala = bonecosGrandes.includes(config.slug) ? 1.25 : 1;
+                  if (config.slug === "musculacao" && genero === "Feminino") escala = 1.9;
                   return (
-                    <div
-                      className="absolute inset-0 z-5"
-                      style={{ transform: `scale(${escala})`, transformOrigin: "center center" }}
-                    >
-                      <img
-                        src={previewSrc}
-                        alt={`Pré-visualização de joia ${config.nome}`}
-                        className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500"
-                      />
-
+                    <div className="absolute inset-0 z-5" style={{ transform: `scale(${escala})`, transformOrigin: "center center" }}>
+                      <img src={previewSrc} alt={`Pré-visualização de joia ${config.nome}`} className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500" />
                       {overlayTexto && (
-                        <div
-                          className="absolute z-20 pointer-events-none text-center"
-                          style={{
-                            top: overlayPos.top,
-                            left: overlayPos.left,
-                            width: overlayPos.width,
-                            transform: overlayPos.transform,
-                          }}
-                        >
-                          <span
-                            className="block uppercase leading-none whitespace-nowrap overflow-hidden"
-                            style={{
-                              fontFamily: 'Arial, Helvetica, sans-serif',
-                              fontSize: `${overlayFontSize}px`,
-                              color: material === "Ouro 18K" ? "#d4af37" : "#c0c0c0",
-                              fontWeight: 700,
-                              letterSpacing: "0.02em",
-                              WebkitTextStroke: "0.5px rgba(0,0,0,0.95)",
-                              textShadow: "0 0 1px rgba(0,0,0,0.9), 0 1px 1px rgba(0,0,0,0.8)",
-                            }}
-                          >
+                        <div className="absolute z-20 pointer-events-none text-center" style={{ top: overlayPos.top, left: overlayPos.left, width: overlayPos.width, transform: overlayPos.transform }}>
+                          <span className="block uppercase leading-none whitespace-nowrap overflow-hidden" style={{ fontFamily: 'Arial, Helvetica, sans-serif', fontSize: `${overlayFontSize}px`, color: material === "Ouro 18K" ? "#d4af37" : "#c0c0c0", fontWeight: 700, letterSpacing: "0.02em", WebkitTextStroke: "0.5px rgba(0,0,0,0.95)", textShadow: "0 0 1px rgba(0,0,0,0.9), 0 1px 1px rgba(0,0,0,0.8)" }}>
                             {overlayTexto}
                           </span>
                         </div>
@@ -650,49 +625,34 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                 })()}
               </div>
 
-              {/* Legenda lateral — fora do card, na sequência de seleção */}
               {(genero || material || estilo) && (
                 <ul className="flex flex-col gap-1.5 pt-2 min-w-[80px]">
                   {[genero, material, estilo].filter(Boolean).map((item, i) => (
-                    <li
-                      key={i}
-                      className="text-[9px] uppercase tracking-[0.25em] text-accent/90 whitespace-nowrap"
-                    >
-                      • {item}
-                    </li>
+                    <li key={i} className="text-[9px] uppercase tracking-[0.25em] text-accent/90 whitespace-nowrap">• {item}</li>
                   ))}
                 </ul>
               )}
             </div>
           </div>
 
-          {/* COLUNA DIREITA — Escolhas em sequência */}
+          {/* COLUNA DIREITA — Escolhas em sequência (LEGADO) */}
           <div className="space-y-3">
-            {/* I — Gênero */}
             <section>
               <SectionTitle numeral="I" label="Escolha quem você se tornou" />
               <div className="flex gap-2 flex-wrap justify-center">
                 {(["Masculino", "Feminino"] as Genero[]).map((g) => (
-                  <ChoiceButton key={g} selected={genero === g} onClick={() => setGenero(genero === g ? null : g)}>
-                    {g}
-                  </ChoiceButton>
+                  <ChoiceButton key={g} selected={genero === g} onClick={() => setGenero(genero === g ? null : g)}>{g}</ChoiceButton>
                 ))}
               </div>
             </section>
-
-            {/* II — Metal */}
             <section>
               <SectionTitle numeral="II" label="Defina o material da sua conquista" />
               <div className="flex gap-2 flex-wrap justify-center">
                 {(["Ouro 18K", "Prata 925"] as Material[]).map((m) => (
-                  <ChoiceButton key={m} selected={material === m} onClick={() => setMaterial(material === m ? null : m)}>
-                    {m}
-                  </ChoiceButton>
+                  <ChoiceButton key={m} selected={material === m} onClick={() => setMaterial(material === m ? null : m)}>{m}</ChoiceButton>
                 ))}
               </div>
             </section>
-
-            {/* III — Estilo */}
             <section>
               <SectionTitle numeral="III" label="Forma da sua história" />
               <div className="flex gap-2 flex-wrap justify-center">
@@ -703,219 +663,459 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
                 ))}
               </div>
             </section>
-
-            {/* IV — Gravação */}
             {gravacaoLiberada && (
-            <section>
-              <SectionTitle numeral="IV" label="Dê significado à sua peça" />
-              <div className="flex flex-wrap gap-1.5 justify-center">
-                {config.camposGravacao.includes("nome") && (
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">Nome</label>
-                    <Input
-                      value={nome}
-                      maxLength={20}
-                      onChange={(e) => setExclusivo("nome", e.target.value)}
-                      placeholder="Ex: Renata"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
-                    />
-                  </div>
+              <section>
+                <SectionTitle numeral="IV" label="Dê significado à sua peça" />
+                <div className="flex flex-wrap gap-1.5 justify-center">
+                  {config.camposGravacao.includes("nome") && (
+                    <div><label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">Nome</label><Input value={nome} maxLength={20} onChange={(e) => setExclusivo("nome", e.target.value)} placeholder="Ex: Renata" className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs" /></div>
+                  )}
+                  {config.camposGravacao.includes("palavra") && (
+                    <div><label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">Palavra</label><Input value={palavra} maxLength={15} onChange={(e) => setExclusivo("palavra", e.target.value)} placeholder="Ex: Força" className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs" /></div>
+                  )}
+                  {config.camposGravacao.includes("km") && (
+                    <div><label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">KM</label><Input value={km} onChange={(e) => setExclusivo("km", e.target.value)} placeholder="Ex: 21K" className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs" /></div>
+                  )}
+                  {config.camposGravacao.includes("data") && (
+                    <div><label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">Data</label><Input value={data} maxLength={10} onChange={(e) => setExclusivo("data", e.target.value)} placeholder="DD/MM/AAAA" className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs" /></div>
+                  )}
+                  {config.camposGravacao.includes("tempo") && (
+                    <div><label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">Tempo</label><Input value={tempo} maxLength={10} onChange={(e) => setExclusivo("tempo", e.target.value)} placeholder="Ex: 1h45" className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs" /></div>
+                  )}
+                </div>
+                {personalizacaoEscolhida && (
+                  <button onClick={() => setExclusivo("nome", "")} className="mt-3 text-[10px] uppercase tracking-[0.3em] text-accent/70 hover:text-accent underline">Limpar gravação</button>
                 )}
-                {config.camposGravacao.includes("palavra") && (
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">Palavra</label>
-                    <Input
-                      value={palavra}
-                      maxLength={15}
-                      onChange={(e) => setExclusivo("palavra", e.target.value)}
-                      placeholder="Ex: Força"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
-                    />
-                  </div>
-                )}
-                {config.camposGravacao.includes("km") && (
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">KM</label>
-                    <Input
-                      value={km}
-                      onChange={(e) => setExclusivo("km", e.target.value)}
-                      placeholder="Ex: 21K"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
-                    />
-                  </div>
-                )}
-                {config.camposGravacao.includes("data") && (
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">Data</label>
-                    <Input
-                      value={data}
-                      maxLength={10}
-                      onChange={(e) => setExclusivo("data", e.target.value)}
-                      placeholder="DD/MM/AAAA"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
-                    />
-                  </div>
-                )}
-                {config.camposGravacao.includes("tempo") && (
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-white block mb-1 text-center">Tempo</label>
-                    <Input
-                      value={tempo}
-                      maxLength={10}
-                      onChange={(e) => setExclusivo("tempo", e.target.value)}
-                      placeholder="Ex: 1h45"
-                      className="bg-card/40 border-accent/30 focus-visible:border-accent h-8 text-xs"
-                    />
-                  </div>
-                )}
-              </div>
-              {personalizacaoEscolhida && (
-                <button
-                  onClick={() => setExclusivo("nome", "")}
-                  className="mt-3 text-[10px] uppercase tracking-[0.3em] text-accent/70 hover:text-accent underline"
-                >
-                  Limpar gravação
-                </button>
-              )}
-            </section>
+              </section>
             )}
+            <section>
+              <SectionTitle numeral="V" label="Torne isso único" />
+              <p className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 mb-2 italic text-center">Transforme em uma jóia que só você tem</p>
+              <div className="grid grid-cols-2 gap-3">
+                <button onClick={() => fotoInputRef.current?.click()} disabled={!genero || !material || !estilo} className="relative aspect-square border border-dashed border-accent/40 hover:border-accent transition-all flex flex-col items-center justify-center gap-1.5 bg-card/20 hover:bg-card/40 disabled:opacity-40 disabled:cursor-not-allowed group">
+                  {fotoCliente ? (
+                    <><img src={fotoCliente} alt="Sua foto" className="absolute inset-0 w-full h-full object-cover" /><div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><span className="text-[10px] uppercase tracking-[0.3em] text-accent">Trocar foto</span></div></>
+                  ) : (
+                    <><Upload className="h-6 w-6 text-accent/60" /><span className="text-[9px] uppercase tracking-[0.3em] text-accent/80">Upload da foto</span>{(!genero || !material || !estilo) && (<span className="text-[8px] text-muted-foreground/60 px-2 text-center leading-tight">Escolha gênero, metal e estilo</span>)}</>
+                  )}
+                  <input ref={fotoInputRef} type="file" accept="image/*" onChange={handleFotoUpload} className="hidden" />
+                </button>
+                <div className="relative aspect-square border border-accent/30 bg-black/60 flex items-center justify-center overflow-hidden">
+                  {gerandoPingente ? (<div className="flex flex-col items-center gap-2"><Loader2 className="h-5 w-5 text-accent animate-spin" /><span className="text-[9px] uppercase tracking-[0.3em] text-accent">Gerando…</span></div>) : pingenteGerado ? (<img src={pingenteGerado} alt="Pingente gerado por IA" className="w-full h-full object-contain" />) : (<div className="flex flex-col items-center gap-1.5 text-center px-3"><Camera className="h-5 w-5 text-accent/40" /><span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground/60 leading-tight">Prévia IA</span></div>)}
+                </div>
+              </div>
+            </section>
+            <section className="pt-2 border-t border-accent/20">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">Investimento</span>
+                <span className="font-display text-lg gold-text">a partir de R$ 890</span>
+              </div>
+              <Button onClick={handleAdicionar} disabled={adicionando || !podeAdicionar} className="w-full bg-gradient-to-r from-[#b8860b] via-[#d4af37] to-[#b8860b] text-black hover:opacity-90 font-display tracking-[0.3em] uppercase text-xs py-3 h-auto">
+                {adicionando ? (<><Loader2 className="h-4 w-4 animate-spin mr-2" />Adicionando…</>) : (<><Sparkles className="h-4 w-4 mr-2" />Adicionar ao carrinho</>)}
+              </Button>
+              <button onClick={handleComprar} disabled={adicionando || !podeAdicionar} className="mt-2 w-full text-center text-[10px] uppercase tracking-[0.3em] text-accent/80 hover:text-accent disabled:opacity-40 underline-offset-4 hover:underline">Comprar agora</button>
+            </section>
+          </div>
+        </div>
+      </main>
+      </>
+      )}
+    </div>
+  );
+};
 
-            {/* V + CTA (não-fisiculturismo permanecem na col 2) */}
-            {config.slug !== "fisiculturismo" && (
-              <>
-                <section>
-                  <SectionTitle numeral="V" label="Torne isso único" />
-                  <p className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 mb-2 italic text-center">
-                    Transforme em uma jóia que só você tem
+/* ============================================================
+   LUXURY CONFIGURATOR — Jornada guiada premium (Fisiculturismo)
+   ============================================================ */
+
+type LuxuryProps = {
+  config: ModalidadeConfig;
+  previewSrc: string;
+  gerandoPingente: boolean;
+  pingenteGerado: string | null;
+  fotoCliente: string | null;
+  fotoInputRef: React.RefObject<HTMLInputElement>;
+  handleFotoUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  genero: Genero | null; setGenero: (g: Genero | null) => void;
+  material: Material | null; setMaterial: (m: Material | null) => void;
+  estilo: Estilo | null; setEstilo: (e: Estilo | null) => void;
+  estiloHover: Estilo | null; setEstiloHover: (e: Estilo | null) => void;
+  eternizar: string; setEternizar: (s: string) => void;
+  palavraSig: string; setPalavraSig: (s: string) => void;
+  momento: string; setMomento: (s: string) => void;
+  currentStep: number; setCurrentStep: (n: number) => void;
+  handleAdicionar: () => void;
+  adicionando: boolean;
+  podeAdicionar: boolean;
+};
+
+const LuxuryConfigurator = (p: LuxuryProps) => {
+  const totalSteps = 7;
+  const next = () => p.setCurrentStep(Math.min(totalSteps, p.currentStep + 1));
+  const prev = () => p.setCurrentStep(Math.max(1, p.currentStep - 1));
+
+  // Estilo "preview" no hover do passo 4
+  const estiloEfetivo = p.estiloHover ?? p.estilo;
+
+  // src do preview considerando hover de estilo
+  const previewEfetivo = useMemo(() => {
+    if (p.pingenteGerado) return p.pingenteGerado;
+    const mat = p.material ?? "Prata 925";
+    const gen = p.genero ?? "Masculino";
+    const est = estiloEfetivo ?? "Clássico";
+    return p.config.bonecos[mat][gen][est];
+  }, [p.pingenteGerado, p.material, p.genero, estiloEfetivo, p.config]);
+
+  const stepTitles = [
+    "Identidade", "Modalidade", "Material", "Estilo", "Significado", "Sua imagem", "Resumo"
+  ];
+
+  return (
+    <main
+      className="relative w-full overflow-hidden"
+      style={{
+        minHeight: "90vh",
+        background:
+          "radial-gradient(ellipse at 20% 10%, hsl(43 60% 18% / 0.25) 0%, transparent 55%), radial-gradient(ellipse at 80% 90%, hsl(43 60% 14% / 0.20) 0%, transparent 55%), linear-gradient(180deg, #050505 0%, #0a0a0a 50%, #060606 100%)",
+      }}
+    >
+      <div className="container mx-auto px-4 lg:px-8 py-8 lg:py-12 max-w-[1500px]">
+        {/* Stepper topo */}
+        <div className="flex items-center justify-center gap-3 mb-8">
+          {stepTitles.map((t, i) => {
+            const n = i + 1;
+            const active = n === p.currentStep;
+            const done = n < p.currentStep;
+            return (
+              <button
+                key={t}
+                onClick={() => p.setCurrentStep(n)}
+                className="flex items-center gap-2 group"
+              >
+                <span
+                  className={`h-1.5 transition-all duration-500 ${active ? "w-10 bg-[#d4af37]" : done ? "w-6 bg-[#d4af37]/60" : "w-6 bg-white/15"}`}
+                  style={active ? { boxShadow: "0 0 12px rgba(212,175,55,0.6)" } : undefined}
+                />
+                <span className={`hidden md:inline text-[9px] tracking-[0.3em] uppercase transition-colors ${active ? "text-[#d4af37]" : done ? "text-[#d4af37]/50" : "text-white/30"}`}>
+                  {t}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-center min-h-[70vh]">
+          {/* ESQUERDA — Pingente */}
+          <div className="relative flex items-center justify-center">
+            <div
+              className="relative aspect-[4/5] w-full max-w-[460px]"
+              style={{
+                background: "radial-gradient(ellipse at center, #1a1410 0%, #050403 70%)",
+                boxShadow: "inset 0 0 120px rgba(0,0,0,0.9), 0 40px 100px -30px rgba(212,175,55,0.18)",
+              }}
+            >
+              {/* Glow dourado sutil */}
+              <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: "radial-gradient(ellipse 55% 45% at 50% 45%, rgba(212,175,55,0.12) 0%, transparent 70%)",
+                  animation: "spotlight-pulse 5s ease-in-out infinite",
+                }}
+              />
+              {p.gerandoPingente && (
+                <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/75 backdrop-blur-sm gap-4">
+                  <Loader2 className="h-12 w-12 animate-spin" style={{ color: "#d4af37" }} />
+                  <p className="text-[10px] uppercase tracking-[0.4em]" style={{ color: "#d4af37" }}>
+                    Modelando sua peça…
                   </p>
-                  <div className="grid grid-cols-2 gap-3">
+                </div>
+              )}
+              <img
+                key={previewEfetivo}
+                src={previewEfetivo}
+                alt={`Pingente ${p.config.nome}`}
+                className="absolute inset-0 w-full h-full object-contain transition-all duration-700 ease-out animate-in fade-in zoom-in-95"
+                style={{
+                  filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.6)) drop-shadow(0 0 30px rgba(212,175,55,0.15))",
+                  transform: estiloEfetivo === "Underground" ? "rotate(-3deg) scale(1.02)" : "rotate(0deg) scale(1)",
+                  transitionProperty: "transform, filter, opacity",
+                }}
+              />
+              {/* Cantos dourados */}
+              <span className="absolute top-3 left-3 h-5 w-5 border-t border-l z-20" style={{ borderColor: "#d4af37" }} />
+              <span className="absolute top-3 right-3 h-5 w-5 border-t border-r z-20" style={{ borderColor: "#d4af37" }} />
+              <span className="absolute bottom-3 left-3 h-5 w-5 border-b border-l z-20" style={{ borderColor: "#d4af37" }} />
+              <span className="absolute bottom-3 right-3 h-5 w-5 border-b border-r z-20" style={{ borderColor: "#d4af37" }} />
+            </div>
+          </div>
+
+          {/* DIREITA — Etapa atual */}
+          <div className="relative">
+            <div key={p.currentStep} className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+              <div className="text-[9px] tracking-[0.5em] uppercase mb-3" style={{ color: "rgba(212,175,55,0.6)" }}>
+                {String(p.currentStep).padStart(2, "0")} · {stepTitles[p.currentStep - 1]}
+              </div>
+
+              {/* PASSO 1 — IDENTIDADE */}
+              {p.currentStep === 1 && (
+                <StepLayout
+                  title="Escolha quem você se tornou"
+                  subtitle="A identidade é o primeiro traço da sua história."
+                >
+                  <div className="flex gap-4 flex-wrap">
+                    {(["Masculino", "Feminino"] as Genero[]).map((g) => (
+                      <LuxuryChoice key={g} selected={p.genero === g} onClick={() => p.setGenero(g)}>
+                        {g}
+                      </LuxuryChoice>
+                    ))}
+                  </div>
+                </StepLayout>
+              )}
+
+              {/* PASSO 2 — MODALIDADE */}
+              {p.currentStep === 2 && (
+                <StepLayout
+                  title="Sua disciplina tem forma"
+                  subtitle="Você escolheu o caminho do fisiculturismo. Cada músculo conta."
+                >
+                  <div className="inline-flex items-center gap-3 px-5 py-3 border" style={{ borderColor: "rgba(212,175,55,0.5)", background: "rgba(212,175,55,0.05)" }}>
+                    <Sparkles className="h-4 w-4" style={{ color: "#d4af37" }} />
+                    <span className="font-display tracking-[0.3em] uppercase text-sm" style={{ color: "#d4af37" }}>
+                      Fisiculturismo
+                    </span>
+                  </div>
+                </StepLayout>
+              )}
+
+              {/* PASSO 3 — MATERIAL */}
+              {p.currentStep === 3 && (
+                <StepLayout
+                  title="Defina o material da sua conquista"
+                  subtitle="O metal que vai eternizar sua jornada."
+                >
+                  <div className="flex gap-3 flex-wrap">
+                    {(["Ouro 18K", "Prata 925"] as Material[]).map((m) => (
+                      <LuxuryChoice key={m} selected={p.material === m} onClick={() => p.setMaterial(m)}>
+                        {m}
+                      </LuxuryChoice>
+                    ))}
+                  </div>
+                </StepLayout>
+              )}
+
+              {/* PASSO 4 — ESTILO */}
+              {p.currentStep === 4 && (
+                <StepLayout
+                  title="Escolha a presença da sua peça"
+                  subtitle="Hover para visualizar. Clique para fixar."
+                >
+                  <div className="flex gap-3 flex-wrap">
+                    {(["Clássico", "Underground"] as Estilo[]).map((e) => (
+                      <LuxuryChoice
+                        key={e}
+                        selected={p.estilo === e}
+                        onClick={() => p.setEstilo(e)}
+                        onMouseEnter={() => p.setEstiloHover(e)}
+                        onMouseLeave={() => p.setEstiloHover(null)}
+                      >
+                        {e === "Underground" ? "Personalizado" : e}
+                      </LuxuryChoice>
+                    ))}
+                  </div>
+                </StepLayout>
+              )}
+
+              {/* PASSO 5 — SIGNIFICADO */}
+              {p.currentStep === 5 && (
+                <StepLayout
+                  title="Dê significado à sua joia"
+                  subtitle="Três traços que tornam a peça inconfundivelmente sua."
+                >
+                  <div className="space-y-5 max-w-md">
+                    <LuxuryField label="Quem você quer eternizar?" value={p.eternizar} onChange={p.setEternizar} placeholder="Ex: Você. Sua mãe. Seu mentor." />
+                    <LuxuryField label="Qual palavra define sua jornada?" value={p.palavraSig} onChange={p.setPalavraSig} placeholder="Disciplina, Superação, Olympia" />
+                    <LuxuryField label="O momento que mudou tudo" value={p.momento} onChange={p.setMomento} placeholder="A primeira competição, a recaída, o palco" />
+                  </div>
+                </StepLayout>
+              )}
+
+              {/* PASSO 6 — IA */}
+              {p.currentStep === 6 && (
+                <StepLayout
+                  title="Transforme você em símbolo"
+                  subtitle="Sua imagem está sendo transformada em uma peça única."
+                >
+                  <div className="grid grid-cols-2 gap-4 max-w-md">
                     <button
-                      onClick={() => fotoInputRef.current?.click()}
-                      disabled={!genero || !material || !estilo}
-                      className="relative aspect-square border border-dashed border-accent/40 hover:border-accent transition-all flex flex-col items-center justify-center gap-1.5 bg-card/20 hover:bg-card/40 disabled:opacity-40 disabled:cursor-not-allowed group"
+                      onClick={() => p.fotoInputRef.current?.click()}
+                      disabled={!p.genero || !p.material || !p.estilo}
+                      className="relative aspect-square border border-dashed transition-all duration-500 flex flex-col items-center justify-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed group hover:border-[#d4af37]"
+                      style={{ borderColor: "rgba(212,175,55,0.4)", background: "rgba(212,175,55,0.03)" }}
                     >
-                      {fotoCliente ? (
-                        <>
-                          <img src={fotoCliente} alt="Sua foto" className="absolute inset-0 w-full h-full object-cover" />
-                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <span className="text-[10px] uppercase tracking-[0.3em] text-accent">Trocar foto</span>
-                          </div>
-                        </>
+                      {p.fotoCliente ? (
+                        <img src={p.fotoCliente} alt="Sua foto" className="absolute inset-0 w-full h-full object-cover" />
                       ) : (
                         <>
-                          <Upload className="h-6 w-6 text-accent/60" />
-                          <span className="text-[9px] uppercase tracking-[0.3em] text-accent/80">Upload da foto</span>
-                          {(!genero || !material || !estilo) && (
-                            <span className="text-[8px] text-muted-foreground/60 px-2 text-center leading-tight">
-                              Escolha gênero, metal e estilo
-                            </span>
-                          )}
+                          <Upload className="h-7 w-7" style={{ color: "rgba(212,175,55,0.7)" }} />
+                          <span className="text-[10px] tracking-[0.3em] uppercase" style={{ color: "rgba(212,175,55,0.8)" }}>
+                            Enviar sua foto
+                          </span>
                         </>
                       )}
-                      <input ref={fotoInputRef} type="file" accept="image/*" onChange={handleFotoUpload} className="hidden" />
+                      <input ref={p.fotoInputRef} type="file" accept="image/*" onChange={p.handleFotoUpload} className="hidden" />
                     </button>
-                    <div className="relative aspect-square border border-accent/30 bg-black/60 flex items-center justify-center overflow-hidden">
-                      {gerandoPingente ? (
+                    <div className="relative aspect-square border flex items-center justify-center overflow-hidden" style={{ borderColor: "rgba(212,175,55,0.3)", background: "rgba(0,0,0,0.6)" }}>
+                      {p.gerandoPingente ? (
                         <div className="flex flex-col items-center gap-2">
-                          <Loader2 className="h-5 w-5 text-accent animate-spin" />
-                          <span className="text-[9px] uppercase tracking-[0.3em] text-accent">Gerando…</span>
+                          <Loader2 className="h-6 w-6 animate-spin" style={{ color: "#d4af37" }} />
+                          <span className="text-[9px] tracking-[0.3em] uppercase" style={{ color: "#d4af37" }}>IA gerando…</span>
                         </div>
-                      ) : pingenteGerado ? (
-                        <img src={pingenteGerado} alt="Pingente gerado por IA" className="w-full h-full object-contain" />
+                      ) : p.pingenteGerado ? (
+                        <img src={p.pingenteGerado} alt="Prévia" className="w-full h-full object-contain" />
                       ) : (
-                        <div className="flex flex-col items-center gap-1.5 text-center px-3">
-                          <Camera className="h-5 w-5 text-accent/40" />
-                          <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground/60 leading-tight">Prévia IA</span>
+                        <div className="flex flex-col items-center gap-1.5 px-3 text-center">
+                          <Sparkles className="h-6 w-6" style={{ color: "rgba(212,175,55,0.4)" }} />
+                          <span className="text-[9px] tracking-[0.3em] uppercase text-white/40">Prévia da peça</span>
                         </div>
                       )}
                     </div>
                   </div>
-                </section>
-                <section className="pt-2 border-t border-accent/20">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">Investimento</span>
-                    <span className="font-display text-lg gold-text">a partir de R$ 890</span>
+                </StepLayout>
+              )}
+
+              {/* PASSO 7 — RESUMO */}
+              {p.currentStep === 7 && (
+                <StepLayout
+                  title="Sua peça está pronta para nascer"
+                  subtitle="Revise os traços que tornaram esta joia exclusivamente sua."
+                >
+                  <div className="space-y-3 max-w-md mb-6">
+                    <ResumoLinha label="Modalidade" value={p.config.nome} />
+                    <ResumoLinha label="Identidade" value={p.genero ?? "—"} />
+                    <ResumoLinha label="Material" value={p.material ?? "—"} />
+                    <ResumoLinha label="Estilo" value={p.estilo ?? "—"} />
+                    {(p.eternizar || p.palavraSig || p.momento) && (
+                      <ResumoLinha label="Gravação" value={[p.eternizar, p.palavraSig, p.momento].filter(Boolean).join(" · ")} />
+                    )}
                   </div>
-                  <Button onClick={handleAdicionar} disabled={adicionando || !podeAdicionar} className="w-full bg-gradient-to-r from-[#b8860b] via-[#d4af37] to-[#b8860b] text-black hover:opacity-90 font-display tracking-[0.3em] uppercase text-xs py-3 h-auto">
-                    {adicionando ? (<><Loader2 className="h-4 w-4 animate-spin mr-2" />Adicionando…</>) : (<><Sparkles className="h-4 w-4 mr-2" />Adicionar ao carrinho</>)}
-                  </Button>
-                  <button onClick={handleComprar} disabled={adicionando || !podeAdicionar} className="mt-2 w-full text-center text-[10px] uppercase tracking-[0.3em] text-accent/80 hover:text-accent disabled:opacity-40 underline-offset-4 hover:underline">
-                    Comprar agora
+
+                  <div className="flex items-baseline gap-2 mb-5">
+                    <span className="text-[9px] tracking-[0.4em] uppercase text-white/40">Investimento da peça</span>
+                    <span className="font-display text-base gold-text">a partir de R$ 890</span>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button
+                      onClick={p.handleAdicionar}
+                      disabled={p.adicionando || !p.podeAdicionar}
+                      className="px-8 py-4 font-display tracking-[0.3em] uppercase text-xs transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed hover:shadow-[0_0_30px_rgba(212,175,55,0.5)]"
+                      style={{ background: "linear-gradient(135deg, #b8860b 0%, #d4af37 50%, #b8860b 100%)", color: "#0a0a0a" }}
+                    >
+                      {p.adicionando ? "Enviando…" : "Solicitar criação da minha joia"}
+                    </button>
+                    <button
+                      onClick={() => p.setCurrentStep(1)}
+                      className="px-6 py-4 font-display tracking-[0.3em] uppercase text-xs border transition-all duration-300 hover:border-[#d4af37] hover:text-[#d4af37]"
+                      style={{ borderColor: "rgba(212,175,55,0.4)", color: "rgba(212,175,55,0.8)" }}
+                    >
+                      Refinar minha peça
+                    </button>
+                  </div>
+                </StepLayout>
+              )}
+            </div>
+
+            {/* Navegação entre passos */}
+            {p.currentStep < 7 && (
+              <div className="mt-10 flex items-center gap-4">
+                {p.currentStep > 1 && (
+                  <button
+                    onClick={prev}
+                    className="text-[10px] tracking-[0.4em] uppercase text-white/40 hover:text-white/80 transition-colors"
+                  >
+                    ← Voltar
                   </button>
-                </section>
-              </>
+                )}
+                <button
+                  onClick={next}
+                  className="px-7 py-3 font-display tracking-[0.3em] uppercase text-[11px] border transition-all duration-500 hover:shadow-[0_0_25px_rgba(212,175,55,0.4)]"
+                  style={{ borderColor: "#d4af37", color: "#d4af37", background: "rgba(212,175,55,0.04)" }}
+                >
+                  Continuar →
+                </button>
+              </div>
             )}
           </div>
-
-          {/* COLUNA 3 — Upload + IA + Preço (Fisiculturismo) */}
-          {config.slug === "fisiculturismo" && (
-            <div className="space-y-5">
-              <section>
-                <SectionTitle numeral="V" label="Torne isso único" />
-                <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70 mb-3 italic text-center">
-                  Envie uma foto e veja a IA modelar sua joia
-                </p>
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    onClick={() => fotoInputRef.current?.click()}
-                    disabled={!genero || !material || !estilo}
-                    className="relative aspect-square border border-dashed border-accent/40 hover:border-accent transition-all flex flex-col items-center justify-center gap-1.5 bg-card/20 hover:bg-card/40 disabled:opacity-40 disabled:cursor-not-allowed group"
-                  >
-                    {fotoCliente ? (
-                      <>
-                        <img src={fotoCliente} alt="Sua foto" className="absolute inset-0 w-full h-full object-cover" />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                          <span className="text-[10px] uppercase tracking-[0.3em] text-accent">Trocar foto</span>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <Upload className="h-7 w-7 text-accent/60" />
-                        <span className="text-[10px] uppercase tracking-[0.3em] text-accent/80">Upload da foto</span>
-                        {(!genero || !material || !estilo) && (
-                          <span className="text-[8px] text-muted-foreground/60 px-2 text-center leading-tight">
-                            Escolha gênero, metal e estilo
-                          </span>
-                        )}
-                      </>
-                    )}
-                    <input ref={fotoInputRef} type="file" accept="image/*" onChange={handleFotoUpload} className="hidden" />
-                  </button>
-                  <div className="relative aspect-square border border-accent/30 bg-black/60 flex items-center justify-center overflow-hidden">
-                    {gerandoPingente ? (
-                      <div className="flex flex-col items-center gap-2">
-                        <Loader2 className="h-6 w-6 text-accent animate-spin" />
-                        <span className="text-[9px] uppercase tracking-[0.3em] text-accent">IA gerando…</span>
-                      </div>
-                    ) : pingenteGerado ? (
-                      <img src={pingenteGerado} alt="Pingente gerado por IA" className="w-full h-full object-contain" />
-                    ) : (
-                      <div className="flex flex-col items-center gap-1.5 text-center px-3">
-                        <Sparkles className="h-6 w-6 text-accent/40" />
-                        <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground/60 leading-tight">IA gerando</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </section>
-              <section className="pt-3 border-t border-accent/20">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Preço final</span>
-                  <span className="font-display text-xl gold-text">a partir de R$ 890</span>
-                </div>
-                <Button onClick={handleAdicionar} disabled={adicionando || !podeAdicionar} className="w-full bg-gradient-to-r from-[#b8860b] via-[#d4af37] to-[#b8860b] text-black hover:opacity-90 font-display tracking-[0.3em] uppercase text-xs py-3 h-auto">
-                  {adicionando ? (<><Loader2 className="h-4 w-4 animate-spin mr-2" />Adicionando…</>) : (<><Sparkles className="h-4 w-4 mr-2" />Adicionar ao carrinho</>)}
-                </Button>
-                <button onClick={handleComprar} disabled={adicionando || !podeAdicionar} className="mt-2 w-full text-center text-[10px] uppercase tracking-[0.3em] text-accent/80 hover:text-accent disabled:opacity-40 underline-offset-4 hover:underline">
-                  Comprar agora
-                </button>
-              </section>
-            </div>
-          )}
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 };
+
+const StepLayout = ({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) => (
+  <div>
+    <h2
+      className="font-display text-3xl md:text-4xl lg:text-5xl leading-[1.1] mb-3 tracking-[-0.01em]"
+      style={{ color: "#f5e9c8", fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif', fontStyle: "italic", fontWeight: 400 }}
+    >
+      {title}
+    </h2>
+    {subtitle && (
+      <p className="text-sm text-white/50 mb-8 max-w-md leading-relaxed">{subtitle}</p>
+    )}
+    <div>{children}</div>
+  </div>
+);
+
+const LuxuryChoice = ({
+  selected, onClick, onMouseEnter, onMouseLeave, children,
+}: {
+  selected: boolean; onClick: () => void;
+  onMouseEnter?: () => void; onMouseLeave?: () => void;
+  children: React.ReactNode;
+}) => (
+  <button
+    onClick={onClick}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
+    className="relative px-7 py-4 font-display tracking-[0.3em] uppercase text-[11px] border transition-all duration-500 hover:scale-[1.02]"
+    style={{
+      borderColor: selected ? "#d4af37" : "rgba(255,255,255,0.15)",
+      color: selected ? "#d4af37" : "rgba(255,255,255,0.75)",
+      background: selected ? "rgba(212,175,55,0.08)" : "transparent",
+      boxShadow: selected ? "0 0 30px rgba(212,175,55,0.35), inset 0 0 20px rgba(212,175,55,0.05)" : "none",
+    }}
+  >
+    {children}
+  </button>
+);
+
+const LuxuryField = ({
+  label, value, onChange, placeholder,
+}: {
+  label: string; value: string; onChange: (s: string) => void; placeholder?: string;
+}) => (
+  <div>
+    <label className="block text-[9px] tracking-[0.4em] uppercase mb-2" style={{ color: "rgba(212,175,55,0.7)" }}>
+      {label}
+    </label>
+    <input
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder}
+      className="w-full bg-transparent border-b py-2.5 text-base font-light tracking-wide outline-none transition-colors focus:border-[#d4af37] placeholder:text-white/25"
+      style={{ borderColor: "rgba(212,175,55,0.35)", color: "#f5e9c8" }}
+    />
+  </div>
+);
+
+const ResumoLinha = ({ label, value }: { label: string; value: string }) => (
+  <div className="flex items-baseline justify-between gap-4 border-b py-2" style={{ borderColor: "rgba(212,175,55,0.15)" }}>
+    <span className="text-[9px] tracking-[0.4em] uppercase text-white/40">{label}</span>
+    <span className="font-display text-sm" style={{ color: "#f5e9c8" }}>{value}</span>
+  </div>
+);
+
 
 export default Modalidade;
