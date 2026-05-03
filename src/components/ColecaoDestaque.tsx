@@ -14,8 +14,8 @@ type Props = {
 };
 
 export const ColecaoDestaque = ({
-  title = "Peças já criadas",
-  subtitle = "Algumas histórias já nasceram prontas",
+  title = "Peças do ateliê",
+  subtitle = "Cada criação carrega uma história singular",
   limit = 4,
 }: Props) => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
