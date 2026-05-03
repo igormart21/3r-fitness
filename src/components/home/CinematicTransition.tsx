@@ -27,7 +27,7 @@ export const CinematicTransition = () => {
       <div className="absolute bottom-8 left-6 sm:bottom-12 sm:left-12 z-10">
         <Link
           to="/colecao"
-          aria-label="Explorar coleções"
+          aria-label="Entrar no ateliê 3R"
           style={{
             display: "inline-block",
             padding: "14px 32px",
@@ -51,7 +51,7 @@ export const CinematicTransition = () => {
             e.currentTarget.style.color = "#d4af37";
           }}
         >
-          Explorar coleções
+          Entrar no ateliê 3R
         </Link>
       </div>
     </section>
