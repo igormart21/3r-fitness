@@ -780,8 +780,21 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             </section>
             )}
 
-            {/* V — Para os mais exclusivos */}
+            {/* No layout fisiculturismo, fechamos a coluna 2 aqui e abrimos a coluna 3 */}
+            {config.slug === "fisiculturismo" && <div className="hidden" />}
+          </div>
+
+          {config.slug === "fisiculturismo" ? <div className="space-y-4">
+            <SectionTitle numeral="IV" label="Torne isso único" />
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70 italic text-center">
+              Envie uma foto e veja a IA modelar sua joia
+            </p>
+          </div> : null}
+
+          {/* (a 3ª coluna real começa abaixo) */}
+          {false && (
             <section>
+
               <SectionTitle numeral="V" label="Torne isso único" />
               <p className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 mb-2 italic text-center">
                 Transforme em uma jóia que só você tem
