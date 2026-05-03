@@ -57,7 +57,7 @@ export const Hero = () => {
         <a
           href="#modalidades"
           className="luxury-cta"
-          aria-label="Iniciar criação"
+          aria-label="Criar Peça Exclusiva"
           onClick={(e) => {
             e.preventDefault();
             document
@@ -65,7 +65,7 @@ export const Hero = () => {
               ?.scrollIntoView({ behavior: "smooth", block: "start" });
           }}
         >
-          Iniciar criação
+          Criar Peça Exclusiva
         </a>
       </div>
     </section>
