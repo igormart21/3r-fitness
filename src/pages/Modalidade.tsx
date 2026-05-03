@@ -518,66 +518,16 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
 
 
       {/* Hero da modalidade — atletas completos + frase sobreposta à esquerda */}
-      {config.slug === "fisiculturismo" ? (
-        <section className="relative w-full overflow-hidden" style={{ backgroundColor: "#0a0a0a" }}>
-          <div
-            className="relative w-full"
-            style={{ height: "clamp(180px, 22vw, 260px)" }}
-          >
-            {/* Imagem de fundo desfocada preenchendo as laterais */}
-            <img
-              src={fisiculturismoHero}
-              alt=""
-              aria-hidden
-              className="absolute inset-0 w-full h-full object-cover object-center select-none"
-              style={{ filter: "blur(40px) brightness(0.45) saturate(0.7)", transform: "scale(1.15)" }}
-              draggable={false}
-            />
-            {/* Imagem principal por cima, com atletas completos */}
-            <img
-              src={fisiculturismoHero}
-              alt={`Atletas de ${config.nome}`}
-              className="absolute inset-0 w-full h-full object-contain object-center select-none"
-              draggable={false}
-            />
-            {/* Fade inferior suave para o fundo da página */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(to bottom, transparent 75%, #0a0a0a 100%)",
-              }}
-            />
-
-            {/* Frase de impacto sobreposta — canto esquerdo */}
-            <div className="absolute inset-y-0 left-0 z-20 flex items-center pl-4 sm:pl-8 md:pl-12 max-w-[55%]">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Sparkles className="h-3 w-3 text-accent" />
-                  <span className="h-px w-8 bg-accent/60" />
-                </div>
-                <h1
-                  className="font-serif italic text-base sm:text-xl md:text-2xl tracking-[0.04em] gold-text leading-tight"
-                  style={{ fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif' }}
-                >
-                  {config.fraseImpacto}
-                </h1>
-              </div>
-            </div>
-          </div>
-        </section>
-      ) : (
-        // Espaço reservado no topo para foto horizontal da modalidade (será anexada depois)
-        <section
-          className="relative w-full overflow-hidden border-b border-accent/10"
-          style={{
-            backgroundColor: "#0a0a0a",
-            height: "clamp(180px, 22vw, 260px)",
-          }}
-          aria-label={`Espaço reservado para foto de ${config.nome}`}
-        >
-          {/* Frase de impacto sobreposta — canto esquerdo */}
+      {/* Espaço reservado no topo para foto horizontal da modalidade (será anexada depois) */}
+      <section
+        className="relative w-full overflow-hidden border-b border-accent/10"
+        style={{
+          backgroundColor: "#0a0a0a",
+          height: "clamp(180px, 22vw, 260px)",
+        }}
+        aria-label={`Espaço reservado para foto de ${config.nome}`}
+      >
+        {config.slug !== "fisiculturismo" && (
           <div className="absolute inset-y-0 left-0 z-20 flex items-center pl-4 sm:pl-8 md:pl-12 max-w-[55%]">
             <div>
               <div className="flex items-center gap-2 mb-2">
@@ -592,8 +542,8 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
               </h1>
             </div>
           </div>
-        </section>
-      )}
+        )}
+      </section>
 
       {/* Conteúdo principal: 2 colunas */}
       <main className="container mx-auto px-4 pt-3 pb-10 max-w-6xl">
