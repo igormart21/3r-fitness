@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Loader2, Package } from "lucide-react";
 import {
   storefrontApiRequest,
@@ -13,6 +13,8 @@ const CATEGORIAS_DEFAULT = ["Colares", "Pingentes", "Anéis", "Brincos"] as cons
 const TODAS = "Todas";
 
 const Colecao = () => {
+  const [searchParams] = useSearchParams();
+  const afterCustom = searchParams.get("after") === "1";
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [categoriaAtiva, setCategoriaAtiva] = useState<string>(TODAS);
