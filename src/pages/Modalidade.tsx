@@ -517,17 +517,62 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       `}</style>
 
 
-      {/* Hero da modalidade — atletas completos + frase sobreposta à esquerda */}
-      {/* Espaço reservado no topo para foto horizontal da modalidade (será anexada depois) */}
+      {/* Hero da modalidade */}
       <section
         className="relative w-full overflow-hidden border-b border-accent/10"
         style={{
           backgroundColor: "#0a0a0a",
           height: "clamp(180px, 22vw, 260px)",
         }}
-        aria-label={`Espaço reservado para foto de ${config.nome}`}
+        aria-label={`Foto de ${config.nome}`}
       >
-        {config.slug !== "fisiculturismo" && (
+        {config.slug === "fisiculturismo" ? (
+          <>
+            {/* Camada 1: imagem desfocada preenchendo toda a área (extensão das bordas) */}
+            <img
+              src={fisiculturismoHero}
+              alt=""
+              aria-hidden
+              className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none"
+              style={{
+                filter: "blur(45px) brightness(0.55) saturate(0.9)",
+                transform: "scale(1.25)",
+              }}
+              draggable={false}
+            />
+            {/* Camada 2: imagem principal completa, sem cortes, com fade nas bordas */}
+            <img
+              src={fisiculturismoHero}
+              alt={`Atletas de ${config.nome}`}
+              className="absolute inset-0 w-full h-full object-contain object-center select-none pointer-events-none"
+              style={{
+                WebkitMaskImage:
+                  "radial-gradient(ellipse 85% 92% at 50% 50%, #000 55%, rgba(0,0,0,0.85) 72%, rgba(0,0,0,0.4) 88%, transparent 100%)",
+                maskImage:
+                  "radial-gradient(ellipse 85% 92% at 50% 50%, #000 55%, rgba(0,0,0,0.85) 72%, rgba(0,0,0,0.4) 88%, transparent 100%)",
+              }}
+              draggable={false}
+            />
+            {/* Vinheta dourada sutil para integração premium */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(ellipse 75% 80% at 50% 50%, transparent 55%, rgba(212,175,55,0.06) 78%, transparent 100%)",
+              }}
+            />
+            {/* Fade lateral e inferior para fundir com o fundo da página */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to right, #0a0a0a 0%, transparent 12%, transparent 88%, #0a0a0a 100%), linear-gradient(to bottom, transparent 70%, #0a0a0a 100%)",
+              }}
+            />
+          </>
+        ) : (
           <div className="absolute inset-y-0 left-0 z-20 flex items-center pl-4 sm:pl-8 md:pl-12 max-w-[55%]">
             <div>
               <div className="flex items-center gap-2 mb-2">
