@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+
 import heroImg from "@/assets/hero-atletas.png";
 
 export const Hero = () => {
@@ -54,9 +54,19 @@ export const Hero = () => {
           <br />
           <span className="gold">se tornou</span>
         </h1>
-        <Link to="/catalogo" className="luxury-cta" aria-label="Iniciar criação">
+        <a
+          href="#modalidades"
+          className="luxury-cta"
+          aria-label="Iniciar criação"
+          onClick={(e) => {
+            e.preventDefault();
+            document
+              .getElementById("modalidades")
+              ?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }}
+        >
           Iniciar criação
-        </Link>
+        </a>
       </div>
     </section>
   );

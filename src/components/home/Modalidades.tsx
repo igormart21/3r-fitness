@@ -18,7 +18,8 @@ const modalidades = [
 export const Modalidades = () => {
   return (
     <section
-      className="relative w-full"
+      id="modalidades"
+      className="relative w-full scroll-mt-0"
       style={{
         background:
           "linear-gradient(180deg, #000 0%, #050505 30%, #050505 70%, #000 100%)",
