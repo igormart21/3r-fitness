@@ -1133,7 +1133,7 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
             </div>
 
             {/* Navegação entre passos */}
-            {p.currentStep < 7 && (
+            {p.currentStep < 6 && (
               <div className="mt-10 flex items-center gap-4">
                 {p.currentStep > 1 && (
                   <button
