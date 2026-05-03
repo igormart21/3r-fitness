@@ -1,4 +1,4 @@
-import { GoldCTA } from "@/components/home/GoldCTA";
+import { Link } from "react-router-dom";
 import heroImg from "@/assets/hero-atletas.png";
 
 export const Hero = () => {
@@ -12,29 +12,51 @@ export const Hero = () => {
         src={heroImg}
         alt="Atletas 3R Fitness"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: "center 30%", transform: "scale(1.03)" }}
+        style={{
+          objectPosition: "center 30%",
+          transform: "scale(1.04)",
+          filter: "contrast(1.06) saturate(1.05)",
+        }}
       />
 
-      {/* Vinheta cinematográfica + fade base para fundir com próxima seção */}
+      {/* Overlay esquerdo + vinheta + fade base inferior */}
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.25) 60%, rgba(5,5,5,0.85) 88%, rgba(5,5,5,1) 100%), radial-gradient(ellipse 80% 60% at 50% 45%, rgba(244,215,122,0.08) 0%, transparent 70%)",
+            "linear-gradient(to right, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0) 70%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.55) 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 pointer-events-none"
+        style={{
+          height: "30%",
+          background:
+            "linear-gradient(180deg, rgba(5,5,5,0) 0%, rgba(5,5,5,0.85) 70%, rgba(5,5,5,1) 100%)",
         }}
       />
 
-      {/* Texto Hero - posicionamento editorial */}
-      <div className="hero-copy">
+      {/* Bloco editorial: texto + CTA */}
+      <div className="hero-editorial">
         <div className="eyebrow">Joias que representam</div>
-        <h1 className="headline-gold">Quem você se tornou</h1>
-        <div className="luxury-line" />
-      </div>
-
-      {/* CTA */}
-      <div className="relative z-10 container mx-auto max-w-5xl px-6 min-h-screen flex flex-col items-center justify-end pb-24">
-        <GoldCTA size="lg" />
+        <h1 className="headline">
+          <span className="white">Quem você</span>
+          <br />
+          <span className="gold">se tornou</span>
+        </h1>
+        <Link to="/catalogo" className="luxury-cta" aria-label="Iniciar criação">
+          Iniciar criação
+        </Link>
       </div>
     </section>
   );
