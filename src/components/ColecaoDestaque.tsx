@@ -48,7 +48,7 @@ export const ColecaoDestaque = ({
   return (
     <section
       className="relative w-full overflow-hidden z-[1]"
-      style={{ backgroundColor: "#050505", marginTop: "-140px", paddingTop: 0 }}
+      style={{ backgroundColor: "#050505", marginTop: "-220px", paddingTop: 0 }}
     >
       {/* Hero coleções */}
       <div className="relative overflow-hidden" style={{ minHeight: "78vh" }}>
@@ -61,13 +61,24 @@ export const ColecaoDestaque = ({
           style={{ objectPosition: "center top", transform: "translateZ(0) scale(1.04)" }}
         />
 
-        {/* Overlay da imagem (linear + radial) */}
+        {/* Fade superior suave para fundir com a seção anterior (sem faixa escura) */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 pointer-events-none z-[3]"
+          style={{
+            height: "240px",
+            background:
+              "linear-gradient(to bottom, rgba(5,5,5,0.85) 0%, rgba(5,5,5,0.45) 40%, rgba(5,5,5,0.15) 75%, rgba(5,5,5,0) 100%)",
+          }}
+        />
+
+        {/* Vinheta sutil + fade inferior na imagem */}
         <div
           aria-hidden
           className="absolute inset-0 pointer-events-none z-[2]"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.25) 20%, rgba(5,5,5,0.05) 45%, rgba(5,5,5,0.85) 100%), radial-gradient(circle at 65% 45%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.9) 100%)",
+              "linear-gradient(to bottom, rgba(5,5,5,0) 30%, rgba(5,5,5,0.05) 50%, rgba(5,5,5,0.7) 100%), radial-gradient(circle at 65% 45%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 60%, rgba(0,0,0,0.75) 100%)",
           }}
         />
 
