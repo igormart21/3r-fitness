@@ -535,7 +535,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
              src={fisiculturismoHero}
              alt={`Atletas de ${config.nome}`}
              className="block select-none pointer-events-none"
-             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
+             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
              draggable={false}
            />
          </section>
