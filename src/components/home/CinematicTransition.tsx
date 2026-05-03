@@ -24,11 +24,10 @@ export const CinematicTransition = () => {
         }}
       />
 
-      <div className="relative z-10 flex items-center justify-center" style={{ minHeight: "75vh" }}>
+      <div className="absolute bottom-8 left-6 sm:bottom-12 sm:left-12 z-10">
         <Link
           to="/colecao"
           aria-label="Explorar coleções"
-          className="luxury-cta"
           style={{
             display: "inline-block",
             padding: "14px 32px",
