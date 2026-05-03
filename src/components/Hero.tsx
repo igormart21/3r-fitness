@@ -87,7 +87,7 @@ export const Hero = () => {
 
       {/* Editorial block */}
       <div className="hero-editorial">
-        <div className="eyebrow">Joias que representam</div>
+        <div className="eyebrow"><span className="eyebrow-gold">Joias</span> que representam</div>
         <h1 className="headline">
           Quem você
           <br />
