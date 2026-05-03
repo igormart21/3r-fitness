@@ -9,6 +9,11 @@ import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/l
 import { supabase } from "@/integrations/supabase/client";
 import fisiculturismoHero from "@/assets/fisiculturismo-hero.png";
 import fisiculturismoHeroBg from "@/assets/fisiculturismo-hero-bg.png";
+import ciclismoHeroBg from "@/assets/ciclismo-hero-bg.png";
+import corridaHeroBg from "@/assets/corrida-hero-bg.png";
+import crossfitHeroBg from "@/assets/crossfit-hero-bg.png";
+import musculacaoHeroBg from "@/assets/musculacao-hero-bg.png";
+import triathlonHeroBg from "@/assets/triathlon-hero-bg.png";
 
 // Bonecos FISICULTURISMO
 import bonecoFisiFemClassicoOuro from "@/assets/boneco-fisiculturismo-fem-classico-ouro.jpg";
@@ -108,6 +113,7 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     slug: "musculacao",
     nome: "Musculação",
     fraseImpacto: "Cada repetição é uma promessa cumprida.",
+    heroBg: musculacaoHeroBg,
     bonecos: {
       "Ouro 18K": {
         Masculino: { "Clássico": bonecoMuscMascClassicoOuro, Underground: bonecoMuscMascUndergroundOuro },
@@ -124,6 +130,7 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     slug: "triathlon",
     nome: "Triathlon",
     fraseImpacto: "Resistência em todos os níveis.",
+    heroBg: triathlonHeroBg,
     bonecos: {
       "Ouro 18K": {
         Masculino: { "Clássico": bonecoTriMascClassicoOuro, Underground: bonecoTriMascUndergroundOuro },
@@ -140,6 +147,7 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     slug: "ciclismo",
     nome: "Ciclismo",
     fraseImpacto: "Cada pedalada conta uma história.",
+    heroBg: ciclismoHeroBg,
     bonecos: {
       "Ouro 18K": {
         Masculino: { "Clássico": bikeSpeedClassicoOuro, Underground: bikeSpeedUndergroundMascOuro },
@@ -156,6 +164,7 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     slug: "crossfit",
     nome: "Crossfit",
     fraseImpacto: "Força forjada em cada movimento.",
+    heroBg: crossfitHeroBg,
     bonecos: {
       "Ouro 18K": {
         Masculino: { "Clássico": bonecoCrossMascClassicoOuro, Underground: bonecoCrossMascUndergroundOuro },
@@ -172,6 +181,7 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     slug: "corrida",
     nome: "Corrida",
     fraseImpacto: "Cada quilômetro, uma conquista.",
+    heroBg: corridaHeroBg,
     bonecos: {
       "Ouro 18K": {
         Masculino: { "Clássico": bonecoCorrMascClassicoOuro, Underground: bonecoCorrMascUndergroundOuro },
