@@ -6,6 +6,7 @@ import {
   STOREFRONT_QUERY,
   type ShopifyProduct,
 } from "@/lib/shopify";
+import atelieCtaBg from "@/assets/atelie-cta-bg.png";
 
 type Props = {
   eyebrow?: string;
