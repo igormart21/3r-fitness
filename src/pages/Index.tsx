@@ -1,21 +1,24 @@
 import { Hero } from "@/components/Hero";
-import { Testimonials } from "@/components/Testimonials";
+import { Modalidades } from "@/components/home/Modalidades";
+import { CinematicTransition } from "@/components/home/CinematicTransition";
 import { ColecaoDestaque } from "@/components/ColecaoDestaque";
+import { BrandStatement } from "@/components/home/BrandStatement";
+import { PersonalizationCTA } from "@/components/home/PersonalizationCTA";
+import { Testimonials } from "@/components/Testimonials";
+import { ClosingCTA } from "@/components/home/ClosingCTA";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#000" }}>
       <main className="flex-1">
         <Hero />
-        <ColecaoDestaque
-          eyebrow="Ateliê 3R"
-          title="Peças já criadas"
-          subtitle="Algumas histórias já nasceram prontas"
-          ctaLabel="Explorar coleções"
-          limit={4}
-          cols={4}
-        />
+        <Modalidades />
+        <CinematicTransition />
+        <ColecaoDestaque limit={4} />
+        <BrandStatement />
+        <PersonalizationCTA />
         <Testimonials />
+        <ClosingCTA />
       </main>
     </div>
   );
