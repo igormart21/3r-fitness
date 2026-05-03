@@ -12,7 +12,7 @@ export const CinematicTransition = () => {
         src={bg}
         alt=""
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: "center 35%", transform: "scale(1.05)" }}
+        style={{ objectPosition: "center 15%", transform: "scale(1.05)" }}
       />
       {/* Fade topo + base + vinheta — dissolve sem cortes */}
       <div
