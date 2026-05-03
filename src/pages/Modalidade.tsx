@@ -91,6 +91,7 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     slug: "fisiculturismo",
     nome: "Fisiculturismo",
     fraseImpacto: "Seu corpo é sua obra. Merece ser representado.",
+    heroBg: fisiculturismoHeroBg,
     bonecos: {
       "Ouro 18K": {
         Masculino: { "Clássico": bonecoFisiMascClassicoOuro, Underground: bonecoFisiMascUndergroundOuro },
