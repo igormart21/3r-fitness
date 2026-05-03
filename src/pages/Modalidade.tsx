@@ -562,9 +562,13 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
         </section>
       )}
 
-      {/* Conteúdo principal: 2 colunas */}
-      <main className="container mx-auto px-4 pt-3 pb-10 max-w-6xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-3 lg:gap-6">
+      {/* Conteúdo principal: 3 colunas (Fisiculturismo) | 2 colunas (legado) */}
+      <main className={`container mx-auto px-4 pt-6 pb-10 ${config.slug === "fisiculturismo" ? "max-w-[1400px]" : "max-w-6xl"}`}>
+        <div className={
+          config.slug === "fisiculturismo"
+            ? "grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1fr)] gap-6 lg:gap-8"
+            : "grid grid-cols-1 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-3 lg:gap-6"
+        }>
           {/* COLUNA ESQUERDA — Preview sticky */}
           <div className="lg:sticky lg:top-4 lg:self-start max-w-[380px] mx-auto lg:mx-0 w-full">
             <div className="relative flex items-start gap-3">
