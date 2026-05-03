@@ -8,6 +8,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/lib/shopify";
 import { supabase } from "@/integrations/supabase/client";
 import fisiculturismoHero from "@/assets/fisiculturismo-hero.png";
+import fisiculturismoHeroBg from "@/assets/fisiculturismo-hero-bg.png";
 
 // Bonecos FISICULTURISMO
 import bonecoFisiFemClassicoOuro from "@/assets/boneco-fisiculturismo-fem-classico-ouro.jpg";
