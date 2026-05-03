@@ -88,6 +88,8 @@ type ModalidadeConfig = {
   heroBg?: string;
   /** Posição do background (CSS background-position). Default: "center top". */
   heroBgPosition?: string;
+  /** Tamanho do background (CSS background-size). Default: "cover". */
+  heroBgSize?: string;
   bonecos: Record<Material, Record<Genero, Record<Estilo, string>>>;
   // Quais campos de gravação habilitar para esta modalidade
   camposGravacao: CtaFieldKey[];
@@ -116,7 +118,8 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     nome: "Musculação",
     fraseImpacto: "Cada repetição é uma promessa cumprida.",
     heroBg: musculacaoHeroBg,
-    heroBgPosition: "30% top",
+    heroBgPosition: "center top",
+    heroBgSize: "100% auto",
     bonecos: {
       "Ouro 18K": {
         Masculino: { "Clássico": bonecoMuscMascClassicoOuro, Underground: bonecoMuscMascUndergroundOuro },
@@ -816,7 +819,7 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
         style={{
           height: "min(110vh, 1200px)",
           backgroundImage: `url(${p.config.heroBg ?? fisiculturismoHeroBg})`,
-          backgroundSize: "cover",
+          backgroundSize: p.config.heroBgSize ?? "cover",
           backgroundPosition: p.config.heroBgPosition ?? "center top",
           backgroundRepeat: "no-repeat",
           filter: "saturate(1.1) brightness(1.05)",
