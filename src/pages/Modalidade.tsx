@@ -274,7 +274,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
   const [palavraSig, setPalavraSig] = useState("");
   const [momento, setMomento] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
-  const isLuxury = config.slug === "fisiculturismo";
+  const isLuxury = true;
 
   // Gravação (apenas uma opção por joia)
   const [nome, setNome] = useState("");
