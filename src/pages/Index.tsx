@@ -6,6 +6,7 @@ import { BrandStatement } from "@/components/home/BrandStatement";
 import { PersonalizationCTA } from "@/components/home/PersonalizationCTA";
 import { Testimonials } from "@/components/Testimonials";
 import { ClosingCTA } from "@/components/home/ClosingCTA";
+import { Footer } from "@/components/Footer";
 
 const Index = () => {
   return (
@@ -20,8 +21,10 @@ const Index = () => {
         <Testimonials />
         <ClosingCTA />
       </main>
+      <Footer />
     </div>
   );
 };
 
 export default Index;
+

@@ -44,13 +44,7 @@ const FloatingButtons = () => {
   return (
     <>
       <HomeFloatingButton />
-      {!isHome && (
-        <>
-          <InstagramFloatingButton />
-          <WhatsappFloatingButton />
-          <AuthFloatingButton />
-        </>
-      )}
+      {!isHome && <AuthFloatingButton />}
     </>
   );
 };
