@@ -52,7 +52,7 @@ export const ColecaoDestaque = ({
         src={atelieCtaBg}
         alt="Coleções 3R Fitness — peças em ouro"
         loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover object-top"
       />
       <div
         className="absolute inset-0"
