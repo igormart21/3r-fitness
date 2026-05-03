@@ -502,7 +502,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
         selectedOptions: personalizacao,
       });
       toast.success("Joia personalizada adicionada ao carrinho!");
-      setTimeout(() => navigate("/colecao"), 600);
+      setTimeout(() => navigate("/colecao?after=1"), 600);
     } catch (err) {
       console.error(err);
       toast.error("Não foi possível adicionar ao carrinho.");
