@@ -521,7 +521,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       {config.slug === "fisiculturismo" ? (
         <section
           className="relative w-full overflow-hidden"
-          style={{ backgroundColor: "#0a0a0a", aspectRatio: "1774 / 887" }}
+          style={{ backgroundColor: "#0a0a0a", height: "clamp(140px, 16vw, 220px)" }}
           aria-label={`Foto de ${config.nome}`}
         >
           <img
