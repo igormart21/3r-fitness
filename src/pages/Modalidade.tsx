@@ -798,7 +798,7 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
         className="pointer-events-none absolute inset-x-0 top-0 z-0"
         style={{
           height: "min(110vh, 1200px)",
-          backgroundImage: `url(${fisiculturismoHeroBg})`,
+          backgroundImage: `url(${config.heroBg ?? fisiculturismoHeroBg})`,
           backgroundSize: "cover",
           backgroundPosition: "center top",
           backgroundRepeat: "no-repeat",
