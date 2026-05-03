@@ -79,6 +79,7 @@ type ModalidadeConfig = {
   slug: string;
   nome: string;
   fraseImpacto: string;
+  heroBg: string;
   bonecos: Record<Material, Record<Genero, Record<Estilo, string>>>;
   // Quais campos de gravação habilitar para esta modalidade
   camposGravacao: CtaFieldKey[];
