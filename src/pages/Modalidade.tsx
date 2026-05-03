@@ -780,115 +780,138 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
             </section>
             )}
 
-            {/* No layout fisiculturismo, fechamos a coluna 2 aqui e abrimos a coluna 3 */}
-            {config.slug === "fisiculturismo" && <div className="hidden" />}
-          </div>
-
-          {config.slug === "fisiculturismo" ? <div className="space-y-4">
-            <SectionTitle numeral="IV" label="Torne isso único" />
-            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70 italic text-center">
-              Envie uma foto e veja a IA modelar sua joia
-            </p>
-          </div> : null}
-
-          {/* (a 3ª coluna real começa abaixo) */}
-          {false && (
-            <section>
-
-              <SectionTitle numeral="V" label="Torne isso único" />
-              <p className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 mb-2 italic text-center">
-                Transforme em uma jóia que só você tem
-              </p>
-
-              <div className="grid grid-cols-2 gap-3">
-                {/* Upload */}
-                <button
-                  onClick={() => fotoInputRef.current?.click()}
-                  disabled={!genero || !material || !estilo}
-                  className="relative aspect-square border border-dashed border-accent/40 hover:border-accent transition-all flex flex-col items-center justify-center gap-1.5 bg-card/20 hover:bg-card/40 disabled:opacity-40 disabled:cursor-not-allowed group"
-                >
-                  {fotoCliente ? (
-                    <>
-                      <img src={fotoCliente} alt="Sua foto" className="absolute inset-0 w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <span className="text-[10px] uppercase tracking-[0.3em] text-accent">Trocar foto</span>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <Upload className="h-6 w-6 text-accent/60" />
-                      <span className="text-[9px] uppercase tracking-[0.3em] text-accent/80">Upload da foto</span>
-                      {(!genero || !material || !estilo) && (
-                        <span className="text-[8px] text-muted-foreground/60 px-2 text-center leading-tight">
-                          Escolha gênero, metal e estilo
-                        </span>
+            {/* V + CTA (não-fisiculturismo permanecem na col 2) */}
+            {config.slug !== "fisiculturismo" && (
+              <>
+                <section>
+                  <SectionTitle numeral="V" label="Torne isso único" />
+                  <p className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 mb-2 italic text-center">
+                    Transforme em uma jóia que só você tem
+                  </p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      onClick={() => fotoInputRef.current?.click()}
+                      disabled={!genero || !material || !estilo}
+                      className="relative aspect-square border border-dashed border-accent/40 hover:border-accent transition-all flex flex-col items-center justify-center gap-1.5 bg-card/20 hover:bg-card/40 disabled:opacity-40 disabled:cursor-not-allowed group"
+                    >
+                      {fotoCliente ? (
+                        <>
+                          <img src={fotoCliente} alt="Sua foto" className="absolute inset-0 w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span className="text-[10px] uppercase tracking-[0.3em] text-accent">Trocar foto</span>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <Upload className="h-6 w-6 text-accent/60" />
+                          <span className="text-[9px] uppercase tracking-[0.3em] text-accent/80">Upload da foto</span>
+                          {(!genero || !material || !estilo) && (
+                            <span className="text-[8px] text-muted-foreground/60 px-2 text-center leading-tight">
+                              Escolha gênero, metal e estilo
+                            </span>
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                  <input
-                    ref={fotoInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFotoUpload}
-                    className="hidden"
-                  />
-                </button>
-
-                {/* Prévia gerada */}
-                <div className="relative aspect-square border border-accent/30 bg-black/60 flex items-center justify-center overflow-hidden">
-                  {gerandoPingente ? (
-                    <div className="flex flex-col items-center gap-2">
-                      <Loader2 className="h-5 w-5 text-accent animate-spin" />
-                      <span className="text-[9px] uppercase tracking-[0.3em] text-accent">Gerando…</span>
+                      <input ref={fotoInputRef} type="file" accept="image/*" onChange={handleFotoUpload} className="hidden" />
+                    </button>
+                    <div className="relative aspect-square border border-accent/30 bg-black/60 flex items-center justify-center overflow-hidden">
+                      {gerandoPingente ? (
+                        <div className="flex flex-col items-center gap-2">
+                          <Loader2 className="h-5 w-5 text-accent animate-spin" />
+                          <span className="text-[9px] uppercase tracking-[0.3em] text-accent">Gerando…</span>
+                        </div>
+                      ) : pingenteGerado ? (
+                        <img src={pingenteGerado} alt="Pingente gerado por IA" className="w-full h-full object-contain" />
+                      ) : (
+                        <div className="flex flex-col items-center gap-1.5 text-center px-3">
+                          <Camera className="h-5 w-5 text-accent/40" />
+                          <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground/60 leading-tight">Prévia IA</span>
+                        </div>
+                      )}
                     </div>
-                  ) : pingenteGerado ? (
-                    <img src={pingenteGerado} alt="Pingente gerado por IA" className="w-full h-full object-contain" />
-                  ) : (
-                    <div className="flex flex-col items-center gap-1.5 text-center px-3">
-                      <Camera className="h-5 w-5 text-accent/40" />
-                      <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground/60 leading-tight">
-                        Prévia IA
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </section>
-
-            {/* CTA Final */}
-            <section className="pt-2 border-t border-accent/20">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">Investimento</span>
-                <span className="font-display text-lg gold-text">a partir de R$ 890</span>
-              </div>
-
-              <Button
-                onClick={handleAdicionar}
-                disabled={adicionando || !podeAdicionar}
-                className="w-full bg-gradient-to-r from-[#b8860b] via-[#d4af37] to-[#b8860b] text-black hover:opacity-90 font-display tracking-[0.3em] uppercase text-xs py-3 h-auto"
-              >
-                {adicionando ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                    Adicionando…
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="h-4 w-4 mr-2" />
-                    Adicionar ao carrinho
-                  </>
-                )}
-              </Button>
-
-              <button
-                onClick={handleComprar}
-                disabled={adicionando || !podeAdicionar}
-                className="mt-2 w-full text-center text-[10px] uppercase tracking-[0.3em] text-accent/80 hover:text-accent disabled:opacity-40 underline-offset-4 hover:underline"
-              >
-                Comprar agora
-              </button>
-            </section>
+                  </div>
+                </section>
+                <section className="pt-2 border-t border-accent/20">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">Investimento</span>
+                    <span className="font-display text-lg gold-text">a partir de R$ 890</span>
+                  </div>
+                  <Button onClick={handleAdicionar} disabled={adicionando || !podeAdicionar} className="w-full bg-gradient-to-r from-[#b8860b] via-[#d4af37] to-[#b8860b] text-black hover:opacity-90 font-display tracking-[0.3em] uppercase text-xs py-3 h-auto">
+                    {adicionando ? (<><Loader2 className="h-4 w-4 animate-spin mr-2" />Adicionando…</>) : (<><Sparkles className="h-4 w-4 mr-2" />Adicionar ao carrinho</>)}
+                  </Button>
+                  <button onClick={handleComprar} disabled={adicionando || !podeAdicionar} className="mt-2 w-full text-center text-[10px] uppercase tracking-[0.3em] text-accent/80 hover:text-accent disabled:opacity-40 underline-offset-4 hover:underline">
+                    Comprar agora
+                  </button>
+                </section>
+              </>
+            )}
           </div>
+
+          {/* COLUNA 3 — Upload + IA + Preço (Fisiculturismo) */}
+          {config.slug === "fisiculturismo" && (
+            <div className="space-y-5">
+              <section>
+                <SectionTitle numeral="V" label="Torne isso único" />
+                <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70 mb-3 italic text-center">
+                  Envie uma foto e veja a IA modelar sua joia
+                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => fotoInputRef.current?.click()}
+                    disabled={!genero || !material || !estilo}
+                    className="relative aspect-square border border-dashed border-accent/40 hover:border-accent transition-all flex flex-col items-center justify-center gap-1.5 bg-card/20 hover:bg-card/40 disabled:opacity-40 disabled:cursor-not-allowed group"
+                  >
+                    {fotoCliente ? (
+                      <>
+                        <img src={fotoCliente} alt="Sua foto" className="absolute inset-0 w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <span className="text-[10px] uppercase tracking-[0.3em] text-accent">Trocar foto</span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="h-7 w-7 text-accent/60" />
+                        <span className="text-[10px] uppercase tracking-[0.3em] text-accent/80">Upload da foto</span>
+                        {(!genero || !material || !estilo) && (
+                          <span className="text-[8px] text-muted-foreground/60 px-2 text-center leading-tight">
+                            Escolha gênero, metal e estilo
+                          </span>
+                        )}
+                      </>
+                    )}
+                    <input ref={fotoInputRef} type="file" accept="image/*" onChange={handleFotoUpload} className="hidden" />
+                  </button>
+                  <div className="relative aspect-square border border-accent/30 bg-black/60 flex items-center justify-center overflow-hidden">
+                    {gerandoPingente ? (
+                      <div className="flex flex-col items-center gap-2">
+                        <Loader2 className="h-6 w-6 text-accent animate-spin" />
+                        <span className="text-[9px] uppercase tracking-[0.3em] text-accent">IA gerando…</span>
+                      </div>
+                    ) : pingenteGerado ? (
+                      <img src={pingenteGerado} alt="Pingente gerado por IA" className="w-full h-full object-contain" />
+                    ) : (
+                      <div className="flex flex-col items-center gap-1.5 text-center px-3">
+                        <Sparkles className="h-6 w-6 text-accent/40" />
+                        <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground/60 leading-tight">IA gerando</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </section>
+              <section className="pt-3 border-t border-accent/20">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Preço final</span>
+                  <span className="font-display text-xl gold-text">a partir de R$ 890</span>
+                </div>
+                <Button onClick={handleAdicionar} disabled={adicionando || !podeAdicionar} className="w-full bg-gradient-to-r from-[#b8860b] via-[#d4af37] to-[#b8860b] text-black hover:opacity-90 font-display tracking-[0.3em] uppercase text-xs py-3 h-auto">
+                  {adicionando ? (<><Loader2 className="h-4 w-4 animate-spin mr-2" />Adicionando…</>) : (<><Sparkles className="h-4 w-4 mr-2" />Adicionar ao carrinho</>)}
+                </Button>
+                <button onClick={handleComprar} disabled={adicionando || !podeAdicionar} className="mt-2 w-full text-center text-[10px] uppercase tracking-[0.3em] text-accent/80 hover:text-accent disabled:opacity-40 underline-offset-4 hover:underline">
+                  Comprar agora
+                </button>
+              </section>
+            </div>
+          )}
         </div>
       </main>
     </div>
