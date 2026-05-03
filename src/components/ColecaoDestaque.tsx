@@ -6,6 +6,7 @@ import {
   STOREFRONT_QUERY,
   type ShopifyProduct,
 } from "@/lib/shopify";
+import atelieCtaBg from "@/assets/atelie-cta-bg.png";
 
 type Props = {
   eyebrow?: string;
@@ -192,28 +193,43 @@ export const ColecaoDestaque = ({
           </div>
         )}
 
-        {/* CTA editorial */}
-        <div className="text-center mt-16 md:mt-20">
-          <Link
-            to="/colecao"
-            className="inline-flex items-center gap-3 px-10 py-4 text-[10px] uppercase tracking-[0.45em] transition-all duration-500 hover:gap-5"
+        {/* CTA editorial com fundo cinematográfico */}
+        <div className="relative mt-20 md:mt-28 overflow-hidden rounded-sm">
+          <img
+            src={atelieCtaBg}
+            alt="Coleções 3R Fitness — peças em ouro"
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div
+            className="absolute inset-0"
             style={{
-              color: "#d4af37",
-              border: "1px solid rgba(212,175,55,0.55)",
               background:
-                "linear-gradient(135deg, rgba(212,175,55,0.04), transparent)",
+                "linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.25) 100%), radial-gradient(ellipse 60% 80% at 30% 50%, rgba(212,175,55,0.18) 0%, transparent 70%)",
             }}
-          >
-            <span
-              className="h-px w-6"
-              style={{ background: "rgba(212,175,55,0.7)" }}
-            />
-            {ctaLabel}
-            <span
-              className="h-px w-6"
-              style={{ background: "rgba(212,175,55,0.7)" }}
-            />
-          </Link>
+          />
+          <div className="relative z-10 px-6 md:px-16 py-24 md:py-36 text-center">
+            <Link
+              to="/colecao"
+              className="inline-flex items-center gap-3 px-10 py-4 text-[10px] uppercase tracking-[0.45em] transition-all duration-500 hover:gap-5 backdrop-blur-sm"
+              style={{
+                color: "#d4af37",
+                border: "1px solid rgba(212,175,55,0.55)",
+                background:
+                  "linear-gradient(135deg, rgba(0,0,0,0.45), rgba(0,0,0,0.2))",
+              }}
+            >
+              <span
+                className="h-px w-6"
+                style={{ background: "rgba(212,175,55,0.7)" }}
+              />
+              {ctaLabel}
+              <span
+                className="h-px w-6"
+                style={{ background: "rgba(212,175,55,0.7)" }}
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
