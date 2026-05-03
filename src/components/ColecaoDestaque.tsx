@@ -119,30 +119,6 @@ export const ColecaoDestaque = ({
             })}
           </div>
         )}
-
-        <div className="mt-16 sm:mt-20 flex justify-center">
-          <Link
-            to="/colecao"
-            aria-label="Explorar coleções"
-            className="inline-block px-8 py-3 text-[12px] uppercase tracking-[0.32em] font-medium transition-all duration-500"
-            style={{
-              color: "#d4af37",
-              border: "1px solid #d4af37",
-              background: "transparent",
-              fontFamily: "Inter, sans-serif",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#d4af37";
-              e.currentTarget.style.color = "#000";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.color = "#d4af37";
-            }}
-          >
-            Explorar coleções
-          </Link>
-        </div>
       </div>
     </section>
   );
