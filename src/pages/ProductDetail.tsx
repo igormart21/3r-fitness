@@ -341,11 +341,9 @@ const ProductDetail = () => {
 
             {/* Outras peças */}
             <ColecaoDestaque
-              eyebrow="Continue explorando"
               title="Outras peças do ateliê"
               subtitle="Criações que conversam com a sua escolha"
               limit={3}
-              cols={3}
             />
           </>
         )}
