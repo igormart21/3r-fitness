@@ -107,14 +107,28 @@ export const ColecaoDestaque = ({
             />
           </div>
         ) : products.length === 0 ? (
-          <div className="border border-dashed border-white/10 py-24 text-center">
+          <div className="border border-dashed border-white/10 py-20 text-center">
             <Package
               className="h-10 w-10 text-white/30 mx-auto mb-3"
               strokeWidth={1}
             />
-            <p className="text-white/50 text-sm">
+            <p className="text-white/50 text-sm mb-8">
               Novas peças em breve.
             </p>
+            <Link
+              to="/colecao"
+              className="inline-flex items-center gap-3 px-10 py-4 text-[10px] uppercase tracking-[0.45em] transition-all duration-500 hover:gap-5"
+              style={{
+                color: "#d4af37",
+                border: "1px solid rgba(212,175,55,0.55)",
+                background:
+                  "linear-gradient(135deg, rgba(212,175,55,0.04), transparent)",
+              }}
+            >
+              <span className="h-px w-6" style={{ background: "rgba(212,175,55,0.7)" }} />
+              {ctaLabel}
+              <span className="h-px w-6" style={{ background: "rgba(212,175,55,0.7)" }} />
+            </Link>
           </div>
         ) : (
           <div
