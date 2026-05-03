@@ -32,6 +32,7 @@ const AppRoutes = () => {
       <Route path="/teste-botoes" element={<TesteBotoes />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/modalidade/:id" element={<Modalidade />} />
+      <Route path="/personalizar/:slug" element={<Modalidade />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

@@ -79,6 +79,8 @@ type ModalidadeConfig = {
   slug: string;
   nome: string;
   fraseImpacto: string;
+  /** Imagem de hero (background). Se não definida, usa o hero padrão (fisiculturismo). */
+  heroBg?: string;
   bonecos: Record<Material, Record<Genero, Record<Estilo, string>>>;
   // Quais campos de gravação habilitar para esta modalidade
   camposGravacao: CtaFieldKey[];
@@ -89,6 +91,7 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
     slug: "fisiculturismo",
     nome: "Fisiculturismo",
     fraseImpacto: "Seu corpo é sua obra. Merece ser representado.",
+    heroBg: fisiculturismoHeroBg,
     bonecos: {
       "Ouro 18K": {
         Masculino: { "Clássico": bonecoFisiMascClassicoOuro, Underground: bonecoFisiMascUndergroundOuro },
@@ -231,8 +234,12 @@ const ChoiceButton = ({
 /* ===================== Página ===================== */
 
 const Modalidade = () => {
-  const { id } = useParams();
-  const config = id ? MODALIDADES[id] : undefined;
+  const { id, slug } = useParams();
+  const config = useMemo(() => {
+    if (slug) return Object.values(MODALIDADES).find((m) => m.slug === slug);
+    if (id) return MODALIDADES[id];
+    return undefined;
+  }, [id, slug]);
 
   // Se a modalidade não existe ainda, redireciona para a página antiga (legado)
   if (!config) {
@@ -795,7 +802,7 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
         className="pointer-events-none absolute inset-x-0 top-0 z-0"
         style={{
           height: "min(110vh, 1200px)",
-          backgroundImage: `url(${fisiculturismoHeroBg})`,
+          backgroundImage: `url(${p.config.heroBg ?? fisiculturismoHeroBg})`,
           backgroundSize: "cover",
           backgroundPosition: "center top",
           backgroundRepeat: "no-repeat",
