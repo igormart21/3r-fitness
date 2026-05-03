@@ -234,8 +234,12 @@ const ChoiceButton = ({
 /* ===================== Página ===================== */
 
 const Modalidade = () => {
-  const { id } = useParams();
-  const config = id ? MODALIDADES[id] : undefined;
+  const { id, slug } = useParams();
+  const config = useMemo(() => {
+    if (slug) return Object.values(MODALIDADES).find((m) => m.slug === slug);
+    if (id) return MODALIDADES[id];
+    return undefined;
+  }, [id, slug]);
 
   // Se a modalidade não existe ainda, redireciona para a página antiga (legado)
   if (!config) {
