@@ -8,6 +8,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/lib/shopify";
 import { supabase } from "@/integrations/supabase/client";
 import fisiculturismoHero from "@/assets/fisiculturismo-hero.png";
+import fisiculturismoHeroBg from "@/assets/fisiculturismo-hero-bg.png";
 
 // Bonecos FISICULTURISMO
 import bonecoFisiFemClassicoOuro from "@/assets/boneco-fisiculturismo-fem-classico-ouro.jpg";
@@ -773,13 +774,56 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
   return (
     <main
       className="relative w-full overflow-hidden"
-      style={{
-        minHeight: "90vh",
-        background:
-          "radial-gradient(ellipse at 20% 10%, hsl(43 60% 18% / 0.25) 0%, transparent 55%), radial-gradient(ellipse at 80% 90%, hsl(43 60% 14% / 0.20) 0%, transparent 55%), linear-gradient(180deg, #050505 0%, #0a0a0a 50%, #060606 100%)",
-      }}
+      style={{ background: "#050505" }}
     >
-      <div className="container mx-auto px-4 lg:px-8 py-8 lg:py-12 max-w-[1500px]">
+      {/* ============= HERO INTEGRADO (imagem de fundo contínua) ============= */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-0"
+        style={{
+          height: "min(110vh, 1200px)",
+          backgroundImage: `url(${fisiculturismoHeroBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center top",
+          backgroundRepeat: "no-repeat",
+          filter: "blur(1.5px) saturate(1.05)",
+        }}
+      />
+      {/* Vinheta lateral */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-0"
+        style={{
+          height: "min(110vh, 1200px)",
+          background:
+            "radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 95%)",
+        }}
+      />
+      {/* Fade inferior para o preto do site */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-0"
+        style={{
+          height: "min(110vh, 1200px)",
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 85%, #050505 100%)",
+        }}
+      />
+      {/* Glow dourado sutil na parte inferior central (reflexo de joia) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 -translate-x-1/2 z-0"
+        style={{
+          top: "min(70vh, 760px)",
+          width: "80%",
+          height: "40vh",
+          background:
+            "radial-gradient(ellipse at center, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0.05) 35%, transparent 70%)",
+          filter: "blur(40px)",
+        }}
+      />
+
+      <div className="relative z-10 container mx-auto px-4 lg:px-8 max-w-[1500px]" style={{ paddingTop: "clamp(360px, 55vh, 620px)", paddingBottom: "clamp(40px, 6vh, 80px)" }}>
         {/* Stepper topo */}
         <div className="flex items-center justify-center gap-3 mb-8">
           {stepTitles.map((t, i) => {
