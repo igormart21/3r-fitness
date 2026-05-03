@@ -527,6 +527,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
              maxWidth: "100vw",
              marginLeft: "calc(50% - 50vw)",
              marginRight: "calc(50% - 50vw)",
+             height: "300px",
            }}
            aria-label={`Foto de ${config.nome}`}
          >
@@ -534,7 +535,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
              src={fisiculturismoHero}
              alt={`Atletas de ${config.nome}`}
              className="block select-none pointer-events-none"
-             style={{ width: "100%", height: "300px", objectFit: "fill" }}
+             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
              draggable={false}
            />
          </section>
