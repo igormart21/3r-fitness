@@ -66,7 +66,7 @@ export const ColecaoDestaque = ({
             />
           </div>
         ) : products.length === 0 ? (
-          <div className="border border-dashed border-white/10 py-20 text-center">
+          <div className="py-20 text-center">
             <Package
               className="h-10 w-10 text-white/30 mx-auto mb-3"
               strokeWidth={1}
