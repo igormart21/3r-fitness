@@ -51,7 +51,7 @@ export const CinematicTransition = () => {
             e.currentTarget.style.color = "#d4af37";
           }}
         >
-          Explorar coleções
+          Entrar no ateliê 3R
         </Link>
       </div>
     </section>
