@@ -518,36 +518,21 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
 
 
       {/* Hero da modalidade */}
-      {config.slug === "fisiculturismo" ? (
-        <section
-          className="relative w-full overflow-hidden"
-          style={{ backgroundColor: "#0a0a0a", height: "clamp(140px, 16vw, 220px)" }}
-          aria-label={`Foto de ${config.nome}`}
-        >
-          {/* Fundo desfocado preenchendo as laterais */}
-          <img
-            src={fisiculturismoHero}
-            alt=""
-            aria-hidden
-            className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none"
-            style={{ filter: "blur(40px) brightness(0.5) saturate(0.8)", transform: "scale(1.2)" }}
-            draggable={false}
-          />
-          {/* Imagem completa sem cortes */}
-          <img
-            src={fisiculturismoHero}
-            alt={`Atletas de ${config.nome}`}
-            className="absolute inset-0 w-full h-full object-contain object-center select-none pointer-events-none"
-            draggable={false}
-          />
-          {/* Fade inferior suave */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4"
-            style={{ background: "linear-gradient(to bottom, transparent, #0a0a0a)" }}
-          />
-        </section>
-      ) : (
+       {config.slug === "fisiculturismo" ? (
+         <section
+           className="relative w-full overflow-hidden"
+           style={{ backgroundColor: "#0a0a0a", height: "clamp(120px, 13vw, 200px)" }}
+           aria-label={`Foto de ${config.nome}`}
+         >
+           {/* Imagem preenchendo 100% do cabeçalho, sem espaços laterais */}
+           <img
+             src={fisiculturismoHero}
+             alt={`Atletas de ${config.nome}`}
+             className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none"
+             draggable={false}
+           />
+         </section>
+       ) : (
         <section
           className="relative w-full overflow-hidden border-b border-accent/10"
           style={{ backgroundColor: "#0a0a0a", height: "clamp(180px, 22vw, 260px)" }}
