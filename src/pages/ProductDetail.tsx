@@ -319,7 +319,7 @@ const ProductDetail = () => {
                   Transforme essa criação em um símbolo exclusivo seu.
                 </p>
                 <Link
-                  to="/criar-minha-joia"
+                  to="/catalogo"
                   className="inline-flex items-center gap-3 px-12 py-4 text-[11px] uppercase tracking-[0.45em] transition-all duration-500 hover:gap-5"
                   style={{
                     color: "#d4af37",
