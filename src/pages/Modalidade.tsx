@@ -395,7 +395,19 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
           inscricao: valorGravacao(),
         },
       });
-      if (error) throw error;
+      if (error) {
+        const status = (error as any)?.context?.status;
+        if (status === 402) {
+          toast.error("Os créditos de IA acabaram. A pré-visualização com IA está temporariamente indisponível — sua joia pode ser solicitada normalmente.");
+          setFotoCliente(null);
+          return;
+        }
+        if (status === 429) {
+          toast.error("Muitas solicitações no momento. Aguarde alguns instantes e tente novamente.");
+          return;
+        }
+        throw error;
+      }
       if (!result?.imageUrl) throw new Error("Imagem não retornada");
       setPingenteGerado(result.imageUrl);
       toast.success("Sua joia foi modelada!");
