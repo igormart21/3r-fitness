@@ -123,6 +123,10 @@
   text-transform: uppercase;
   margin-bottom: 28px;
 }
+.hero-editorial .eyebrow .eyebrow-gold {
+  color: #d4af37;
+  font-weight: 400;
+}
 .hero-editorial .headline {
   font-family: "Fraunces", "Cormorant Garamond", "Playfair Display", Georgia, serif;
   font-size: clamp(54px, 6.8vw, 104px);
