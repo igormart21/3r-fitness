@@ -25,8 +25,32 @@ export const Hero = () => {
         }}
       />
 
-      {/* CTA */}
-      <div className="relative z-10 container mx-auto max-w-4xl px-6 min-h-screen flex flex-col items-center justify-end pb-24">
+      {/* Conteúdo */}
+      <div className="relative z-10 container mx-auto max-w-5xl px-6 min-h-screen flex flex-col items-center justify-end pb-24 text-center">
+        <h1
+          className="font-light tracking-[0.02em] text-white mb-10"
+          style={{
+            fontFamily: "'Cormorant Garamond', 'Playfair Display', serif",
+            fontSize: "clamp(2.25rem, 5.5vw, 4.75rem)",
+            lineHeight: 1.05,
+            textShadow: "0 2px 30px rgba(0,0,0,0.6)",
+          }}
+        >
+          Joias que representam
+          <br />
+          <span
+            style={{
+              fontStyle: "italic",
+              background:
+                "linear-gradient(180deg, #f4d77a 0%, #d4af37 60%, #b8860b 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            quem você se tornou
+          </span>
+        </h1>
         <GoldCTA size="lg" />
       </div>
     </section>
