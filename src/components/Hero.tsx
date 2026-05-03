@@ -54,28 +54,19 @@ export const Hero = () => {
           <br />
           <span className="gold">se tornou</span>
         </h1>
-        <div className="hero-cta-row">
-          <a
-            href="#modalidades"
-            className="luxury-cta"
-            aria-label="Iniciar criação"
-            onClick={(e) => {
-              e.preventDefault();
-              document
-                .getElementById("modalidades")
-                ?.scrollIntoView({ behavior: "smooth", block: "start" });
-            }}
-          >
-            Iniciar criação
-          </a>
-          <a
-            href="/colecao"
-            className="luxury-cta luxury-cta--ghost"
-            aria-label="Explorar coleções"
-          >
-            Explorar coleções
-          </a>
-        </div>
+        <a
+          href="#modalidades"
+          className="luxury-cta"
+          aria-label="Iniciar criação"
+          onClick={(e) => {
+            e.preventDefault();
+            document
+              .getElementById("modalidades")
+              ?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }}
+        >
+          Iniciar criação
+        </a>
       </div>
     </section>
   );
