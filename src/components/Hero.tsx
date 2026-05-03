@@ -10,7 +10,7 @@ import sportCorrida from "@/assets/sport-corrida.jpg";
 
 export const Hero = () => {
   return (
-    <section className="relative bg-background">
+    <section className="relative" style={{ backgroundColor: "#050505", paddingBottom: "140px", overflow: "hidden" }}>
       <style>{`
         @keyframes hero-shimmer {
           0% { background-position: 200% 0; }
@@ -342,13 +342,14 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* Fade inferior — dissolve a seção no fundo preto da próxima seção */}
+      {/* Fade inferior — dissolve a seção no fundo preto (#050505) da próxima seção */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-40 md:h-56 z-20"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[2]"
         style={{
+          height: "180px",
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,1) 100%)",
+            "linear-gradient(to bottom, rgba(5,5,5,0) 0%, rgba(5,5,5,0.18) 35%, rgba(5,5,5,0.55) 70%, rgba(5,5,5,1) 100%)",
         }}
       />
     </section>
