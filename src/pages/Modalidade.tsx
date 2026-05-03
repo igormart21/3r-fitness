@@ -769,7 +769,7 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
   }, [p.pingenteGerado, p.material, p.genero, estiloEfetivo, p.config]);
 
   const stepTitles = [
-    "Identidade", "Modalidade", "Material", "Estilo", "Significado", "Sua imagem", "Resumo"
+    "Identidade", "Modalidade", "Material", "Estilo", "Significado", "Finalizar"
   ];
 
   return (
