@@ -259,7 +259,7 @@ const Modalidade = () => {
 
   // Se a modalidade não existe ainda, redireciona para a página antiga (legado)
   if (!config) {
-    return <Navigate to="/criar-minha-joia" replace />;
+    return <Navigate to="/catalogo" replace />;
   }
 
   return <ModalidadePage config={config} />;

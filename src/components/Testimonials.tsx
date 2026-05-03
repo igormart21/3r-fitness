@@ -312,7 +312,7 @@ export const Testimonials = () => {
             @keyframes testi-shine { 0% { transform: translateX(-150%) skewX(-20deg); } 60%, 100% { transform: translateX(250%) skewX(-20deg); } }
           `}</style>
           <Link
-            to="/criar-minha-joia"
+            to="/catalogo"
             aria-label="Criar minha joia"
             translate="no"
             className="group notranslate relative inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-10 md:px-12 py-3 sm:py-4 overflow-hidden border border-black transition-all duration-500 hover:-translate-y-0.5 whitespace-nowrap"

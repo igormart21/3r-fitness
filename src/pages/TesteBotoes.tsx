@@ -24,7 +24,7 @@ const TesteBotoes = () => {
         {/* Opção 1 — Dourado luxuoso com brilho */}
         <Card label="Opção 1 — Dourado Luxuoso">
           <Link
-            to="/criar-minha-joia"
+            to="/catalogo"
             className="group relative inline-flex items-center gap-3 px-10 py-4 overflow-hidden"
             style={{
               background:
@@ -45,7 +45,7 @@ const TesteBotoes = () => {
         {/* Opção 2 — Outline minimalista com cantos */}
         <Card label="Opção 2 — Outline Minimalista">
           <Link
-            to="/criar-minha-joia"
+            to="/catalogo"
             className="group relative inline-flex items-center gap-4 px-12 py-5 transition-all duration-500 hover:bg-accent/5"
           >
             <span className="absolute -top-[2px] -left-[2px] h-3 w-3 border-t border-l border-accent transition-all duration-500 group-hover:h-4 group-hover:w-4" />
@@ -64,7 +64,7 @@ const TesteBotoes = () => {
         {/* Opção 3 — Preto fosco premium com detalhe ouro */}
         <Card label="Opção 3 — Preto Fosco Premium">
           <Link
-            to="/criar-minha-joia"
+            to="/catalogo"
             className="group relative inline-flex items-center gap-3 px-10 py-4 bg-black border border-accent/40 hover:border-accent transition-all duration-500"
             style={{
               boxShadow:
@@ -84,7 +84,7 @@ const TesteBotoes = () => {
         {/* Opção 4 — Gradiente metálico animado */}
         <Card label="Opção 4 — Metálico Animado">
           <Link
-            to="/criar-minha-joia"
+            to="/catalogo"
             className="group relative inline-flex items-center gap-3 px-12 py-5 overflow-hidden border border-accent/60"
             style={{
               background:

@@ -75,7 +75,7 @@ const Catalogo = () => {
       <header className="border-b border-border bg-card/50 backdrop-blur sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link
-            to="/criar-minha-joia"
+            to="/catalogo"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -175,7 +175,7 @@ const Catalogo = () => {
         )}
 
         <div className="text-center mt-16">
-          <Link to="/criar-minha-joia">
+          <Link to="/catalogo">
             <Button
               variant="outline"
               className="border-accent text-accent hover:bg-accent hover:text-accent-foreground rounded-none px-8 py-6 text-xs uppercase tracking-[0.3em]"
