@@ -816,7 +816,7 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
           backgroundSize: "cover",
           backgroundPosition: "center top",
           backgroundRepeat: "no-repeat",
-          filter: "blur(1.5px) saturate(1.05)",
+          filter: "saturate(1.1) brightness(1.05)",
         }}
       />
       {/* Vinheta lateral */}
@@ -826,7 +826,7 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
         style={{
           height: "min(110vh, 1200px)",
           background:
-            "radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 95%)",
+            "radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%)",
         }}
       />
       {/* Fade inferior para o preto do site */}
@@ -836,7 +836,7 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
         style={{
           height: "min(110vh, 1200px)",
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 85%, #050505 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.75) 88%, #050505 100%)",
         }}
       />
       {/* Glow dourado sutil na parte inferior central (reflexo de joia) */}
