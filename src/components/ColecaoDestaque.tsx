@@ -105,26 +105,6 @@ export const ColecaoDestaque = ({
         </div>
       </div>
 
-      <div className="relative z-[3] container mx-auto max-w-7xl px-4 py-32 md:py-56 min-h-[100vh] flex items-end justify-center pb-20 md:pb-32">
-        {loading ? (
-          <Loader2 className="h-8 w-8 animate-spin" style={{ color: "#d4af37" }} />
-        ) : (
-          <Link
-            to="/colecao"
-            className="inline-flex items-center gap-3 px-10 py-4 text-[10px] uppercase tracking-[0.45em] transition-all duration-500 hover:gap-5 backdrop-blur-sm"
-            style={{
-              color: "#d4af37",
-              border: "1px solid rgba(212,175,55,0.55)",
-              background:
-                "linear-gradient(135deg, rgba(0,0,0,0.45), rgba(0,0,0,0.2))",
-            }}
-          >
-            <span className="h-px w-6" style={{ background: "rgba(212,175,55,0.7)" }} />
-            {ctaLabel}
-            <span className="h-px w-6" style={{ background: "rgba(212,175,55,0.7)" }} />
-          </Link>
-        )}
-      </div>
     </section>
   );
 };
