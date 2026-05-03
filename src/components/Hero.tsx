@@ -342,6 +342,15 @@ export const Hero = () => {
         </div>
       </div>
 
+      {/* Fade inferior — dissolve a seção no fundo preto da próxima seção */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-40 md:h-56 z-20"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,1) 100%)",
+        }}
+      />
     </section>
   );
 };
