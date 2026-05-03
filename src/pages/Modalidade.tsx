@@ -751,7 +751,8 @@ type LuxuryProps = {
 };
 
 const LuxuryConfigurator = (p: LuxuryProps) => {
-  const totalSteps = 7;
+  const totalSteps = 6;
+  const [iaAberta, setIaAberta] = useState(false);
   const next = () => p.setCurrentStep(Math.min(totalSteps, p.currentStep + 1));
   const prev = () => p.setCurrentStep(Math.max(1, p.currentStep - 1));
 
