@@ -55,48 +55,7 @@ export const ColecaoDestaque = ({
       }}
     >
       <div className="container mx-auto max-w-7xl">
-        {/* Cabeçalho editorial */}
-        <div className="text-center mb-14 md:mb-20">
-          <div className="flex items-center justify-center gap-3 mb-5">
-            <span
-              className="h-px w-16"
-              style={{
-                background:
-                  "linear-gradient(90deg, transparent, rgba(212,175,55,0.7))",
-              }}
-            />
-            <span
-              className="text-[10px] uppercase tracking-[0.5em]"
-              style={{ color: "#d4af37" }}
-            >
-              {eyebrow}
-            </span>
-            <span
-              className="h-px w-16"
-              style={{
-                background:
-                  "linear-gradient(90deg, rgba(212,175,55,0.7), transparent)",
-              }}
-            />
-          </div>
-          <h2
-            className="font-serif italic font-light text-3xl md:text-5xl tracking-tight leading-tight"
-            style={{
-              fontFamily:
-                '"Cormorant Garamond","Playfair Display",Georgia,serif',
-              background:
-                "linear-gradient(180deg, #f4d77a 0%, #d4af37 50%, #b8860b 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            {title}
-          </h2>
-          <p className="mt-4 text-sm md:text-base text-white/60 max-w-xl mx-auto italic">
-            {subtitle}
-          </p>
-        </div>
+        {/* Cabeçalho removido — fundo limpo */}
 
         {/* Grid editorial */}
         {loading ? (
