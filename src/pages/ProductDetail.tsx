@@ -56,10 +56,8 @@ const ProductDetail = () => {
     <div
       className="min-h-screen text-foreground relative"
       style={{
-        backgroundColor: "#030303",
-        backgroundImage:
-          "radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212,175,55,0.06) 0%, transparent 70%)",
-        ["--background" as any]: "0 0% 2%",
+        backgroundColor: "#070707",
+        ["--background" as any]: "0 0% 4%",
         ["--foreground" as any]: "43 55% 78%",
         ["--accent" as any]: "43 65% 55%",
         ["--border" as any]: "43 35% 28%",
@@ -111,85 +109,65 @@ const ProductDetail = () => {
             {/* HERO da peça */}
             <section className="relative w-full px-6 py-12 md:py-20">
               <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-                {/* Imagem dramática com spotlight */}
+                {/* Imagem dramática */}
                 <div className="relative">
-                  {/* Spotlight ambient glow behind frame */}
                   <div
-                    aria-hidden
-                    className="absolute -inset-10 pointer-events-none"
-                    style={{
-                      background:
-                        "radial-gradient(ellipse 60% 55% at 50% 45%, rgba(244,215,122,0.18) 0%, rgba(212,175,55,0.06) 35%, transparent 70%)",
-                      filter: "blur(20px)",
-                    }}
-                  />
-                  <div
-                    className="relative aspect-square overflow-hidden transition-all duration-700"
+                    className="relative aspect-square overflow-hidden"
                     style={{
                       backgroundColor: "#000",
                       backgroundImage:
-                        "radial-gradient(ellipse 65% 55% at 50% 35%, rgba(212,175,55,0.22) 0%, transparent 70%)",
-                      border: "1px solid rgba(212,175,55,0.30)",
+                        "radial-gradient(ellipse 70% 60% at 50% 30%, rgba(212,175,55,0.18) 0%, transparent 70%)",
+                      border: "1px solid rgba(212,175,55,0.25)",
                       boxShadow:
-                        "0 40px 100px rgba(0,0,0,0.7), 0 0 80px rgba(212,175,55,0.15), inset 0 0 60px rgba(0,0,0,0.4)",
+                        "0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(212,175,55,0.1)",
                     }}
                   >
-                    {/* Top spotlight cone */}
-                    <div
-                      aria-hidden
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background:
-                          "radial-gradient(ellipse 50% 40% at 50% 0%, rgba(255,240,200,0.18) 0%, transparent 60%)",
-                        mixBlendMode: "screen",
-                      }}
-                    />
                     {product.images.edges[activeImage]?.node && (
                       <img
-                        key={activeImage}
                         src={product.images.edges[activeImage].node.url}
                         alt={product.title}
-                        className="w-full h-full object-cover animate-[fade-in_0.9s_ease-out_both]"
-                        style={{ filter: "contrast(1.05) saturate(1.05) drop-shadow(0 0 30px rgba(212,175,55,0.15))" }}
+                        className="w-full h-full object-cover"
                       />
                     )}
-                    {/* Floor reflection / vignette */}
-                    <div
-                      aria-hidden
-                      className="absolute inset-x-0 bottom-0 h-1/3 pointer-events-none"
-                      style={{
-                        background:
-                          "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.55) 100%)",
-                      }}
-                    />
                     {/* Cantos dourados */}
-                    <span className="absolute top-3 left-3 h-4 w-4 border-t border-l" style={{ borderColor: "#d4af37" }} />
-                    <span className="absolute top-3 right-3 h-4 w-4 border-t border-r" style={{ borderColor: "#d4af37" }} />
-                    <span className="absolute bottom-3 left-3 h-4 w-4 border-b border-l" style={{ borderColor: "#d4af37" }} />
-                    <span className="absolute bottom-3 right-3 h-4 w-4 border-b border-r" style={{ borderColor: "#d4af37" }} />
+                    <span
+                      className="absolute top-3 left-3 h-4 w-4 border-t border-l"
+                      style={{ borderColor: "#d4af37" }}
+                    />
+                    <span
+                      className="absolute top-3 right-3 h-4 w-4 border-t border-r"
+                      style={{ borderColor: "#d4af37" }}
+                    />
+                    <span
+                      className="absolute bottom-3 left-3 h-4 w-4 border-b border-l"
+                      style={{ borderColor: "#d4af37" }}
+                    />
+                    <span
+                      className="absolute bottom-3 right-3 h-4 w-4 border-b border-r"
+                      style={{ borderColor: "#d4af37" }}
+                    />
                   </div>
 
                   {product.images.edges.length > 1 && (
-                    <div className="grid grid-cols-5 gap-3 mt-6">
+                    <div className="grid grid-cols-5 gap-2 mt-4">
                       {product.images.edges.map((img: any, i: number) => (
                         <button
                           key={i}
                           onClick={() => setActiveImage(i)}
-                          className="aspect-square overflow-hidden transition-all duration-500 hover:opacity-90"
+                          className="aspect-square overflow-hidden transition-all duration-300"
                           style={{
                             border:
                               activeImage === i
                                 ? "1px solid #d4af37"
                                 : "1px solid rgba(212,175,55,0.15)",
-                            opacity: activeImage === i ? 1 : 0.55,
-                            boxShadow:
-                              activeImage === i
-                                ? "0 0 24px rgba(212,175,55,0.35), 0 0 0 1px rgba(212,175,55,0.4)"
-                                : "none",
-                            transform: activeImage === i ? "translateY(-2px)" : "none",
+                            opacity: activeImage === i ? 1 : 0.6,
                           }}
                         >
-                          <img src={img.node.url} alt="" className="w-full h-full object-cover" />
+                          <img
+                            src={img.node.url}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
                         </button>
                       ))}
                     </div>
@@ -238,7 +216,7 @@ const ProductDetail = () => {
                   {product.variants.edges.length > 1 && (
                     <div className="mb-10">
                       <h3
-                        className="text-[10px] uppercase tracking-[0.4em] mb-5"
+                        className="text-[10px] uppercase tracking-[0.4em] mb-4"
                         style={{ color: "rgba(212,175,55,0.7)" }}
                       >
                         Variações
@@ -251,19 +229,15 @@ const ProductDetail = () => {
                               key={v.node.id}
                               onClick={() => setSelectedVariantId(v.node.id)}
                               disabled={!v.node.availableForSale}
-                              className="relative px-7 py-3.5 text-[10px] uppercase tracking-[0.4em] transition-all duration-700 ease-out disabled:opacity-30 disabled:line-through hover:-translate-y-0.5"
+                              className="px-6 py-3 text-[10px] uppercase tracking-[0.35em] transition-all duration-500 disabled:opacity-30 disabled:line-through"
                               style={{
                                 border: sel
                                   ? "1px solid #d4af37"
-                                  : "1px solid rgba(212,175,55,0.22)",
+                                  : "1px solid rgba(212,175,55,0.25)",
                                 color: sel ? "#070707" : "#e9dcb1",
                                 background: sel
                                   ? "linear-gradient(135deg, #f4d77a 0%, #d4af37 50%, #b8860b 100%)"
                                   : "transparent",
-                                boxShadow: sel
-                                  ? "0 0 0 1px rgba(212,175,55,0.5), 0 0 30px rgba(212,175,55,0.35), 0 10px 30px rgba(0,0,0,0.4)"
-                                  : "none",
-                                transform: sel ? "translateY(-1px)" : "none",
                               }}
                             >
                               {v.node.title}
