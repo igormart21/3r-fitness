@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
-import CriarMinhaJoia from "./pages/CriarMinhaJoia.tsx";
+
 import Catalogo from "./pages/Catalogo.tsx";
 import Colecao from "./pages/Colecao.tsx";
 import TesteBotoes from "./pages/TesteBotoes.tsx";
