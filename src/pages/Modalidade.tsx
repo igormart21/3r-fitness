@@ -79,7 +79,8 @@ type ModalidadeConfig = {
   slug: string;
   nome: string;
   fraseImpacto: string;
-  heroBg: string;
+  /** Imagem de hero (background). Se não definida, usa o hero padrão (fisiculturismo). */
+  heroBg?: string;
   bonecos: Record<Material, Record<Genero, Record<Estilo, string>>>;
   // Quais campos de gravação habilitar para esta modalidade
   camposGravacao: CtaFieldKey[];
