@@ -520,15 +520,21 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       {/* Hero da modalidade */}
        {config.slug === "fisiculturismo" ? (
          <section
-           className="relative w-full overflow-hidden"
-           style={{ backgroundColor: "#0a0a0a", height: "clamp(120px, 13vw, 200px)" }}
+           className="relative overflow-hidden"
+           style={{
+             backgroundColor: "#0a0a0a",
+             width: "100vw",
+             maxWidth: "100vw",
+             marginLeft: "calc(50% - 50vw)",
+             marginRight: "calc(50% - 50vw)",
+           }}
            aria-label={`Foto de ${config.nome}`}
          >
-           {/* Imagem preenchendo 100% do cabeçalho, sem espaços laterais */}
            <img
              src={fisiculturismoHero}
              alt={`Atletas de ${config.nome}`}
-             className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none"
+             className="block select-none pointer-events-none"
+             style={{ width: "100%", height: "350px", objectFit: "cover" }}
              draggable={false}
            />
          </section>
