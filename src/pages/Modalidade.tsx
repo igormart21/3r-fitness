@@ -524,13 +524,23 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
           style={{ backgroundColor: "#0a0a0a", height: "clamp(140px, 16vw, 220px)" }}
           aria-label={`Foto de ${config.nome}`}
         >
+          {/* Fundo desfocado preenchendo as laterais */}
+          <img
+            src={fisiculturismoHero}
+            alt=""
+            aria-hidden
+            className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none"
+            style={{ filter: "blur(40px) brightness(0.5) saturate(0.8)", transform: "scale(1.2)" }}
+            draggable={false}
+          />
+          {/* Imagem completa sem cortes */}
           <img
             src={fisiculturismoHero}
             alt={`Atletas de ${config.nome}`}
-            className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none"
+            className="absolute inset-0 w-full h-full object-contain object-center select-none pointer-events-none"
             draggable={false}
           />
-          {/* Fade inferior suave para fundir com o fundo da página */}
+          {/* Fade inferior suave */}
           <div
             aria-hidden
             className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4"
