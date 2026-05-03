@@ -91,7 +91,7 @@ export const ColecaoDestaque = ({
         }}
       />
 
-      <div className="relative z-10 container mx-auto max-w-7xl px-4 py-32 md:py-56 min-h-[100vh] flex items-end justify-center pb-20 md:pb-32">
+      <div className="relative z-[3] container mx-auto max-w-7xl px-4 py-32 md:py-56 min-h-[100vh] flex items-end justify-center pb-20 md:pb-32">
         {loading ? (
           <Loader2 className="h-8 w-8 animate-spin" style={{ color: "#d4af37" }} />
         ) : (
