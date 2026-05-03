@@ -88,6 +88,38 @@ const Colecao = () => {
         </div>
       </header>
 
+      {/* Faixa pós-personalização */}
+      {afterCustom && (
+        <section
+          className="relative pt-28 pb-16 px-6 text-center"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 80% at 50% 0%, rgba(212,175,55,0.18) 0%, transparent 70%)",
+          }}
+        >
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="h-px w-16" style={{ background: "linear-gradient(90deg, transparent, rgba(212,175,55,0.7))" }} />
+            <span className="text-[10px] uppercase tracking-[0.5em]" style={{ color: "#d4af37" }}>Sua jornada</span>
+            <span className="h-px w-16" style={{ background: "linear-gradient(90deg, rgba(212,175,55,0.7), transparent)" }} />
+          </div>
+          <h2
+            className="font-serif italic font-light text-3xl md:text-5xl mb-3"
+            style={{
+              fontFamily: '"Cormorant Garamond","Playfair Display",Georgia,serif',
+              color: "#f4ead0",
+            }}
+          >
+            Sua peça foi <em style={{ color: "#d4af37" }}>criada</em>
+          </h2>
+          <p className="text-sm md:text-base text-white/65 italic max-w-xl mx-auto">
+            Complete sua coleção com criações que dialogam com o seu estilo.
+          </p>
+          <p className="mt-6 text-[10px] uppercase tracking-[0.45em] text-white/45">
+            Adicionar outra peça à sua jornada
+          </p>
+        </section>
+      )}
+
       {/* HERO 80vh */}
       <section className="relative w-full h-[80vh] min-h-[560px] overflow-hidden">
         <img
