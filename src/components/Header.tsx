@@ -39,8 +39,9 @@ export const Header = () => {
           </DropdownMenu>
         </div>
         <nav className="hidden md:flex items-center gap-8 text-sm">
-          <Link to="/" className="hover:text-accent transition-smooth">Loja</Link>
-          <a href="#sobre" className="hover:text-accent transition-smooth">Sobre</a>
+          <Link to="/" className="hover:text-accent transition-smooth">Início</Link>
+          <Link to="/colecao" className="hover:text-accent transition-smooth tracking-[0.15em] uppercase text-xs">Coleções</Link>
+          <Link to="/criar-minha-joia" className="hover:text-accent transition-smooth tracking-[0.15em] uppercase text-xs">Personalizar</Link>
           <a href="#contato" className="hover:text-accent transition-smooth">Contato</a>
         </nav>
         <CartDrawer />

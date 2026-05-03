@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, Loader2, ShoppingBag } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { ArrowLeft, Loader2, Sparkles } from "lucide-react";
+import { CartDrawer } from "@/components/CartDrawer";
+import { ColecaoDestaque } from "@/components/ColecaoDestaque";
 import { PRODUCT_BY_HANDLE_QUERY, storefrontApiRequest } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
@@ -13,14 +12,18 @@ const ProductDetail = () => {
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(0);
-  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
-  const addItem = useCartStore(s => s.addItem);
-  const isLoading = useCartStore(s => s.isLoading);
+  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(
+    null
+  );
+  const addItem = useCartStore((s) => s.addItem);
+  const isLoading = useCartStore((s) => s.isLoading);
 
   useEffect(() => {
     (async () => {
       try {
-        const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
+        const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, {
+          handle,
+        });
         const p = data?.data?.product;
         setProduct(p);
         setSelectedVariantId(p?.variants?.edges?.[0]?.node?.id ?? null);
@@ -30,8 +33,9 @@ const ProductDetail = () => {
     })();
   }, [handle]);
 
-  const variant = product?.variants.edges.find((e: any) => e.node.id === selectedVariantId)?.node
-    ?? product?.variants.edges[0]?.node;
+  const variant =
+    product?.variants.edges.find((e: any) => e.node.id === selectedVariantId)
+      ?.node ?? product?.variants.edges[0]?.node;
 
   const handleAdd = async () => {
     if (!variant || !product) return;
@@ -43,78 +47,309 @@ const ProductDetail = () => {
       quantity: 1,
       selectedOptions: variant.selectedOptions || [],
     });
-    toast.success("Adicionado à sacola", { description: product.title });
+    toast.success("Peça adicionada à sua coleção", {
+      description: product.title,
+    });
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
+    <div
+      className="min-h-screen text-foreground relative"
+      style={{
+        backgroundColor: "#070707",
+        ["--background" as any]: "0 0% 4%",
+        ["--foreground" as any]: "43 55% 78%",
+        ["--accent" as any]: "43 65% 55%",
+        ["--border" as any]: "43 35% 28%",
+        ["--muted-foreground" as any]: "43 25% 60%",
+      }}
+    >
+      {/* HEADER */}
+      <header className="absolute top-0 inset-x-0 z-30">
+        <div className="container mx-auto px-6 py-6 flex items-center justify-between">
+          <Link
+            to="/colecao"
+            className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-white/70 hover:text-[#d4af37] transition-colors"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            Coleções
+          </Link>
+          <span
+            className="hidden md:block font-serif italic text-sm tracking-[0.3em]"
+            style={{ color: "#d4af37" }}
+          >
+            ATELIÊ 3R
+          </span>
+          <CartDrawer />
+        </div>
+      </header>
+
+      <main className="pt-24">
         {loading ? (
-          <div className="flex justify-center py-32"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>
+          <div className="flex justify-center py-40">
+            <Loader2
+              className="h-8 w-8 animate-spin"
+              style={{ color: "#d4af37" }}
+            />
+          </div>
         ) : !product ? (
           <div className="container py-32 text-center">
-            <h1 className="font-display text-4xl mb-4">Produto não encontrado</h1>
-            <Link to="/" className="text-accent underline">Voltar para a loja</Link>
+            <h1 className="font-serif italic text-4xl mb-4 text-white/80">
+              Peça não encontrada
+            </h1>
+            <Link
+              to="/colecao"
+              className="text-[#d4af37] underline text-sm tracking-[0.3em] uppercase"
+            >
+              Voltar às coleções
+            </Link>
           </div>
         ) : (
-          <div className="container py-12">
-            <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-smooth mb-8">
-              <ArrowLeft className="h-4 w-4" /> Continuar comprando
-            </Link>
-            <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
-              <div>
-                <div className="aspect-[4/5] overflow-hidden bg-muted rounded-sm mb-4">
-                  {product.images.edges[activeImage]?.node && (
-                    <img src={product.images.edges[activeImage].node.url} alt={product.title} className="w-full h-full object-cover" />
-                  )}
-                </div>
-                {product.images.edges.length > 1 && (
-                  <div className="grid grid-cols-5 gap-2">
-                    {product.images.edges.map((img: any, i: number) => (
-                      <button key={i} onClick={() => setActiveImage(i)}
-                        className={`aspect-square overflow-hidden rounded-sm border-2 transition-smooth ${activeImage === i ? 'border-accent' : 'border-transparent'}`}>
-                        <img src={img.node.url} alt="" className="w-full h-full object-cover" />
-                      </button>
-                    ))}
+          <>
+            {/* HERO da peça */}
+            <section className="relative w-full px-6 py-12 md:py-20">
+              <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+                {/* Imagem dramática */}
+                <div className="relative">
+                  <div
+                    className="relative aspect-square overflow-hidden"
+                    style={{
+                      backgroundColor: "#000",
+                      backgroundImage:
+                        "radial-gradient(ellipse 70% 60% at 50% 30%, rgba(212,175,55,0.18) 0%, transparent 70%)",
+                      border: "1px solid rgba(212,175,55,0.25)",
+                      boxShadow:
+                        "0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(212,175,55,0.1)",
+                    }}
+                  >
+                    {product.images.edges[activeImage]?.node && (
+                      <img
+                        src={product.images.edges[activeImage].node.url}
+                        alt={product.title}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                    {/* Cantos dourados */}
+                    <span
+                      className="absolute top-3 left-3 h-4 w-4 border-t border-l"
+                      style={{ borderColor: "#d4af37" }}
+                    />
+                    <span
+                      className="absolute top-3 right-3 h-4 w-4 border-t border-r"
+                      style={{ borderColor: "#d4af37" }}
+                    />
+                    <span
+                      className="absolute bottom-3 left-3 h-4 w-4 border-b border-l"
+                      style={{ borderColor: "#d4af37" }}
+                    />
+                    <span
+                      className="absolute bottom-3 right-3 h-4 w-4 border-b border-r"
+                      style={{ borderColor: "#d4af37" }}
+                    />
                   </div>
-                )}
-              </div>
-              <div className="md:pt-8">
-                <h1 className="font-display text-4xl md:text-5xl font-medium mb-4">{product.title}</h1>
-                <p className="font-display text-2xl font-semibold mb-8">
-                  {variant.price.currencyCode} {parseFloat(variant.price.amount).toFixed(2)}
-                </p>
-                {product.description && (
-                  <p className="text-muted-foreground leading-relaxed mb-8 whitespace-pre-line">{product.description}</p>
-                )}
-                {product.variants.edges.length > 1 && (
-                  <div className="mb-8">
-                    <h3 className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3">Variante</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {product.variants.edges.map((v: any) => (
-                        <button key={v.node.id}
-                          onClick={() => setSelectedVariantId(v.node.id)}
-                          disabled={!v.node.availableForSale}
-                          className={`px-4 py-2 text-sm border rounded-sm transition-smooth disabled:opacity-40 disabled:line-through ${selectedVariantId === v.node.id ? 'border-primary bg-primary text-primary-foreground' : 'border-border hover:border-primary'}`}>
-                          {v.node.title}
+
+                  {product.images.edges.length > 1 && (
+                    <div className="grid grid-cols-5 gap-2 mt-4">
+                      {product.images.edges.map((img: any, i: number) => (
+                        <button
+                          key={i}
+                          onClick={() => setActiveImage(i)}
+                          className="aspect-square overflow-hidden transition-all duration-300"
+                          style={{
+                            border:
+                              activeImage === i
+                                ? "1px solid #d4af37"
+                                : "1px solid rgba(212,175,55,0.15)",
+                            opacity: activeImage === i ? 1 : 0.6,
+                          }}
+                        >
+                          <img
+                            src={img.node.url}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
                         </button>
                       ))}
                     </div>
-                  </div>
-                )}
-                <Button onClick={handleAdd} disabled={isLoading || !variant?.availableForSale}
-                  size="lg" className="w-full h-14 rounded-sm bg-primary text-primary-foreground hover:bg-primary/90 text-base">
-                  {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : (
-                    <><ShoppingBag className="h-5 w-5 mr-2" /> {variant?.availableForSale ? 'Adicionar à sacola' : 'Esgotado'}</>
                   )}
-                </Button>
+                </div>
+
+                {/* Conteúdo */}
+                <div>
+                  <div className="flex items-center gap-3 mb-5">
+                    <span
+                      className="h-px w-12"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, transparent, rgba(212,175,55,0.7))",
+                      }}
+                    />
+                    <span
+                      className="text-[10px] uppercase tracking-[0.5em]"
+                      style={{ color: "#d4af37" }}
+                    >
+                      Peça do Ateliê
+                    </span>
+                  </div>
+
+                  <h1
+                    className="font-serif italic font-light text-4xl md:text-6xl leading-tight mb-6"
+                    style={{
+                      fontFamily:
+                        '"Cormorant Garamond","Playfair Display",Georgia,serif',
+                      color: "#f4ead0",
+                    }}
+                  >
+                    {product.title}
+                  </h1>
+
+                  {product.description && (
+                    <p
+                      className="font-serif italic text-base md:text-lg leading-relaxed mb-10 whitespace-pre-line"
+                      style={{ color: "rgba(244,234,208,0.75)" }}
+                    >
+                      {product.description}
+                    </p>
+                  )}
+
+                  {/* Variações elegantes */}
+                  {product.variants.edges.length > 1 && (
+                    <div className="mb-10">
+                      <h3
+                        className="text-[10px] uppercase tracking-[0.4em] mb-4"
+                        style={{ color: "rgba(212,175,55,0.7)" }}
+                      >
+                        Variações
+                      </h3>
+                      <div className="flex flex-wrap gap-3">
+                        {product.variants.edges.map((v: any) => {
+                          const sel = selectedVariantId === v.node.id;
+                          return (
+                            <button
+                              key={v.node.id}
+                              onClick={() => setSelectedVariantId(v.node.id)}
+                              disabled={!v.node.availableForSale}
+                              className="px-6 py-3 text-[10px] uppercase tracking-[0.35em] transition-all duration-500 disabled:opacity-30 disabled:line-through"
+                              style={{
+                                border: sel
+                                  ? "1px solid #d4af37"
+                                  : "1px solid rgba(212,175,55,0.25)",
+                                color: sel ? "#070707" : "#e9dcb1",
+                                background: sel
+                                  ? "linear-gradient(135deg, #f4d77a 0%, #d4af37 50%, #b8860b 100%)"
+                                  : "transparent",
+                              }}
+                            >
+                              {v.node.title}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Preço discreto */}
+                  <div className="mb-8">
+                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/45 mb-2">
+                      Investimento da peça
+                    </p>
+                    <p
+                      className="font-serif text-2xl md:text-3xl"
+                      style={{ color: "#d4af37" }}
+                    >
+                      A partir de {variant.price.currencyCode}{" "}
+                      {parseFloat(variant.price.amount).toFixed(2)}
+                    </p>
+                  </div>
+
+                  {/* CTA principal */}
+                  <button
+                    onClick={handleAdd}
+                    disabled={isLoading || !variant?.availableForSale}
+                    className="w-full py-5 text-[11px] uppercase tracking-[0.45em] transition-all duration-500 disabled:opacity-50"
+                    style={{
+                      color: "#070707",
+                      background:
+                        "linear-gradient(135deg, #f4d77a 0%, #d4af37 50%, #b8860b 100%)",
+                      boxShadow: "0 10px 40px rgba(212,175,55,0.25)",
+                    }}
+                  >
+                    {isLoading ? (
+                      <Loader2 className="h-5 w-5 animate-spin mx-auto" />
+                    ) : variant?.availableForSale ? (
+                      "Adicionar à sua coleção"
+                    ) : (
+                      "Indisponível"
+                    )}
+                  </button>
+                </div>
               </div>
-            </div>
-          </div>
+            </section>
+
+            {/* BLOCO PERSONALIZAÇÃO */}
+            <section
+              className="relative py-24 md:py-32 px-6 mt-12"
+              style={{
+                background:
+                  "radial-gradient(ellipse 60% 80% at 50% 50%, rgba(212,175,55,0.10) 0%, transparent 70%), #050505",
+                borderTop: "1px solid rgba(212,175,55,0.15)",
+                borderBottom: "1px solid rgba(212,175,55,0.15)",
+              }}
+            >
+              <div className="max-w-3xl mx-auto text-center">
+                <Sparkles
+                  className="h-6 w-6 mx-auto mb-6"
+                  style={{ color: "#d4af37" }}
+                />
+                <h2
+                  className="font-serif italic font-light text-3xl md:text-5xl mb-6"
+                  style={{
+                    fontFamily:
+                      '"Cormorant Garamond","Playfair Display",Georgia,serif',
+                    color: "#f4ead0",
+                  }}
+                >
+                  Torne essa peça{" "}
+                  <em style={{ color: "#d4af37" }}>única</em>
+                </h2>
+                <p
+                  className="text-base md:text-lg mb-10 italic"
+                  style={{ color: "rgba(244,234,208,0.7)" }}
+                >
+                  Transforme essa criação em um símbolo exclusivo seu.
+                </p>
+                <Link
+                  to="/criar-minha-joia"
+                  className="inline-flex items-center gap-3 px-12 py-4 text-[11px] uppercase tracking-[0.45em] transition-all duration-500 hover:gap-5"
+                  style={{
+                    color: "#d4af37",
+                    border: "1px solid rgba(212,175,55,0.55)",
+                  }}
+                >
+                  <span
+                    className="h-px w-6"
+                    style={{ background: "rgba(212,175,55,0.7)" }}
+                  />
+                  Criar versão personalizada
+                  <span
+                    className="h-px w-6"
+                    style={{ background: "rgba(212,175,55,0.7)" }}
+                  />
+                </Link>
+              </div>
+            </section>
+
+            {/* Outras peças */}
+            <ColecaoDestaque
+              eyebrow="Continue explorando"
+              title="Outras peças do ateliê"
+              subtitle="Criações que conversam com a sua escolha"
+              limit={3}
+              cols={3}
+            />
+          </>
         )}
       </main>
-      <Footer />
     </div>
   );
 };
