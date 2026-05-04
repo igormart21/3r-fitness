@@ -15,6 +15,8 @@ import veloxRoyaleOuroFem from "@/assets/linha-velox-royale-ouro-feminino.jpg";
 import veloxRoyalePrataMasc from "@/assets/linha-velox-royale-prata-masculino.jpg";
 import aeronPrataMasc from "@/assets/linha-aeron-prata-masculino.jpg";
 import aeronPrataFem from "@/assets/linha-aeron-prata-feminino.jpg";
+import strataOuro from "@/assets/linha-strata-ouro.jpg";
+import strataPrata from "@/assets/linha-strata-prata.jpg";
 
 const AtelieLinha = () => {
   const { slug } = useParams();
@@ -108,7 +110,11 @@ const AtelieLinha = () => {
   );
 
   const imgSrc =
-    linha.slug === "vigor" && forma === "masculino" && material === "ouro"
+    linha.slug === "forja" && material === "ouro"
+      ? strataOuro
+      : linha.slug === "forja" && material === "prata"
+      ? strataPrata
+      : linha.slug === "vigor" && forma === "masculino" && material === "ouro"
       ? vigorMasculino
       : linha.slug === "vigor" && forma === "masculino" && material === "prata"
       ? vigorMasculinoPrata
@@ -163,7 +169,7 @@ const AtelieLinha = () => {
             <div
               className="relative w-full overflow-hidden mx-auto group"
               style={{
-                aspectRatio: "1122 / 946",
+                aspectRatio: linha.slug === "forja" ? "1536 / 1024" : "1122 / 946",
                 maxHeight: "calc(100vh - 180px)",
                 background:
                   "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)",
@@ -181,7 +187,7 @@ const AtelieLinha = () => {
                 key={revealKey}
                 src={imgSrc}
                 alt={`${linha.nome} — ${material === "ouro" ? "Ouro 18K" : "Prata 925"}`}
-                className="absolute inset-0 w-full h-full object-contain reveal-piece will-change-transform"
+                className={`absolute inset-0 w-full h-full ${linha.slug === "forja" ? "object-cover" : "object-contain"} reveal-piece will-change-transform`}
                 style={{
                   filter:
                     material === "ouro"
