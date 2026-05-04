@@ -91,7 +91,7 @@ const AtelieModalidade = () => {
               {active && (
                 <img
                   key={revealKey}
-                  src={modalidade.slug === "musculacao" ? musculacaoCampaign : modalidade.slug === "ciclismo" ? ciclismoCampaign : active.campaign}
+                  src={modalidade.slug === "musculacao" && active.slug === "halter" ? musculacaoHalter : modalidade.slug === "musculacao" ? musculacaoCampaign : modalidade.slug === "ciclismo" ? ciclismoCampaign : active.campaign}
                   alt={active.nome}
                   className="absolute inset-0 w-full h-full object-contain reveal-line transition-transform duration-500 ease-out group-hover:scale-[2]"
                   style={{
