@@ -68,39 +68,58 @@ const AtelieModalidade = () => {
         <div className="container mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           {/* ESQUERDA — campanha */}
           <section className="lg:col-span-6 relative">
-            <div
-              className="relative w-full overflow-hidden mx-auto group"
-              style={{
-                aspectRatio: "1135 / 1410",
-                maxHeight: "calc(100vh - 100px)",
-                border: "1px solid rgba(212,175,55,0.18)",
-                boxShadow:
-                  "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08) inset",
-                background:
-                  "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)",
-                cursor: "zoom-in",
-              }}
-              onMouseMove={(e) => {
-                const r = e.currentTarget.getBoundingClientRect();
-                const x = ((e.clientX - r.left) / r.width) * 100;
-                const y = ((e.clientY - r.top) / r.height) * 100;
-                e.currentTarget.style.setProperty("--zx", `${x}%`);
-                e.currentTarget.style.setProperty("--zy", `${y}%`);
-              }}
-            >
-              {active && (
-                <img
-                  key={revealKey}
-                  src={modalidade.slug === "musculacao" && active.slug === "halter" ? musculacaoHalter : modalidade.slug === "musculacao" ? musculacaoCampaign : modalidade.slug === "ciclismo" ? ciclismoCampaign : active.campaign}
-                  alt={active.nome}
-                  className="absolute inset-0 w-full h-full object-contain reveal-line transition-transform duration-500 ease-out group-hover:scale-[2]"
+            {(() => {
+              const isHalter = modalidade.slug === "musculacao" && active?.slug === "halter";
+              const isMusc = modalidade.slug === "musculacao";
+              const isCiclismo = modalidade.slug === "ciclismo";
+              const imgSrc = isHalter
+                ? musculacaoHalter
+                : isMusc
+                ? musculacaoCampaign
+                : isCiclismo
+                ? ciclismoCampaign
+                : active?.campaign;
+              const ratio = isHalter
+                ? "1402 / 1122"
+                : isMusc
+                ? "1122 / 1402"
+                : isCiclismo
+                ? "1086 / 1448"
+                : "1135 / 1410";
+              return (
+                <div
+                  className="relative w-full overflow-hidden mx-auto group"
                   style={{
-                    filter: "contrast(1.05) saturate(1.04)",
-                    transformOrigin: "var(--zx, 50%) var(--zy, 50%)",
-                    objectPosition: active.slug === "vigor" ? "65% 50%" : "50% 50%",
+                    aspectRatio: ratio,
+                    maxHeight: "calc(100vh - 100px)",
+                    border: "1px solid rgba(212,175,55,0.18)",
+                    boxShadow:
+                      "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08) inset",
+                    background:
+                      "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)",
+                    cursor: "zoom-in",
                   }}
-                />
-              )}
+                  onMouseMove={(e) => {
+                    const r = e.currentTarget.getBoundingClientRect();
+                    const x = ((e.clientX - r.left) / r.width) * 100;
+                    const y = ((e.clientY - r.top) / r.height) * 100;
+                    e.currentTarget.style.setProperty("--zx", `${x}%`);
+                    e.currentTarget.style.setProperty("--zy", `${y}%`);
+                  }}
+                >
+                  {active && (
+                    <img
+                      key={revealKey}
+                      src={imgSrc}
+                      alt={active.nome}
+                      className="absolute inset-0 w-full h-full object-cover reveal-line transition-transform duration-500 ease-out group-hover:scale-[2]"
+                      style={{
+                        filter: "contrast(1.05) saturate(1.04)",
+                        transformOrigin: "var(--zx, 50%) var(--zy, 50%)",
+                        objectPosition: active.slug === "vigor" ? "65% 50%" : "50% 50%",
+                      }}
+                    />
+                  )}
               <div
                 aria-hidden
                 className="absolute inset-0 pointer-events-none"
