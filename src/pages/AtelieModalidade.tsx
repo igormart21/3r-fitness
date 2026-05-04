@@ -219,7 +219,7 @@ const AtelieModalidade = () => {
                         }
                       }}
                     >
-                      {l.nome}
+                      {l.slug === "forja" ? "STRATA" : l.nome}
                     </button>
                   );
                 })}
