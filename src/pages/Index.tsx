@@ -15,7 +15,6 @@ const Index = () => {
         <Hero />
         <Modalidades />
         <CinematicTransition />
-        <ColecaoDestaque limit={4} />
         <Testimonials />
       </main>
       <Footer />
