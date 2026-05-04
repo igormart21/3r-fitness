@@ -50,7 +50,7 @@ export const LINHAS: Record<string, Linha> = {
     assinatura: "Assinatura do Peso",
     frase: "O peso que esculpe o caráter.",
     imagens: { ouro: imperiumOuroClean, prata: imperiumPrataClean },
-    campaign: imperiumCampaign,
+    campaign: halterCampaign,
   },
   imperium: {
     slug: "imperium",
