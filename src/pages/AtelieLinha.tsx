@@ -281,8 +281,8 @@ const AtelieLinha = () => {
                   <Selector
                     label="Forma"
                     options={[
-                      { value: "masculino", label: "Masculino" },
-                      { value: "feminino", label: "Feminino" },
+                      { value: "masculino", label: "masculino" },
+                      { value: "feminino", label: "feminina" },
                     ]}
                     value={forma}
                     onChange={(v) => setForma(v as Forma)}
