@@ -293,7 +293,9 @@ const AtelieLinha = () => {
               <div className="mt-14">
                 <button
                   type="button"
-                  className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500"
+                  onClick={handleFinalizar}
+                  disabled={checkoutLoading}
+                  className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500 disabled:opacity-60 disabled:cursor-wait"
                   style={{
                     color: "#d4af37",
                     border: "1px solid rgba(212,175,55,0.55)",
@@ -304,25 +306,31 @@ const AtelieLinha = () => {
                     textTransform: "uppercase",
                   }}
                   onMouseEnter={(e) => {
+                    if (checkoutLoading) return;
                     e.currentTarget.style.background = "#d4af37";
                     e.currentTarget.style.color = "#000";
                   }}
                   onMouseLeave={(e) => {
+                    if (checkoutLoading) return;
                     e.currentTarget.style.background = "transparent";
                     e.currentTarget.style.color = "#d4af37";
                   }}
                 >
-                  <span
-                    className="h-px w-5"
-                    style={{ background: "currentColor" }}
-                  />
-                  Selecionar peça
-                  <span
-                    className="h-px w-5"
-                    style={{ background: "currentColor" }}
-                  />
+                  {checkoutLoading ? (
+                    <>
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      Preparando…
+                    </>
+                  ) : (
+                    <>
+                      <span className="h-px w-5" style={{ background: "currentColor" }} />
+                      Selecionar peça
+                      <span className="h-px w-5" style={{ background: "currentColor" }} />
+                    </>
+                  )}
                 </button>
               </div>
+
             </div>
           </section>
         </div>
