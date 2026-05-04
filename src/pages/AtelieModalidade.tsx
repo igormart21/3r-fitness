@@ -21,6 +21,7 @@ const AtelieModalidade = () => {
     linhas[0]?.slug,
   );
   const [revealKey, setRevealKey] = useState(0);
+  const [hoverSlug, setHoverSlug] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     setActiveSlug(linhas[0]?.slug);
@@ -35,11 +36,11 @@ const AtelieModalidade = () => {
       img.src = l.campaign;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeSlug]);
+  }, [activeSlug, hoverSlug]);
 
   if (!modalidade) return <Navigate to="/atelie/modalidades" replace />;
 
-  const active = linhas.find((l) => l.slug === activeSlug) ?? linhas[0];
+  const active = linhas.find((l) => l.slug === (hoverSlug ?? activeSlug)) ?? linhas[0];
 
   return (
     <div
@@ -185,12 +186,21 @@ const AtelieModalidade = () => {
               {/* Botões das linhas */}
               <div className="flex flex-wrap gap-3">
                 {linhas.map((l) => {
-                  const isActive = l.slug === active?.slug;
+                  const isActive = l.slug === activeSlug;
                   return (
                     <button
                       key={l.slug}
                       type="button"
                       onClick={() => setActiveSlug(l.slug)}
+                      onMouseEnter={(e) => {
+                        setHoverSlug(l.slug);
+                        if (!isActive) {
+                          e.currentTarget.style.borderColor =
+                            "rgba(212,175,55,0.75)";
+                          e.currentTarget.style.color = "#f4d77a";
+                        }
+                      }}
+                      onFocus={() => setHoverSlug(l.slug)}
                       className="transition-all duration-500"
                       style={{
                         padding: "12px 26px",
@@ -207,14 +217,8 @@ const AtelieModalidade = () => {
                           ? "0 0 28px rgba(212,175,55,0.35)"
                           : "none",
                       }}
-                      onMouseEnter={(e) => {
-                        if (!isActive) {
-                          e.currentTarget.style.borderColor =
-                            "rgba(212,175,55,0.75)";
-                          e.currentTarget.style.color = "#f4d77a";
-                        }
-                      }}
                       onMouseLeave={(e) => {
+                        setHoverSlug(undefined);
                         if (!isActive) {
                           e.currentTarget.style.borderColor =
                             "rgba(212,175,55,0.35)";
@@ -222,6 +226,7 @@ const AtelieModalidade = () => {
                             "rgba(244,215,122,0.9)";
                         }
                       }}
+                      onBlur={() => setHoverSlug(undefined)}
                     >
                       {l.slug === "forja" ? "STRATA" : l.nome}
                     </button>
