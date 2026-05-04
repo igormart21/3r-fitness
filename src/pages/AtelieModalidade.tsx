@@ -62,11 +62,11 @@ const AtelieModalidade = () => {
       </header>
 
       <main className="relative w-full min-h-screen pt-28 md:pt-32 pb-20">
-        <div className="container mx-auto max-w-7xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="container mx-auto max-w-7xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           {/* ESQUERDA — campanha */}
-          <section className="lg:col-span-8 relative">
+          <section className="lg:col-span-7 relative">
             <div
-              className="relative w-full overflow-hidden"
+              className="relative w-full overflow-hidden flex items-center justify-center p-8 md:p-12"
               style={{
                 aspectRatio: "4 / 5",
                 border: "1px solid rgba(212,175,55,0.18)",
@@ -81,7 +81,7 @@ const AtelieModalidade = () => {
                   key={revealKey}
                   src={active.campaign}
                   alt={active.nome}
-                  className="absolute inset-0 w-full h-full object-cover reveal-line"
+                  className="relative max-w-[78%] max-h-[78%] w-auto h-auto object-contain reveal-line"
                   style={{ filter: "contrast(1.05) saturate(1.04)" }}
                 />
               )}
