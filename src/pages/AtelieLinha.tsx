@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
+import {
+  storefrontApiRequest,
+  PRODUCT_BY_HANDLE_QUERY,
+  createShopifyCart,
+} from "@/lib/shopify";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
 import vigorMasculinoPrata from "@/assets/linha-vigor-masculino-prata.jpg";
 import veloxRoyaleOuroMasc from "@/assets/linha-velox-royale-ouro-masculino.jpg";
@@ -17,6 +23,71 @@ const AtelieLinha = () => {
   const [material, setMaterial] = useState<Material>("ouro");
   const [forma, setForma] = useState<Forma>("masculino");
   const [revealKey, setRevealKey] = useState(0);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+
+  const handleFinalizar = async () => {
+    if (!linha || checkoutLoading) return;
+    setCheckoutLoading(true);
+    try {
+      const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle: linha.slug });
+      const product = data?.data?.product;
+      if (!product) {
+        toast.error("Produto ainda não disponível", {
+          description: "Esta linha ainda não está cadastrada na loja.",
+        });
+        return;
+      }
+
+      const variants = product.variants?.edges?.map((e: any) => e.node) || [];
+      const norm = (s: string) => s.toLowerCase().trim();
+      const wantedMaterial = norm(material);
+      const wantedForma = norm(forma);
+
+      const matchScore = (v: any) => {
+        let score = 0;
+        let matched = 0;
+        for (const opt of v.selectedOptions || []) {
+          const name = norm(opt.name);
+          const value = norm(opt.value);
+          if (name.includes("material") || name.includes("metal")) {
+            if (value === wantedMaterial || value.includes(wantedMaterial)) { score += 2; matched++; }
+            else { score -= 1; }
+          } else if (name.includes("forma") || name.includes("gênero") || name.includes("genero") || name.includes("modelo")) {
+            if (value === wantedForma || value.includes(wantedForma)) { score += 2; matched++; }
+            else { score -= 1; }
+          }
+        }
+        return { score, matched, available: v.availableForSale };
+      };
+
+      const ranked = variants
+        .map((v: any) => ({ v, ...matchScore(v) }))
+        .sort((a: any, b: any) => {
+          if (a.available !== b.available) return a.available ? -1 : 1;
+          if (b.score !== a.score) return b.score - a.score;
+          return b.matched - a.matched;
+        });
+
+      const chosen = ranked[0]?.v || variants[0];
+      if (!chosen?.id) {
+        toast.error("Variante indisponível");
+        return;
+      }
+
+      const result = await createShopifyCart({ variantId: chosen.id, quantity: 1 });
+      if (!result?.checkoutUrl) {
+        toast.error("Não foi possível iniciar o checkout");
+        return;
+      }
+      window.location.href = result.checkoutUrl;
+    } catch (err) {
+      console.error(err);
+      toast.error("Erro ao finalizar peça");
+    } finally {
+      setCheckoutLoading(false);
+    }
+  };
+
 
   useEffect(() => {
     setRevealKey((k) => k + 1);
@@ -222,7 +293,9 @@ const AtelieLinha = () => {
               <div className="mt-14">
                 <button
                   type="button"
-                  className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500"
+                  onClick={handleFinalizar}
+                  disabled={checkoutLoading}
+                  className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500 disabled:opacity-60 disabled:cursor-wait"
                   style={{
                     color: "#d4af37",
                     border: "1px solid rgba(212,175,55,0.55)",
@@ -233,25 +306,31 @@ const AtelieLinha = () => {
                     textTransform: "uppercase",
                   }}
                   onMouseEnter={(e) => {
+                    if (checkoutLoading) return;
                     e.currentTarget.style.background = "#d4af37";
                     e.currentTarget.style.color = "#000";
                   }}
                   onMouseLeave={(e) => {
+                    if (checkoutLoading) return;
                     e.currentTarget.style.background = "transparent";
                     e.currentTarget.style.color = "#d4af37";
                   }}
                 >
-                  <span
-                    className="h-px w-5"
-                    style={{ background: "currentColor" }}
-                  />
-                  Selecionar peça
-                  <span
-                    className="h-px w-5"
-                    style={{ background: "currentColor" }}
-                  />
+                  {checkoutLoading ? (
+                    <>
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      Preparando…
+                    </>
+                  ) : (
+                    <>
+                      <span className="h-px w-5" style={{ background: "currentColor" }} />
+                      Selecionar peça
+                      <span className="h-px w-5" style={{ background: "currentColor" }} />
+                    </>
+                  )}
                 </button>
               </div>
+
             </div>
           </section>
         </div>
