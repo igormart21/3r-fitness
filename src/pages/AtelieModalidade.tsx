@@ -91,7 +91,7 @@ const AtelieModalidade = () => {
                   key={revealKey}
                   src={modalidade.slug === "musculacao" ? musculacaoCampaign : active.campaign}
                   alt={active.nome}
-                  className="absolute inset-0 w-full h-full object-cover reveal-line transition-transform duration-500 ease-out group-hover:scale-[2]"
+                  className="absolute inset-0 w-full h-full object-contain reveal-line transition-transform duration-500 ease-out group-hover:scale-[2]"
                   style={{
                     filter: "contrast(1.05) saturate(1.04)",
                     transformOrigin: "var(--zx, 50%) var(--zy, 50%)",
