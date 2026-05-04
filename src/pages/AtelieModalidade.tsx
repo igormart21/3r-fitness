@@ -98,7 +98,7 @@ const AtelieModalidade = () => {
           </section>
 
           {/* DIREITA — seleção */}
-          <section className="lg:col-span-5">
+          <section className="lg:col-span-6">
             <div className="max-w-md mx-auto lg:mx-0">
               <p
                 className="text-[10px] uppercase tracking-[0.5em] mb-4"
