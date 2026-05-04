@@ -5,6 +5,7 @@ import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
 import vigorMasculinoPrata from "@/assets/linha-vigor-masculino-prata.jpg";
 import veloxRoyaleOuroMasc from "@/assets/linha-velox-royale-ouro-masculino.jpg";
+import veloxRoyaleOuroFem from "@/assets/linha-velox-royale-ouro-feminino.jpg";
 
 const AtelieLinha = () => {
   const { slug } = useParams();
