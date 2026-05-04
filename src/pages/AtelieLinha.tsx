@@ -70,7 +70,7 @@ const AtelieLinha = () => {
             <div
               className="relative w-full overflow-hidden mx-auto"
               style={{
-                aspectRatio: "4 / 5",
+                aspectRatio: "1122 / 946",
                 maxHeight: "calc(100vh - 180px)",
                 background:
                   "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)",
