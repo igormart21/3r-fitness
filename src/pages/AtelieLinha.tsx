@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
@@ -10,10 +10,6 @@ const AtelieLinha = () => {
   const [material, setMaterial] = useState<Material>("ouro");
   const [forma, setForma] = useState<Forma>("classico");
   const [revealKey, setRevealKey] = useState(0);
-  const [lens, setLens] = useState<{ x: number; y: number; bx: number; by: number; visible: boolean }>({ x: 0, y: 0, bx: 50, by: 50, visible: false });
-  const lensSize = 180;
-  const lensZoom = 2.4;
-  const frameRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setRevealKey((k) => k + 1);
