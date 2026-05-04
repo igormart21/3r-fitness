@@ -282,7 +282,79 @@ const ProductDetail = () => {
                       "Indisponível"
                     )}
                   </button>
+
+                  {/* Aviso discreto sob o CTA */}
+                  <div className="mt-6 text-center space-y-1.5">
+                    <p
+                      className="text-[10px] uppercase tracking-[0.4em] font-light"
+                      style={{ color: "rgba(255,255,255,0.55)" }}
+                    >
+                      Peça produzida sob demanda
+                    </p>
+                    <p
+                      className="text-[10px] uppercase tracking-[0.35em] font-light"
+                      style={{ color: "rgba(255,255,255,0.4)" }}
+                    >
+                      Prazo de entrega: 7 a 12 dias úteis
+                    </p>
+                  </div>
                 </div>
+              </div>
+            </section>
+
+            {/* PRODUÇÃO SOB MEDIDA */}
+            <section className="relative px-6 py-24 md:py-32">
+              <div className="max-w-2xl mx-auto text-center">
+                <div
+                  className="mx-auto mb-10 h-px w-16"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, transparent, rgba(212,175,55,0.7), transparent)",
+                  }}
+                />
+                <p
+                  className="text-[10px] uppercase tracking-[0.6em] mb-8"
+                  style={{ color: "rgba(212,175,55,0.75)" }}
+                >
+                  Produção sob medida
+                </p>
+                <div
+                  className="space-y-7 font-light"
+                  style={{
+                    fontFamily:
+                      '"Fraunces","Cormorant Garamond",Georgia,serif',
+                    color: "rgba(244,234,208,0.78)",
+                    fontSize: "clamp(15px, 1.25vw, 18px)",
+                    lineHeight: 1.85,
+                    letterSpacing: "0.015em",
+                  }}
+                >
+                  <p className="italic">
+                    Cada peça é criada individualmente após a confirmação do
+                    pedido, passando por um processo artesanal que garante
+                    acabamento único, precisão e identidade em cada detalhe.
+                  </p>
+                  <p
+                    className="text-[11px] not-italic uppercase tracking-[0.45em]"
+                    style={{ color: "#d4af37" }}
+                  >
+                    Prazo total de produção e envio
+                    <br />
+                    <span className="text-white/85">7 a 12 dias úteis</span>
+                  </p>
+                  <p className="italic">
+                    Você não está adquirindo um produto pronto — está
+                    garantindo uma peça construída especialmente para
+                    acompanhar a sua jornada.
+                  </p>
+                </div>
+                <div
+                  className="mx-auto mt-12 h-px w-16"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, transparent, rgba(212,175,55,0.7), transparent)",
+                  }}
+                />
               </div>
             </section>
 
