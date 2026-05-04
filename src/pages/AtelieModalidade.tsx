@@ -94,6 +94,7 @@ const AtelieModalidade = () => {
                   style={{
                     filter: "contrast(1.05) saturate(1.04)",
                     transformOrigin: "var(--zx, 50%) var(--zy, 50%)",
+                    objectPosition: active.slug === "vigor" ? "65% 50%" : "50% 50%",
                   }}
                 />
               )}
