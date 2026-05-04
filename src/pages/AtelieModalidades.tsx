@@ -180,8 +180,9 @@ const AtelieModalidades = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (sessionStorage.getItem("atelie-modalidades-auto") === "1") return;
-    sessionStorage.setItem("atelie-modalidades-auto", "1");
+
+    // Sempre iniciar pelo topo (hero) ao entrar na página
+    window.scrollTo(0, 0);
 
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
     const delay = isMobile ? 3500 : 3000;
