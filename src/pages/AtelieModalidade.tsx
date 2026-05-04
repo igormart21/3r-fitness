@@ -69,8 +69,8 @@ const AtelieModalidade = () => {
             <div
               className="relative w-full overflow-hidden mx-auto group"
               style={{
-                aspectRatio: "3 / 5",
-                maxHeight: "calc(100vh - 140px)",
+                aspectRatio: "1135 / 1410",
+                maxHeight: "calc(100vh - 100px)",
                 border: "1px solid rgba(212,175,55,0.18)",
                 boxShadow:
                   "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08) inset",
@@ -91,7 +91,7 @@ const AtelieModalidade = () => {
                   key={revealKey}
                   src={modalidade.slug === "musculacao" ? musculacaoCampaign : active.campaign}
                   alt={active.nome}
-                  className="absolute inset-0 w-full h-full object-cover reveal-line transition-transform duration-500 ease-out group-hover:scale-[2]"
+                  className="absolute inset-0 w-full h-full object-contain reveal-line transition-transform duration-500 ease-out group-hover:scale-[2]"
                   style={{
                     filter: "contrast(1.05) saturate(1.04)",
                     transformOrigin: "var(--zx, 50%) var(--zy, 50%)",
