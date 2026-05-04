@@ -63,8 +63,8 @@ export const LINHAS: Record<string, Linha> = {
     imagens: { ouro: imperiumOuroClean, prata: imperiumPrataClean },
     campaign: imperiumCampaign,
   },
-  forja: {
-    slug: "forja",
+  strata: {
+    slug: "strata",
     nome: "LINE STRATA",
     assinatura: "Assinatura da Intensidade",
     frase: "A intensidade transformada em arte.",
@@ -134,7 +134,7 @@ export const MODALIDADES: Modalidade[] = [
     nome: "Crossfit",
     subtitulo: "A intensidade como arte",
     img: sportCrossfit,
-    linhas: ["imperium", "forja"],
+    linhas: ["imperium", "strata"],
   },
   {
     slug: "corrida",
