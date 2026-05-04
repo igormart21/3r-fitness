@@ -88,7 +88,7 @@ export const LINHAS: Record<string, Linha> = {
   },
   horizonte: {
     slug: "horizonte",
-    nome: "HORIZONTE",
+    nome: "VELOX ROYALE",
     assinatura: "Assinatura da Distância",
     frase: "Horizontes conquistados em silêncio.",
     imagens: { ouro: imperiumOuroClean, prata: imperiumPrataClean },
@@ -96,7 +96,7 @@ export const LINHAS: Record<string, Linha> = {
   },
   cadencia: {
     slug: "cadencia",
-    nome: "CADÊNCIA",
+    nome: "AERON",
     assinatura: "Assinatura do Compasso",
     frase: "Cada giro, um pulso eterno.",
     imagens: { ouro: triadeOuroClean, prata: triadePrataClean },
