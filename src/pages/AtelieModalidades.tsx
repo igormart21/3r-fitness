@@ -64,7 +64,7 @@ const AtelieModalidades = () => {
 
         <div className="container mx-auto max-w-7xl px-6 grid grid-cols-2 md:grid-cols-3 auto-rows-[260px] sm:auto-rows-[320px] md:auto-rows-[280px] gap-6 sm:gap-8 md:gap-10">
           {(() => {
-            const order = ["fisiculturismo","musculacao","corrida","ciclismo","crossfit","triathlon"];
+            const order = ["triathlon","fisiculturismo","musculacao","corrida","ciclismo","crossfit"];
             return order
               .map((s) => MODALIDADES.find((m) => m.slug === s))
               .filter(Boolean) as typeof MODALIDADES;
@@ -96,8 +96,13 @@ const AtelieModalidades = () => {
                 src={m.img}
                 alt={m.nome}
                 loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-110"
-                style={{ filter: "contrast(1.04) saturate(1.02)" }}
+                className={`absolute inset-0 w-full h-full transition-transform duration-[1600ms] ease-out group-hover:scale-110 ${
+                  i === 0 ? "object-contain" : "object-cover"
+                }`}
+                style={{
+                  filter: "contrast(1.04) saturate(1.02)",
+                  background: i === 0 ? "#050505" : undefined,
+                }}
               />
               <div
                 className="absolute inset-0"
