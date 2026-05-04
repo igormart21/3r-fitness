@@ -62,7 +62,7 @@ const AtelieModalidades = () => {
           </p>
         </div>
 
-        <div className="container mx-auto max-w-7xl px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+        <div className="container mx-auto max-w-7xl px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10" style={{ maxWidth: "55%" }}>
           {MODALIDADES.map((m, i) => (
             <Link
               key={m.slug}
