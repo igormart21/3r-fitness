@@ -1,6 +1,32 @@
+import { useEffect, useState } from "react";
 import heroImg from "@/assets/hero-atletas.png";
+import hero1 from "@/assets/hero-1.png";
+import hero2 from "@/assets/hero-2.png";
+import hero3 from "@/assets/hero-3.png";
+import hero4 from "@/assets/hero-4.png";
+import hero5 from "@/assets/hero-5.png";
+
+const HERO_IMAGES = [heroImg, hero1, hero2, hero3, hero4, hero5];
+const DISPLAY_MS = 3800;
+const FADE_MS = 1400;
 
 export const Hero = () => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    HERO_IMAGES.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % HERO_IMAGES.length);
+    }, DISPLAY_MS);
+    return () => clearInterval(id);
+  }, []);
+
   const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const target = document.getElementById("modalidades");
@@ -32,16 +58,28 @@ export const Hero = () => {
       style={{ minHeight: "100vh", backgroundColor: "#000" }}
       aria-label="Hero"
     >
-      <img
-        src={heroImg}
-        alt="Atletas 3R Fitness"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{
-          objectPosition: "center 30%",
-          transform: "scale(1.04)",
-          filter: "contrast(1.04) saturate(1.02)",
-        }}
-      />
+      {HERO_IMAGES.map((src, i) => {
+        const isActive = i === index;
+        return (
+          <img
+            key={i}
+            src={src}
+            alt="Atletas 3R Fitness"
+            aria-hidden={!isActive}
+            className="hero-slide absolute inset-0 w-full h-full object-cover"
+            style={{
+              objectPosition: "center 30%",
+              opacity: isActive ? 1 : 0,
+              transform: isActive ? "scale(1.05)" : "scale(1.0)",
+              filter: isActive
+                ? "contrast(1.05) saturate(1.03) brightness(1) blur(0px)"
+                : "contrast(1.02) saturate(1.0) brightness(0.92) blur(6px)",
+              transition: `opacity ${FADE_MS}ms cubic-bezier(0.65,0,0.35,1), transform ${DISPLAY_MS + FADE_MS}ms cubic-bezier(0.22,1,0.36,1), filter ${FADE_MS}ms ease-in-out`,
+              willChange: "opacity, transform, filter",
+            }}
+          />
+        );
+      })}
 
       {/* Soft dark gradient on the left for text readability */}
       <div
