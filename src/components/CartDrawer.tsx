@@ -72,6 +72,7 @@ export const CartDrawer = () => {
             </div>
           ) : (
             <>
+              <ShippingAnnouncementBar />
               <div className="flex-1 overflow-y-auto px-8 py-6 space-y-8">
                 {items.map((item) => (
                   <div key={item.variantId} className="group">
