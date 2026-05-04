@@ -73,12 +73,15 @@ const AtelieModalidade = () => {
               const isHalter = modalidade.slug === "musculacao" && active?.slug === "halter";
               const isMusc = modalidade.slug === "musculacao";
               const isCiclismo = modalidade.slug === "ciclismo";
+              const isCrossfit = modalidade.slug === "crossfit";
               const imgSrc = isHalter
                 ? musculacaoHalter
                 : isMusc
                 ? musculacaoCampaign
                 : isCiclismo
                 ? ciclismoCampaign
+                : isCrossfit
+                ? crossfitCampaign
                 : active?.campaign;
               const ratio = isHalter
                 ? "1402 / 1122"
@@ -86,6 +89,8 @@ const AtelieModalidade = () => {
                 ? "1122 / 1402"
                 : isCiclismo
                 ? "1086 / 1448"
+                : isCrossfit
+                ? "1536 / 1024"
                 : "1135 / 1410";
               return (
                 <div
