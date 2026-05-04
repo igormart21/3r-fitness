@@ -96,7 +96,7 @@ const AtelieLinha = () => {
                 key={revealKey}
                 src={imgSrc}
                 alt={`${linha.nome} — ${material === "ouro" ? "Ouro 18K" : "Prata 925"}`}
-                className="absolute inset-0 w-full h-full object-contain reveal-piece transition-transform duration-500 ease-out group-hover:scale-[1.35]"
+                className="absolute inset-0 w-full h-full object-contain reveal-piece transition-transform duration-500 ease-out group-hover:scale-[2]"
                 style={{
                   filter:
                     material === "ouro"
