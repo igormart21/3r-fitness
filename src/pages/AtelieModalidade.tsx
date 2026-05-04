@@ -5,6 +5,7 @@ import { MODALIDADES, LINHAS } from "@/data/atelie";
 import musculacaoCampaign from "@/assets/modalidade-musculacao-campaign.jpg";
 import musculacaoHalter from "@/assets/modalidade-musculacao-halter.jpg";
 import ciclismoCampaign from "@/assets/modalidade-ciclismo-campaign.jpg";
+import crossfitCampaign from "@/assets/modalidade-crossfit-campaign.jpg";
 
 const AtelieModalidade = () => {
   const { slug } = useParams();
