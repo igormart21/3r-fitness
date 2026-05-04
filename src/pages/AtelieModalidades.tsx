@@ -154,6 +154,7 @@ const AtelieModalidades = () => {
           ))}
         </div>
       </main>
+      </div>
     </div>
   );
 };
