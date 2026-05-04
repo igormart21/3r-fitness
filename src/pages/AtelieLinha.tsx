@@ -108,6 +108,7 @@ const AtelieLinha = () => {
   const parentModalidade = MODALIDADES.find((m) =>
     m.linhas.includes(linha.slug),
   );
+  const showFormaSelector = linha.slug !== "halter" && parentModalidade?.slug !== "crossfit";
 
   const imgSrc =
     linha.slug === "strata" && material === "ouro"
@@ -283,7 +284,7 @@ const AtelieLinha = () => {
                   value={material}
                   onChange={(v) => setMaterial(v as Material)}
                 />
-                {linha.slug !== "halter" && linha.slug !== "strata" && (
+                {showFormaSelector && (
                   <Selector
                     label="Forma"
                     options={[
