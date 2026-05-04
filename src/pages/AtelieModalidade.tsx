@@ -66,7 +66,7 @@ const AtelieModalidade = () => {
           {/* ESQUERDA — campanha */}
           <section className="lg:col-span-6 relative">
             <div
-              className="relative w-full overflow-hidden mx-auto"
+              className="relative w-full overflow-hidden mx-auto group"
               style={{
                 aspectRatio: "4 / 5",
                 maxHeight: "calc(100vh - 180px)",
@@ -75,6 +75,14 @@ const AtelieModalidade = () => {
                   "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08) inset",
                 background:
                   "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)",
+                cursor: "zoom-in",
+              }}
+              onMouseMove={(e) => {
+                const r = e.currentTarget.getBoundingClientRect();
+                const x = ((e.clientX - r.left) / r.width) * 100;
+                const y = ((e.clientY - r.top) / r.height) * 100;
+                e.currentTarget.style.setProperty("--zx", `${x}%`);
+                e.currentTarget.style.setProperty("--zy", `${y}%`);
               }}
             >
               {active && (
@@ -82,8 +90,11 @@ const AtelieModalidade = () => {
                   key={revealKey}
                   src={active.campaign}
                   alt={active.nome}
-                  className="absolute inset-0 w-full h-full object-cover reveal-line"
-                  style={{ filter: "contrast(1.05) saturate(1.04)" }}
+                  className="absolute inset-0 w-full h-full object-cover reveal-line transition-transform duration-500 ease-out group-hover:scale-[1.35]"
+                  style={{
+                    filter: "contrast(1.05) saturate(1.04)",
+                    transformOrigin: "var(--zx, 50%) var(--zy, 50%)",
+                  }}
                 />
               )}
               <div
