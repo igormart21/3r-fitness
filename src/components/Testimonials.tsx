@@ -161,8 +161,8 @@ export const Testimonials = () => {
         />
       )}
 
-      {/* Botões sociais — canto direito da seção */}
-      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 flex flex-col gap-3">
+      {/* Botões sociais — canto inferior direito da seção */}
+      <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 flex flex-row gap-3">
         <a
           href="https://instagram.com/3rfitnessjr"
           target="_blank"
