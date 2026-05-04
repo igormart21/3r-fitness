@@ -97,7 +97,7 @@ const AtelieModalidade = () => {
           </section>
 
           {/* DIREITA — seleção */}
-          <section className="lg:col-span-4">
+          <section className="lg:col-span-5">
             <div className="max-w-md mx-auto lg:mx-0">
               <p
                 className="text-[10px] uppercase tracking-[0.5em] mb-4"
@@ -128,7 +128,7 @@ const AtelieModalidade = () => {
               </p>
 
               <div
-                className="my-8 h-px w-20"
+                className="my-10 h-px w-20"
                 style={{
                   background:
                     "linear-gradient(90deg, rgba(212,175,55,0.7), transparent)",
@@ -184,7 +184,7 @@ const AtelieModalidade = () => {
 
               {/* Detalhes da linha ativa */}
               {active && (
-                <div key={`info-${active.slug}`} className="mt-12 reveal-info">
+                <div key={`info-${active.slug}`} className="mt-14 reveal-info">
                   <h2
                     className="font-display font-light leading-none"
                     style={{
@@ -196,7 +196,7 @@ const AtelieModalidade = () => {
                     {active.nome}
                   </h2>
                   <p
-                    className="mt-3 italic font-light"
+                    className="mt-5 italic font-light"
                     style={{
                       fontFamily: '"Fraunces",serif',
                       color: "rgba(244,215,122,0.9)",
@@ -207,7 +207,7 @@ const AtelieModalidade = () => {
                     {active.assinatura}
                   </p>
                   <p
-                    className="mt-5 font-light leading-relaxed italic"
+                    className="mt-7 font-light leading-relaxed italic"
                     style={{
                       fontFamily: '"Fraunces",serif',
                       color: "rgba(255,255,255,0.72)",
@@ -217,7 +217,7 @@ const AtelieModalidade = () => {
                     {active.frase}
                   </p>
 
-                  <div className="mt-10">
+                  <div className="mt-12">
                     <button
                       type="button"
                       onClick={() => navigate(`/atelie/linha/${active.slug}`)}
