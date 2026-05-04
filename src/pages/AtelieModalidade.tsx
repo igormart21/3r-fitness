@@ -76,7 +76,7 @@ const AtelieModalidade = () => {
               const isMusc = modalidade.slug === "musculacao";
               const isCiclismo = modalidade.slug === "ciclismo";
               const isCrossfit = modalidade.slug === "crossfit";
-              const isCrossfitStrata = isCrossfit && active?.slug === "forja";
+              const isCrossfitStrata = isCrossfit && active?.slug === "strata";
               const imgSrc = isHalter
                 ? musculacaoHalter
                 : isMusc
@@ -228,7 +228,7 @@ const AtelieModalidade = () => {
                       }}
                       onBlur={() => setHoverSlug(undefined)}
                     >
-                      {l.slug === "forja" ? "STRATA" : l.nome}
+                      {l.slug === "strata" ? "STRATA" : l.nome}
                     </button>
                   );
                 })}

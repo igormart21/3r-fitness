@@ -110,9 +110,9 @@ const AtelieLinha = () => {
   );
 
   const imgSrc =
-    linha.slug === "forja" && material === "ouro"
+    linha.slug === "strata" && material === "ouro"
       ? strataOuro
-      : linha.slug === "forja" && material === "prata"
+      : linha.slug === "strata" && material === "prata"
       ? strataPrata
       : linha.slug === "vigor" && forma === "masculino" && material === "ouro"
       ? vigorMasculino
@@ -169,7 +169,7 @@ const AtelieLinha = () => {
             <div
               className="relative w-full overflow-hidden mx-auto group"
               style={{
-                aspectRatio: linha.slug === "forja" ? "1536 / 1024" : "1122 / 946",
+                aspectRatio: linha.slug === "strata" ? "1536 / 1024" : "1122 / 946",
                 maxHeight: "calc(100vh - 180px)",
                 background:
                   "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)",
@@ -187,7 +187,7 @@ const AtelieLinha = () => {
                 key={revealKey}
                 src={imgSrc}
                 alt={`${linha.nome} — ${material === "ouro" ? "Ouro 18K" : "Prata 925"}`}
-                className={`absolute inset-0 w-full h-full ${linha.slug === "forja" ? "object-cover" : "object-contain"} reveal-piece will-change-transform`}
+                className={`absolute inset-0 w-full h-full ${linha.slug === "strata" ? "object-cover" : "object-contain"} reveal-piece will-change-transform`}
                 style={{
                   filter:
                     material === "ouro"
@@ -283,7 +283,7 @@ const AtelieLinha = () => {
                   value={material}
                   onChange={(v) => setMaterial(v as Material)}
                 />
-                {linha.slug !== "halter" && linha.slug !== "forja" && (
+                {linha.slug !== "halter" && linha.slug !== "strata" && (
                   <Selector
                     label="Forma"
                     options={[
