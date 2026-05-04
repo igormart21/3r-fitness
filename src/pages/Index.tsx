@@ -16,10 +16,7 @@ const Index = () => {
         <Modalidades />
         <CinematicTransition />
         <ColecaoDestaque limit={4} />
-        <BrandStatement />
-        <PersonalizationCTA />
         <Testimonials />
-        <ClosingCTA />
       </main>
       <Footer />
     </div>
