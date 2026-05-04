@@ -218,6 +218,7 @@ const AtelieModalidade = () => {
                           : "none",
                       }}
                       onMouseLeave={(e) => {
+                        setHoverSlug(undefined);
                         if (!isActive) {
                           e.currentTarget.style.borderColor =
                             "rgba(212,175,55,0.35)";
@@ -225,6 +226,7 @@ const AtelieModalidade = () => {
                             "rgba(244,215,122,0.9)";
                         }
                       }}
+                      onBlur={() => setHoverSlug(undefined)}
                     >
                       {l.slug === "forja" ? "STRATA" : l.nome}
                     </button>
