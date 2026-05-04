@@ -8,48 +8,20 @@ import vigorOuroClean from "@/assets/linha-vigor-ouro-clean.jpg";
 import vigorPrataClean from "@/assets/linha-vigor-prata-clean.jpg";
 import vigorCampaign from "@/assets/linha-vigor-ouro-only.jpg";
 import halterCampaign from "@/assets/linha-halter-ouro-only.jpg";
+import halterPrata from "@/assets/linha-halter-prata.jpg";
 import imperiumOuroClean from "@/assets/linha-imperium-ouro-clean.jpg";
 import imperiumPrataClean from "@/assets/linha-imperium-prata-clean.jpg";
 import imperiumCampaign from "@/assets/linha-imperium-ouro.jpg";
 import triadeOuroClean from "@/assets/linha-triade-ouro-clean.jpg";
 import triadePrataClean from "@/assets/linha-triade-prata-clean.jpg";
 import triadeCampaign from "@/assets/linha-triade-ouro.jpg";
-
-export type Material = "ouro" | "prata";
-export type Forma = "masculino" | "feminino";
-
-export type Linha = {
-  slug: string;
-  nome: string;
-  assinatura: string;
-  frase: string;
-  imagens: Record<Material, string>;
-  campaign: string;
-};
-
-export type Modalidade = {
-  slug: string;
-  nome: string;
-  img: string;
-  subtitulo: string;
-  linhas: string[];
-};
-
-export const LINHAS: Record<string, Linha> = {
-  vigor: {
-    slug: "vigor",
-    nome: "VIGOR",
-    assinatura: "Assinatura da Força",
-    frase: "Força que se constrói diariamente.",
-    imagens: { ouro: vigorOuroClean, prata: vigorPrataClean },
-    campaign: vigorCampaign,
-  },
+...
   halter: {
     slug: "halter",
     nome: "HALTER",
     assinatura: "Assinatura do Peso",
     frase: "O peso que esculpe o caráter.",
-    imagens: { ouro: imperiumOuroClean, prata: imperiumPrataClean },
+    imagens: { ouro: imperiumOuroClean, prata: halterPrata },
     campaign: halterCampaign,
   },
   imperium: {
