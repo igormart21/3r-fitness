@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ShoppingBag, Minus, Plus, X, ArrowRight, Loader2 } from "lucide-react";
+import { ShippingAnnouncementBar } from "@/components/ShippingAnnouncementBar";
 import { useCartStore } from "@/stores/cartStore";
 
 export const CartDrawer = () => {
