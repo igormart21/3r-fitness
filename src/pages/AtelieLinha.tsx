@@ -77,32 +77,40 @@ const AtelieLinha = () => {
                 border: "1px solid rgba(212,175,55,0.18)",
                 boxShadow:
                   "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08) inset",
-                cursor: "zoom-in",
-              }}
-              onMouseMove={(e) => {
-                const r = e.currentTarget.getBoundingClientRect();
-                const x = ((e.clientX - r.left) / r.width) * 100;
-                const y = ((e.clientY - r.top) / r.height) * 100;
-                e.currentTarget.style.setProperty("--zx", `${x}%`);
-                e.currentTarget.style.setProperty("--zy", `${y}%`);
               }}
             >
               <div
                 aria-hidden
-                className="absolute inset-0 pointer-events-none transition-opacity duration-700"
+                className="absolute inset-0 pointer-events-none transition-opacity duration-700 group-hover:opacity-80"
                 style={{ background: lightTone }}
               />
               <img
                 key={revealKey}
                 src={imgSrc}
                 alt={`${linha.nome} — ${material === "ouro" ? "Ouro 18K" : "Prata 925"}`}
-                className="absolute inset-0 w-full h-full object-contain reveal-piece transition-transform duration-[700ms] ease-out group-hover:scale-[3.2]"
+                className="absolute inset-0 w-full h-full object-contain reveal-piece will-change-transform"
                 style={{
                   filter:
                     material === "ouro"
                       ? "saturate(1.05) contrast(1.04) brightness(1.02)"
                       : "saturate(0.92) contrast(1.05) brightness(1) hue-rotate(-2deg)",
-                  transformOrigin: "var(--zx, 50%) var(--zy, 50%)",
+                  transformOrigin: "50% 42%",
+                  transition:
+                    "transform 600ms cubic-bezier(0.22,1,0.36,1), filter 600ms ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.1)";
+                  e.currentTarget.style.filter =
+                    material === "ouro"
+                      ? "saturate(1.1) contrast(1.08) brightness(1.05)"
+                      : "saturate(0.95) contrast(1.08) brightness(1.03) hue-rotate(-2deg)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "";
+                  e.currentTarget.style.filter =
+                    material === "ouro"
+                      ? "saturate(1.05) contrast(1.04) brightness(1.02)"
+                      : "saturate(0.92) contrast(1.05) brightness(1) hue-rotate(-2deg)";
                 }}
               />
               <div
