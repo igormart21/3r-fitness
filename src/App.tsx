@@ -12,6 +12,7 @@ import TesteBotoes from "./pages/TesteBotoes.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Auth from "./pages/Auth.tsx";
 import Modalidade from "./pages/Modalidade.tsx";
+import Atelie from "./pages/Atelie.tsx";
 import { useCartSync } from "@/hooks/useCartSync";
 import { InstagramFloatingButton } from "@/components/InstagramFloatingButton";
 import { WhatsappFloatingButton } from "@/components/WhatsappFloatingButton";
@@ -31,6 +32,7 @@ const AppRoutes = () => {
       <Route path="/colecao" element={<Colecao />} />
       <Route path="/teste-botoes" element={<TesteBotoes />} />
       <Route path="/auth" element={<Auth />} />
+      <Route path="/atelie" element={<Atelie />} />
       <Route path="/modalidade/:id" element={<Modalidade />} />
       <Route path="/personalizar/:slug" element={<Modalidade />} />
       <Route path="*" element={<NotFound />} />

@@ -26,7 +26,7 @@ export const CinematicTransition = () => {
 
       <div className="absolute bottom-2 left-6 sm:bottom-4 sm:left-12 z-10">
         <Link
-          to="/colecao"
+          to="/atelie"
           aria-label="Entrar no ateliê 3R"
           style={{
             display: "inline-block",
