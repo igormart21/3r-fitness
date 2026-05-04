@@ -6,6 +6,7 @@ import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
 import vigorMasculinoPrata from "@/assets/linha-vigor-masculino-prata.jpg";
 import veloxRoyaleOuroMasc from "@/assets/linha-velox-royale-ouro-masculino.jpg";
 import veloxRoyaleOuroFem from "@/assets/linha-velox-royale-ouro-feminino.jpg";
+import veloxRoyalePrataMasc from "@/assets/linha-velox-royale-prata-masculino.jpg";
 
 const AtelieLinha = () => {
   const { slug } = useParams();
@@ -42,6 +43,8 @@ const AtelieLinha = () => {
       ? veloxRoyaleOuroMasc
       : linha.slug === "horizonte" && forma === "feminino" && material === "ouro"
       ? veloxRoyaleOuroFem
+      : linha.slug === "horizonte" && forma === "masculino" && material === "prata"
+      ? veloxRoyalePrataMasc
       : linha.imagens[material];
   const lightTone =
     material === "ouro"
