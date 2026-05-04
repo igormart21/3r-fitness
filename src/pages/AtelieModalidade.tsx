@@ -282,11 +282,11 @@ const AtelieModalidade = () => {
       </main>
 
       <style>{`
-        @keyframes reveal-line {
-          0% { opacity: 0; transform: scale(0.99); filter: blur(3px); }
-          100% { opacity: 1; transform: scale(1.02); filter: blur(0); }
+        @keyframes crossfade-img {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
         }
-        .reveal-line { animation: reveal-line 0.4s cubic-bezier(0.22,1,0.36,1) both; }
+        .crossfade-img { animation: crossfade-img 0.7s cubic-bezier(0.22,1,0.36,1) both; }
         @keyframes reveal-info {
           0% { opacity: 0; transform: translateY(6px); }
           100% { opacity: 1; transform: translateY(0); }
