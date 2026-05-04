@@ -1,147 +1,52 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Quote, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import modelLeft from "@/assets/model-left-new.png";
 import modelRight from "@/assets/model-original.jpg";
-
-// 👇 TROQUE AQUI PARA TESTAR: "offwhite" | "preto" | "grafite" | "bokeh" | "luxoBordo"
-const THEME: "offwhite" | "preto" | "grafite" | "bokeh" | "luxoBordo" = "luxoBordo";
-
-const themes = {
-  offwhite: {
-    background: "linear-gradient(180deg, hsl(36 35% 95%) 0%, hsl(36 30% 92%) 100%)",
-    overlay: null as string | null,
-    eyebrow: "hsl(40 60% 40%)",
-    title: "hsl(20 14% 15%)",
-    quoteIcon: "hsl(40 70% 50%)",
-    quote: "hsl(20 14% 20%)",
-    line: "hsl(40 70% 55%)",
-    name: "hsl(20 14% 15%)",
-    role: "hsl(20 8% 45%)",
-    accent: "hsl(40 60% 40%)",
-    border: "hsl(40 40% 70%)",
-    arrow: "hsl(20 14% 20%)",
-    dotInactive: "hsl(30 15% 75%)",
-    dotActive: "hsl(40 70% 50%)",
-    topLine: "linear-gradient(90deg, transparent, hsl(40 70% 55%), transparent)",
-  },
-  preto: {
-    background: "hsl(0 0% 4%)",
-    overlay: null,
-    eyebrow: "hsl(40 70% 60%)",
-    title: "hsl(36 30% 96%)",
-    quoteIcon: "hsl(40 80% 60%)",
-    quote: "hsl(36 20% 92%)",
-    line: "hsl(40 70% 55%)",
-    name: "hsl(36 30% 96%)",
-    role: "hsl(30 10% 60%)",
-    accent: "hsl(40 70% 60%)",
-    border: "hsl(40 40% 35%)",
-    arrow: "hsl(36 30% 90%)",
-    dotInactive: "hsl(0 0% 25%)",
-    dotActive: "hsl(40 70% 55%)",
-    topLine: "linear-gradient(90deg, transparent, hsl(40 70% 55%), transparent)",
-  },
-  grafite: {
-    background:
-      "radial-gradient(ellipse at top, hsl(20 6% 18%) 0%, hsl(20 8% 12%) 60%, hsl(20 10% 8%) 100%)",
-    overlay:
-      "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
-    eyebrow: "hsl(40 50% 60%)",
-    title: "hsl(36 20% 92%)",
-    quoteIcon: "hsl(40 60% 55%)",
-    quote: "hsl(30 15% 88%)",
-    line: "hsl(40 60% 50%)",
-    name: "hsl(36 20% 92%)",
-    role: "hsl(30 8% 60%)",
-    accent: "hsl(40 55% 55%)",
-    border: "hsl(20 10% 30%)",
-    arrow: "hsl(36 20% 88%)",
-    dotInactive: "hsl(20 8% 28%)",
-    dotActive: "hsl(40 60% 55%)",
-    topLine: "linear-gradient(90deg, transparent, hsl(40 50% 50%), transparent)",
-  },
-  bokeh: {
-    background:
-      "radial-gradient(circle at 20% 30%, hsl(40 80% 50% / 0.18), transparent 40%), radial-gradient(circle at 80% 70%, hsl(35 70% 55% / 0.15), transparent 45%), radial-gradient(circle at 50% 50%, hsl(40 60% 40% / 0.08), transparent 60%), linear-gradient(180deg, hsl(20 15% 8%), hsl(20 20% 5%))",
-    overlay: null,
-    eyebrow: "hsl(40 80% 65%)",
-    title: "hsl(36 30% 96%)",
-    quoteIcon: "hsl(40 90% 65%)",
-    quote: "hsl(36 25% 94%)",
-    line: "hsl(40 80% 60%)",
-    name: "hsl(36 30% 96%)",
-    role: "hsl(30 15% 70%)",
-    accent: "hsl(40 80% 65%)",
-    border: "hsl(40 40% 40%)",
-    arrow: "hsl(36 30% 92%)",
-    dotInactive: "hsl(20 10% 30%)",
-    dotActive: "hsl(40 80% 60%)",
-    topLine: "linear-gradient(90deg, transparent, hsl(40 80% 60%), transparent)",
-  },
-  luxoBordo: {
-    // Fundo bordô profundo com vinheta dourada e textura sutil — visual luxuoso e exclusivo
-    background:
-      "radial-gradient(ellipse 80% 60% at 50% 0%, hsl(40 70% 50% / 0.18) 0%, transparent 55%), radial-gradient(ellipse 70% 50% at 50% 100%, hsl(40 60% 45% / 0.12) 0%, transparent 60%), linear-gradient(180deg, hsl(350 45% 12%) 0%, hsl(350 50% 8%) 50%, hsl(350 55% 6%) 100%)",
-    overlay:
-      "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
-    eyebrow: "hsl(42 75% 65%)",        // dourado claro - "Depoimentos"
-    title: "hsl(42 80% 70%)",          // título dourado luminoso
-    quoteIcon: "hsl(42 80% 62%)",
-    quote: "hsl(36 30% 94%)",          // depoimento off-white para contraste
-    line: "hsl(42 70% 55%)",
-    name: "hsl(42 75% 68%)",           // nome dourado (diferente do depoimento)
-    role: "hsl(36 15% 75%)",
-    accent: "hsl(42 85% 70%)",
-    border: "hsl(42 50% 40%)",
-    arrow: "hsl(42 70% 70%)",
-    dotInactive: "hsl(350 30% 25%)",
-    dotActive: "hsl(42 80% 60%)",
-    topLine: "linear-gradient(90deg, transparent, hsl(42 80% 60%), transparent)",
-  },
-};
+import model3r from "@/assets/model-3r.png";
+import heroAtletas from "@/assets/hero-atletas.png";
 
 const testimonials = [
   {
-    quote:
-      "A joia significa a personificação da corredora que sempre sonhei ser!",
+    quote: "Não tiro mais. Faz parte de quem eu sou.",
     name: "Elizandra Fernandes",
-    role: "Corredora — SC",
-    distance: "RUN",
+    location: "Florianópolis — SC",
+    discipline: "RUN",
+    image: modelLeft,
   },
   {
-    quote:
-      "Minha joia chegou na sexta, já coloquei assim que chegou, não tirei mais! Ela é linda demais e já me deu muita sorte. Primeira prova com ela e voltei com 2 troféus.",
+    quote: "Primeira prova com ela. Dois troféus.",
     name: "Carin Marchinhacki",
-    role: "Corredora — SP",
-    distance: "RUN",
+    location: "São Paulo — SP",
+    discipline: "RUN",
+    image: modelRight,
   },
   {
-    quote:
-      "Presenteei meu pai depois da primeira meia maratona dele aos 60 anos. Ele chorou. Vocês transformaram um momento em eternidade.",
+    quote: "Transformaram um momento em eternidade.",
     name: "Júlia Mendes",
-    role: "Triatleta — Belo Horizonte",
-    distance: "70.3",
+    location: "Belo Horizonte — MG",
+    discipline: "70.3",
+    image: model3r,
   },
   {
-    quote:
-      "Meu pingente de corredora carrega minha alegria, minha dedicação e a liberdade que sinto quando estou correndo.",
+    quote: "Carrego minha liberdade no peito.",
     name: "Catiucia Bertuol",
-    role: "Corredora — RJ",
-    distance: "RUN",
+    location: "Rio de Janeiro — RJ",
+    discipline: "RUN",
+    image: heroAtletas,
   },
 ];
 
 export const Testimonials = () => {
-  const t = themes[THEME];
   const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
+    if (paused) return;
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % testimonials.length);
-    }, 6000);
+    }, 5500);
     return () => clearInterval(id);
-  }, []);
+  }, [paused]);
 
   const prev = () => setIndex((i) => (i - 1 + testimonials.length) % testimonials.length);
   const next = () => setIndex((i) => (i + 1) % testimonials.length);
@@ -151,18 +56,25 @@ export const Testimonials = () => {
   return (
     <section
       id="depoimentos"
-      className="relative pt-2 sm:pt-3 pb-6 sm:pb-10 md:pb-14 overflow-hidden"
-      style={{ background: t.background }}
+      className="relative overflow-hidden py-24 sm:py-32 md:py-40"
+      style={{
+        background:
+          "radial-gradient(ellipse 70% 50% at 50% 0%, hsl(40 70% 50% / 0.10) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 50% 100%, hsl(40 60% 45% / 0.08) 0%, transparent 65%), linear-gradient(180deg, hsl(350 35% 9%) 0%, hsl(350 45% 6%) 50%, hsl(0 0% 3%) 100%)",
+      }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
     >
-      {t.overlay && (
-        <div
-          className="absolute inset-0 pointer-events-none mix-blend-overlay"
-          style={{ backgroundImage: t.overlay }}
-        />
-      )}
+      {/* Textura sutil */}
+      <div
+        className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-40"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+        }}
+      />
 
-      {/* Botões sociais — canto inferior direito da seção */}
-      <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 flex flex-row gap-3">
+      {/* Botões sociais — canto inferior direito */}
+      <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 z-20 flex flex-row gap-3">
         <a
           href="https://instagram.com/3rfitnessjr"
           target="_blank"
@@ -175,9 +87,9 @@ export const Testimonials = () => {
           }}
         >
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
           </svg>
         </a>
         <a
@@ -189,129 +101,103 @@ export const Testimonials = () => {
           style={{ background: "linear-gradient(135deg, #25D366 0%, #128C7E 100%)" }}
         >
           <svg viewBox="0 0 32 32" className="h-5 w-5" fill="currentColor" aria-hidden="true">
-            <path d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.715.315-.41.442-1.117 1.11-1.117 2.532 0 .457.072.93.187 1.376.315 1.232.962 2.41 1.733 3.412 1.118 1.448 2.62 2.66 4.32 3.317.434.157 2.32.792 2.736.792.817 0 1.59-.4 1.962-1.103.215-.4.357-.85.4-1.288 0-.073 0-.158-.043-.215-.115-.187-.43-.287-.6-.387z"/>
-            <path d="M16.013 2.667C8.65 2.667 2.68 8.638 2.68 16c0 2.348.617 4.65 1.79 6.668L2.667 29.333l6.838-1.794a13.292 13.292 0 0 0 6.508 1.683C23.376 29.222 29.347 23.252 29.347 15.89c0-3.546-1.388-6.881-3.91-9.391-2.51-2.51-5.84-3.832-9.424-3.832zm0 24.402c-2.061 0-4.077-.555-5.84-1.604l-.418-.247-4.328 1.135 1.155-4.222-.272-.434c-1.155-1.832-1.766-3.96-1.766-6.144 0-6.397 5.21-11.605 11.482-11.605 3.103 0 6.013 1.21 8.198 3.405a11.512 11.512 0 0 1 3.396 8.21c0 6.396-5.077 11.605-11.474 11.605z"/>
+            <path d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.715.315-.41.442-1.117 1.11-1.117 2.532 0 .457.072.93.187 1.376.315 1.232.962 2.41 1.733 3.412 1.118 1.448 2.62 2.66 4.32 3.317.434.157 2.32.792 2.736.792.817 0 1.59-.4 1.962-1.103.215-.4.357-.85.4-1.288 0-.073 0-.158-.043-.215-.115-.187-.43-.287-.6-.387z" />
+            <path d="M16.013 2.667C8.65 2.667 2.68 8.638 2.68 16c0 2.348.617 4.65 1.79 6.668L2.667 29.333l6.838-1.794a13.292 13.292 0 0 0 6.508 1.683C23.376 29.222 29.347 23.252 29.347 15.89c0-3.546-1.388-6.881-3.91-9.391-2.51-2.51-5.84-3.832-9.424-3.832zm0 24.402c-2.061 0-4.077-.555-5.84-1.604l-.418-.247-4.328 1.135 1.155-4.222-.272-.434c-1.155-1.832-1.766-3.96-1.766-6.144 0-6.397 5.21-11.605 11.482-11.605 3.103 0 6.013 1.21 8.198 3.405a11.512 11.512 0 0 1 3.396 8.21c0 6.396-5.077 11.605-11.474 11.605z" />
           </svg>
         </a>
       </div>
 
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-24 sm:w-32"
-        style={{ background: t.topLine }}
-      />
-
-      {/* Modelos laterais — apenas em telas médias+ (no mobile aparecem acima do depoimento) */}
-      <div
-        className="hidden md:block absolute left-0 top-1/2 w-[32%] lg:w-[22%] max-w-[320px] pointer-events-none select-none opacity-60 lg:opacity-100"
-        style={{
-          transform: "translateY(-50%) rotate(-4deg)",
-          filter: "drop-shadow(0 30px 40px hsl(20 14% 15% / 0.18))",
-        }}
-        aria-hidden="true"
-      >
-        <img
-          src={modelLeft}
-          alt=""
-          className="w-full h-auto object-contain rounded-sm"
-          loading="lazy"
-        />
-      </div>
-      <div
-        className="hidden md:block absolute right-0 top-1/2 w-[32%] lg:w-[22%] max-w-[320px] pointer-events-none select-none opacity-60 lg:opacity-100"
-        style={{
-          transform: "translateY(-50%) rotate(4deg)",
-          filter: "drop-shadow(0 30px 40px hsl(20 14% 15% / 0.18))",
-        }}
-        aria-hidden="true"
-      >
-        <img
-          src={modelRight}
-          alt=""
-          className="w-full h-auto object-contain rounded-sm"
-          loading="lazy"
-        />
-      </div>
-
-      {/* Mobile: fotos lado a lado acima do depoimento, sem sobreposição com o texto */}
-      <div className="md:hidden container max-w-md px-6 mb-8 flex items-end justify-center gap-4">
-        <div
-          className="w-[42%] max-w-[160px]"
-          style={{
-            transform: "rotate(-3deg)",
-            filter: "drop-shadow(0 18px 24px hsl(20 14% 15% / 0.18))",
-          }}
-        >
-          <img
-            src={modelLeft}
-            alt=""
-            className="w-full h-auto object-contain rounded-sm"
-            loading="lazy"
-          />
-        </div>
-        <div
-          className="w-[42%] max-w-[160px]"
-          style={{
-            transform: "rotate(3deg)",
-            filter: "drop-shadow(0 18px 24px hsl(20 14% 15% / 0.18))",
-          }}
-        >
-          <img
-            src={modelRight}
-            alt=""
-            className="w-full h-auto object-contain rounded-sm"
-            loading="lazy"
-          />
-        </div>
-      </div>
-
-      <div className="container max-w-4xl text-center relative px-6 sm:px-8">
+      <div className="container relative max-w-3xl px-6 text-center">
+        {/* Micro assinatura */}
         <span
-          className="text-[10px] sm:text-[11px] uppercase tracking-[0.35em] sm:tracking-[0.4em] font-medium"
-          style={{ color: t.eyebrow }}
+          className="block text-[10px] sm:text-[11px] uppercase tracking-[0.5em] font-light"
+          style={{ color: "hsl(42 75% 65%)" }}
         >
-          Depoimentos
+          Atletas 3R
         </span>
+
+        {/* Linha dourada */}
+        <div
+          className="mx-auto mt-6 mb-8 h-px w-16"
+          style={{ background: "linear-gradient(90deg, transparent, hsl(42 80% 60%), transparent)" }}
+        />
+
+        {/* Título */}
         <h2
-          className="font-display text-3xl sm:text-4xl md:text-5xl font-medium mt-3 sm:mt-4 mb-10 sm:mb-16"
-          style={{ color: t.title }}
+          className="font-display text-3xl sm:text-4xl md:text-5xl font-light tracking-wide"
+          style={{ color: "hsl(42 80% 72%)" }}
         >
-          Histórias que carregamos
+          Histórias que nos acompanham
         </h2>
 
-        <div className="relative min-h-[320px] sm:min-h-[280px] md:min-h-[240px]">
-          <Quote
-            className="mx-auto mb-6 sm:mb-8 h-8 w-8 sm:h-10 sm:w-10 opacity-80"
-            style={{ color: t.quoteIcon }}
-            strokeWidth={1.25}
-          />
+        {/* Linha dourada inferior */}
+        <div
+          className="mx-auto mt-8 mb-16 sm:mb-20 h-px w-24"
+          style={{ background: "linear-gradient(90deg, transparent, hsl(42 70% 55%), transparent)" }}
+        />
 
-          <blockquote
-            key={index}
-            className="animate-fade-in font-display text-lg sm:text-2xl md:text-3xl leading-relaxed font-light italic px-2 sm:px-4 md:px-12"
-            style={{ color: t.quote }}
-          >
-            “{current.quote}”
-          </blockquote>
+        {/* Carrossel */}
+        <div className="relative min-h-[420px] sm:min-h-[460px]">
+          <div key={index} className="animate-fade-in flex flex-col items-center">
+            {/* Imagem do cliente — circular, refinada */}
+            <div
+              className="relative h-24 w-24 sm:h-28 sm:w-28 rounded-full overflow-hidden mb-10 sm:mb-12"
+              style={{
+                boxShadow:
+                  "0 0 0 1px hsl(42 60% 45% / 0.5), 0 0 0 6px hsl(350 45% 8%), 0 0 0 7px hsl(42 60% 45% / 0.3), 0 20px 40px hsl(0 0% 0% / 0.6)",
+              }}
+            >
+              <img
+                src={current.image}
+                alt={current.name}
+                className="h-full w-full object-cover"
+                style={{
+                  objectPosition: "center 20%",
+                  filter: "contrast(1.05) brightness(1.02) saturate(0.95)",
+                }}
+                loading="lazy"
+              />
+            </div>
 
-          <div className="mt-8 sm:mt-10 flex flex-col items-center gap-1">
-            <div className="h-px w-10 sm:w-12 mb-3 sm:mb-4" style={{ background: t.line }} />
-            <p className="text-sm font-medium tracking-wide" style={{ color: t.name }}>
-              {current.name}
-            </p>
-            <p className="text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em]" style={{ color: t.role }}>
-              {current.role} · <span style={{ color: t.accent }}>{current.distance}</span>
-            </p>
+            {/* Frase principal */}
+            <blockquote
+              className="font-display text-2xl sm:text-3xl md:text-4xl leading-[1.4] font-light italic max-w-2xl px-4"
+              style={{ color: "hsl(36 30% 96%)" }}
+            >
+              “{current.quote}”
+            </blockquote>
+
+            {/* Nome + identificação */}
+            <div className="mt-10 sm:mt-12 flex flex-col items-center gap-3">
+              <div
+                className="h-px w-8"
+                style={{ background: "hsl(42 70% 55%)" }}
+              />
+              <p
+                className="text-sm sm:text-base font-light tracking-[0.15em]"
+                style={{ color: "hsl(42 75% 70%)" }}
+              >
+                {current.name}
+              </p>
+              <p
+                className="text-[10px] sm:text-[11px] uppercase tracking-[0.35em] font-light"
+                style={{ color: "hsl(36 12% 65%)" }}
+              >
+                {current.location} · <span style={{ color: "hsl(42 70% 60%)" }}>{current.discipline}</span>
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="mt-10 sm:mt-12 flex items-center justify-center gap-4 sm:gap-6">
+        {/* Navegação discreta */}
+        <div className="mt-12 sm:mt-16 flex items-center justify-center gap-6">
           <button
             onClick={prev}
             aria-label="Depoimento anterior"
-            className="p-2 rounded-full border transition-all hover:scale-110"
-            style={{ borderColor: t.border, color: t.arrow }}
+            className="opacity-60 hover:opacity-100 transition-opacity"
+            style={{ color: "hsl(42 70% 70%)" }}
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4" strokeWidth={1.25} />
           </button>
 
           <div className="flex gap-2">
@@ -320,10 +206,10 @@ export const Testimonials = () => {
                 key={i}
                 onClick={() => setIndex(i)}
                 aria-label={`Ir para depoimento ${i + 1}`}
-                className="h-1.5 rounded-full transition-all"
+                className="h-1 rounded-full transition-all duration-500"
                 style={{
-                  width: i === index ? "32px" : "8px",
-                  background: i === index ? t.dotActive : t.dotInactive,
+                  width: i === index ? "24px" : "6px",
+                  background: i === index ? "hsl(42 80% 60%)" : "hsl(350 25% 22%)",
                 }}
               />
             ))}
@@ -332,13 +218,34 @@ export const Testimonials = () => {
           <button
             onClick={next}
             aria-label="Próximo depoimento"
-            className="p-2 rounded-full border transition-all hover:scale-110"
-            style={{ borderColor: t.border, color: t.arrow }}
+            className="opacity-60 hover:opacity-100 transition-opacity"
+            style={{ color: "hsl(42 70% 70%)" }}
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4" strokeWidth={1.25} />
           </button>
         </div>
 
+        {/* Botão minimalista */}
+        <div className="mt-16 sm:mt-20">
+          <a
+            href="https://instagram.com/3rfitnessjr"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-3 text-[11px] sm:text-xs uppercase tracking-[0.4em] font-light pb-1.5 border-b transition-all duration-500 hover:gap-5"
+            style={{
+              color: "hsl(42 75% 70%)",
+              borderColor: "hsl(42 60% 45% / 0.5)",
+            }}
+          >
+            Ver mais histórias
+            <span
+              className="inline-block transition-transform duration-500 group-hover:translate-x-1"
+              aria-hidden="true"
+            >
+              →
+            </span>
+          </a>
+        </div>
       </div>
     </section>
   );
