@@ -30,18 +30,35 @@ const AtelieModalidades = () => {
       </header>
 
       <main className="pt-32 pb-24">
-        <div className="container mx-auto max-w-7xl px-6 text-center mb-20">
-          <p
-            className="italic font-light max-w-xl mx-auto"
+        <div className="container mx-auto max-w-5xl px-6 text-center mb-24">
+          <div
+            className="mx-auto mb-8 h-px"
             style={{
-              fontFamily: '"Fraunces",serif',
-              color: "rgba(255,255,255,0.7)",
-              fontSize: "18px",
-              letterSpacing: "0.03em",
+              width: 80,
+              background:
+                "linear-gradient(90deg, transparent, rgba(212,175,55,0.7), transparent)",
+            }}
+          />
+          <h2
+            className="font-display font-light mx-auto"
+            style={{
+              fontFamily: '"Fraunces", "Cormorant Garamond", serif',
+              fontSize: "clamp(28px, 3.4vw, 48px)",
+              lineHeight: 1.18,
+              letterSpacing: "0.015em",
+              color: "#f4ead0",
+              maxWidth: "20ch",
             }}
           >
-            Cada disciplina inspira sua própria linha autoral.
-          </p>
+            Cada disciplina inspira{" "}
+            <em
+              className="italic"
+              style={{ color: "#d4af37", fontWeight: 400 }}
+            >
+              sua própria linha autoral
+            </em>
+            .
+          </h2>
         </div>
 
         <div className="container mx-auto max-w-7xl px-6 grid grid-cols-2 md:grid-cols-3 auto-rows-[260px] sm:auto-rows-[320px] md:auto-rows-[280px] gap-6 sm:gap-8 md:gap-10">
