@@ -72,8 +72,7 @@ const AtelieLinha = () => {
           {/* ESQUERDA — imagem */}
           <section className="lg:col-span-6 relative">
             <div
-              ref={frameRef}
-              className="relative w-full overflow-hidden mx-auto"
+              className="relative w-full overflow-hidden mx-auto group"
               style={{
                 aspectRatio: "1122 / 946",
                 maxHeight: "calc(100vh - 180px)",
@@ -82,17 +81,14 @@ const AtelieLinha = () => {
                 border: "1px solid rgba(212,175,55,0.18)",
                 boxShadow:
                   "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08) inset",
-                cursor: "crosshair",
+                cursor: "zoom-in",
               }}
-              onMouseEnter={() => setLens((l) => ({ ...l, visible: true }))}
-              onMouseLeave={() => setLens((l) => ({ ...l, visible: false }))}
               onMouseMove={(e) => {
                 const r = e.currentTarget.getBoundingClientRect();
-                const x = e.clientX - r.left;
-                const y = e.clientY - r.top;
-                const bx = (x / r.width) * 100;
-                const by = (y / r.height) * 100;
-                setLens({ x, y, bx, by, visible: true });
+                const x = ((e.clientX - r.left) / r.width) * 100;
+                const y = ((e.clientY - r.top) / r.height) * 100;
+                e.currentTarget.style.setProperty("--zx", `${x}%`);
+                e.currentTarget.style.setProperty("--zy", `${y}%`);
               }}
             >
               <div
@@ -104,12 +100,13 @@ const AtelieLinha = () => {
                 key={revealKey}
                 src={imgSrc}
                 alt={`${linha.nome} — ${material === "ouro" ? "Ouro 18K" : "Prata 925"}`}
-                className="absolute inset-0 w-full h-full object-contain reveal-piece"
+                className="absolute inset-0 w-full h-full object-contain reveal-piece transition-transform duration-[700ms] ease-out group-hover:scale-[1.9]"
                 style={{
                   filter:
                     material === "ouro"
                       ? "saturate(1.05) contrast(1.04) brightness(1.02)"
                       : "saturate(0.92) contrast(1.05) brightness(1) hue-rotate(-2deg)",
+                  transformOrigin: "var(--zx, 50%) var(--zy, 50%)",
                 }}
               />
               <div
@@ -118,26 +115,6 @@ const AtelieLinha = () => {
                 style={{
                   background:
                     "radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.6) 100%)",
-                }}
-              />
-              {/* Lupa */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute rounded-full transition-opacity duration-200"
-                style={{
-                  width: lensSize,
-                  height: lensSize,
-                  top: lens.y - lensSize / 2,
-                  left: lens.x - lensSize / 2,
-                  opacity: lens.visible ? 1 : 0,
-                  backgroundImage: `url(${imgSrc})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: `${lensZoom * 100}% ${lensZoom * 100}%`,
-                  backgroundPosition: `${lens.bx}% ${lens.by}%`,
-                  backgroundColor: "#0a0a0a",
-                  border: "1px solid rgba(212,175,55,0.55)",
-                  boxShadow:
-                    "0 12px 40px rgba(0,0,0,0.7), 0 0 0 4px rgba(0,0,0,0.5), inset 0 0 24px rgba(0,0,0,0.4)",
                 }}
               />
             </div>
