@@ -3,6 +3,7 @@ import sportCrossfit from "@/assets/sport-crossfit.jpg";
 import sportCorrida from "@/assets/sport-corrida.jpg";
 import sportCiclismo from "@/assets/sport-ciclismo.jpg";
 import sportTriathlon from "@/assets/sport-triathlon.jpg";
+import sportFisiculturismo from "@/assets/sport-fisiculturismo.jpg";
 
 import vigorOuroClean from "@/assets/linha-vigor-ouro-clean.jpg";
 import vigorPrataClean from "@/assets/linha-vigor-prata-clean.jpg";
@@ -155,5 +156,12 @@ export const MODALIDADES: Modalidade[] = [
     subtitulo: "A travessia dos limites",
     img: sportTriathlon,
     linhas: ["travessia", "elite"],
+  },
+  {
+    slug: "fisiculturismo",
+    nome: "Fisiculturismo",
+    subtitulo: "A escultura do físico",
+    img: sportFisiculturismo,
+    linhas: ["vigor", "imperium"],
   },
 ];
