@@ -186,12 +186,21 @@ const AtelieModalidade = () => {
               {/* Botões das linhas */}
               <div className="flex flex-wrap gap-3">
                 {linhas.map((l) => {
-                  const isActive = l.slug === active?.slug;
+                  const isActive = l.slug === activeSlug;
                   return (
                     <button
                       key={l.slug}
                       type="button"
                       onClick={() => setActiveSlug(l.slug)}
+                      onMouseEnter={(e) => {
+                        setHoverSlug(l.slug);
+                        if (!isActive) {
+                          e.currentTarget.style.borderColor =
+                            "rgba(212,175,55,0.75)";
+                          e.currentTarget.style.color = "#f4d77a";
+                        }
+                      }}
+                      onFocus={() => setHoverSlug(l.slug)}
                       className="transition-all duration-500"
                       style={{
                         padding: "12px 26px",
@@ -207,13 +216,6 @@ const AtelieModalidade = () => {
                         boxShadow: isActive
                           ? "0 0 28px rgba(212,175,55,0.35)"
                           : "none",
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!isActive) {
-                          e.currentTarget.style.borderColor =
-                            "rgba(212,175,55,0.75)";
-                          e.currentTarget.style.color = "#f4d77a";
-                        }
                       }}
                       onMouseLeave={(e) => {
                         if (!isActive) {
