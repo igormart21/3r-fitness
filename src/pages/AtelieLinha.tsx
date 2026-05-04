@@ -169,7 +169,7 @@ const AtelieLinha = () => {
             <div
               className="relative w-full overflow-hidden mx-auto group"
               style={{
-                aspectRatio: "1122 / 946",
+                aspectRatio: linha.slug === "forja" ? "1536 / 1024" : "1122 / 946",
                 maxHeight: "calc(100vh - 180px)",
                 background:
                   "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)",
@@ -187,7 +187,7 @@ const AtelieLinha = () => {
                 key={revealKey}
                 src={imgSrc}
                 alt={`${linha.nome} — ${material === "ouro" ? "Ouro 18K" : "Prata 925"}`}
-                className="absolute inset-0 w-full h-full object-contain reveal-piece will-change-transform"
+                className={`absolute inset-0 w-full h-full ${linha.slug === "forja" ? "object-cover" : "object-contain"} reveal-piece will-change-transform`}
                 style={{
                   filter:
                     material === "ouro"
