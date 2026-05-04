@@ -32,30 +32,11 @@ const AtelieModalidades = () => {
       <main className="pt-32 pb-24">
         <div className="container mx-auto max-w-7xl px-6 text-center mb-20">
           <p
-            className="text-[10px] uppercase tracking-[0.6em] mb-6"
-            style={{ color: "rgba(212,175,55,0.75)" }}
-          >
-            Etapa 01
-          </p>
-          <h1
-            className="font-display font-light leading-tight"
-            style={{
-              fontSize: "clamp(34px, 4.5vw, 56px)",
-              letterSpacing: "0.03em",
-              color: "#f4ead0",
-            }}
-          >
-            Escolha sua{" "}
-            <em className="italic" style={{ color: "#d4af37" }}>
-              modalidade
-            </em>
-          </h1>
-          <p
-            className="mt-5 italic font-light max-w-xl mx-auto"
+            className="italic font-light max-w-xl mx-auto"
             style={{
               fontFamily: '"Fraunces",serif',
-              color: "rgba(255,255,255,0.6)",
-              fontSize: "15px",
+              color: "rgba(255,255,255,0.7)",
+              fontSize: "18px",
               letterSpacing: "0.03em",
             }}
           >
