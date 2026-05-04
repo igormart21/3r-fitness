@@ -87,8 +87,8 @@ export const LINHAS: Record<string, Linha> = {
     imagens: { ouro: vigorOuroClean, prata: vigorPrataClean },
     campaign: vigorCampaign,
   },
-  horizonte: {
-    slug: "horizonte",
+  velox: {
+    slug: "velox",
     nome: "VELOX ROYALE",
     assinatura: "Assinatura da Distância",
     frase: "Horizontes conquistados em silêncio.",
@@ -148,7 +148,7 @@ export const MODALIDADES: Modalidade[] = [
     nome: "Ciclismo",
     subtitulo: "Horizontes conquistados",
     img: sportCiclismo,
-    linhas: ["horizonte", "cadencia"],
+    linhas: ["velox", "cadencia"],
   },
   {
     slug: "triathlon",

@@ -125,11 +125,11 @@ const AtelieLinha = () => {
       ? vigorMasculino
       : linha.slug === "vigor" && forma === "masculino" && material === "prata"
       ? vigorMasculinoPrata
-      : linha.slug === "horizonte" && forma === "masculino" && material === "ouro"
+      : linha.slug === "velox" && forma === "masculino" && material === "ouro"
       ? veloxRoyaleOuroMasc
-      : linha.slug === "horizonte" && forma === "feminino" && material === "ouro"
+      : linha.slug === "velox" && forma === "feminino" && material === "ouro"
       ? veloxRoyaleOuroFem
-      : linha.slug === "horizonte" && forma === "masculino" && material === "prata"
+      : linha.slug === "velox" && forma === "masculino" && material === "prata"
       ? veloxRoyalePrataMasc
       : linha.slug === "cadencia" && forma === "masculino" && material === "prata"
       ? aeronPrataMasc
