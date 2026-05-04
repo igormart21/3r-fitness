@@ -219,7 +219,7 @@ const AtelieModalidade = () => {
                         }
                       }}
                     >
-                      {l.nome}
+                      {l.slug === "forja" ? "STRATA" : l.nome}
                     </button>
                   );
                 })}
@@ -228,44 +228,6 @@ const AtelieModalidade = () => {
               {/* Detalhes da linha ativa */}
               {active && (
                 <div key={`info-${active.slug}`} className="mt-14 reveal-info">
-                  {modalidade.slug !== "musculacao" && modalidade.slug !== "ciclismo" && (
-                    <h2
-                      className="font-display font-light leading-none"
-                      style={{
-                        fontSize: "clamp(36px, 3.4vw, 50px)",
-                        letterSpacing: "0.04em",
-                        color: "#f4ead0",
-                      }}
-                    >
-                      {active.nome}
-                    </h2>
-                  )}
-                  {modalidade.slug !== "musculacao" && modalidade.slug !== "ciclismo" && (
-                    <>
-                      <p
-                        className="mt-5 italic font-light"
-                        style={{
-                          fontFamily: '"Fraunces",serif',
-                          color: "rgba(244,215,122,0.9)",
-                          fontSize: "14px",
-                          letterSpacing: "0.06em",
-                        }}
-                      >
-                        {active.assinatura}
-                      </p>
-                      <p
-                        className="mt-7 font-light leading-relaxed italic"
-                        style={{
-                          fontFamily: '"Fraunces",serif',
-                          color: "rgba(255,255,255,0.72)",
-                          fontSize: "16px",
-                        }}
-                      >
-                        {active.frase}
-                      </p>
-                    </>
-                  )}
-
                   <div className="mt-12">
                     <button
                       type="button"
