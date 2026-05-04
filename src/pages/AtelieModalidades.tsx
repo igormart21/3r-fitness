@@ -96,12 +96,10 @@ const AtelieModalidades = () => {
                 src={m.img}
                 alt={m.nome}
                 loading="lazy"
-                className={`absolute inset-0 w-full h-full transition-transform duration-[1600ms] ease-out group-hover:scale-110 ${
-                  i === 0 ? "object-contain" : "object-cover"
-                }`}
+                className="absolute inset-0 w-full h-full object-contain transition-transform duration-[1600ms] ease-out group-hover:scale-105"
                 style={{
                   filter: "contrast(1.04) saturate(1.02)",
-                  background: i === 0 ? "#050505" : undefined,
+                  background: "#050505",
                 }}
               />
               <div
