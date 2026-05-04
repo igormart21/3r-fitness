@@ -8,6 +8,7 @@ import veloxRoyaleOuroMasc from "@/assets/linha-velox-royale-ouro-masculino.jpg"
 import veloxRoyaleOuroFem from "@/assets/linha-velox-royale-ouro-feminino.jpg";
 import veloxRoyalePrataMasc from "@/assets/linha-velox-royale-prata-masculino.jpg";
 import aeronPrataMasc from "@/assets/linha-aeron-prata-masculino.jpg";
+import aeronPrataFem from "@/assets/linha-aeron-prata-feminino.jpg";
 
 const AtelieLinha = () => {
   const { slug } = useParams();
