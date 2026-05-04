@@ -142,6 +142,26 @@ export const CartDrawer = () => {
                 <p className="text-[10px] tracking-wider text-[hsl(43,20%,45%)] uppercase">
                   Frete e impostos calculados na próxima etapa
                 </p>
+
+                {/* Mensagem artesanal premium */}
+                <div className="pt-4 space-y-2 border-t border-[hsl(43,30%,12%)]">
+                  <p className="text-[10px] uppercase tracking-[0.4em] text-[hsl(43,65%,55%)]">
+                    Feito à mão · Sob medida
+                  </p>
+                  <p
+                    className="font-light italic leading-relaxed text-[hsl(43,30%,70%)]"
+                    style={{
+                      fontFamily:
+                        '"Fraunces","Cormorant Garamond",Georgia,serif',
+                      fontSize: "13px",
+                      letterSpacing: "0.01em",
+                    }}
+                  >
+                    Cada peça é finalizada manualmente após o seu pedido.
+                    Nosso prazo de 7 a 12 dias úteis garante o padrão de
+                    qualidade e acabamento que define a experiência da marca.
+                  </p>
+                </div>
                 <button
                   onClick={handleCheckout}
                   disabled={isLoading || isSyncing}
