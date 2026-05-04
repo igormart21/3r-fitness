@@ -161,8 +161,8 @@ export const Testimonials = () => {
         />
       )}
 
-      {/* Botões sociais — canto direito da seção */}
-      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 flex flex-col gap-3">
+      {/* Botões sociais — canto inferior direito da seção */}
+      <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 flex flex-row gap-3">
         <a
           href="https://instagram.com/3rfitnessjr"
           target="_blank"
@@ -339,45 +339,6 @@ export const Testimonials = () => {
           </button>
         </div>
 
-        {/* CTA "Criar minha joia" — movido do Hero para a sessão Depoimentos */}
-        <div className="mt-12 sm:mt-16 flex items-center justify-center px-4">
-          <style>{`
-            @keyframes testi-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-            @keyframes testi-shine { 0% { transform: translateX(-150%) skewX(-20deg); } 60%, 100% { transform: translateX(250%) skewX(-20deg); } }
-          `}</style>
-          <Link
-            to="/catalogo"
-            aria-label="Criar minha joia"
-            translate="no"
-            className="group notranslate relative inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-10 md:px-12 py-3 sm:py-4 overflow-hidden border border-black transition-all duration-500 hover:-translate-y-0.5 whitespace-nowrap"
-            style={{
-              background:
-                "linear-gradient(110deg, rgba(184,134,11,0.95) 0%, rgba(212,175,55,0.95) 25%, rgba(244,215,122,0.95) 50%, rgba(212,175,55,0.95) 75%, rgba(184,134,11,0.95) 100%)",
-              backgroundSize: "300% 100%",
-              animation: "testi-shimmer 4s linear infinite",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.5), 0 0 25px rgba(212,175,55,0.4)",
-            }}
-          >
-            <span
-              className="pointer-events-none absolute top-0 left-0 h-full w-1/3"
-              style={{
-                background:
-                  "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.85) 50%, transparent 100%)",
-                animation: "testi-shine 3.5s ease-in-out infinite",
-                mixBlendMode: "screen",
-              }}
-            />
-            <Sparkles className="h-4 w-4 text-black relative z-10 shrink-0" strokeWidth={1.5} />
-            <span
-              translate="no"
-              lang="pt-BR"
-              className="notranslate relative z-10 font-display text-xs sm:text-sm tracking-[0.35em] sm:tracking-[0.4em] uppercase text-black"
-            >
-              Criar minha joia
-            </span>
-            <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
-          </Link>
-        </div>
       </div>
     </section>
   );
