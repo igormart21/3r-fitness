@@ -222,16 +222,18 @@ const AtelieModalidade = () => {
               {/* Detalhes da linha ativa */}
               {active && (
                 <div key={`info-${active.slug}`} className="mt-14 reveal-info">
-                  <h2
-                    className="font-display font-light leading-none"
-                    style={{
-                      fontSize: "clamp(36px, 3.4vw, 50px)",
-                      letterSpacing: "0.04em",
-                      color: "#f4ead0",
-                    }}
-                  >
-                    {active.nome}
-                  </h2>
+                  {modalidade.slug !== "musculacao" && modalidade.slug !== "ciclismo" && (
+                    <h2
+                      className="font-display font-light leading-none"
+                      style={{
+                        fontSize: "clamp(36px, 3.4vw, 50px)",
+                        letterSpacing: "0.04em",
+                        color: "#f4ead0",
+                      }}
+                    >
+                      {active.nome}
+                    </h2>
+                  )}
                   {modalidade.slug !== "musculacao" && modalidade.slug !== "ciclismo" && (
                     <>
                       <p
