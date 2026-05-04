@@ -210,27 +210,31 @@ const AtelieModalidade = () => {
                   >
                     {active.nome}
                   </h2>
-                  <p
-                    className="mt-5 italic font-light"
-                    style={{
-                      fontFamily: '"Fraunces",serif',
-                      color: "rgba(244,215,122,0.9)",
-                      fontSize: "14px",
-                      letterSpacing: "0.06em",
-                    }}
-                  >
-                    {active.assinatura}
-                  </p>
-                  <p
-                    className="mt-7 font-light leading-relaxed italic"
-                    style={{
-                      fontFamily: '"Fraunces",serif',
-                      color: "rgba(255,255,255,0.72)",
-                      fontSize: "16px",
-                    }}
-                  >
-                    {active.frase}
-                  </p>
+                  {modalidade.slug !== "musculacao" && (
+                    <>
+                      <p
+                        className="mt-5 italic font-light"
+                        style={{
+                          fontFamily: '"Fraunces",serif',
+                          color: "rgba(244,215,122,0.9)",
+                          fontSize: "14px",
+                          letterSpacing: "0.06em",
+                        }}
+                      >
+                        {active.assinatura}
+                      </p>
+                      <p
+                        className="mt-7 font-light leading-relaxed italic"
+                        style={{
+                          fontFamily: '"Fraunces",serif',
+                          color: "rgba(255,255,255,0.72)",
+                          fontSize: "16px",
+                        }}
+                      >
+                        {active.frase}
+                      </p>
+                    </>
+                  )}
 
                   <div className="mt-12">
                     <button
