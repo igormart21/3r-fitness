@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ShoppingBag, Minus, Plus, X, ArrowRight, Loader2 } from "lucide-react";
+import { ShippingAnnouncementBar } from "@/components/ShippingAnnouncementBar";
 import { useCartStore } from "@/stores/cartStore";
 
 export const CartDrawer = () => {
@@ -72,6 +73,7 @@ export const CartDrawer = () => {
             </div>
           ) : (
             <>
+              <ShippingAnnouncementBar />
               <div className="flex-1 overflow-y-auto px-8 py-6 space-y-8">
                 {items.map((item) => (
                   <div key={item.variantId} className="group">
