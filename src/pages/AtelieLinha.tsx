@@ -277,7 +277,7 @@ const AtelieLinha = () => {
                   value={material}
                   onChange={(v) => setMaterial(v as Material)}
                 />
-                {linha.slug !== "halter" && (
+                {linha.slug !== "halter" && linha.slug !== "forja" && (
                   <Selector
                     label="Forma"
                     options={[
