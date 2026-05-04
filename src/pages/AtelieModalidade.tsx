@@ -69,8 +69,8 @@ const AtelieModalidade = () => {
             <div
               className="relative w-full overflow-hidden mx-auto group"
               style={{
-                aspectRatio: "3 / 5",
-                maxHeight: "calc(100vh - 140px)",
+                aspectRatio: "1135 / 1410",
+                maxHeight: "calc(100vh - 100px)",
                 border: "1px solid rgba(212,175,55,0.18)",
                 boxShadow:
                   "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08) inset",
