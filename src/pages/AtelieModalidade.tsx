@@ -3,6 +3,7 @@ import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { MODALIDADES, LINHAS } from "@/data/atelie";
 import musculacaoCampaign from "@/assets/modalidade-musculacao-campaign.jpg";
+import ciclismoCampaign from "@/assets/modalidade-ciclismo-campaign.jpg";
 
 const AtelieModalidade = () => {
   const { slug } = useParams();
@@ -89,7 +90,7 @@ const AtelieModalidade = () => {
               {active && (
                 <img
                   key={revealKey}
-                  src={modalidade.slug === "musculacao" ? musculacaoCampaign : active.campaign}
+                  src={modalidade.slug === "musculacao" ? musculacaoCampaign : modalidade.slug === "ciclismo" ? ciclismoCampaign : active.campaign}
                   alt={active.nome}
                   className="absolute inset-0 w-full h-full object-contain reveal-line transition-transform duration-500 ease-out group-hover:scale-[2]"
                   style={{
