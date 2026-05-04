@@ -17,6 +17,8 @@ import aeronPrataMasc from "@/assets/linha-aeron-prata-masculino.jpg";
 import aeronPrataFem from "@/assets/linha-aeron-prata-feminino.jpg";
 import strataOuro from "@/assets/linha-strata-ouro.jpg";
 import strataPrata from "@/assets/linha-strata-prata.jpg";
+import imperiumOuro from "@/assets/linha-imperium-ouro.jpg";
+import imperiumPrata from "@/assets/linha-imperium-prata.jpg";
 
 const AtelieLinha = () => {
   const { slug } = useParams();
@@ -111,7 +113,11 @@ const AtelieLinha = () => {
   const showFormaSelector = linha.slug !== "halter" && parentModalidade?.slug !== "crossfit";
 
   const imgSrc =
-    linha.slug === "strata" && material === "ouro"
+    linha.slug === "imperium" && material === "ouro"
+      ? imperiumOuro
+      : linha.slug === "imperium" && material === "prata"
+      ? imperiumPrata
+      : linha.slug === "strata" && material === "ouro"
       ? strataOuro
       : linha.slug === "strata" && material === "prata"
       ? strataPrata
@@ -170,7 +176,7 @@ const AtelieLinha = () => {
             <div
               className="relative w-full overflow-hidden mx-auto group"
               style={{
-                aspectRatio: linha.slug === "strata" ? "1536 / 1024" : "1122 / 946",
+                aspectRatio: linha.slug === "strata" || linha.slug === "imperium" ? "1536 / 1024" : "1122 / 946",
                 maxHeight: "calc(100vh - 180px)",
                 background:
                   "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)",
@@ -188,7 +194,7 @@ const AtelieLinha = () => {
                 key={revealKey}
                 src={imgSrc}
                 alt={`${linha.nome} — ${material === "ouro" ? "Ouro 18K" : "Prata 925"}`}
-                className={`absolute inset-0 w-full h-full ${linha.slug === "strata" ? "object-cover" : "object-contain"} reveal-piece will-change-transform`}
+                className={`absolute inset-0 w-full h-full ${linha.slug === "strata" || linha.slug === "imperium" ? "object-cover" : "object-contain"} reveal-piece will-change-transform`}
                 style={{
                   filter:
                     material === "ouro"
