@@ -103,12 +103,6 @@ const AtelieLinha = () => {
                     "radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.6) 100%)",
                 }}
               />
-              <div
-                className="absolute bottom-4 right-5 text-[9px] uppercase tracking-[0.5em]"
-                style={{ color: "rgba(212,175,55,0.55)" }}
-              >
-                Ateliê 3R · {forma === "classico" ? "Clássico" : "Slim"}
-              </div>
             </div>
           </section>
 
