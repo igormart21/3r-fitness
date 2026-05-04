@@ -52,7 +52,7 @@ const FloatingButtons = () => {
   return (
     <>
       <HomeFloatingButton />
-      <AuthFloatingButton />
+      {!isHome && <AuthFloatingButton />}
     </>
   );
 };
