@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
+import {
+  storefrontApiRequest,
+  PRODUCT_BY_HANDLE_QUERY,
+  createShopifyCart,
+} from "@/lib/shopify";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
 import vigorMasculinoPrata from "@/assets/linha-vigor-masculino-prata.jpg";
 import veloxRoyaleOuroMasc from "@/assets/linha-velox-royale-ouro-masculino.jpg";
