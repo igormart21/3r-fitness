@@ -16,7 +16,7 @@ import triadePrataClean from "@/assets/linha-triade-prata-clean.jpg";
 import triadeCampaign from "@/assets/linha-triade-ouro.jpg";
 
 export type Material = "ouro" | "prata";
-export type Forma = "classico" | "slim";
+export type Forma = "masculino" | "feminino";
 
 export type Linha = {
   slug: string;
