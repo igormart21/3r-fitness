@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
 import vigorMasculinoPrata from "@/assets/linha-vigor-masculino-prata.jpg";
+import veloxRoyaleOuroMasc from "@/assets/linha-velox-royale-ouro-masculino.jpg";
 
 const AtelieLinha = () => {
   const { slug } = useParams();
