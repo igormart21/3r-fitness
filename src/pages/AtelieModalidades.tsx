@@ -8,6 +8,7 @@ const AtelieModalidades = () => {
       className="min-h-screen w-full text-white"
       style={{ backgroundColor: "#050505" }}
     >
+      <div className="mx-auto" style={{ width: "55%" }}>
       {/* Header */}
       <header className="absolute top-0 inset-x-0 z-30">
         <div className="container mx-auto px-6 py-6 flex items-center justify-between">
@@ -153,6 +154,7 @@ const AtelieModalidades = () => {
           ))}
         </div>
       </main>
+      </div>
     </div>
   );
 };
