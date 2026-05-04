@@ -96,7 +96,7 @@ export const LINHAS: Record<string, Linha> = {
   },
   cadencia: {
     slug: "cadencia",
-    nome: "CADÊNCIA",
+    nome: "AERON",
     assinatura: "Assinatura do Compasso",
     frase: "Cada giro, um pulso eterno.",
     imagens: { ouro: triadeOuroClean, prata: triadePrataClean },
