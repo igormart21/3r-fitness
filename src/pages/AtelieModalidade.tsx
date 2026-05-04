@@ -61,14 +61,15 @@ const AtelieModalidade = () => {
         </div>
       </header>
 
-      <main className="relative w-full min-h-screen pt-28 md:pt-32 pb-20">
-        <div className="container mx-auto max-w-7xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+      <main className="relative w-full min-h-screen pt-24 md:pt-28 pb-12">
+        <div className="container mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           {/* ESQUERDA — campanha */}
-          <section className="lg:col-span-7 relative">
+          <section className="lg:col-span-6 relative">
             <div
-              className="relative w-full overflow-hidden"
+              className="relative w-full overflow-hidden mx-auto"
               style={{
                 aspectRatio: "4 / 5",
+                maxHeight: "calc(100vh - 180px)",
                 border: "1px solid rgba(212,175,55,0.18)",
                 boxShadow:
                   "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08) inset",
@@ -97,7 +98,7 @@ const AtelieModalidade = () => {
           </section>
 
           {/* DIREITA — seleção */}
-          <section className="lg:col-span-5">
+          <section className="lg:col-span-6">
             <div className="max-w-md mx-auto lg:mx-0">
               <p
                 className="text-[10px] uppercase tracking-[0.5em] mb-4"
