@@ -232,7 +232,7 @@ const AtelieModalidade = () => {
                   >
                     {active.nome}
                   </h2>
-                  {modalidade.slug !== "musculacao" && (
+                  {modalidade.slug !== "musculacao" && modalidade.slug !== "ciclismo" && (
                     <>
                       <p
                         className="mt-5 italic font-light"
