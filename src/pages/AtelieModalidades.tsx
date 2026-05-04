@@ -1,16 +1,165 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { MODALIDADES } from "@/data/atelie";
 
+const ORDER = ["triathlon", "fisiculturismo", "musculacao", "corrida", "ciclismo", "crossfit"];
+
+const ModalidadeSection = ({
+  m,
+  index,
+}: {
+  m: { slug: string; nome: string; img: string; subtitulo: string };
+  index: number;
+}) => {
+  const ref = useRef<HTMLElement | null>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => entry.isIntersecting && setVisible(true),
+      { threshold: 0.2 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <section
+      ref={ref}
+      className="relative w-full overflow-hidden group"
+      style={{ height: "92vh", minHeight: 620 }}
+    >
+      <img
+        src={m.img}
+        alt={m.nome}
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover transition-transform ease-out"
+        style={{
+          transform: visible ? "scale(1.03)" : "scale(1.12)",
+          transitionDuration: "2200ms",
+          filter: "contrast(1.05) saturate(1.03)",
+        }}
+      />
+      {/* Base readability overlay */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.85) 100%)",
+        }}
+      />
+      {/* Hover gold sheen */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 55% at 50% 45%, rgba(212,175,55,0.18) 0%, transparent 70%)",
+          mixBlendMode: "screen",
+        }}
+      />
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+        style={{ background: "rgba(0,0,0,0.10)" }}
+      />
+
+      {/* Content */}
+      <div className="relative z-10 h-full container mx-auto px-6 flex items-end pb-20 md:pb-28">
+        <div
+          className="max-w-2xl"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(40px)",
+            transition: "opacity 1200ms ease-out, transform 1200ms ease-out",
+          }}
+        >
+          <span
+            className="block text-[10px] tracking-[0.5em] mb-6"
+            style={{ color: "#d4af37" }}
+          >
+            {String(index + 1).padStart(2, "0")} — MODALIDADE
+          </span>
+          <div
+            className="h-px mb-8"
+            style={{
+              width: 64,
+              background:
+                "linear-gradient(90deg, #d4af37, transparent)",
+            }}
+          />
+          <h2
+            className="font-display font-light text-white"
+            style={{
+              fontFamily: '"Fraunces", "Cormorant Garamond", serif',
+              fontSize: "clamp(44px, 6.5vw, 96px)",
+              lineHeight: 0.95,
+              letterSpacing: "0.02em",
+              textShadow: "0 4px 24px rgba(0,0,0,0.6)",
+            }}
+          >
+            {m.nome}
+          </h2>
+          <p
+            className="mt-6 italic font-light"
+            style={{
+              fontFamily: '"Fraunces", serif',
+              fontSize: "clamp(18px, 1.6vw, 24px)",
+              color: "rgba(244,234,208,0.92)",
+              letterSpacing: "0.03em",
+              maxWidth: "32ch",
+            }}
+          >
+            {m.subtitulo}
+          </p>
+
+          <Link
+            to={`/atelie/modalidade/${m.slug}`}
+            className="inline-flex items-center gap-4 mt-12 group/btn"
+          >
+            <span
+              className="inline-block transition-all duration-500 group-hover/btn:tracking-[0.5em]"
+              style={{
+                fontSize: 11,
+                letterSpacing: "0.4em",
+                color: "#f4ead0",
+                borderBottom: "1px solid rgba(212,175,55,0.6)",
+                paddingBottom: 6,
+              }}
+            >
+              EXPLORAR MODALIDADE
+            </span>
+            <span
+              className="h-px transition-all duration-500"
+              style={{
+                width: 24,
+                background: "#d4af37",
+              }}
+            />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const AtelieModalidades = () => {
+  const modalidades = ORDER
+    .map((s) => MODALIDADES.find((m) => m.slug === s))
+    .filter(Boolean) as typeof MODALIDADES;
+
+  const scrollToModalidades = () => {
+    document.getElementById("modalidades")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div
       className="min-h-screen w-full text-white"
       style={{ backgroundColor: "#050505" }}
     >
-      <div className="mx-auto" style={{ width: "55%" }}>
       {/* Header */}
-      <header className="absolute top-0 inset-x-0 z-30">
+      <header className="fixed top-0 inset-x-0 z-50">
         <div className="container mx-auto px-6 py-6 flex items-center justify-between">
           <Link
             to="/atelie"
@@ -29,130 +178,125 @@ const AtelieModalidades = () => {
         </div>
       </header>
 
-      <main className="pt-32 pb-24">
-        <div className="container mx-auto max-w-5xl px-6 text-center mb-24">
-          <div
-            className="mx-auto mb-8 h-px"
-            style={{
-              width: 80,
-              background:
-                "linear-gradient(90deg, transparent, rgba(212,175,55,0.7), transparent)",
-            }}
-          />
-          <h2
-            className="font-display font-light mx-auto"
+      {/* HERO */}
+      <section
+        className="relative w-full flex items-center justify-center overflow-hidden"
+        style={{ height: "100vh", minHeight: 640 }}
+      >
+        {/* Subtle background texture */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, #0c0c0c 0%, #050505 60%, #000 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-[0.06] pointer-events-none"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(45deg, rgba(212,175,55,0.5) 0 1px, transparent 1px 14px)",
+          }}
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(212,175,55,0.10), transparent 70%)",
+          }}
+        />
+
+        <div
+          className="relative z-10 text-center px-6 max-w-4xl mx-auto"
+          style={{ animation: "fade-in 1.4s ease-out both" }}
+        >
+          <span
+            className="block text-[10px] tracking-[0.6em] mb-10"
+            style={{ color: "rgba(212,175,55,0.85)" }}
+          >
+            ATELIÊ — MODALIDADES
+          </span>
+          <h1
+            className="font-display font-light"
             style={{
               fontFamily: '"Fraunces", "Cormorant Garamond", serif',
-              fontSize: "clamp(28px, 3.4vw, 48px)",
-              lineHeight: 1.18,
+              fontSize: "clamp(36px, 5.2vw, 76px)",
+              lineHeight: 1.1,
               letterSpacing: "0.015em",
               color: "#f4ead0",
-              maxWidth: "20ch",
             }}
           >
-            Cada disciplina inspira{" "}
+            Cada disciplina inspira
+            <br />
             <em
               className="italic"
               style={{ color: "#d4af37", fontWeight: 400 }}
             >
-              sua própria linha autoral
+              sua própria linha autoral.
             </em>
-            .
-          </h2>
-        </div>
+          </h1>
 
-        <div className="container mx-auto max-w-7xl px-6 grid grid-cols-2 md:grid-cols-3 auto-rows-[260px] sm:auto-rows-[320px] md:auto-rows-[280px] gap-6 sm:gap-8 md:gap-10">
-          {(() => {
-            const order = ["triathlon","fisiculturismo","musculacao","corrida","ciclismo","crossfit"];
-            return order
-              .map((s) => MODALIDADES.find((m) => m.slug === s))
-              .filter(Boolean) as typeof MODALIDADES;
-          })().map((m, i) => (
-            <Link
-              key={m.slug}
-              to={`/atelie/modalidade/${m.slug}`}
-              className={`group relative overflow-hidden block transition-all duration-700 hover:-translate-y-1.5 hover:scale-[1.015] ${
-                i === 0 ? "col-span-2 row-span-2 md:col-span-2 md:row-span-2" : ""
-              }`}
+          <div
+            className="mx-auto mt-12 h-px"
+            style={{
+              width: 120,
+              background:
+                "linear-gradient(90deg, transparent, #d4af37, transparent)",
+            }}
+          />
+
+          <button
+            onClick={scrollToModalidades}
+            className="mt-14 inline-flex items-center gap-4 group"
+          >
+            <span
+              className="inline-block transition-all duration-500 group-hover:tracking-[0.55em]"
               style={{
-                border: "1px solid rgba(212,175,55,0.18)",
-                boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow =
-                  "0 30px 70px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,175,55,0.55), 0 0 40px rgba(212,175,55,0.22)";
-                e.currentTarget.style.borderColor =
-                  "rgba(212,175,55,0.55)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow =
-                  "0 20px 50px rgba(0,0,0,0.5)";
-                e.currentTarget.style.borderColor =
-                  "rgba(212,175,55,0.18)";
+                fontSize: 11,
+                letterSpacing: "0.45em",
+                color: "#f4ead0",
+                borderBottom: "1px solid rgba(212,175,55,0.6)",
+                paddingBottom: 6,
               }}
             >
-              <img
-                src={m.img}
-                alt={m.nome}
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-105"
-                style={{
-                  filter: "contrast(1.04) saturate(1.02)",
-                  background: "#050505",
-                }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.40) 55%, rgba(0,0,0,0.92) 100%)",
-                }}
-              />
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                style={{
-                  background:
-                    "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(244,215,122,0.20) 0%, transparent 65%)",
-                  mixBlendMode: "screen",
-                }}
-              />
-              <div
-                className={`absolute inset-x-0 bottom-0 z-10 ${
-                  i === 0 ? "p-8 sm:p-10" : "p-6"
-                }`}
-              >
-                <h3
-                  className="font-display text-white font-light tracking-wide"
-                  style={{
-                    fontSize: i === 0 ? "clamp(28px,3vw,40px)" : "22px",
-                    textShadow: "0 2px 12px rgba(0,0,0,0.65)",
-                    letterSpacing: "0.04em",
-                  }}
-                >
-                  {m.nome}
-                </h3>
-                <p
-                  className="mt-2 italic font-light text-sm"
-                  style={{
-                    color: "rgba(244,215,122,0.82)",
-                    letterSpacing: "0.04em",
-                  }}
-                >
-                  {m.subtitulo}
-                </p>
-                <div
-                  className="mt-4 h-px w-0 group-hover:w-20 transition-all duration-700"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #d4af37, transparent)",
-                  }}
-                />
-              </div>
-            </Link>
-          ))}
+              EXPLORAR MODALIDADES
+            </span>
+          </button>
         </div>
+
+        {/* Scroll cue */}
+        <div
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[9px] tracking-[0.5em] text-white/40"
+          style={{ animation: "fade-in 2s ease-out both" }}
+        >
+          ↓ ROLAR
+        </div>
+      </section>
+
+      {/* MODALIDADES — full-screen sections */}
+      <main id="modalidades">
+        {modalidades.map((m, i) => (
+          <ModalidadeSection key={m.slug} m={m} index={i} />
+        ))}
       </main>
-      </div>
+
+      {/* Footer mark */}
+      <footer className="py-16 text-center">
+        <div
+          className="mx-auto mb-6 h-px"
+          style={{
+            width: 80,
+            background:
+              "linear-gradient(90deg, transparent, rgba(212,175,55,0.6), transparent)",
+          }}
+        />
+        <span
+          className="font-display italic text-sm tracking-[0.3em]"
+          style={{ color: "#d4af37" }}
+        >
+          ATELIÊ
+        </span>
+      </footer>
     </div>
   );
 };
