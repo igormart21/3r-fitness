@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
+import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
 
 const AtelieLinha = () => {
   const { slug } = useParams();
@@ -29,7 +30,10 @@ const AtelieLinha = () => {
     m.linhas.includes(linha.slug),
   );
 
-  const imgSrc = linha.imagens[material];
+  const imgSrc =
+    linha.slug === "vigor" && forma === "masculino" && material === "ouro"
+      ? vigorMasculino
+      : linha.imagens[material];
   const lightTone =
     material === "ouro"
       ? "radial-gradient(ellipse 60% 55% at 50% 45%, rgba(244,200,90,0.22) 0%, transparent 70%)"
