@@ -120,15 +120,17 @@ const AtelieModalidade = () => {
                       }}
                     />
                   )}
-              <div
-                aria-hidden
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background:
-                    "radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%)",
-                }}
-              />
-            </div>
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%)",
+                    }}
+                  />
+                </div>
+              );
+            })()}
           </section>
 
           {/* DIREITA — seleção */}
