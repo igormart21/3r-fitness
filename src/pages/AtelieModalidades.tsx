@@ -38,6 +38,7 @@ const ModalidadeSection = ({
         loading="lazy"
         className="absolute inset-0 w-full h-full object-cover transition-transform ease-out"
         style={{
+          objectPosition: "center 18%",
           transform: visible ? "scale(1.03)" : "scale(1.12)",
           transitionDuration: "2200ms",
           filter: "contrast(1.05) saturate(1.03)",
