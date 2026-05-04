@@ -89,7 +89,7 @@ const AtelieModalidade = () => {
               {active && (
                 <img
                   key={revealKey}
-                  src={active.campaign}
+                  src={modalidade.slug === "musculacao" ? musculacaoCampaign : active.campaign}
                   alt={active.nome}
                   className="absolute inset-0 w-full h-full object-cover reveal-line transition-transform duration-500 ease-out group-hover:scale-[2]"
                   style={{
