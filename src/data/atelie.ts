@@ -8,6 +8,7 @@ import vigorOuroClean from "@/assets/linha-vigor-ouro-clean.jpg";
 import vigorPrataClean from "@/assets/linha-vigor-prata-clean.jpg";
 import vigorCampaign from "@/assets/linha-vigor-ouro-only.jpg";
 import halterCampaign from "@/assets/linha-halter-ouro-only.jpg";
+import halterOuro from "@/assets/linha-halter-ouro.jpg";
 import halterPrata from "@/assets/linha-halter-prata.jpg";
 import imperiumOuroClean from "@/assets/linha-imperium-ouro-clean.jpg";
 import imperiumPrataClean from "@/assets/linha-imperium-prata-clean.jpg";
@@ -50,7 +51,7 @@ export const LINHAS: Record<string, Linha> = {
     nome: "HALTER",
     assinatura: "Assinatura do Peso",
     frase: "O peso que esculpe o caráter.",
-    imagens: { ouro: imperiumOuroClean, prata: halterPrata },
+    imagens: { ouro: halterOuro, prata: halterPrata },
     campaign: halterCampaign,
   },
   imperium: {
