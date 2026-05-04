@@ -62,16 +62,20 @@ const AtelieModalidades = () => {
           </p>
         </div>
 
-        <div className="container mx-auto max-w-7xl px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10" style={{ maxWidth: "55%" }}>
-          {MODALIDADES.map((m, i) => (
+        <div className="container mx-auto max-w-7xl px-6 grid grid-cols-2 md:grid-cols-3 auto-rows-[260px] sm:auto-rows-[320px] md:auto-rows-[280px] gap-6 sm:gap-8 md:gap-10">
+          {(() => {
+            const order = ["fisiculturismo","musculacao","corrida","ciclismo","crossfit","triathlon"];
+            return order
+              .map((s) => MODALIDADES.find((m) => m.slug === s))
+              .filter(Boolean) as typeof MODALIDADES;
+          })().map((m, i) => (
             <Link
               key={m.slug}
               to={`/atelie/modalidade/${m.slug}`}
-              className={`group relative overflow-hidden block transition-all duration-700 hover:-translate-y-1 ${
-                i === 0 ? "lg:col-span-2 lg:row-span-2" : ""
+              className={`group relative overflow-hidden block transition-all duration-700 hover:-translate-y-1.5 hover:scale-[1.015] ${
+                i === 0 ? "col-span-2 row-span-2 md:col-span-2 md:row-span-2" : ""
               }`}
               style={{
-                aspectRatio: i === 0 ? "16 / 11" : "4 / 5",
                 border: "1px solid rgba(212,175,55,0.18)",
                 boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
               }}
@@ -92,7 +96,7 @@ const AtelieModalidades = () => {
                 src={m.img}
                 alt={m.nome}
                 loading="lazy"
-                className="absolute inset-0 w-full h-full object-contain transition-transform duration-[1600ms] ease-out group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-110"
                 style={{ filter: "contrast(1.04) saturate(1.02)" }}
               />
               <div
