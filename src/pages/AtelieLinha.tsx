@@ -3,6 +3,7 @@ import { Link, useParams, Navigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
+import vigorMasculinoPrata from "@/assets/linha-vigor-masculino-prata.jpg";
 
 const AtelieLinha = () => {
   const { slug } = useParams();
@@ -33,6 +34,8 @@ const AtelieLinha = () => {
   const imgSrc =
     linha.slug === "vigor" && forma === "masculino" && material === "ouro"
       ? vigorMasculino
+      : linha.slug === "vigor" && forma === "masculino" && material === "prata"
+      ? vigorMasculinoPrata
       : linha.imagens[material];
   const lightTone =
     material === "ouro"
