@@ -1,16 +1,40 @@
-import { Link, useParams, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { MODALIDADES, LINHAS } from "@/data/atelie";
 
 const AtelieModalidade = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const modalidade = MODALIDADES.find((m) => m.slug === slug);
+
+  const linhas = (modalidade?.linhas ?? [])
+    .map((id) => LINHAS[id])
+    .filter(Boolean);
+
+  const [activeSlug, setActiveSlug] = useState<string | undefined>(
+    linhas[0]?.slug,
+  );
+  const [revealKey, setRevealKey] = useState(0);
+
+  useEffect(() => {
+    setActiveSlug(linhas[0]?.slug);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug]);
+
+  useEffect(() => {
+    setRevealKey((k) => k + 1);
+    // preload
+    linhas.forEach((l) => {
+      const img = new Image();
+      img.src = l.campaign;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeSlug]);
 
   if (!modalidade) return <Navigate to="/atelie/modalidades" replace />;
 
-  const linhas = modalidade.linhas
-    .map((id) => LINHAS[id])
-    .filter(Boolean);
+  const active = linhas.find((l) => l.slug === activeSlug) ?? linhas[0];
 
   return (
     <div
@@ -37,171 +61,218 @@ const AtelieModalidade = () => {
         </div>
       </header>
 
-      <main className="pt-32 pb-24">
-        {/* Intro */}
-        <div className="container mx-auto max-w-5xl px-6 text-center mb-24">
-          <p
-            className="text-[10px] uppercase tracking-[0.6em] mb-6"
-            style={{ color: "rgba(212,175,55,0.75)" }}
-          >
-            Etapa 02 · Linhas autorais
-          </p>
-          <h1
-            className="font-display font-light leading-tight"
-            style={{
-              fontSize: "clamp(36px, 5vw, 64px)",
-              letterSpacing: "0.03em",
-              color: "#f4ead0",
-            }}
-          >
-            {modalidade.nome}
-          </h1>
-          <p
-            className="mt-5 italic font-light max-w-xl mx-auto"
-            style={{
-              fontFamily: '"Fraunces",serif',
-              color: "rgba(255,255,255,0.65)",
-              fontSize: "16px",
-              letterSpacing: "0.03em",
-            }}
-          >
-            Duas linhas. Duas narrativas. Uma essência.
-          </p>
-        </div>
-
-        {/* Linhas full-width campaign sections */}
-        <div className="space-y-24">
-          {linhas.map((linha, i) => (
-            <section
-              key={linha.slug}
-              className="relative w-full"
-              style={{ minHeight: "82vh" }}
+      <main className="relative w-full min-h-screen pt-28 md:pt-32 pb-20">
+        <div className="container mx-auto max-w-7xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          {/* ESQUERDA — campanha */}
+          <section className="lg:col-span-8 relative">
+            <div
+              className="relative w-full overflow-hidden"
+              style={{
+                aspectRatio: "4 / 5",
+                border: "1px solid rgba(212,175,55,0.18)",
+                boxShadow:
+                  "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08) inset",
+                background:
+                  "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)",
+              }}
             >
+              {active && (
+                <img
+                  key={revealKey}
+                  src={active.campaign}
+                  alt={active.nome}
+                  className="absolute inset-0 w-full h-full object-cover reveal-line"
+                  style={{ filter: "contrast(1.05) saturate(1.04)" }}
+                />
+              )}
               <div
-                className={`container mx-auto max-w-7xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center ${
-                  i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
-                }`}
+                aria-hidden
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    "radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%)",
+                }}
+              />
+            </div>
+          </section>
+
+          {/* DIREITA — seleção */}
+          <section className="lg:col-span-4">
+            <div className="max-w-md mx-auto lg:mx-0">
+              <p
+                className="text-[10px] uppercase tracking-[0.5em] mb-4"
+                style={{ color: "rgba(212,175,55,0.75)" }}
               >
-                {/* Imagem campanha */}
-                <div className="lg:col-span-7 relative">
-                  <div
-                    className="relative w-full overflow-hidden group"
+                Etapa 02 · Modalidade
+              </p>
+              <h1
+                className="font-display font-light leading-none"
+                style={{
+                  fontSize: "clamp(34px, 3.6vw, 52px)",
+                  letterSpacing: "0.05em",
+                  color: "#f4ead0",
+                }}
+              >
+                {modalidade.nome.toUpperCase()}
+              </h1>
+              <p
+                className="mt-4 italic font-light"
+                style={{
+                  fontFamily: '"Fraunces",serif',
+                  color: "rgba(255,255,255,0.65)",
+                  fontSize: "15px",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                Escolha uma assinatura da modalidade.
+              </p>
+
+              <div
+                className="my-8 h-px w-20"
+                style={{
+                  background:
+                    "linear-gradient(90deg, rgba(212,175,55,0.7), transparent)",
+                }}
+              />
+
+              {/* Botões das linhas */}
+              <div className="flex flex-wrap gap-3">
+                {linhas.map((l) => {
+                  const isActive = l.slug === active?.slug;
+                  return (
+                    <button
+                      key={l.slug}
+                      type="button"
+                      onClick={() => setActiveSlug(l.slug)}
+                      className="transition-all duration-500"
+                      style={{
+                        padding: "12px 26px",
+                        fontFamily: "Inter, sans-serif",
+                        fontSize: "11px",
+                        letterSpacing: "0.4em",
+                        textTransform: "uppercase",
+                        color: isActive ? "#0a0a0a" : "rgba(244,215,122,0.9)",
+                        background: isActive ? "#d4af37" : "transparent",
+                        border: isActive
+                          ? "1px solid #d4af37"
+                          : "1px solid rgba(212,175,55,0.35)",
+                        boxShadow: isActive
+                          ? "0 0 28px rgba(212,175,55,0.35)"
+                          : "none",
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isActive) {
+                          e.currentTarget.style.borderColor =
+                            "rgba(212,175,55,0.75)";
+                          e.currentTarget.style.color = "#f4d77a";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isActive) {
+                          e.currentTarget.style.borderColor =
+                            "rgba(212,175,55,0.35)";
+                          e.currentTarget.style.color =
+                            "rgba(244,215,122,0.9)";
+                        }
+                      }}
+                    >
+                      {l.nome}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Detalhes da linha ativa */}
+              {active && (
+                <div key={`info-${active.slug}`} className="mt-12 reveal-info">
+                  <h2
+                    className="font-display font-light leading-none"
                     style={{
-                      aspectRatio: "4 / 5",
-                      border: "1px solid rgba(212,175,55,0.18)",
-                      boxShadow: "0 30px 80px rgba(0,0,0,0.7)",
+                      fontSize: "clamp(36px, 3.4vw, 50px)",
+                      letterSpacing: "0.04em",
+                      color: "#f4ead0",
                     }}
                   >
-                    <img
-                      src={linha.campaign}
-                      alt={linha.nome}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1800ms] ease-out group-hover:scale-105"
-                      style={{ filter: "contrast(1.05) saturate(1.04)" }}
-                    />
-                    <div
-                      className="absolute inset-0"
+                    {active.nome}
+                  </h2>
+                  <p
+                    className="mt-3 italic font-light"
+                    style={{
+                      fontFamily: '"Fraunces",serif',
+                      color: "rgba(244,215,122,0.9)",
+                      fontSize: "14px",
+                      letterSpacing: "0.06em",
+                    }}
+                  >
+                    {active.assinatura}
+                  </p>
+                  <p
+                    className="mt-5 font-light leading-relaxed italic"
+                    style={{
+                      fontFamily: '"Fraunces",serif',
+                      color: "rgba(255,255,255,0.72)",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {active.frase}
+                  </p>
+
+                  <div className="mt-10">
+                    <button
+                      type="button"
+                      onClick={() => navigate(`/atelie/linha/${active.slug}`)}
+                      className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500"
                       style={{
-                        background:
-                          "radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%)",
+                        color: "#d4af37",
+                        border: "1px solid rgba(212,175,55,0.55)",
+                        background: "transparent",
+                        fontFamily: "Inter, sans-serif",
+                        fontSize: "11px",
+                        letterSpacing: "0.42em",
+                        textTransform: "uppercase",
                       }}
-                    />
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "#d4af37";
+                        e.currentTarget.style.color = "#000";
+                        e.currentTarget.style.boxShadow =
+                          "0 0 32px rgba(212,175,55,0.35)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "transparent";
+                        e.currentTarget.style.color = "#d4af37";
+                        e.currentTarget.style.boxShadow = "none";
+                      }}
+                    >
+                      <span
+                        className="h-px w-5"
+                        style={{ background: "currentColor" }}
+                      />
+                      Explorar linha
+                      <span
+                        className="h-px w-5"
+                        style={{ background: "currentColor" }}
+                      />
+                    </button>
                   </div>
                 </div>
-
-                {/* Texto + CTA */}
-                <div className="lg:col-span-5">
-                  <div className="max-w-md mx-auto lg:mx-0">
-                    <p
-                      className="text-[10px] uppercase tracking-[0.5em] mb-5"
-                      style={{ color: "rgba(212,175,55,0.75)" }}
-                    >
-                      Linha autoral · 0{i + 1}
-                    </p>
-                    <h2
-                      className="font-display font-light leading-none"
-                      style={{
-                        fontSize: "clamp(44px, 5vw, 72px)",
-                        letterSpacing: "0.04em",
-                        color: "#f4ead0",
-                      }}
-                    >
-                      {linha.nome}
-                    </h2>
-                    <p
-                      className="mt-4 italic font-light"
-                      style={{
-                        fontFamily: '"Fraunces",serif',
-                        color: "rgba(244,215,122,0.9)",
-                        fontSize: "15px",
-                        letterSpacing: "0.06em",
-                      }}
-                    >
-                      {linha.assinatura}
-                    </p>
-
-                    <div
-                      className="my-8 h-px w-20"
-                      style={{
-                        background:
-                          "linear-gradient(90deg, rgba(212,175,55,0.7), transparent)",
-                      }}
-                    />
-
-                    <p
-                      className="font-light leading-relaxed italic"
-                      style={{
-                        fontFamily: '"Fraunces",serif',
-                        color: "rgba(255,255,255,0.72)",
-                        fontSize: "17px",
-                      }}
-                    >
-                      {linha.frase}
-                    </p>
-
-                    <div className="mt-12">
-                      <Link
-                        to={`/atelie/linha/${linha.slug}`}
-                        className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500"
-                        style={{
-                          color: "#d4af37",
-                          border: "1px solid rgba(212,175,55,0.55)",
-                          background: "transparent",
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          letterSpacing: "0.42em",
-                          textTransform: "uppercase",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = "#d4af37";
-                          e.currentTarget.style.color = "#000";
-                          e.currentTarget.style.boxShadow =
-                            "0 0 32px rgba(212,175,55,0.35)";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = "transparent";
-                          e.currentTarget.style.color = "#d4af37";
-                          e.currentTarget.style.boxShadow = "none";
-                        }}
-                      >
-                        <span
-                          className="h-px w-5"
-                          style={{ background: "currentColor" }}
-                        />
-                        Explorar linha
-                        <span
-                          className="h-px w-5"
-                          style={{ background: "currentColor" }}
-                        />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          ))}
+              )}
+            </div>
+          </section>
         </div>
       </main>
+
+      <style>{`
+        @keyframes reveal-line {
+          0% { opacity: 0; transform: scale(0.99); filter: blur(3px); }
+          100% { opacity: 1; transform: scale(1.02); filter: blur(0); }
+        }
+        .reveal-line { animation: reveal-line 0.4s cubic-bezier(0.22,1,0.36,1) both; }
+        @keyframes reveal-info {
+          0% { opacity: 0; transform: translateY(6px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .reveal-info { animation: reveal-info 0.45s cubic-bezier(0.22,1,0.36,1) both; }
+      `}</style>
     </div>
   );
 };
