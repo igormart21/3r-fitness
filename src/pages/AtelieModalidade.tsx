@@ -3,6 +3,7 @@ import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { MODALIDADES, LINHAS } from "@/data/atelie";
 import musculacaoCampaign from "@/assets/modalidade-musculacao-campaign.jpg";
+import ciclismoCampaign from "@/assets/modalidade-ciclismo-campaign.jpg";
 
 const AtelieModalidade = () => {
   const { slug } = useParams();
