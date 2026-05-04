@@ -46,6 +46,8 @@ const AtelieLinha = () => {
       ? veloxRoyaleOuroFem
       : linha.slug === "horizonte" && forma === "masculino" && material === "prata"
       ? veloxRoyalePrataMasc
+      : linha.slug === "cadencia" && forma === "masculino" && material === "prata"
+      ? aeronPrataMasc
       : linha.imagens[material];
   const lightTone =
     material === "ouro"
