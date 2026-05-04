@@ -191,15 +191,17 @@ const AtelieLinha = () => {
                   value={material}
                   onChange={(v) => setMaterial(v as Material)}
                 />
-                <Selector
-                  label="Forma"
-                  options={[
-                    { value: "masculino", label: "Masculino" },
-                    { value: "feminino", label: "Feminino" },
-                  ]}
-                  value={forma}
-                  onChange={(v) => setForma(v as Forma)}
-                />
+                {linha.slug !== "halter" && (
+                  <Selector
+                    label="Forma"
+                    options={[
+                      { value: "masculino", label: "Masculino" },
+                      { value: "feminino", label: "Feminino" },
+                    ]}
+                    value={forma}
+                    onChange={(v) => setForma(v as Forma)}
+                  />
+                )}
               </div>
 
               <div className="mt-14">
