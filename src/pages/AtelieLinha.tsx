@@ -8,7 +8,7 @@ const AtelieLinha = () => {
   const linha = slug ? LINHAS[slug] : undefined;
 
   const [material, setMaterial] = useState<Material>("ouro");
-  const [forma, setForma] = useState<Forma>("classico");
+  const [forma, setForma] = useState<Forma>("masculino");
   const [revealKey, setRevealKey] = useState(0);
 
   useEffect(() => {
@@ -187,8 +187,8 @@ const AtelieLinha = () => {
                 <Selector
                   label="Forma"
                   options={[
-                    { value: "classico", label: "Clássico" },
-                    { value: "slim", label: "Slim" },
+                    { value: "masculino", label: "Masculino" },
+                    { value: "feminino", label: "Feminino" },
                   ]}
                   value={forma}
                   onChange={(v) => setForma(v as Forma)}
