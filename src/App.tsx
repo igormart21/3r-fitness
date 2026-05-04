@@ -13,6 +13,9 @@ import NotFound from "./pages/NotFound.tsx";
 import Auth from "./pages/Auth.tsx";
 import Modalidade from "./pages/Modalidade.tsx";
 import Atelie from "./pages/Atelie.tsx";
+import AtelieModalidades from "./pages/AtelieModalidades.tsx";
+import AtelieModalidade from "./pages/AtelieModalidade.tsx";
+import AtelieLinha from "./pages/AtelieLinha.tsx";
 import { useCartSync } from "@/hooks/useCartSync";
 import { InstagramFloatingButton } from "@/components/InstagramFloatingButton";
 import { WhatsappFloatingButton } from "@/components/WhatsappFloatingButton";
@@ -33,6 +36,9 @@ const AppRoutes = () => {
       <Route path="/teste-botoes" element={<TesteBotoes />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/atelie" element={<Atelie />} />
+      <Route path="/atelie/modalidades" element={<AtelieModalidades />} />
+      <Route path="/atelie/modalidade/:slug" element={<AtelieModalidade />} />
+      <Route path="/atelie/linha/:slug" element={<AtelieLinha />} />
       <Route path="/modalidade/:id" element={<Modalidade />} />
       <Route path="/personalizar/:slug" element={<Modalidade />} />
       <Route path="*" element={<NotFound />} />
