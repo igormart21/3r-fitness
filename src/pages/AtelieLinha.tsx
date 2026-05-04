@@ -13,6 +13,7 @@ import vigorMasculinoPrata from "@/assets/linha-vigor-masculino-prata.jpg";
 import veloxRoyaleOuroMasc from "@/assets/linha-velox-royale-ouro-masculino.jpg";
 import veloxRoyaleOuroFem from "@/assets/linha-velox-royale-ouro-feminino.jpg";
 import veloxRoyalePrataMasc from "@/assets/linha-velox-royale-prata-masculino.jpg";
+import veloxRoyalePrataFem from "@/assets/linha-velox-royale-prata-feminino.jpg";
 import aeronPrataMasc from "@/assets/linha-aeron-prata-masculino.jpg";
 import aeronPrataFem from "@/assets/linha-aeron-prata-feminino.jpg";
 import strataOuro from "@/assets/linha-strata-ouro.jpg";
@@ -131,6 +132,8 @@ const AtelieLinha = () => {
       ? veloxRoyaleOuroFem
       : linha.slug === "velox" && forma === "masculino" && material === "prata"
       ? veloxRoyalePrataMasc
+      : linha.slug === "velox" && forma === "feminino" && material === "prata"
+      ? veloxRoyalePrataFem
       : linha.slug === "cadencia" && forma === "masculino" && material === "prata"
       ? aeronPrataMasc
       : linha.slug === "cadencia" && forma === "feminino" && material === "prata"
