@@ -88,7 +88,7 @@ export const LINHAS: Record<string, Linha> = {
   },
   horizonte: {
     slug: "horizonte",
-    nome: "HORIZONTE",
+    nome: "VELOX ROYALE",
     assinatura: "Assinatura da Distância",
     frase: "Horizontes conquistados em silêncio.",
     imagens: { ouro: imperiumOuroClean, prata: imperiumPrataClean },
