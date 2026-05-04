@@ -21,6 +21,7 @@ const AtelieModalidade = () => {
     linhas[0]?.slug,
   );
   const [revealKey, setRevealKey] = useState(0);
+  const [hoverSlug, setHoverSlug] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     setActiveSlug(linhas[0]?.slug);
@@ -35,11 +36,11 @@ const AtelieModalidade = () => {
       img.src = l.campaign;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeSlug]);
+  }, [activeSlug, hoverSlug]);
 
   if (!modalidade) return <Navigate to="/atelie/modalidades" replace />;
 
-  const active = linhas.find((l) => l.slug === activeSlug) ?? linhas[0];
+  const active = linhas.find((l) => l.slug === (hoverSlug ?? activeSlug)) ?? linhas[0];
 
   return (
     <div
