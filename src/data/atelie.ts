@@ -65,7 +65,7 @@ export const LINHAS: Record<string, Linha> = {
   },
   forja: {
     slug: "forja",
-    nome: "FORJA",
+    nome: "LINE STRATA",
     assinatura: "Assinatura da Intensidade",
     frase: "A intensidade transformada em arte.",
     imagens: { ouro: triadeOuroClean, prata: triadePrataClean },
