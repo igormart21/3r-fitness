@@ -6,6 +6,7 @@ import musculacaoCampaign from "@/assets/modalidade-musculacao-campaign.jpg";
 import musculacaoHalter from "@/assets/modalidade-musculacao-halter.jpg";
 import ciclismoCampaign from "@/assets/modalidade-ciclismo-campaign.jpg";
 import crossfitCampaign from "@/assets/modalidade-crossfit-campaign.jpg";
+import crossfitStrata from "@/assets/modalidade-crossfit-strata.jpg";
 
 const AtelieModalidade = () => {
   const { slug } = useParams();
@@ -74,12 +75,15 @@ const AtelieModalidade = () => {
               const isMusc = modalidade.slug === "musculacao";
               const isCiclismo = modalidade.slug === "ciclismo";
               const isCrossfit = modalidade.slug === "crossfit";
+              const isCrossfitStrata = isCrossfit && active?.slug === "forja";
               const imgSrc = isHalter
                 ? musculacaoHalter
                 : isMusc
                 ? musculacaoCampaign
                 : isCiclismo
                 ? ciclismoCampaign
+                : isCrossfitStrata
+                ? crossfitStrata
                 : isCrossfit
                 ? crossfitCampaign
                 : active?.campaign;
