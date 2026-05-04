@@ -66,7 +66,7 @@ const AtelieModalidade = () => {
           {/* ESQUERDA — campanha */}
           <section className="lg:col-span-7 relative">
             <div
-              className="relative w-full overflow-hidden flex items-center justify-center p-8 md:p-12"
+              className="relative w-full overflow-hidden"
               style={{
                 aspectRatio: "4 / 5",
                 border: "1px solid rgba(212,175,55,0.18)",
@@ -81,7 +81,7 @@ const AtelieModalidade = () => {
                   key={revealKey}
                   src={active.campaign}
                   alt={active.nome}
-                  className="relative max-w-[78%] max-h-[78%] w-auto h-auto object-contain reveal-line"
+                  className="absolute inset-0 w-full h-full object-cover reveal-line"
                   style={{ filter: "contrast(1.05) saturate(1.04)" }}
                 />
               )}
