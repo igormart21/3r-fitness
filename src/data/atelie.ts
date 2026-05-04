@@ -157,4 +157,11 @@ export const MODALIDADES: Modalidade[] = [
     img: sportTriathlon,
     linhas: ["travessia", "elite"],
   },
+  {
+    slug: "fisiculturismo",
+    nome: "Fisiculturismo",
+    subtitulo: "A escultura do físico",
+    img: sportFisiculturismo,
+    linhas: ["vigor", "imperium"],
+  },
 ];
