@@ -368,6 +368,7 @@ const AtelieLinha = () => {
                 }}
               />
             </div>
+            )}
           </section>
 
           {/* DIREITA — interface */}
