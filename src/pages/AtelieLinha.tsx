@@ -118,9 +118,8 @@ const AtelieLinha = () => {
 
   // Link externo do produto no Shopify por linha.
   // Adicione novas linhas mapeando o slug para a URL pública do produto.
-  const SHOPIFY_PRODUCTS_BASE = "https://store-store-builder-joaax.myshopify.com/products";
   const externalProductLinksBySlug: Record<string, string> = {
-    halter: `${SHOPIFY_PRODUCTS_BASE}/halter`,
+    halter: "https://3r-fitness-5605.myshopify.com/products/halter",
   };
   const externalCartUrl = externalProductLinksBySlug[linha.slug];
 
