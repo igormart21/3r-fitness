@@ -304,9 +304,9 @@ const AtelieLinha = () => {
       </header>
 
       <main className="relative z-10 w-full min-h-screen pt-24 md:pt-28 pb-12">
-        <div className={`container mx-auto max-w-6xl px-6 ${isVeloxCiclismo ? "flex justify-center lg:justify-end items-center min-h-[calc(100vh-180px)]" : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"}`}>
+        <div className={`container mx-auto max-w-6xl px-6 ${hasEditorial ? "flex justify-center lg:justify-end items-center min-h-[calc(100vh-180px)]" : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"}`}>
           {/* ESQUERDA — imagem (omitida no Velox Royale ciclismo: o fundo split é o produto) */}
-          {!isVeloxCiclismo && (
+          {!hasEditorial && (
             <section className="lg:col-span-6 relative">
             <div
               className="relative w-full overflow-hidden mx-auto group"
@@ -367,7 +367,7 @@ const AtelieLinha = () => {
           )}
 
           {/* DIREITA — interface */}
-          <section className={isVeloxCiclismo ? "w-full max-w-md lg:max-w-[520px]" : "lg:col-span-6"}>
+          <section className={hasEditorial ? "w-full max-w-md lg:max-w-[520px]" : "lg:col-span-6"}>
             <div className="max-w-md mx-auto lg:mx-0">
               <p
                 className="text-[10px] uppercase tracking-[0.5em] mb-5"
