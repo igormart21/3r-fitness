@@ -459,9 +459,9 @@ const AtelieLinha = () => {
               </div>
 
               <div className="mt-14">
-                {externalProductUrl ? (
+                {externalCartUrl ? (
                   <a
-                    href={externalProductUrl}
+                    href={externalCartUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500"
