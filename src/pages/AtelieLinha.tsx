@@ -155,8 +155,6 @@ const AtelieLinha = () => {
       className="relative min-h-screen w-full text-white overflow-hidden"
       style={{ backgroundColor: "#050505" }}
     >
-      {isCiclismo && (
-        <>
       {isCiclismo && !isVeloxCiclismo && (
         <>
           <img
