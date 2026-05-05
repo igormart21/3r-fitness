@@ -146,6 +146,7 @@ const AtelieLinha = () => {
       : "radial-gradient(ellipse 60% 55% at 50% 45%, rgba(200,215,235,0.16) 0%, transparent 70%)";
 
   const isCiclismo = parentModalidade?.slug === "ciclismo";
+  const isVeloxCiclismo = isCiclismo && linha.slug === "velox";
 
   return (
     <div
