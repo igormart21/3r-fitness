@@ -109,6 +109,10 @@ export const LINHAS: Record<string, Linha> = {
     frase: "Horizontes conquistados em silêncio.",
     imagens: { ouro: veloxOuro, prata: imperiumPrataClean },
     campaign: imperiumCampaign,
+    editorial: {
+      feminino: { ouro: veloxEditorialFemOuro, prata: veloxEditorialFemPrata },
+      masculino: { ouro: veloxEditorialMascOuro, prata: veloxEditorialMascPrata },
+    },
   },
   cadencia: {
     slug: "cadencia",
