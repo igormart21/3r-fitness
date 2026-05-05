@@ -226,19 +226,48 @@ const AtelieModalidades = () => {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 70% 55% at 50% 35%, rgba(220,225,235,0.10), transparent 70%), linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0.85) 100%)",
+              "radial-gradient(ellipse 38% 30% at 50% 45%, rgba(230,232,240,0.18), transparent 60%), linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.9) 100%)",
           }}
         />
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(220,225,235,0.14), transparent 70%)",
+              "radial-gradient(circle 32% at 50% 50%, rgba(230,232,240,0.22), transparent 55%)",
             animation: "ambient-breath 7s ease-in-out infinite",
             mixBlendMode: "screen",
           }}
         />
 
+        {/* Particles douradas */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {Array.from({ length: 14 }).map((_, i) => {
+            const left = (i * 53) % 100;
+            const size = 1 + ((i * 7) % 3);
+            const duration = 18 + ((i * 3) % 14);
+            const delay = (i * 1.7) % 12;
+            const drift = ((i % 2 === 0 ? 1 : -1) * (10 + (i * 5) % 30)) + "px";
+            const opacity = 0.18 + ((i % 4) * 0.06);
+            return (
+              <span
+                key={i}
+                style={{
+                  position: "absolute",
+                  bottom: "-10px",
+                  left: `${left}%`,
+                  width: size,
+                  height: size,
+                  borderRadius: "9999px",
+                  background: "rgba(212,175,55,0.9)",
+                  boxShadow: "0 0 6px rgba(212,175,55,0.6)",
+                  animation: `particle-float ${duration}s linear ${delay}s infinite`,
+                  ["--p-drift" as any]: drift,
+                  ["--p-opacity" as any]: opacity,
+                } as React.CSSProperties}
+              />
+            );
+          })}
+        </div>
         <div
           className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto"
         >
