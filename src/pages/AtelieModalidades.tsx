@@ -221,7 +221,9 @@ const AtelieModalidades = () => {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(212,175,55,0.10), transparent 70%)",
+              "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(212,175,55,0.12), transparent 70%)",
+            animation: "ambient-breath 7s ease-in-out infinite",
+            mixBlendMode: "screen",
           }}
         />
 
