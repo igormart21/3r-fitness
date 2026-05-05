@@ -157,6 +157,8 @@ const AtelieLinha = () => {
     >
       {isCiclismo && (
         <>
+      {isCiclismo && !isVeloxCiclismo && (
+        <>
           <img
             src={ciclismoBg}
             alt=""
@@ -186,6 +188,73 @@ const AtelieLinha = () => {
           `}</style>
         </>
       )}
+      {isVeloxCiclismo && (
+        <>
+          <div
+            aria-hidden
+            className="fixed inset-0 pointer-events-none grid grid-cols-2"
+            style={{ zIndex: 0 }}
+          >
+            <div
+              className="relative h-full w-full overflow-hidden"
+              style={{
+                backgroundImage: `url(${veloxBgFem})`,
+                backgroundSize: "cover",
+                backgroundPosition: "50% 38%",
+                filter: "contrast(1.08) saturate(0.95) brightness(0.95)",
+              }}
+            >
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(ellipse 70% 70% at 55% 55%, transparent 35%, rgba(0,0,0,0.65) 100%)",
+                }}
+              />
+            </div>
+            <div
+              className="relative h-full w-full overflow-hidden"
+              style={{
+                backgroundImage: `url(${veloxBgMasc})`,
+                backgroundSize: "cover",
+                backgroundPosition: "50% 38%",
+                filter: "contrast(1.08) saturate(0.95) brightness(0.95)",
+              }}
+            >
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(ellipse 70% 70% at 45% 55%, transparent 35%, rgba(0,0,0,0.65) 100%)",
+                }}
+              />
+            </div>
+          </div>
+          {/* Center seam gradient */}
+          <div
+            aria-hidden
+            className="fixed inset-y-0 pointer-events-none"
+            style={{
+              zIndex: 0,
+              left: "30%",
+              right: "30%",
+              background:
+                "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.55) 50%, transparent 100%)",
+            }}
+          />
+          {/* Subtle global vignette + warmth */}
+          <div
+            aria-hidden
+            className="fixed inset-0 pointer-events-none"
+            style={{
+              zIndex: 0,
+              background:
+                "radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%), radial-gradient(ellipse 60% 50% at 50% 50%, rgba(212,175,55,0.06) 0%, transparent 70%)",
+            }}
+          />
+        </>
+      )}
+
       <header className="absolute top-0 inset-x-0 z-30">
         <div className="container mx-auto px-6 py-6 flex items-center justify-between">
           <Link
