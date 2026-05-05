@@ -224,8 +224,8 @@ const AtelieLinha = () => {
             {/* Lado masculino: stack OURO/PRATA com crossfade */}
             <div className="relative h-full w-full overflow-hidden">
               {[
-                { src: veloxBgMascOuro, active: material === "ouro" },
-                { src: veloxBgMascPrata, active: material === "prata" },
+                { src: linha.editorial.masculino.ouro, active: material === "ouro" },
+                { src: linha.editorial.masculino.prata, active: material === "prata" },
               ].map((layer, i) => (
                 <div
                   key={i}
