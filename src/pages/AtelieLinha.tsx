@@ -20,6 +20,7 @@ import strataOuro from "@/assets/linha-strata-ouro.jpg";
 import strataPrata from "@/assets/linha-strata-prata.jpg";
 import imperiumOuro from "@/assets/linha-imperium-ouro.jpg";
 import imperiumPrata from "@/assets/linha-imperium-prata.jpg";
+import ciclismoBg from "@/assets/atelie-ciclismo-bg.jpg";
 
 const AtelieLinha = () => {
   const { slug } = useParams();
@@ -144,11 +145,44 @@ const AtelieLinha = () => {
       ? "radial-gradient(ellipse 60% 55% at 50% 45%, rgba(244,200,90,0.22) 0%, transparent 70%)"
       : "radial-gradient(ellipse 60% 55% at 50% 45%, rgba(200,215,235,0.16) 0%, transparent 70%)";
 
+  const isCiclismo = parentModalidade?.slug === "ciclismo";
+
   return (
     <div
-      className="min-h-screen w-full text-white"
+      className="relative min-h-screen w-full text-white overflow-hidden"
       style={{ backgroundColor: "#050505" }}
     >
+      {isCiclismo && (
+        <>
+          <img
+            src={ciclismoBg}
+            alt=""
+            aria-hidden
+            className="fixed inset-0 w-full h-full object-cover pointer-events-none"
+            style={{
+              zIndex: 0,
+              filter: "contrast(1.08) saturate(1.05)",
+              animation: "ciclismo-bg-zoom 12s ease-in-out infinite alternate",
+              objectPosition: "50% 50%",
+            }}
+          />
+          <div
+            aria-hidden
+            className="fixed inset-0 pointer-events-none"
+            style={{
+              zIndex: 0,
+              background:
+                "linear-gradient(180deg, rgba(5,5,5,0.85) 0%, rgba(5,5,5,0.75) 50%, rgba(5,5,5,0.92) 100%), radial-gradient(ellipse at 70% 50%, rgba(212,175,55,0.08) 0%, transparent 60%)",
+            }}
+          />
+          <style>{`
+            @keyframes ciclismo-bg-zoom {
+              0% { transform: scale(1.0); }
+              100% { transform: scale(1.05); }
+            }
+          `}</style>
+        </>
+      )}
       <header className="absolute top-0 inset-x-0 z-30">
         <div className="container mx-auto px-6 py-6 flex items-center justify-between">
           <Link
@@ -172,7 +206,7 @@ const AtelieLinha = () => {
         </div>
       </header>
 
-      <main className="relative w-full min-h-screen pt-24 md:pt-28 pb-12">
+      <main className="relative z-10 w-full min-h-screen pt-24 md:pt-28 pb-12">
         <div className="container mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           {/* ESQUERDA — imagem */}
           <section className="lg:col-span-6 relative">
