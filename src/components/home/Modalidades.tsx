@@ -120,6 +120,101 @@ export const Modalidades = () => {
           </Link>
         ))}
       </div>
+
+      {/* Cinematic transition cue → Ateliê */}
+      <style>{`
+        @keyframes atelie-pulse-line {
+          0%, 100% { transform: scaleY(0.4); opacity: 0.35; }
+          50% { transform: scaleY(1); opacity: 1; }
+        }
+        @keyframes atelie-float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(6px); }
+        }
+        @keyframes atelie-shimmer-text {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+      `}</style>
+      <div className="relative z-10 mt-16 sm:mt-20 flex flex-col items-center gap-5">
+        <span
+          className="text-[9px] sm:text-[10px] uppercase font-light"
+          style={{
+            letterSpacing: "0.7em",
+            paddingLeft: "0.7em",
+            color: "rgba(244,215,122,0.55)",
+          }}
+        >
+          Continua
+        </span>
+
+        <p
+          className="italic font-light text-center px-6"
+          style={{
+            fontFamily: '"Fraunces","Cormorant Garamond",serif',
+            fontSize: "clamp(15px, 1.3vw, 18px)",
+            letterSpacing: "0.04em",
+            background:
+              "linear-gradient(90deg, rgba(244,215,122,0.35) 0%, rgba(244,215,122,0.95) 50%, rgba(244,215,122,0.35) 100%)",
+            backgroundSize: "200% 100%",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            animation: "atelie-shimmer-text 6s ease-in-out infinite",
+          }}
+        >
+          Descubra o Ateliê 3R
+        </p>
+
+        <button
+          type="button"
+          aria-label="Descer para a seção do Ateliê"
+          onClick={() => {
+            const start = window.scrollY;
+            const end = start + window.innerHeight * 0.95;
+            const duration = 1400;
+            let t0: number | null = null;
+            const ease = (t: number) =>
+              t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+            const step = (ts: number) => {
+              if (t0 === null) t0 = ts;
+              const p = Math.min((ts - t0) / duration, 1);
+              window.scrollTo(0, start + (end - start) * ease(p));
+              if (p < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+          }}
+          className="group flex flex-col items-center gap-3 cursor-pointer"
+          style={{ background: "transparent", border: "none" }}
+        >
+          <span
+            aria-hidden
+            style={{
+              display: "block",
+              width: "1px",
+              height: "56px",
+              background:
+                "linear-gradient(180deg, transparent 0%, rgba(244,215,122,0.85) 50%, transparent 100%)",
+              transformOrigin: "center",
+              animation: "atelie-pulse-line 2.4s ease-in-out infinite",
+            }}
+          />
+          <span
+            aria-hidden
+            style={{
+              display: "inline-block",
+              animation: "atelie-float 2.4s ease-in-out infinite",
+              color: "rgba(244,215,122,0.85)",
+              fontSize: "14px",
+              lineHeight: 1,
+              transition: "color 0.4s ease",
+            }}
+            className="group-hover:!text-[#f4d77a]"
+          >
+            ▾
+          </span>
+        </button>
+      </div>
     </section>
   );
 };
