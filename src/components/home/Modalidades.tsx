@@ -136,7 +136,7 @@ export const Modalidades = () => {
           100% { background-position: 200% 0; }
         }
       `}</style>
-      <div className="relative z-10 mt-16 sm:mt-20 flex flex-col items-center gap-5">
+      <div className="relative z-10 mt-10 sm:mt-12 flex flex-col items-center gap-4">
         <span
           className="text-[9px] sm:text-[10px] uppercase font-light"
           style={{
