@@ -291,6 +291,7 @@ const AtelieModalidades = () => {
         </span>
       </footer>
     </div>
+    </>
   );
 };
 
