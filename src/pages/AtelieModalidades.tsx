@@ -292,12 +292,18 @@ const AtelieModalidades = () => {
               fontStyle: "italic",
               fontSize: "clamp(16px, 1.5vw, 22px)",
               letterSpacing: "0.04em",
-              color: "rgba(255,255,255,0.78)",
-              animation: "fade-in 1.4s ease-out 0.4s both",
+              color: "rgba(248,248,250,0.92)",
+              animation: "fade-in 1.4s ease-out 0.3s both",
             }}
           >
             Cada disciplina inspira{" "}
-            <span style={{ color: "rgba(212,175,55,0.85)" }}>
+            <span
+              style={{
+                color: "#d4af37",
+                fontWeight: 400,
+                textShadow: "0 0 24px rgba(212,175,55,0.35)",
+              }}
+            >
               sua própria linha.
             </span>
           </p>
