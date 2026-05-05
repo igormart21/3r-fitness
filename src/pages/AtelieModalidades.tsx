@@ -73,26 +73,26 @@ const ModalidadeSection = ({
 
       {/* Content */}
       <div className="relative z-10 h-full container mx-auto px-6 flex items-end pb-20 md:pb-28">
-        <div
-          className="max-w-2xl"
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(40px)",
-            transition: "opacity 1200ms ease-out, transform 1200ms ease-out",
-          }}
-        >
+        <div className="max-w-2xl">
           <span
-            className="block text-[10px] tracking-[0.5em] mb-6"
-            style={{ color: "#d4af37" }}
+            className="block text-[10px] mb-6"
+            style={{
+              color: "#d4af37",
+              letterSpacing: visible ? "0.5em" : "0.9em",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(10px)",
+              transition:
+                "opacity 500ms ease-out 500ms, transform 500ms ease-out 500ms, letter-spacing 600ms ease-out 500ms",
+            }}
           >
             {String(index + 1).padStart(2, "0")} — MODALIDADE
           </span>
           <div
             className="h-px mb-8"
             style={{
-              width: 64,
-              background:
-                "linear-gradient(90deg, #d4af37, transparent)",
+              width: visible ? 64 : 0,
+              background: "linear-gradient(90deg, #d4af37, transparent)",
+              transition: "width 700ms ease-out 600ms",
             }}
           />
           <h2
@@ -101,8 +101,12 @@ const ModalidadeSection = ({
               fontFamily: '"Fraunces", "Cormorant Garamond", serif',
               fontSize: "clamp(44px, 6.5vw, 96px)",
               lineHeight: 0.95,
-              letterSpacing: "0.02em",
+              letterSpacing: visible ? "0.02em" : "0.18em",
               textShadow: "0 4px 24px rgba(0,0,0,0.6)",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(20px)",
+              transition:
+                "opacity 700ms ease-out 500ms, transform 700ms ease-out 500ms, letter-spacing 900ms ease-out 500ms",
             }}
           >
             {m.nome}
@@ -115,6 +119,9 @@ const ModalidadeSection = ({
               color: "rgba(244,234,208,0.92)",
               letterSpacing: "0.03em",
               maxWidth: "32ch",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(15px)",
+              transition: "opacity 600ms ease-out 700ms, transform 600ms ease-out 700ms",
             }}
           >
             {m.subtitulo}
@@ -123,6 +130,11 @@ const ModalidadeSection = ({
           <Link
             to={`/atelie/modalidade/${m.slug}`}
             className="inline-flex items-center gap-4 mt-12 group/btn"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(10px)",
+              transition: "opacity 400ms ease-out 1000ms, transform 400ms ease-out 1000ms",
+            }}
           >
             <span
               className="inline-block transition-all duration-500 group-hover/btn:tracking-[0.5em]"
@@ -138,10 +150,7 @@ const ModalidadeSection = ({
             </span>
             <span
               className="h-px transition-all duration-500"
-              style={{
-                width: 24,
-                background: "#d4af37",
-              }}
+              style={{ width: 24, background: "#d4af37" }}
             />
           </Link>
         </div>
