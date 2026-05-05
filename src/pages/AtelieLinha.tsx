@@ -33,6 +33,14 @@ const AtelieLinha = () => {
 
   const handleFinalizar = async () => {
     if (!linha || checkoutLoading) return;
+    if (linha.slug === "halter") {
+      window.open(
+        "https://store-store-builder-joaax.myshopify.com/products/halter",
+        "_blank",
+        "noopener,noreferrer",
+      );
+      return;
+    }
     setCheckoutLoading(true);
     try {
       const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle: linha.slug });
