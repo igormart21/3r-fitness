@@ -195,15 +195,28 @@ const AtelieLinha = () => {
             className="fixed inset-0 pointer-events-none grid grid-cols-2"
             style={{ zIndex: 0 }}
           >
-            <div
-              className="relative h-full w-full overflow-hidden"
-              style={{
-                backgroundImage: `url(${veloxBgFem})`,
-                backgroundSize: "cover",
-                backgroundPosition: "50% 38%",
-                filter: "contrast(1.08) saturate(0.95) brightness(0.95)",
-              }}
-            >
+            {/* Lado feminino: stack OURO/PRATA com crossfade */}
+            <div className="relative h-full w-full overflow-hidden">
+              {[
+                { src: veloxBgFemOuro, active: material === "ouro" },
+                { src: veloxBgFemPrata, active: material === "prata" },
+              ].map((layer, i) => (
+                <div
+                  key={i}
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: `url(${layer.src})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "50% 38%",
+                    filter:
+                      material === "ouro"
+                        ? "contrast(1.06) saturate(1.02) brightness(0.98)"
+                        : "contrast(1.1) saturate(0.92) brightness(0.96)",
+                    opacity: layer.active ? 1 : 0,
+                    transition: "opacity 550ms ease-in-out, filter 600ms ease",
+                  }}
+                />
+              ))}
               <div
                 className="absolute inset-0"
                 style={{
@@ -212,15 +225,28 @@ const AtelieLinha = () => {
                 }}
               />
             </div>
-            <div
-              className="relative h-full w-full overflow-hidden"
-              style={{
-                backgroundImage: `url(${veloxBgMasc})`,
-                backgroundSize: "cover",
-                backgroundPosition: "50% 38%",
-                filter: "contrast(1.08) saturate(0.95) brightness(0.95)",
-              }}
-            >
+            {/* Lado masculino: stack OURO/PRATA com crossfade */}
+            <div className="relative h-full w-full overflow-hidden">
+              {[
+                { src: veloxBgMascOuro, active: material === "ouro" },
+                { src: veloxBgMascPrata, active: material === "prata" },
+              ].map((layer, i) => (
+                <div
+                  key={i}
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: `url(${layer.src})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "50% 38%",
+                    filter:
+                      material === "ouro"
+                        ? "contrast(1.06) saturate(1.02) brightness(0.98)"
+                        : "contrast(1.1) saturate(0.92) brightness(0.96)",
+                    opacity: layer.active ? 1 : 0,
+                    transition: "opacity 550ms ease-in-out, filter 600ms ease",
+                  }}
+                />
+              ))}
               <div
                 className="absolute inset-0"
                 style={{
@@ -242,14 +268,17 @@ const AtelieLinha = () => {
                 "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.55) 50%, transparent 100%)",
             }}
           />
-          {/* Subtle global vignette + warmth */}
+          {/* Atmosfera global — quente para ouro, fria sutil para prata */}
           <div
             aria-hidden
             className="fixed inset-0 pointer-events-none"
             style={{
               zIndex: 0,
               background:
-                "radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%), radial-gradient(ellipse 60% 50% at 50% 50%, rgba(212,175,55,0.06) 0%, transparent 70%)",
+                material === "ouro"
+                  ? "radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%), radial-gradient(ellipse 60% 50% at 50% 50%, rgba(212,175,55,0.10) 0%, transparent 70%)"
+                  : "radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.6) 100%), radial-gradient(ellipse 60% 50% at 50% 50%, rgba(170,200,230,0.06) 0%, transparent 70%)",
+              transition: "background 600ms ease-in-out",
             }}
           />
         </>
