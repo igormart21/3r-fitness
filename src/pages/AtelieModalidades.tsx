@@ -278,7 +278,7 @@ const AtelieModalidades = () => {
               letterSpacing: "0.45em",
               textTransform: "uppercase",
               transition: "all 500ms ease",
-              animation: "fade-in 1.4s ease-out 0.6s both",
+              animation: "fade-in 1.2s ease-out 1.5s both",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "#d4af37";
