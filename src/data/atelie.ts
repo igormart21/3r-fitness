@@ -19,6 +19,10 @@ import triadePrataClean from "@/assets/linha-triade-prata-clean.jpg";
 import triadeCampaign from "@/assets/linha-triade-ouro.jpg";
 import aeronOuro from "@/assets/linha-aeron-ouro.png";
 import veloxOuro from "@/assets/linha-velox-ouro.png";
+import veloxEditorialFemOuro from "@/assets/velox-royale-feminina-ouro.png";
+import veloxEditorialFemPrata from "@/assets/velox-royale-feminina-prata.png";
+import veloxEditorialMascOuro from "@/assets/velox-royale-masculino-ouro.png";
+import veloxEditorialMascPrata from "@/assets/velox-royale-masculino-prata.png";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
