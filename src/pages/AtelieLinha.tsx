@@ -21,10 +21,6 @@ import strataPrata from "@/assets/linha-strata-prata.jpg";
 import imperiumOuro from "@/assets/linha-imperium-ouro.jpg";
 import imperiumPrata from "@/assets/linha-imperium-prata.jpg";
 import ciclismoBg from "@/assets/atelie-ciclismo-bg.jpg";
-import veloxBgFemOuro from "@/assets/velox-royale-feminina-ouro.png";
-import veloxBgFemPrata from "@/assets/velox-royale-feminina-prata.png";
-import veloxBgMascOuro from "@/assets/velox-royale-masculino-ouro.png";
-import veloxBgMascPrata from "@/assets/velox-royale-masculino-prata.png";
 
 const AtelieLinha = () => {
   const { slug } = useParams();
