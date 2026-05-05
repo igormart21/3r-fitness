@@ -169,6 +169,10 @@ const AtelieModalidades = () => {
           0% { opacity: 0; transform: scale(0.98); }
           100% { opacity: 0.92; transform: scale(1); }
         }
+        @keyframes ambient-breath {
+          0%, 100% { opacity: 0.55; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.04); }
+        }
       `}</style>
     <div
       className="min-h-screen w-full text-white"
@@ -217,7 +221,9 @@ const AtelieModalidades = () => {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(212,175,55,0.10), transparent 70%)",
+              "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(212,175,55,0.12), transparent 70%)",
+            animation: "ambient-breath 7s ease-in-out infinite",
+            mixBlendMode: "screen",
           }}
         />
 
@@ -272,7 +278,7 @@ const AtelieModalidades = () => {
               letterSpacing: "0.45em",
               textTransform: "uppercase",
               transition: "all 500ms ease",
-              animation: "fade-in 1.4s ease-out 0.6s both",
+              animation: "fade-in 1.2s ease-out 1.5s both",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "#d4af37";
