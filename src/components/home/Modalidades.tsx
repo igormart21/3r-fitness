@@ -19,15 +19,16 @@ export const Modalidades = () => {
   return (
     <section
       id="modalidades"
-      className="relative w-full scroll-mt-0"
+      className="relative w-full scroll-mt-0 flex flex-col justify-center"
       style={{
         background:
           "linear-gradient(180deg, #000 0%, #050505 30%, #050505 70%, #000 100%)",
-        paddingTop: "140px",
-        paddingBottom: "180px",
+        minHeight: "100vh",
+        paddingTop: "40px",
+        paddingBottom: "40px",
       }}
     >
-      <div className="container mx-auto max-w-7xl px-6 text-center mb-20 sm:mb-28">
+      <div className="container mx-auto max-w-7xl px-6 text-center mb-6 sm:mb-8">
         <span
           className="text-[10px] sm:text-[11px] uppercase tracking-[0.5em] font-light"
           style={{ color: "rgba(244,215,122,0.7)" }}
@@ -50,7 +51,7 @@ export const Modalidades = () => {
         </h2>
       </div>
 
-      <div className="container mx-auto max-w-7xl px-6 grid grid-cols-2 md:grid-cols-3 auto-rows-[300px] sm:auto-rows-[360px] md:auto-rows-[300px] gap-6 sm:gap-8 md:gap-10">
+      <div className="container mx-auto max-w-7xl px-6 grid grid-cols-2 md:grid-cols-3 auto-rows-[clamp(160px,22vh,240px)] md:auto-rows-[clamp(180px,26vh,260px)] gap-4 sm:gap-5 md:gap-6">
         {modalidades.map(({ id, nome, img, frase, featured }) => (
           <Link
             key={id}
