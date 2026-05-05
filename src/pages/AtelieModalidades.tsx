@@ -215,13 +215,25 @@ const AtelieModalidades = () => {
         />
 
         <div
-          className="relative z-10 text-center px-6 max-w-4xl mx-auto"
-          style={{ animation: "fade-in 1.4s ease-out both" }}
+          className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto"
         >
+          <img
+            src={logo3R}
+            alt="3R Fitness"
+            style={{
+              height: "20vh",
+              width: "auto",
+              filter:
+                "brightness(0) saturate(100%) invert(78%) sepia(38%) saturate(540%) hue-rotate(7deg) brightness(95%) contrast(88%) drop-shadow(0 4px 24px rgba(212,175,55,0.25))",
+              opacity: 0.92,
+              animation: "logo-enter 1.2s ease-out both",
+            }}
+          />
 
           <button
             onClick={scrollToModalidades}
             className="mt-14 inline-flex items-center gap-4 group"
+            style={{ animation: "fade-in 1.4s ease-out 0.6s both" }}
           >
             <span
               className="inline-block transition-all duration-500 group-hover:tracking-[0.55em]"
