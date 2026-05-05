@@ -150,83 +150,13 @@ const AtelieModalidades = () => {
     .map((s) => MODALIDADES.find((m) => m.slug === s))
     .filter(Boolean) as typeof MODALIDADES;
 
-  const autoScrollRef = useRef<{ raf: number | null; cancelled: boolean }>({
-    raf: null,
-    cancelled: false,
-  });
-
-  const smoothScrollTo = (targetY: number, duration: number) => {
-    const startY = window.scrollY;
-    const diff = targetY - startY;
-    const startTime = performance.now();
-    const ease = (t: number) =>
-      t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; // ease-in-out
-
-    const step = (now: number) => {
-      if (autoScrollRef.current.cancelled) return;
-      const elapsed = now - startTime;
-      const t = Math.min(1, elapsed / duration);
-      window.scrollTo(0, startY + diff * ease(t));
-      if (t < 1) {
-        autoScrollRef.current.raf = requestAnimationFrame(step);
-      }
-    };
-    autoScrollRef.current.raf = requestAnimationFrame(step);
-  };
-
-  const cancelAuto = () => {
-    autoScrollRef.current.cancelled = true;
-    if (autoScrollRef.current.raf) cancelAnimationFrame(autoScrollRef.current.raf);
-  };
-
   useEffect(() => {
     if (typeof window === "undefined") return;
-
     // Sempre iniciar pelo topo (hero) ao entrar na página
     window.scrollTo(0, 0);
-
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const delay = isMobile ? 3500 : 3000;
-
-    let started = false;
-
-    const onUserInteract = () => {
-      if (!started) {
-        clearTimeout(timer);
-      }
-      cancelAuto();
-      removeListeners();
-    };
-
-    const removeListeners = () => {
-      window.removeEventListener("wheel", onUserInteract, { capture: true } as any);
-      window.removeEventListener("touchstart", onUserInteract, { capture: true } as any);
-      window.removeEventListener("keydown", onUserInteract, { capture: true } as any);
-      window.removeEventListener("mousedown", onUserInteract, { capture: true } as any);
-    };
-
-    window.addEventListener("wheel", onUserInteract, { passive: true, capture: true });
-    window.addEventListener("touchstart", onUserInteract, { passive: true, capture: true });
-    window.addEventListener("keydown", onUserInteract, { capture: true });
-    window.addEventListener("mousedown", onUserInteract, { capture: true });
-
-    const timer = window.setTimeout(() => {
-      started = true;
-      const target = document.getElementById("modalidades");
-      if (!target) return;
-      const targetY = target.getBoundingClientRect().top + window.scrollY;
-      smoothScrollTo(targetY, 1400);
-    }, delay);
-
-    return () => {
-      clearTimeout(timer);
-      cancelAuto();
-      removeListeners();
-    };
   }, []);
 
   const scrollToModalidades = () => {
-    cancelAuto();
     document.getElementById("modalidades")?.scrollIntoView({ behavior: "smooth" });
   };
 
