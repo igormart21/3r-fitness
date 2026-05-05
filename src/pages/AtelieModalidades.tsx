@@ -214,14 +214,14 @@ const AtelieModalidades = () => {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 70% 55% at 50% 35%, rgba(212,175,55,0.10), transparent 70%), linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0.85) 100%)",
+              "radial-gradient(ellipse 70% 55% at 50% 35%, rgba(220,225,235,0.10), transparent 70%), linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0.85) 100%)",
           }}
         />
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(212,175,55,0.12), transparent 70%)",
+              "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(220,225,235,0.14), transparent 70%)",
             animation: "ambient-breath 7s ease-in-out infinite",
             mixBlendMode: "screen",
           }}
@@ -237,7 +237,7 @@ const AtelieModalidades = () => {
               height: "60vh",
               width: "auto",
               filter:
-                "brightness(0) saturate(100%) invert(92%) sepia(4%) saturate(180%) hue-rotate(180deg) brightness(102%) contrast(88%) drop-shadow(0 4px 24px rgba(220,220,230,0.25))",
+                "brightness(0) saturate(100%) invert(78%) sepia(38%) saturate(540%) hue-rotate(7deg) brightness(95%) contrast(88%) drop-shadow(0 4px 24px rgba(212,175,55,0.25))",
               opacity: 0.92,
               animation: "logo-enter 1.2s ease-out both",
             }}
