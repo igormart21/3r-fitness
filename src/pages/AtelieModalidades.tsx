@@ -38,12 +38,15 @@ const ModalidadeSection = ({
         src={m.img}
         alt={m.nome}
         loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover transition-transform ease-out"
+        className="absolute inset-0 w-full h-full object-cover"
         style={{
           objectPosition: "center 18%",
-          transform: visible ? "scale(1.03)" : "scale(1.12)",
-          transitionDuration: "2200ms",
+          opacity: visible ? 1 : 0,
+          transform: visible ? "scale(1) translateY(0)" : "scale(1.08) translateY(40px)",
+          transition:
+            "opacity 800ms ease-out 200ms, transform 800ms cubic-bezier(0.22,1,0.36,1) 200ms",
           filter: "contrast(1.05) saturate(1.03)",
+          willChange: "opacity, transform",
         }}
       />
       {/* Base readability overlay */}
