@@ -146,14 +146,14 @@ const AtelieLinha = () => {
       : "radial-gradient(ellipse 60% 55% at 50% 45%, rgba(200,215,235,0.16) 0%, transparent 70%)";
 
   const isCiclismo = parentModalidade?.slug === "ciclismo";
-  const isVeloxCiclismo = isCiclismo && linha.slug === "velox";
+  const hasEditorial = !!linha.editorial;
 
   return (
     <div
       className="relative min-h-screen w-full text-white overflow-hidden"
       style={{ backgroundColor: "#050505" }}
     >
-      {isCiclismo && !isVeloxCiclismo && (
+      {isCiclismo && !hasEditorial && (
         <>
           <img
             src={ciclismoBg}
@@ -184,7 +184,7 @@ const AtelieLinha = () => {
           `}</style>
         </>
       )}
-      {isVeloxCiclismo && (
+      {hasEditorial && linha.editorial && (
         <>
           <div
             aria-hidden
@@ -194,8 +194,8 @@ const AtelieLinha = () => {
             {/* Lado feminino: stack OURO/PRATA com crossfade */}
             <div className="relative h-full w-full overflow-hidden">
               {[
-                { src: veloxBgFemOuro, active: material === "ouro" },
-                { src: veloxBgFemPrata, active: material === "prata" },
+                { src: linha.editorial.feminino.ouro, active: material === "ouro" },
+                { src: linha.editorial.feminino.prata, active: material === "prata" },
               ].map((layer, i) => (
                 <div
                   key={i}
