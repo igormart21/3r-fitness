@@ -257,6 +257,33 @@ const AtelieModalidades = () => {
           }}
         />
 
+        {/* Cinematic transition glow (scroll-driven) */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(circle 40% at 50% 50%, rgba(244,215,122,0.55), transparent 65%)",
+            opacity: glowOpacity,
+            transform: `scale(${glowScale})`,
+            transition: "opacity 600ms ease-out, transform 600ms ease-out",
+            mixBlendMode: "screen",
+            willChange: "opacity, transform",
+          }}
+        />
+
+        {/* Cinematic transition overlay (scroll-driven) */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "rgba(0,0,0,1)",
+            opacity: overlayOpacity,
+            backdropFilter: blurPx > 0.1 ? `blur(${blurPx}px)` : undefined,
+            WebkitBackdropFilter: blurPx > 0.1 ? `blur(${blurPx}px)` : undefined,
+            transition: "opacity 300ms ease-out, backdrop-filter 300ms ease-out",
+            willChange: "opacity",
+          }}
+        />
+
         {/* Particles douradas */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {Array.from({ length: 14 }).map((_, i) => {
