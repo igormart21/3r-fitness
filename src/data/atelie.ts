@@ -101,7 +101,7 @@ export const LINHAS: Record<string, Linha> = {
     nome: "AERON",
     assinatura: "Assinatura do Compasso",
     frase: "Cada giro, um pulso eterno.",
-    imagens: { ouro: triadeOuroClean, prata: triadePrataClean },
+    imagens: { ouro: aeronOuro, prata: triadePrataClean },
     campaign: triadeCampaign,
   },
   travessia: {
