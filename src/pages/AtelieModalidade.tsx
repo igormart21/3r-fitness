@@ -69,7 +69,46 @@ const AtelieModalidade = () => {
       </header>
 
       <main className="relative w-full min-h-screen pt-24 md:pt-28 pb-12">
-        <div className="container mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        {modalidade.slug === "ciclismo" && (
+          <>
+            <div
+              aria-hidden
+              className="absolute inset-0 overflow-hidden pointer-events-none"
+              style={{ zIndex: 0, width: "100vw", left: "50%", transform: "translateX(-50%)" }}
+            >
+              <img
+                src={ciclismoBg}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover ciclismo-bg-anim"
+                style={{ objectPosition: "center center", filter: "contrast(1.08) saturate(1.05)" }}
+              />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.78) 28%, rgba(0,0,0,0.45) 52%, rgba(0,0,0,0.15) 75%, rgba(0,0,0,0.35) 100%)",
+                }}
+              />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(5,5,5,0.55) 0%, transparent 18%, transparent 82%, rgba(5,5,5,0.85) 100%)",
+                }}
+              />
+            </div>
+            <style>{`
+              @keyframes ciclismo-bg-zoom {
+                0% { transform: scale(1.00); }
+                100% { transform: scale(1.04); }
+              }
+              .ciclismo-bg-anim {
+                animation: ciclismo-bg-zoom 12s ease-in-out infinite alternate;
+              }
+            `}</style>
+          </>
+        )}
+        <div className="relative container mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center" style={{ zIndex: 1 }}>
           {/* ESQUERDA — campanha */}
           <section className="lg:col-span-6 relative">
             {(() => {
