@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { MODALIDADES } from "@/data/atelie";
 import heroBg from "@/assets/atelie-modalidades-hero.jpg";
+import logo3R from "@/assets/logo-3r-fitness.png";
 
 const ORDER = ["triathlon", "fisiculturismo", "musculacao", "corrida", "ciclismo", "crossfit"];
 
