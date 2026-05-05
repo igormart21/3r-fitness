@@ -217,40 +217,6 @@ const AtelieModalidades = () => {
           className="relative z-10 text-center px-6 max-w-4xl mx-auto"
           style={{ animation: "fade-in 1.4s ease-out both" }}
         >
-          <span
-            className="block text-[10px] tracking-[0.6em] mb-10"
-            style={{ color: "rgba(212,175,55,0.85)" }}
-          >
-            ATELIÊ — MODALIDADES
-          </span>
-          <h1
-            className="font-display font-light"
-            style={{
-              fontFamily: '"Fraunces", "Cormorant Garamond", serif',
-              fontSize: "clamp(36px, 5.2vw, 76px)",
-              lineHeight: 1.1,
-              letterSpacing: "0.015em",
-              color: "#f4ead0",
-            }}
-          >
-            Cada disciplina inspira
-            <br />
-            <em
-              className="italic"
-              style={{ color: "#d4af37", fontWeight: 400 }}
-            >
-              sua própria linha autoral.
-            </em>
-          </h1>
-
-          <div
-            className="mx-auto mt-12 h-px"
-            style={{
-              width: 120,
-              background:
-                "linear-gradient(90deg, transparent, #d4af37, transparent)",
-            }}
-          />
 
           <button
             onClick={scrollToModalidades}
