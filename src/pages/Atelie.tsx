@@ -113,7 +113,7 @@ const Atelie = () => {
                 className="h-px w-6"
                 style={{ background: "currentColor" }}
               />
-              Explorar modalidades
+              Entrar no ateliê
               <span
                 className="h-px w-6"
                 style={{ background: "currentColor" }}
