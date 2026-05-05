@@ -191,19 +191,18 @@ const AtelieModalidades = () => {
         className="relative w-full flex items-center justify-center overflow-hidden"
         style={{ height: "100vh", minHeight: 640 }}
       >
-        {/* Subtle background texture */}
+        {/* Background image full screen */}
+        <img
+          src={heroBg}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 w-full h-full object-cover"
+        />
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse at center, #0c0c0c 0%, #050505 60%, #000 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.06] pointer-events-none"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(45deg, rgba(212,175,55,0.5) 0 1px, transparent 1px 14px)",
+              "radial-gradient(ellipse 70% 55% at 50% 35%, rgba(212,175,55,0.10), transparent 70%), linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0.85) 100%)",
           }}
         />
         <div
