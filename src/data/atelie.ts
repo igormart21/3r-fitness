@@ -27,6 +27,14 @@ import veloxEditorialMascPrata from "@/assets/velox-royale-masculino-prata.png";
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
 
+export type EditorialBackground = {
+  // Split editorial: imagens de modelo (com pingente) por gênero × material.
+  // Quando presente em uma linha, ativa o template "Velox Royale":
+  // fundo split full-width + crossfade ouro↔prata + conteúdo à direita, sem card de produto.
+  feminino: { ouro: string; prata: string };
+  masculino: { ouro: string; prata: string };
+};
+
 export type Linha = {
   slug: string;
   nome: string;
@@ -34,6 +42,7 @@ export type Linha = {
   frase: string;
   imagens: Record<Material, string>;
   campaign: string;
+  editorial?: EditorialBackground;
 };
 
 export type Modalidade = {
