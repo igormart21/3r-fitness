@@ -19,9 +19,21 @@ import triadePrataClean from "@/assets/linha-triade-prata-clean.jpg";
 import triadeCampaign from "@/assets/linha-triade-ouro.jpg";
 import aeronOuro from "@/assets/linha-aeron-ouro.png";
 import veloxOuro from "@/assets/linha-velox-ouro.png";
+import veloxEditorialFemOuro from "@/assets/velox-royale-feminina-ouro.png";
+import veloxEditorialFemPrata from "@/assets/velox-royale-feminina-prata.png";
+import veloxEditorialMascOuro from "@/assets/velox-royale-masculino-ouro.png";
+import veloxEditorialMascPrata from "@/assets/velox-royale-masculino-prata.png";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
+
+export type EditorialBackground = {
+  // Split editorial: imagens de modelo (com pingente) por gênero × material.
+  // Quando presente em uma linha, ativa o template "Velox Royale":
+  // fundo split full-width + crossfade ouro↔prata + conteúdo à direita, sem card de produto.
+  feminino: { ouro: string; prata: string };
+  masculino: { ouro: string; prata: string };
+};
 
 export type Linha = {
   slug: string;
@@ -30,6 +42,7 @@ export type Linha = {
   frase: string;
   imagens: Record<Material, string>;
   campaign: string;
+  editorial?: EditorialBackground;
 };
 
 export type Modalidade = {
@@ -96,6 +109,10 @@ export const LINHAS: Record<string, Linha> = {
     frase: "Horizontes conquistados em silêncio.",
     imagens: { ouro: veloxOuro, prata: imperiumPrataClean },
     campaign: imperiumCampaign,
+    editorial: {
+      feminino: { ouro: veloxEditorialFemOuro, prata: veloxEditorialFemPrata },
+      masculino: { ouro: veloxEditorialMascOuro, prata: veloxEditorialMascPrata },
+    },
   },
   cadencia: {
     slug: "cadencia",

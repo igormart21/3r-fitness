@@ -21,10 +21,6 @@ import strataPrata from "@/assets/linha-strata-prata.jpg";
 import imperiumOuro from "@/assets/linha-imperium-ouro.jpg";
 import imperiumPrata from "@/assets/linha-imperium-prata.jpg";
 import ciclismoBg from "@/assets/atelie-ciclismo-bg.jpg";
-import veloxBgFemOuro from "@/assets/velox-royale-feminina-ouro.png";
-import veloxBgFemPrata from "@/assets/velox-royale-feminina-prata.png";
-import veloxBgMascOuro from "@/assets/velox-royale-masculino-ouro.png";
-import veloxBgMascPrata from "@/assets/velox-royale-masculino-prata.png";
 
 const AtelieLinha = () => {
   const { slug } = useParams();
@@ -150,14 +146,14 @@ const AtelieLinha = () => {
       : "radial-gradient(ellipse 60% 55% at 50% 45%, rgba(200,215,235,0.16) 0%, transparent 70%)";
 
   const isCiclismo = parentModalidade?.slug === "ciclismo";
-  const isVeloxCiclismo = isCiclismo && linha.slug === "velox";
+  const hasEditorial = !!linha.editorial;
 
   return (
     <div
       className="relative min-h-screen w-full text-white overflow-hidden"
       style={{ backgroundColor: "#050505" }}
     >
-      {isCiclismo && !isVeloxCiclismo && (
+      {isCiclismo && !hasEditorial && (
         <>
           <img
             src={ciclismoBg}
@@ -188,7 +184,7 @@ const AtelieLinha = () => {
           `}</style>
         </>
       )}
-      {isVeloxCiclismo && (
+      {hasEditorial && linha.editorial && (
         <>
           <div
             aria-hidden
@@ -198,8 +194,8 @@ const AtelieLinha = () => {
             {/* Lado feminino: stack OURO/PRATA com crossfade */}
             <div className="relative h-full w-full overflow-hidden">
               {[
-                { src: veloxBgFemOuro, active: material === "ouro" },
-                { src: veloxBgFemPrata, active: material === "prata" },
+                { src: linha.editorial.feminino.ouro, active: material === "ouro" },
+                { src: linha.editorial.feminino.prata, active: material === "prata" },
               ].map((layer, i) => (
                 <div
                   key={i}
@@ -228,8 +224,8 @@ const AtelieLinha = () => {
             {/* Lado masculino: stack OURO/PRATA com crossfade */}
             <div className="relative h-full w-full overflow-hidden">
               {[
-                { src: veloxBgMascOuro, active: material === "ouro" },
-                { src: veloxBgMascPrata, active: material === "prata" },
+                { src: linha.editorial.masculino.ouro, active: material === "ouro" },
+                { src: linha.editorial.masculino.prata, active: material === "prata" },
               ].map((layer, i) => (
                 <div
                   key={i}
@@ -308,9 +304,9 @@ const AtelieLinha = () => {
       </header>
 
       <main className="relative z-10 w-full min-h-screen pt-24 md:pt-28 pb-12">
-        <div className={`container mx-auto max-w-6xl px-6 ${isVeloxCiclismo ? "flex justify-center lg:justify-end items-center min-h-[calc(100vh-180px)]" : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"}`}>
+        <div className={`container mx-auto max-w-6xl px-6 ${hasEditorial ? "flex justify-center lg:justify-end items-center min-h-[calc(100vh-180px)]" : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"}`}>
           {/* ESQUERDA — imagem (omitida no Velox Royale ciclismo: o fundo split é o produto) */}
-          {!isVeloxCiclismo && (
+          {!hasEditorial && (
             <section className="lg:col-span-6 relative">
             <div
               className="relative w-full overflow-hidden mx-auto group"
@@ -371,7 +367,7 @@ const AtelieLinha = () => {
           )}
 
           {/* DIREITA — interface */}
-          <section className={isVeloxCiclismo ? "w-full max-w-md lg:max-w-[520px]" : "lg:col-span-6"}>
+          <section className={hasEditorial ? "w-full max-w-md lg:max-w-[520px]" : "lg:col-span-6"}>
             <div className="max-w-md mx-auto lg:mx-0">
               <p
                 className="text-[10px] uppercase tracking-[0.5em] mb-5"
