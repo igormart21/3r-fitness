@@ -279,7 +279,40 @@ const AtelieLinha = () => {
       <main className="relative z-10 w-full min-h-screen pt-24 md:pt-28 pb-12">
         <div className="container mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           {/* ESQUERDA — imagem */}
-          <section className="lg:col-span-6 relative">
+          <section className={`lg:col-span-6 relative ${isVeloxCiclismo ? "hidden lg:flex items-center justify-center" : ""}`}>
+            {isVeloxCiclismo ? (
+              <div className="relative w-full flex items-center justify-center group" style={{ minHeight: "60vh" }}>
+                <div
+                  aria-hidden
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse 50% 45% at 50% 50%, rgba(212,175,55,0.18) 0%, transparent 70%)",
+                  }}
+                />
+                <img
+                  key={revealKey}
+                  src={imgSrc}
+                  alt={`${linha.nome} — ${material === "ouro" ? "Ouro 18K" : "Prata 925"}`}
+                  className="relative w-[78%] max-w-[460px] object-contain reveal-piece will-change-transform"
+                  style={{
+                    filter:
+                      material === "ouro"
+                        ? "saturate(1.08) contrast(1.06) brightness(1.04) drop-shadow(0 30px 40px rgba(0,0,0,0.75)) drop-shadow(0 0 60px rgba(212,175,55,0.25))"
+                        : "saturate(0.95) contrast(1.06) brightness(1.02) drop-shadow(0 30px 40px rgba(0,0,0,0.75)) drop-shadow(0 0 60px rgba(200,215,235,0.18))",
+                    transformOrigin: "50% 50%",
+                    transition:
+                      "transform 700ms cubic-bezier(0.22,1,0.36,1), filter 700ms ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "scale(1.06)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "";
+                  }}
+                />
+              </div>
+            ) : (
             <div
               className="relative w-full overflow-hidden mx-auto group"
               style={{
@@ -335,6 +368,7 @@ const AtelieLinha = () => {
                 }}
               />
             </div>
+            )}
           </section>
 
           {/* DIREITA — interface */}
