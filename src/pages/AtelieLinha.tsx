@@ -206,7 +206,7 @@ const AtelieLinha = () => {
         </div>
       </header>
 
-      <main className="relative w-full min-h-screen pt-24 md:pt-28 pb-12">
+      <main className="relative z-10 w-full min-h-screen pt-24 md:pt-28 pb-12">
         <div className="container mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           {/* ESQUERDA — imagem */}
           <section className="lg:col-span-6 relative">
