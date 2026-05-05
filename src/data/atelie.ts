@@ -94,7 +94,7 @@ export const LINHAS: Record<string, Linha> = {
     nome: "VELOX ROYALE",
     assinatura: "Assinatura da Distância",
     frase: "Horizontes conquistados em silêncio.",
-    imagens: { ouro: imperiumOuroClean, prata: imperiumPrataClean },
+    imagens: { ouro: veloxOuro, prata: imperiumPrataClean },
     campaign: imperiumCampaign,
   },
   cadencia: {
