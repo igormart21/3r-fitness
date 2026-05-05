@@ -237,7 +237,7 @@ const AtelieModalidades = () => {
               height: "60vh",
               width: "auto",
               filter:
-                "brightness(0) saturate(100%) invert(78%) sepia(38%) saturate(540%) hue-rotate(7deg) brightness(95%) contrast(88%) drop-shadow(0 4px 24px rgba(212,175,55,0.25))",
+                "brightness(0) saturate(100%) invert(92%) sepia(4%) saturate(180%) hue-rotate(180deg) brightness(102%) contrast(88%) drop-shadow(0 4px 24px rgba(220,220,230,0.25))",
               opacity: 0.92,
               animation: "logo-enter 1.2s ease-out both",
             }}
