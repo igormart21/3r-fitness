@@ -116,22 +116,13 @@ const AtelieLinha = () => {
   );
   const showFormaSelector = linha.slug !== "halter" && parentModalidade?.slug !== "crossfit";
 
-  // Mapa de links de carrinho do Shopify por linha + material + forma.
-  // Chave: `${slug}:${material}:${forma}`. Use "*" para qualquer forma.
-  // Adicione novas variantes inserindo o ID correto retornado pelo Shopify.
-  const SHOPIFY_BASE = "https://store-store-builder-joaax.myshopify.com/cart";
-  const cartLinksByVariant: Record<string, string> = {
-    "halter:ouro:*": `${SHOPIFY_BASE}/48911810396387:1`,
+  // Link externo do produto no Shopify por linha.
+  // Adicione novas linhas mapeando o slug para a URL pública do produto.
+  const SHOPIFY_PRODUCTS_BASE = "https://store-store-builder-joaax.myshopify.com/products";
+  const externalProductLinksBySlug: Record<string, string> = {
+    halter: `${SHOPIFY_PRODUCTS_BASE}/halter`,
   };
-  const resolveCartUrl = (): string | undefined => {
-    const keys = [
-      `${linha.slug}:${material}:${forma}`,
-      `${linha.slug}:${material}:*`,
-    ];
-    for (const k of keys) if (cartLinksByVariant[k]) return cartLinksByVariant[k];
-    return undefined;
-  };
-  const externalCartUrl = resolveCartUrl();
+  const externalCartUrl = externalProductLinksBySlug[linha.slug];
 
   const imgSrc =
     linha.slug === "imperium" && material === "ouro"
