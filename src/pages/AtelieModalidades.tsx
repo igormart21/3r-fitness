@@ -38,12 +38,15 @@ const ModalidadeSection = ({
         src={m.img}
         alt={m.nome}
         loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover transition-transform ease-out"
+        className="absolute inset-0 w-full h-full object-cover"
         style={{
           objectPosition: "center 18%",
-          transform: visible ? "scale(1.03)" : "scale(1.12)",
-          transitionDuration: "2200ms",
+          opacity: visible ? 1 : 0,
+          transform: visible ? "scale(1) translateY(0)" : "scale(1.08) translateY(40px)",
+          transition:
+            "opacity 800ms ease-out 200ms, transform 800ms cubic-bezier(0.22,1,0.36,1) 200ms",
           filter: "contrast(1.05) saturate(1.03)",
+          willChange: "opacity, transform",
         }}
       />
       {/* Base readability overlay */}
@@ -70,26 +73,26 @@ const ModalidadeSection = ({
 
       {/* Content */}
       <div className="relative z-10 h-full container mx-auto px-6 flex items-end pb-20 md:pb-28">
-        <div
-          className="max-w-2xl"
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(40px)",
-            transition: "opacity 1200ms ease-out, transform 1200ms ease-out",
-          }}
-        >
+        <div className="max-w-2xl">
           <span
-            className="block text-[10px] tracking-[0.5em] mb-6"
-            style={{ color: "#d4af37" }}
+            className="block text-[10px] mb-6"
+            style={{
+              color: "#d4af37",
+              letterSpacing: visible ? "0.5em" : "0.9em",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(10px)",
+              transition:
+                "opacity 500ms ease-out 500ms, transform 500ms ease-out 500ms, letter-spacing 600ms ease-out 500ms",
+            }}
           >
             {String(index + 1).padStart(2, "0")} — MODALIDADE
           </span>
           <div
             className="h-px mb-8"
             style={{
-              width: 64,
-              background:
-                "linear-gradient(90deg, #d4af37, transparent)",
+              width: visible ? 64 : 0,
+              background: "linear-gradient(90deg, #d4af37, transparent)",
+              transition: "width 700ms ease-out 600ms",
             }}
           />
           <h2
@@ -98,8 +101,12 @@ const ModalidadeSection = ({
               fontFamily: '"Fraunces", "Cormorant Garamond", serif',
               fontSize: "clamp(44px, 6.5vw, 96px)",
               lineHeight: 0.95,
-              letterSpacing: "0.02em",
+              letterSpacing: visible ? "0.02em" : "0.18em",
               textShadow: "0 4px 24px rgba(0,0,0,0.6)",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(20px)",
+              transition:
+                "opacity 700ms ease-out 500ms, transform 700ms ease-out 500ms, letter-spacing 900ms ease-out 500ms",
             }}
           >
             {m.nome}
@@ -112,6 +119,9 @@ const ModalidadeSection = ({
               color: "rgba(244,234,208,0.92)",
               letterSpacing: "0.03em",
               maxWidth: "32ch",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(15px)",
+              transition: "opacity 600ms ease-out 700ms, transform 600ms ease-out 700ms",
             }}
           >
             {m.subtitulo}
@@ -120,6 +130,11 @@ const ModalidadeSection = ({
           <Link
             to={`/atelie/modalidade/${m.slug}`}
             className="inline-flex items-center gap-4 mt-12 group/btn"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(10px)",
+              transition: "opacity 400ms ease-out 1000ms, transform 400ms ease-out 1000ms",
+            }}
           >
             <span
               className="inline-block transition-all duration-500 group-hover/btn:tracking-[0.5em]"
@@ -135,10 +150,7 @@ const ModalidadeSection = ({
             </span>
             <span
               className="h-px transition-all duration-500"
-              style={{
-                width: 24,
-                background: "#d4af37",
-              }}
+              style={{ width: 24, background: "#d4af37" }}
             />
           </Link>
         </div>
@@ -152,15 +164,33 @@ const AtelieModalidades = () => {
     .map((s) => MODALIDADES.find((m) => m.slug === s))
     .filter(Boolean) as typeof MODALIDADES;
 
+  const [progress, setProgress] = useState(0); // 0 → 1 across first viewport
+
   useEffect(() => {
     if (typeof window === "undefined") return;
-    // Sempre iniciar pelo topo (hero) ao entrar na página
     window.scrollTo(0, 0);
+    const onScroll = () => {
+      const p = Math.min(1, Math.max(0, window.scrollY / Math.max(1, window.innerHeight)));
+      setProgress(p);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const scrollToModalidades = () => {
     document.getElementById("modalidades")?.scrollIntoView({ behavior: "smooth" });
   };
+
+  // Eased progress for cinematic feel
+  const ease = (t: number) => t * t * (3 - 2 * t);
+  const ep = ease(progress);
+  const logoOpacity = 0.92 * (1 - Math.min(1, ep / 0.5));
+  const logoScale = 1 + 0.05 * Math.min(1, ep / 0.5);
+  const glowScale = 1 + 0.6 * ep;
+  const glowOpacity = 0.22 + 0.35 * Math.sin(Math.min(1, ep / 0.6) * Math.PI);
+  const overlayOpacity = 0.2 * Math.min(1, ep / 0.4);
+  const blurPx = 6 * Math.min(1, ep / 0.5);
 
   return (
     <>
@@ -239,6 +269,33 @@ const AtelieModalidades = () => {
           }}
         />
 
+        {/* Cinematic transition glow (scroll-driven) */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(circle 40% at 50% 50%, rgba(244,215,122,0.55), transparent 65%)",
+            opacity: glowOpacity,
+            transform: `scale(${glowScale})`,
+            transition: "opacity 600ms ease-out, transform 600ms ease-out",
+            mixBlendMode: "screen",
+            willChange: "opacity, transform",
+          }}
+        />
+
+        {/* Cinematic transition overlay (scroll-driven) */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "rgba(0,0,0,1)",
+            opacity: overlayOpacity,
+            backdropFilter: blurPx > 0.1 ? `blur(${blurPx}px)` : undefined,
+            WebkitBackdropFilter: blurPx > 0.1 ? `blur(${blurPx}px)` : undefined,
+            transition: "opacity 300ms ease-out, backdrop-filter 300ms ease-out",
+            willChange: "opacity",
+          }}
+        />
+
         {/* Particles douradas */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {Array.from({ length: 14 }).map((_, i) => {
@@ -279,8 +336,11 @@ const AtelieModalidades = () => {
               width: "auto",
               filter:
                 "brightness(0) saturate(100%) invert(78%) sepia(38%) saturate(540%) hue-rotate(7deg) brightness(95%) contrast(88%) drop-shadow(0 4px 24px rgba(212,175,55,0.25))",
-              opacity: 0.92,
+              opacity: logoOpacity,
+              transform: `scale(${logoScale})`,
+              transition: "opacity 400ms ease-out, transform 400ms ease-out",
               animation: "logo-enter 1.2s ease-out both",
+              willChange: "opacity, transform",
             }}
           />
 
