@@ -152,15 +152,33 @@ const AtelieModalidades = () => {
     .map((s) => MODALIDADES.find((m) => m.slug === s))
     .filter(Boolean) as typeof MODALIDADES;
 
+  const [progress, setProgress] = useState(0); // 0 → 1 across first viewport
+
   useEffect(() => {
     if (typeof window === "undefined") return;
-    // Sempre iniciar pelo topo (hero) ao entrar na página
     window.scrollTo(0, 0);
+    const onScroll = () => {
+      const p = Math.min(1, Math.max(0, window.scrollY / Math.max(1, window.innerHeight)));
+      setProgress(p);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const scrollToModalidades = () => {
     document.getElementById("modalidades")?.scrollIntoView({ behavior: "smooth" });
   };
+
+  // Eased progress for cinematic feel
+  const ease = (t: number) => t * t * (3 - 2 * t);
+  const ep = ease(progress);
+  const logoOpacity = 0.92 * (1 - Math.min(1, ep / 0.5));
+  const logoScale = 1 + 0.05 * Math.min(1, ep / 0.5);
+  const glowScale = 1 + 0.6 * ep;
+  const glowOpacity = 0.22 + 0.35 * Math.sin(Math.min(1, ep / 0.6) * Math.PI);
+  const overlayOpacity = 0.2 * Math.min(1, ep / 0.4);
+  const blurPx = 6 * Math.min(1, ep / 0.5);
 
   return (
     <>
