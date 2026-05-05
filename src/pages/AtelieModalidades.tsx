@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { MODALIDADES } from "@/data/atelie";
+import heroBg from "@/assets/atelie-modalidades-hero.jpg";
 
 const ORDER = ["triathlon", "fisiculturismo", "musculacao", "corrida", "ciclismo", "crossfit"];
 
