@@ -324,8 +324,11 @@ const AtelieModalidades = () => {
               width: "auto",
               filter:
                 "brightness(0) saturate(100%) invert(78%) sepia(38%) saturate(540%) hue-rotate(7deg) brightness(95%) contrast(88%) drop-shadow(0 4px 24px rgba(212,175,55,0.25))",
-              opacity: 0.92,
+              opacity: logoOpacity,
+              transform: `scale(${logoScale})`,
+              transition: "opacity 400ms ease-out, transform 400ms ease-out",
               animation: "logo-enter 1.2s ease-out both",
+              willChange: "opacity, transform",
             }}
           />
 
