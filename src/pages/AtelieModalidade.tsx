@@ -146,7 +146,7 @@ const AtelieModalidade = () => {
               <button
                 type="button"
                 onClick={() => {
-                  document.getElementById("modalidade-linhas")?.scrollIntoView({ behavior: "smooth" });
+                  smoothScrollToLinhas();
                 }}
                 className="inline-flex items-center gap-3 px-10 py-4 transition-all duration-500"
                 style={{
@@ -378,7 +378,7 @@ const AtelieModalidade = () => {
             <button
               type="button"
               onClick={() => {
-                document.getElementById("modalidade-linhas")?.scrollIntoView({ behavior: "smooth" });
+                smoothScrollToLinhas();
               }}
               className="inline-flex items-center gap-3 px-12 py-5 transition-all duration-500"
               style={{
