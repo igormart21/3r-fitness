@@ -257,21 +257,35 @@ const AtelieModalidades = () => {
 
           <button
             onClick={scrollToModalidades}
-            className="mt-14 inline-flex items-center gap-4 group"
-            style={{ animation: "fade-in 1.4s ease-out 0.6s both" }}
+            className="group"
+            style={{
+              marginTop: "2.5rem",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "16px 44px",
+              border: "1px solid rgba(212,175,55,0.6)",
+              background: "transparent",
+              color: "#d4af37",
+              fontFamily: "Inter, sans-serif",
+              fontSize: 11,
+              letterSpacing: "0.45em",
+              textTransform: "uppercase",
+              transition: "all 500ms ease",
+              animation: "fade-in 1.4s ease-out 0.6s both",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "#d4af37";
+              e.currentTarget.style.color = "#0a0a0a";
+              e.currentTarget.style.boxShadow = "0 0 40px rgba(212,175,55,0.35)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = "#d4af37";
+              e.currentTarget.style.boxShadow = "none";
+            }}
           >
-            <span
-              className="inline-block transition-all duration-500 group-hover:tracking-[0.55em]"
-              style={{
-                fontSize: 11,
-                letterSpacing: "0.45em",
-                color: "#f4ead0",
-                borderBottom: "1px solid rgba(212,175,55,0.6)",
-                paddingBottom: 6,
-              }}
-            >
-              EXPLORAR MODALIDADES
-            </span>
+            EXPLORAR MODALIDADES
           </button>
         </div>
 
