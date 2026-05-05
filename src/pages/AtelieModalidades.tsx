@@ -342,12 +342,26 @@ const AtelieModalidades = () => {
           </button>
         </div>
 
-        {/* Scroll cue */}
+        {/* Scroll cue — traço dourado animado */}
         <div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[9px] tracking-[0.5em] text-white/40"
-          style={{ animation: "fade-in 2s ease-out both" }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+          style={{ animation: "fade-in 2s ease-out 1.2s both" }}
         >
-          ↓ ROLAR
+          <span
+            className="text-[9px] tracking-[0.5em]"
+            style={{ color: "rgba(212,175,55,0.55)" }}
+          >
+            ROLAR
+          </span>
+          <span
+            style={{
+              display: "block",
+              width: 1,
+              height: 48,
+              background: "linear-gradient(180deg, rgba(212,175,55,0.9), rgba(212,175,55,0))",
+              animation: "scroll-line 2.4s ease-in-out infinite",
+            }}
+          />
         </div>
       </section>
 
