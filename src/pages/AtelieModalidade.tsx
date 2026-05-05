@@ -26,8 +26,32 @@ const AtelieModalidade = () => {
 
   useEffect(() => {
     setActiveSlug(linhas[0]?.slug);
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
+
+  const smoothScrollToLinhas = () => {
+    const el = document.getElementById("modalidade-linhas");
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const startY = window.scrollY;
+    // Center the linhas section in viewport so cards + "Explorar linha" button are fully visible
+    const targetCenter = rect.top + startY + rect.height / 2;
+    const endY = Math.max(0, targetCenter - window.innerHeight / 2);
+    const distance = endY - startY;
+    const duration = 1800;
+    let startTime: number | null = null;
+    const easeInOut = (t: number) =>
+      t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    const step = (timestamp: number) => {
+      if (startTime === null) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      window.scrollTo(0, startY + distance * easeInOut(progress));
+      if (elapsed < duration) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
 
   useEffect(() => {
     setRevealKey((k) => k + 1);
@@ -122,7 +146,7 @@ const AtelieModalidade = () => {
               <button
                 type="button"
                 onClick={() => {
-                  document.getElementById("modalidade-linhas")?.scrollIntoView({ behavior: "smooth" });
+                  smoothScrollToLinhas();
                 }}
                 className="inline-flex items-center gap-3 px-10 py-4 transition-all duration-500"
                 style={{
@@ -354,7 +378,7 @@ const AtelieModalidade = () => {
             <button
               type="button"
               onClick={() => {
-                document.getElementById("modalidade-linhas")?.scrollIntoView({ behavior: "smooth" });
+                smoothScrollToLinhas();
               }}
               className="inline-flex items-center gap-3 px-12 py-5 transition-all duration-500"
               style={{
