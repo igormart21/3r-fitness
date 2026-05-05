@@ -328,14 +328,20 @@ const AtelieModalidades = () => {
               animation: "fade-in 1.2s ease-out 0.6s both",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#d4af37";
+              e.currentTarget.style.background =
+                "linear-gradient(135deg, rgba(244,215,122,0.92) 0%, rgba(212,175,55,0.92) 100%)";
               e.currentTarget.style.color = "#0a0a0a";
-              e.currentTarget.style.boxShadow = "0 0 40px rgba(212,175,55,0.35)";
+              e.currentTarget.style.borderColor = "rgba(244,215,122,0.85)";
+              e.currentTarget.style.boxShadow =
+                "0 0 24px rgba(212,175,55,0.28), 0 0 60px rgba(212,175,55,0.18)";
+              e.currentTarget.style.transform = "translateY(-1px)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "transparent";
               e.currentTarget.style.color = "#d4af37";
+              e.currentTarget.style.borderColor = "rgba(212,175,55,0.6)";
               e.currentTarget.style.boxShadow = "none";
+              e.currentTarget.style.transform = "translateY(0)";
             }}
           >
             EXPLORAR MODALIDADES
