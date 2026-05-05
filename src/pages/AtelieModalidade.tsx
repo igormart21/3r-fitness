@@ -146,7 +146,49 @@ const AtelieModalidade = () => {
           </section>
 
           {/* DIREITA — seleção */}
-          <section className="lg:col-span-6">
+          <section className="lg:col-span-6 relative">
+            {modalidade.slug === "ciclismo" && (
+              <>
+                <div
+                  aria-hidden
+                  className="absolute -inset-x-6 -inset-y-10 lg:-inset-y-16 lg:-right-12 lg:-left-6 overflow-hidden pointer-events-none"
+                  style={{ zIndex: 0 }}
+                >
+                  <img
+                    src={ciclismoBg}
+                    alt=""
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover ciclismo-bg-anim"
+                    style={{ filter: "contrast(1.1) saturate(1.05)" }}
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.55) 35%, rgba(5,5,5,0.35) 70%, rgba(5,5,5,0.85) 100%), radial-gradient(ellipse 80% 70% at 60% 50%, rgba(212,175,55,0.10) 0%, transparent 65%)",
+                    }}
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(5,5,5,0.6) 0%, transparent 20%, transparent 80%, rgba(5,5,5,0.8) 100%)",
+                    }}
+                  />
+                </div>
+                <style>{`
+                  @keyframes ciclismo-bg-zoom {
+                    0% { transform: scale(1.08); }
+                    100% { transform: scale(1.15); }
+                  }
+                  .ciclismo-bg-anim {
+                    animation: ciclismo-bg-zoom 18s ease-in-out infinite alternate;
+                  }
+                `}</style>
+              </>
+            )}
+            <div className="relative" style={{ zIndex: 1 }}>
+
             <div className="max-w-md mx-auto lg:mx-0">
               <p
                 className="text-[10px] uppercase tracking-[0.5em] mb-4"
