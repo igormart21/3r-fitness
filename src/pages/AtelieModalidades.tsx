@@ -171,7 +171,19 @@ const AtelieModalidades = () => {
         }
         @keyframes ambient-breath {
           0%, 100% { opacity: 0.55; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.04); }
+          50% { opacity: 1; transform: scale(1.06); }
+        }
+        @keyframes scroll-line {
+          0% { transform: scaleY(0); transform-origin: top; }
+          50% { transform: scaleY(1); transform-origin: top; }
+          50.01% { transform-origin: bottom; }
+          100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+        @keyframes particle-float {
+          0% { transform: translateY(0) translateX(0); opacity: 0; }
+          10% { opacity: var(--p-opacity, 0.5); }
+          90% { opacity: var(--p-opacity, 0.5); }
+          100% { transform: translateY(-120vh) translateX(var(--p-drift, 20px)); opacity: 0; }
         }
       `}</style>
     <div
@@ -214,19 +226,48 @@ const AtelieModalidades = () => {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 70% 55% at 50% 35%, rgba(220,225,235,0.10), transparent 70%), linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0.85) 100%)",
+              "radial-gradient(ellipse 38% 30% at 50% 45%, rgba(230,232,240,0.18), transparent 60%), linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.9) 100%)",
           }}
         />
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(220,225,235,0.14), transparent 70%)",
+              "radial-gradient(circle 32% at 50% 50%, rgba(230,232,240,0.22), transparent 55%)",
             animation: "ambient-breath 7s ease-in-out infinite",
             mixBlendMode: "screen",
           }}
         />
 
+        {/* Particles douradas */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {Array.from({ length: 14 }).map((_, i) => {
+            const left = (i * 53) % 100;
+            const size = 1 + ((i * 7) % 3);
+            const duration = 18 + ((i * 3) % 14);
+            const delay = (i * 1.7) % 12;
+            const drift = ((i % 2 === 0 ? 1 : -1) * (10 + (i * 5) % 30)) + "px";
+            const opacity = 0.18 + ((i % 4) * 0.06);
+            return (
+              <span
+                key={i}
+                style={{
+                  position: "absolute",
+                  bottom: "-10px",
+                  left: `${left}%`,
+                  width: size,
+                  height: size,
+                  borderRadius: "9999px",
+                  background: "rgba(212,175,55,0.9)",
+                  boxShadow: "0 0 6px rgba(212,175,55,0.6)",
+                  animation: `particle-float ${duration}s linear ${delay}s infinite`,
+                  ["--p-drift" as any]: drift,
+                  ["--p-opacity" as any]: opacity,
+                } as React.CSSProperties}
+              />
+            );
+          })}
+        </div>
         <div
           className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto"
         >
@@ -251,12 +292,18 @@ const AtelieModalidades = () => {
               fontStyle: "italic",
               fontSize: "clamp(16px, 1.5vw, 22px)",
               letterSpacing: "0.04em",
-              color: "rgba(255,255,255,0.78)",
-              animation: "fade-in 1.4s ease-out 0.4s both",
+              color: "rgba(248,248,250,0.92)",
+              animation: "fade-in 1.4s ease-out 0.3s both",
             }}
           >
             Cada disciplina inspira{" "}
-            <span style={{ color: "rgba(212,175,55,0.85)" }}>
+            <span
+              style={{
+                color: "#d4af37",
+                fontWeight: 400,
+                textShadow: "0 0 24px rgba(212,175,55,0.35)",
+              }}
+            >
               sua própria linha.
             </span>
           </p>
@@ -278,7 +325,7 @@ const AtelieModalidades = () => {
               letterSpacing: "0.45em",
               textTransform: "uppercase",
               transition: "all 500ms ease",
-              animation: "fade-in 1.2s ease-out 1.5s both",
+              animation: "fade-in 1.2s ease-out 0.6s both",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "#d4af37";
@@ -295,12 +342,26 @@ const AtelieModalidades = () => {
           </button>
         </div>
 
-        {/* Scroll cue */}
+        {/* Scroll cue — traço dourado animado */}
         <div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[9px] tracking-[0.5em] text-white/40"
-          style={{ animation: "fade-in 2s ease-out both" }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+          style={{ animation: "fade-in 2s ease-out 1.2s both" }}
         >
-          ↓ ROLAR
+          <span
+            className="text-[9px] tracking-[0.5em]"
+            style={{ color: "rgba(212,175,55,0.55)" }}
+          >
+            ROLAR
+          </span>
+          <span
+            style={{
+              display: "block",
+              width: 1,
+              height: 48,
+              background: "linear-gradient(180deg, rgba(212,175,55,0.9), rgba(212,175,55,0))",
+              animation: "scroll-line 2.4s ease-in-out infinite",
+            }}
+          />
         </div>
       </section>
 
