@@ -237,6 +237,24 @@ const AtelieModalidades = () => {
             }}
           />
 
+          <p
+            style={{
+              marginTop: "1.5rem",
+              fontFamily: '"Fraunces","Cormorant Garamond",serif',
+              fontWeight: 300,
+              fontStyle: "italic",
+              fontSize: "clamp(16px, 1.5vw, 22px)",
+              letterSpacing: "0.04em",
+              color: "rgba(255,255,255,0.78)",
+              animation: "fade-in 1.4s ease-out 0.4s both",
+            }}
+          >
+            Cada disciplina inspira{" "}
+            <span style={{ color: "rgba(212,175,55,0.85)" }}>
+              sua própria linha.
+            </span>
+          </p>
+
           <button
             onClick={scrollToModalidades}
             className="mt-14 inline-flex items-center gap-4 group"
