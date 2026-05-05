@@ -163,6 +163,13 @@ const AtelieModalidades = () => {
   };
 
   return (
+    <>
+      <style>{`
+        @keyframes logo-enter {
+          0% { opacity: 0; transform: scale(0.98); }
+          100% { opacity: 0.92; transform: scale(1); }
+        }
+      `}</style>
     <div
       className="min-h-screen w-full text-white"
       style={{ backgroundColor: "#050505" }}
