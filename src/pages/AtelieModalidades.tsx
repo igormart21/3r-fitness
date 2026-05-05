@@ -356,15 +356,6 @@ const AtelieModalidades = () => {
               animation: "scroll-line 2.4s ease-in-out infinite",
             }}
           />
-          <span
-            style={{
-              display: "block",
-              width: 1,
-              height: 48,
-              background: "linear-gradient(180deg, rgba(212,175,55,0.9), rgba(212,175,55,0))",
-              animation: "scroll-line 2.4s ease-in-out infinite",
-            }}
-          />
         </div>
       </section>
 
