@@ -33,17 +33,11 @@ const AtelieLinha = () => {
 
   const handleFinalizar = async () => {
     if (!linha || checkoutLoading) return;
-    if (linha.slug === "halter") {
-      window.open(
-        "https://store-store-builder-joaax.myshopify.com/products/halter",
-        "_blank",
-        "noopener,noreferrer",
-      );
-      return;
-    }
     setCheckoutLoading(true);
     try {
-      const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle: linha.slug });
+      const handleOverrides: Record<string, string> = { halter: "halter-1" };
+      const shopifyHandle = handleOverrides[linha.slug] ?? linha.slug;
+      const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle: shopifyHandle });
       const product = data?.data?.product;
       if (!product) {
         toast.error("Produto ainda não disponível", {
@@ -448,75 +442,44 @@ const AtelieLinha = () => {
               </div>
 
               <div className="mt-14">
-                {linha.slug === "halter" ? (
-                  <a
-                    href="https://store-store-builder-joaax.myshopify.com/products/halter"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500"
-                    style={{
-                      color: "#d4af37",
-                      border: "1px solid rgba(212,175,55,0.55)",
-                      background: "transparent",
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "11px",
-                      letterSpacing: "0.42em",
-                      textTransform: "uppercase",
-                      textDecoration: "none",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "#d4af37";
-                      e.currentTarget.style.color = "#000";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.color = "#d4af37";
-                    }}
-                  >
-                    <span className="h-px w-5" style={{ background: "currentColor" }} />
-                    Selecionar peça
-                    <span className="h-px w-5" style={{ background: "currentColor" }} />
-                  </a>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={handleFinalizar}
-                    disabled={checkoutLoading}
-                    className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500 disabled:opacity-60 disabled:cursor-wait"
-                    style={{
-                      color: "#d4af37",
-                      border: "1px solid rgba(212,175,55,0.55)",
-                      background: "transparent",
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "11px",
-                      letterSpacing: "0.42em",
-                      textTransform: "uppercase",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (checkoutLoading) return;
-                      e.currentTarget.style.background = "#d4af37";
-                      e.currentTarget.style.color = "#000";
-                    }}
-                    onMouseLeave={(e) => {
-                      if (checkoutLoading) return;
-                      e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.color = "#d4af37";
-                    }}
-                  >
-                    {checkoutLoading ? (
-                      <>
-                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                        Preparando…
-                      </>
-                    ) : (
-                      <>
-                        <span className="h-px w-5" style={{ background: "currentColor" }} />
-                        Selecionar peça
-                        <span className="h-px w-5" style={{ background: "currentColor" }} />
-                      </>
-                    )}
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={handleFinalizar}
+                  disabled={checkoutLoading}
+                  className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500 disabled:opacity-60 disabled:cursor-wait"
+                  style={{
+                    color: "#d4af37",
+                    border: "1px solid rgba(212,175,55,0.55)",
+                    background: "transparent",
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: "11px",
+                    letterSpacing: "0.42em",
+                    textTransform: "uppercase",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (checkoutLoading) return;
+                    e.currentTarget.style.background = "#d4af37";
+                    e.currentTarget.style.color = "#000";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (checkoutLoading) return;
+                    e.currentTarget.style.background = "transparent";
+                    e.currentTarget.style.color = "#d4af37";
+                  }}
+                >
+                  {checkoutLoading ? (
+                    <>
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      Preparando…
+                    </>
+                  ) : (
+                    <>
+                      <span className="h-px w-5" style={{ background: "currentColor" }} />
+                      Selecionar peça
+                      <span className="h-px w-5" style={{ background: "currentColor" }} />
+                    </>
+                  )}
+                </button>
               </div>
 
             </div>
