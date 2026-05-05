@@ -18,6 +18,7 @@ import triadeOuroClean from "@/assets/linha-triade-ouro-clean.jpg";
 import triadePrataClean from "@/assets/linha-triade-prata-clean.jpg";
 import triadeCampaign from "@/assets/linha-triade-ouro.jpg";
 import aeronOuro from "@/assets/linha-aeron-ouro.png";
+import veloxOuro from "@/assets/linha-velox-ouro.png";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
