@@ -348,11 +348,14 @@ const AtelieModalidades = () => {
           style={{ animation: "fade-in 2s ease-out 1.2s both" }}
         >
           <span
-            className="text-[9px] tracking-[0.5em]"
-            style={{ color: "rgba(212,175,55,0.55)" }}
-          >
-            ROLAR
-          </span>
+            style={{
+              display: "block",
+              width: 1,
+              height: 48,
+              background: "linear-gradient(180deg, rgba(212,175,55,0.9), rgba(212,175,55,0))",
+              animation: "scroll-line 2.4s ease-in-out infinite",
+            }}
+          />
           <span
             style={{
               display: "block",
