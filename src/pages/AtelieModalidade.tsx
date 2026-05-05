@@ -320,6 +320,7 @@ const AtelieModalidade = () => {
                 </div>
               )}
             </div>
+            </div>
           </section>
         </div>
       </main>
