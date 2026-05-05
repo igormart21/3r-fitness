@@ -169,6 +169,10 @@ const AtelieModalidades = () => {
           0% { opacity: 0; transform: scale(0.98); }
           100% { opacity: 0.92; transform: scale(1); }
         }
+        @keyframes ambient-breath {
+          0%, 100% { opacity: 0.55; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.04); }
+        }
       `}</style>
     <div
       className="min-h-screen w-full text-white"
