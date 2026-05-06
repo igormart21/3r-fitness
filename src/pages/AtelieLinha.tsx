@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
-import { ArrowLeft, Loader2 } from "lucide-react";
-import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
-import {
-  storefrontApiRequest,
-  PRODUCT_BY_HANDLE_QUERY,
-  createShopifyCart,
-} from "@/lib/shopify";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
 import vigorMasculinoPrata from "@/assets/linha-vigor-masculino-prata.jpg";
 import veloxRoyaleOuroMasc from "@/assets/linha-velox-royale-ouro-masculino.jpg";
@@ -30,72 +24,6 @@ const AtelieLinha = () => {
   const [material, setMaterial] = useState<Material>("ouro");
   const [forma, setForma] = useState<Forma>("masculino");
   const [revealKey, setRevealKey] = useState(0);
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
-
-  const handleFinalizar = async () => {
-    if (!linha || checkoutLoading) return;
-    setCheckoutLoading(true);
-    try {
-      const handleOverrides: Record<string, string> = { halter: "halter-1" };
-      const shopifyHandle = handleOverrides[linha.slug] ?? linha.slug;
-      const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle: shopifyHandle });
-      const product = data?.data?.product;
-      if (!product) {
-        toast.error("Produto ainda não disponível", {
-          description: "Esta linha ainda não está cadastrada na loja.",
-        });
-        return;
-      }
-
-      const variants = product.variants?.edges?.map((e: any) => e.node) || [];
-      const norm = (s: string) => s.toLowerCase().trim();
-      const wantedMaterial = norm(material);
-      const wantedForma = norm(forma);
-
-      const matchScore = (v: any) => {
-        let score = 0;
-        let matched = 0;
-        for (const opt of v.selectedOptions || []) {
-          const name = norm(opt.name);
-          const value = norm(opt.value);
-          if (name.includes("material") || name.includes("metal")) {
-            if (value === wantedMaterial || value.includes(wantedMaterial)) { score += 2; matched++; }
-            else { score -= 1; }
-          } else if (name.includes("forma") || name.includes("gênero") || name.includes("genero") || name.includes("modelo")) {
-            if (value === wantedForma || value.includes(wantedForma)) { score += 2; matched++; }
-            else { score -= 1; }
-          }
-        }
-        return { score, matched, available: v.availableForSale };
-      };
-
-      const ranked = variants
-        .map((v: any) => ({ v, ...matchScore(v) }))
-        .sort((a: any, b: any) => {
-          if (a.available !== b.available) return a.available ? -1 : 1;
-          if (b.score !== a.score) return b.score - a.score;
-          return b.matched - a.matched;
-        });
-
-      const chosen = ranked[0]?.v || variants[0];
-      if (!chosen?.id) {
-        toast.error("Variante indisponível");
-        return;
-      }
-
-      const result = await createShopifyCart({ variantId: chosen.id, quantity: 1 });
-      if (!result?.checkoutUrl) {
-        toast.error("Não foi possível iniciar o checkout");
-        return;
-      }
-      window.location.href = result.checkoutUrl;
-    } catch (err) {
-      console.error(err);
-      toast.error("Erro ao finalizar peça");
-    } finally {
-      setCheckoutLoading(false);
-    }
-  };
 
 
   useEffect(() => {
