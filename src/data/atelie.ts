@@ -23,6 +23,8 @@ import veloxEditorialFemOuro from "@/assets/velox-royale-feminina-ouro.png";
 import veloxEditorialFemPrata from "@/assets/velox-royale-feminina-prata.png";
 import veloxEditorialMascOuro from "@/assets/velox-royale-masculino-ouro.png";
 import veloxEditorialMascPrata from "@/assets/velox-royale-masculino-prata.png";
+import velarionOuro from "@/assets/linha-velarion-ouro.png";
+import trionEliteOuro from "@/assets/linha-trion-elite-ouro.png";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
@@ -43,6 +45,7 @@ export type Linha = {
   imagens: Record<Material, string>;
   campaign: string;
   editorial?: EditorialBackground;
+  cardFit?: "cover" | "contain";
 };
 
 export type Modalidade = {
@@ -127,16 +130,18 @@ export const LINHAS: Record<string, Linha> = {
     nome: "VELARION",
     assinatura: "Assinatura da Resistência",
     frase: "Atravessar é mais que vencer.",
-    imagens: { ouro: vigorOuroClean, prata: vigorPrataClean },
-    campaign: vigorCampaign,
+    imagens: { ouro: velarionOuro, prata: velarionOuro },
+    campaign: velarionOuro,
+    cardFit: "contain",
   },
   elite: {
     slug: "elite",
     nome: "TRION ELITE",
     assinatura: "Assinatura da Excelência",
     frase: "O refinamento dos que vão além.",
-    imagens: { ouro: imperiumOuroClean, prata: imperiumPrataClean },
-    campaign: imperiumCampaign,
+    imagens: { ouro: trionEliteOuro, prata: trionEliteOuro },
+    campaign: trionEliteOuro,
+    cardFit: "contain",
   },
 };
 
