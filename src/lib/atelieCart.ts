@@ -9,18 +9,34 @@ const ATELIE_HANDLES: Record<string, string> = {
   vigor: "vigor",
 };
 
-function matchVariantByMaterial(product: any, material: Material) {
+// Override explícito de variant ID por linha + material (ID numérico Shopify).
+// Garante que a variante exata configurada na Shopify seja usada no checkout.
+const VARIANT_ID_OVERRIDES: Record<string, Partial<Record<Material, string>>> = {
+  halter: {
+    ouro: "48912055468259",
+    prata: "48912055501027",
+  },
+};
+
+function toGid(numericId: string) {
+  return `gid://shopify/ProductVariant/${numericId}`;
+}
+
+function matchVariantByMaterial(product: any, material: Material, slug: string) {
   const variants = product?.variants?.edges ?? [];
+  const overrideId = VARIANT_ID_OVERRIDES[slug]?.[material];
+  if (overrideId) {
+    const gid = toGid(overrideId);
+    const byId = variants.find((v: any) => v.node.id === gid);
+    if (byId) return byId.node;
+  }
   const target = material === "ouro" ? "ouro" : "prata";
-  // 1) Match por selectedOptions
   const byOption = variants.find((v: any) =>
     v.node.selectedOptions?.some((o: any) => o.value?.toLowerCase().includes(target))
   );
   if (byOption) return byOption.node;
-  // 2) Match por título
   const byTitle = variants.find((v: any) => v.node.title?.toLowerCase().includes(target));
   if (byTitle) return byTitle.node;
-  // 3) Fallback: primeira variante
   return variants[0]?.node;
 }
 
@@ -36,7 +52,7 @@ export async function addAtelieLineToCart(
     const product = data?.data?.product;
     if (!product) return { success: false, error: "Produto não encontrado." };
 
-    const variant = matchVariantByMaterial(product, material);
+    const variant = matchVariantByMaterial(product, material, slug);
     if (!variant) return { success: false, error: "Variação não disponível." };
 
     // Monta ShopifyProduct-shape esperado pelo cart store (usa .node.images[0] no drawer)
