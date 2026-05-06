@@ -108,76 +108,79 @@ const AtelieModalidade = () => {
         </div>
       </header>
 
-      {/* 1. HERO FULL SCREEN */}
-      <section className="relative w-screen h-screen overflow-hidden">
-        <img
-          src={heroBg}
-          alt=""
-          aria-hidden
-          className="absolute inset-0 w-full h-full object-cover modalidade-hero-zoom"
-          style={{ objectPosition: "center center", filter: "contrast(1.08) saturate(1.05)" }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.75) 30%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0) 80%)",
-          }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(5,5,5,0.4) 0%, transparent 20%, transparent 75%, rgba(5,5,5,0.95) 100%)",
-          }}
-        />
-
-        <div className="relative z-10 h-full container mx-auto px-6 lg:px-12 flex items-center">
-          <div className="max-w-xl modalidade-fade-in">
-            <p
-              className="text-[10px] uppercase tracking-[0.55em] mb-6"
-              style={{ color: "rgba(212,175,55,0.85)" }}
-            >
-              Etapa 02 · Modalidade
-            </p>
-            <h1
-              className="font-display font-light leading-[0.95]"
+      {/* 1. HERO + 2. FAIXA — ocultos no Triathlon (vai direto para "O Ateliê Triathlon") */}
+      {modalidade.slug !== "triathlon" && (
+        <>
+          <section className="relative w-screen h-screen overflow-hidden">
+            <img
+              src={heroBg}
+              alt=""
+              aria-hidden
+              className="absolute inset-0 w-full h-full object-cover modalidade-hero-zoom"
+              style={{ objectPosition: "center center", filter: "contrast(1.08) saturate(1.05)" }}
+            />
+            <div
+              className="absolute inset-0"
               style={{
-                fontSize: "clamp(56px, 8vw, 128px)",
-                letterSpacing: "0.04em",
-                color: "#f4ead0",
+                background:
+                  "linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.75) 30%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0) 80%)",
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(5,5,5,0.4) 0%, transparent 20%, transparent 75%, rgba(5,5,5,0.95) 100%)",
+              }}
+            />
+
+            <div className="relative z-10 h-full container mx-auto px-6 lg:px-12 flex items-center">
+              <div className="max-w-xl modalidade-fade-in">
+                <p
+                  className="text-[10px] uppercase tracking-[0.55em] mb-6"
+                  style={{ color: "rgba(212,175,55,0.85)" }}
+                >
+                  Etapa 02 · Modalidade
+                </p>
+                <h1
+                  className="font-display font-light leading-[0.95]"
+                  style={{
+                    fontSize: "clamp(56px, 8vw, 128px)",
+                    letterSpacing: "0.04em",
+                    color: "#f4ead0",
+                  }}
+                >
+                  {modalidade.nome.toUpperCase()}
+                </h1>
+                <p
+                  className="mt-6 italic font-light max-w-md"
+                  style={{
+                    fontFamily: '"Fraunces",serif',
+                    color: "rgba(255,255,255,0.75)",
+                    fontSize: "17px",
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  {modalidade.subtitulo}.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section className="w-full bg-black flex items-center justify-center" style={{ minHeight: "110px" }}>
+            <p
+              className="text-[11px] uppercase text-center"
+              style={{
+                color: "rgba(255,255,255,0.7)",
+                letterSpacing: "0.7em",
+                fontFamily: "Inter, sans-serif",
               }}
             >
-              {modalidade.nome.toUpperCase()}
-            </h1>
-            <p
-              className="mt-6 italic font-light max-w-md"
-              style={{
-                fontFamily: '"Fraunces",serif',
-                color: "rgba(255,255,255,0.75)",
-                fontSize: "17px",
-                letterSpacing: "0.02em",
-              }}
-            >
-              {modalidade.subtitulo}.
+              Disciplina &nbsp;·&nbsp; Foco &nbsp;·&nbsp; Superação
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. FAIXA DE TRANSIÇÃO */}
-      <section className="w-full bg-black flex items-center justify-center" style={{ minHeight: "110px" }}>
-        <p
-          className="text-[11px] uppercase text-center"
-          style={{
-            color: "rgba(255,255,255,0.7)",
-            letterSpacing: "0.7em",
-            fontFamily: "Inter, sans-serif",
-          }}
-        >
-          Disciplina &nbsp;·&nbsp; Foco &nbsp;·&nbsp; Superação
-        </p>
-      </section>
+          </section>
+        </>
+      )}
 
       {/* 3. PRODUTOS */}
       <section
