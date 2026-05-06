@@ -163,11 +163,20 @@ const ModalidadeSection = ({
 };
 
 const AtelieModalidades = () => {
+  const navigate = useNavigate();
   const modalidades = ORDER
     .map((s) => MODALIDADES.find((m) => m.slug === s))
     .filter(Boolean) as typeof MODALIDADES;
 
   const [progress, setProgress] = useState(0); // 0 → 1 across first viewport
+  const [isFading, setIsFading] = useState(false);
+
+  const navigateWithFade = (slug: string) => {
+    setIsFading(true);
+    window.setTimeout(() => {
+      navigate(`/atelie/modalidade/${slug}`);
+    }, 650);
+  };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
