@@ -462,7 +462,7 @@ const AtelieLinha = () => {
           )}
 
           {/* DIREITA — interface */}
-          <section className={hasEditorial || hasCinematic ? "w-full max-w-md lg:max-w-[560px]" : "lg:col-span-6"}>
+          <section className={hasEditorial ? "w-full max-w-md lg:max-w-[560px]" : "lg:col-span-6"}>
             <div
               className={`max-w-md mx-auto lg:mx-0 ${hasCinematic ? "p-8 md:p-10" : ""}`}
               style={hasCinematic ? {
