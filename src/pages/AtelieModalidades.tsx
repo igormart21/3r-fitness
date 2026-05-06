@@ -483,6 +483,20 @@ const AtelieModalidades = () => {
           ATELIÊ
         </span>
       </footer>
+
+      {/* Cinematic fade-out overlay on navigation */}
+      <div
+        aria-hidden
+        style={{
+          position: "fixed",
+          inset: 0,
+          background: "#050505",
+          opacity: isFading ? 1 : 0,
+          pointerEvents: isFading ? "auto" : "none",
+          transition: "opacity 650ms ease-in-out",
+          zIndex: 9999,
+        }}
+      />
     </div>
     </>
   );
