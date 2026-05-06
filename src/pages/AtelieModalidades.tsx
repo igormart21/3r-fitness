@@ -178,14 +178,30 @@ const AtelieModalidades = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // CTA principal: scroll suave até o meio da lista de modalidades (mesma página)
+  // CTA principal: scroll lento e suave (como rolar o mouse aos poucos) até o meio das modalidades
   const goToEnduranceCollection = () => {
     const el = document.getElementById("modalidades");
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    const target =
-      window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
-    window.scrollTo({ top: Math.max(0, target), behavior: "smooth" });
+    const start = window.scrollY;
+    const end = Math.max(
+      0,
+      start + rect.top + rect.height / 2 - window.innerHeight / 2
+    );
+    const distance = end - start;
+    if (Math.abs(distance) < 4) return;
+    // Duração proporcional à distância — ~1.2s por 1000px, mín 2.8s, máx 6s
+    const duration = Math.min(6000, Math.max(2800, Math.abs(distance) * 1.2));
+    const ease = (t: number) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    let t0: number | null = null;
+    const step = (ts: number) => {
+      if (t0 === null) t0 = ts;
+      const p = Math.min(1, (ts - t0) / duration);
+      window.scrollTo(0, start + distance * ease(p));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
   };
 
   // Eased progress for cinematic feel
