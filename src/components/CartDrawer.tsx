@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ShoppingBag, Minus, Plus, X, ArrowRight, Loader2 } from "lucide-react";
 import { ShippingAnnouncementBar } from "@/components/ShippingAnnouncementBar";
 import { useCartStore } from "@/stores/cartStore";
+import { useCartUIStore } from "@/stores/cartUIStore";
 
 export const CartDrawer = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = useCartUIStore((s) => s.isOpen);
+  const setIsOpen = useCartUIStore((s) => s.setOpen);
   const { items, isLoading, isSyncing, updateQuantity, removeItem, getCheckoutUrl, syncCart } = useCartStore();
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
