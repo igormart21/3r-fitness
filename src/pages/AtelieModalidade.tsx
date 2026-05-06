@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { MODALIDADES, LINHAS } from "@/data/atelie";
+import TriathlonCinematicHero from "@/components/TriathlonCinematicHero";
 import musculacaoCampaign from "@/assets/modalidade-musculacao-campaign.jpg";
 import musculacaoHalter from "@/assets/modalidade-musculacao-halter.jpg";
 import ciclismoCampaign from "@/assets/modalidade-ciclismo-campaign.jpg";
