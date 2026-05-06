@@ -11,8 +11,10 @@ export interface ShopifyProduct {
     title: string;
     description: string;
     handle: string;
+    featuredImage?: { url: string; altText: string | null } | null;
     priceRange: { minVariantPrice: { amount: string; currencyCode: string } };
     images: { edges: Array<{ node: { url: string; altText: string | null } }> };
+    media?: { edges: Array<{ node: { image?: { url: string; altText: string | null } | null } }> };
     variants: {
       edges: Array<{
         node: {
@@ -21,6 +23,7 @@ export interface ShopifyProduct {
           price: { amount: string; currencyCode: string };
           availableForSale: boolean;
           selectedOptions: Array<{ name: string; value: string }>;
+          image?: { url: string; altText: string | null } | null;
         };
       }>;
     };
@@ -83,8 +86,57 @@ export const PRODUCT_BY_HANDLE_QUERY = `
   }
 `;
 
+const CART_LINE_FRAGMENT = `
+  fragment CartLineFields on CartLine {
+    id
+    quantity
+    merchandise {
+      ... on ProductVariant {
+        id
+        title
+        image { url altText }
+        price { amount currencyCode }
+        selectedOptions { name value }
+        product {
+          id title description handle
+          featuredImage { url altText }
+          priceRange { minVariantPrice { amount currencyCode } }
+          images(first: 1) { edges { node { url altText } } }
+          media(first: 1) {
+            edges {
+              node {
+                ... on MediaImage { image { url altText } }
+              }
+            }
+          }
+          variants(first: 20) {
+            edges {
+              node {
+                id title
+                price { amount currencyCode }
+                availableForSale
+                selectedOptions { name value }
+                image { url altText }
+              }
+            }
+          }
+          options { name values }
+        }
+      }
+    }
+  }
+`;
+
 export const CART_QUERY = `
-  query cart($id: ID!) { cart(id: $id) { id totalQuantity } }
+  query cart($id: ID!) {
+    cart(id: $id) {
+      id
+      checkoutUrl
+      totalQuantity
+      lines(first: 100) { edges { node { ...CartLineFields } } }
+    }
+  }
+  ${CART_LINE_FRAGMENT}
 `;
 
 export const CART_CREATE_MUTATION = `
@@ -92,23 +144,25 @@ export const CART_CREATE_MUTATION = `
     cartCreate(input: $input) {
       cart {
         id checkoutUrl
-        lines(first: 100) { edges { node { id merchandise { ... on ProductVariant { id } } } } }
+        lines(first: 100) { edges { node { ...CartLineFields } } }
       }
       userErrors { field message }
     }
   }
+  ${CART_LINE_FRAGMENT}
 `;
 
 export const CART_LINES_ADD_MUTATION = `
   mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
     cartLinesAdd(cartId: $cartId, lines: $lines) {
       cart {
-        id
-        lines(first: 100) { edges { node { id merchandise { ... on ProductVariant { id } } } } }
+        id checkoutUrl
+        lines(first: 100) { edges { node { ...CartLineFields } } }
       }
       userErrors { field message }
     }
   }
+  ${CART_LINE_FRAGMENT}
 `;
 
 export const CART_LINES_UPDATE_MUTATION = `
