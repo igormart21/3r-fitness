@@ -364,7 +364,42 @@ const AtelieLinha = () => {
       </header>
 
       <main className="relative z-10 w-full min-h-screen pt-24 md:pt-28 pb-12">
-        <div className={`container mx-auto max-w-6xl px-6 ${hasEditorial || hasCinematic ? "flex justify-center lg:justify-end items-center min-h-[calc(100vh-180px)]" : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"}`}>
+        <div className={`container mx-auto max-w-6xl px-6 ${hasEditorial ? "flex justify-center lg:justify-end items-center min-h-[calc(100vh-180px)]" : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"}`}>
+          {/* ESQUERDA — card do pingente (TRION ELITE cinematic) */}
+          {hasCinematic && (
+            <section className="lg:col-span-6 relative">
+              <div
+                className="relative w-full overflow-hidden mx-auto group flex items-center justify-center"
+                style={{
+                  aspectRatio: "1 / 1",
+                  maxHeight: "calc(100vh - 200px)",
+                  background: "linear-gradient(180deg, rgba(15,15,18,0.55) 0%, rgba(5,5,8,0.7) 100%)",
+                  backdropFilter: "blur(18px) saturate(1.1)",
+                  WebkitBackdropFilter: "blur(18px) saturate(1.1)",
+                  border: "1px solid rgba(212,175,55,0.22)",
+                  boxShadow: "0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08) inset",
+                }}
+              >
+                <div
+                  aria-hidden
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: lightTone }}
+                />
+                <img
+                  key={revealKey}
+                  src={linha.imagens[material]}
+                  alt={`${linha.nome} — ${material === "ouro" ? "Ouro 18K" : "Prata 925"}`}
+                  className="relative max-w-full max-h-full object-contain reveal-piece will-change-transform transition-transform duration-700 group-hover:scale-105"
+                  style={{
+                    filter:
+                      material === "ouro"
+                        ? "saturate(1.08) contrast(1.06) brightness(1.03) drop-shadow(0 20px 40px rgba(244,180,70,0.25))"
+                        : "saturate(0.92) contrast(1.06) brightness(1) hue-rotate(-2deg) drop-shadow(0 20px 40px rgba(180,200,230,0.18))",
+                  }}
+                />
+              </div>
+            </section>
+          )}
           {/* ESQUERDA — imagem (omitida no Velox Royale ciclismo: o fundo split é o produto) */}
           {!hasEditorial && !hasCinematic && (
             <section className="lg:col-span-6 relative">
