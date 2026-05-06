@@ -27,6 +27,11 @@ const AtelieModalidade = () => {
   useEffect(() => {
     setActiveSlug(linhas[0]?.slug);
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    if (slug) {
+      import("@/stores/modalidadeStore").then(({ useModalidadeStore }) =>
+        useModalidadeStore.getState().setModalidade(slug),
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
