@@ -21,6 +21,7 @@ import { InstagramFloatingButton } from "@/components/InstagramFloatingButton";
 import { WhatsappFloatingButton } from "@/components/WhatsappFloatingButton";
 import { HomeFloatingButton } from "@/components/HomeFloatingButton";
 import { AuthFloatingButton } from "@/components/AuthFloatingButton";
+import { CartDrawer } from "@/components/CartDrawer";
 
 const queryClient = new QueryClient();
 
