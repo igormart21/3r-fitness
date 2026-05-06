@@ -258,7 +258,7 @@ const AtelieLinha = () => {
                 style={{
                   backgroundImage: `url(${layer.src})`,
                   backgroundSize: "cover",
-                  backgroundPosition: "50% 38%",
+                  backgroundPosition: "78% 38%",
                   opacity: layer.active ? 1 : 0,
                   transform: `scale(${layer.active ? 1.05 : 1.12}) translate3d(${parallax.x * -8}px, ${parallax.y * -8}px, 0)`,
                   filter:
