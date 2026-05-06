@@ -7,7 +7,7 @@ import { ShippingAnnouncementBar } from "@/components/ShippingAnnouncementBar";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartUIStore } from "@/stores/cartUIStore";
 
-export const CartDrawer = () => {
+export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {}) => {
   const isOpen = useCartUIStore((s) => s.isOpen);
   const setIsOpen = useCartUIStore((s) => s.setOpen);
   const { items, isLoading, isSyncing, updateQuantity, removeItem, getCheckoutUrl, syncCart } = useCartStore();
@@ -27,17 +27,18 @@ export const CartDrawer = () => {
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative rounded-full text-foreground hover:bg-transparent hover:text-[hsl(43,65%,60%)] transition-colors">
-          <ShoppingBag className="h-5 w-5" strokeWidth={1.25} />
-          {totalItems > 0 && (
-            <Badge className="absolute -top-0.5 -right-0.5 h-4 min-w-4 rounded-full p-0 px-1 flex items-center justify-center text-[9px] font-light bg-[hsl(43,65%,55%)] text-black border-0">
-              {totalItems}
-            </Badge>
-          )}
-        </Button>
-      </SheetTrigger>
-
+      {showTrigger && (
+        <SheetTrigger asChild>
+          <Button variant="ghost" size="icon" className="relative rounded-full text-foreground hover:bg-transparent hover:text-[hsl(43,65%,60%)] transition-colors">
+            <ShoppingBag className="h-5 w-5" strokeWidth={1.25} />
+            {totalItems > 0 && (
+              <Badge className="absolute -top-0.5 -right-0.5 h-4 min-w-4 rounded-full p-0 px-1 flex items-center justify-center text-[9px] font-light bg-[hsl(43,65%,55%)] text-black border-0">
+                {totalItems}
+              </Badge>
+            )}
+          </Button>
+        </SheetTrigger>
+      )}
       <SheetContent
         side="right"
         className="w-full sm:max-w-md p-0 flex flex-col h-full border-l border-[hsl(43,30%,20%)] bg-[hsl(0,0%,5%)] text-[hsl(43,40%,85%)] [&>button]:hidden"
