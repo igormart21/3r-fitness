@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
+import { SHOPIFY_PRODUCT_HANDLES } from "@/lib/shopifyExternal";
 import { ArrowLeft } from "lucide-react";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
@@ -15,7 +16,7 @@ import strataPrata from "@/assets/linha-strata-prata.jpg";
 import imperiumOuro from "@/assets/linha-imperium-ouro.jpg";
 import imperiumPrata from "@/assets/linha-imperium-prata.jpg";
 import ciclismoBg from "@/assets/atelie-ciclismo-bg.jpg";
-import { getShopifyProductUrl } from "@/lib/shopifyExternal";
+// Mapa de slug da linha → handle do produto Shopify (importado pelo Storefront API).
 
 const AtelieLinha = () => {
   const { slug } = useParams();
@@ -45,10 +46,10 @@ const AtelieLinha = () => {
   );
   const showFormaSelector = linha.slug !== "halter" && parentModalidade?.slug !== "crossfit";
 
-  // Configuração universal de navegação Shopify (ver src/lib/shopifyExternal.ts).
-  // Cada linha aponta automaticamente para o produto correspondente no Shopify,
-  // sempre como link externo absoluto, abrindo em nova aba.
-  const externalCartUrl = getShopifyProductUrl(linha.slug);
+  // Produto abre DENTRO do Lovable em /product/:handle (mesmo layout premium).
+  // O checkout final é redirecionado ao Shopify pelo carrinho (Storefront API).
+  const productHandle = SHOPIFY_PRODUCT_HANDLES[linha.slug];
+  const internalProductUrl = productHandle ? `/product/${productHandle}` : undefined;
 
   const imgSrc =
     linha.slug === "imperium" && material === "ouro"
@@ -376,11 +377,9 @@ const AtelieLinha = () => {
               </div>
 
               <div className="mt-14">
-                {externalCartUrl ? (
-                  <a
-                    href={externalCartUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                {internalProductUrl ? (
+                  <Link
+                    to={internalProductUrl}
                     className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500"
                     style={{
                       color: "#d4af37",
@@ -403,7 +402,7 @@ const AtelieLinha = () => {
                     <span className="h-px w-5" style={{ background: "currentColor" }} />
                     Selecionar peça
                     <span className="h-px w-5" style={{ background: "currentColor" }} />
-                  </a>
+                  </Link>
                 ) : (
                   <button
                     type="button"
