@@ -58,7 +58,15 @@ export const PRODUCT_BY_HANDLE_QUERY = `
     product(handle: $handle) {
       id title description handle
       priceRange { minVariantPrice { amount currencyCode } }
-      images(first: 10) { edges { node { url altText } } }
+      featuredImage { url altText }
+      images(first: 20) { edges { node { url altText } } }
+      media(first: 20) {
+        edges {
+          node {
+            ... on MediaImage { image { url altText } }
+          }
+        }
+      }
       variants(first: 20) {
         edges {
           node {
@@ -66,6 +74,7 @@ export const PRODUCT_BY_HANDLE_QUERY = `
             price { amount currencyCode }
             availableForSale
             selectedOptions { name value }
+            image { url altText }
           }
         }
       }
