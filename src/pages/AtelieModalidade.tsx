@@ -108,7 +108,7 @@ const AtelieModalidade = () => {
         </div>
       </header>
 
-      {/* 1. HERO + 2. FAIXA — ocultos no Triathlon (vai direto para "O Ateliê Triathlon") */}
+      {/* 1. HERO + 2. FAIXA — ocultos no Triathlon (vai direto para "O Ateliê Triatlo") */}
       {modalidade.slug !== "triathlon" && (
         <>
           <section className="relative w-screen h-screen overflow-hidden">
@@ -266,7 +266,7 @@ const AtelieModalidade = () => {
               }}
             >
               {modalidade.slug === "triathlon"
-                ? "O Ateliê Triathlon"
+                ? "O Ateliê Triatlo"
                 : `As linhas de ${modalidade.nome.toLowerCase()}`}
             </h2>
             <div

@@ -135,7 +135,7 @@ const MODALIDADES: Record<string, ModalidadeConfig> = {
   },
   "3": {
     slug: "triathlon",
-    nome: "Triathlon",
+    nome: "Triatlo",
     fraseImpacto: "Resistência em todos os níveis.",
     heroBg: triathlonHeroBg,
     bonecos: {

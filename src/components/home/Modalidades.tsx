@@ -12,7 +12,7 @@ const modalidades = [
   { id: 6, nome: "Corrida", img: sportCorrida, frase: "O ritmo de uma vida" },
   { id: 4, nome: "Ciclismo", img: sportCiclismo, frase: "Horizontes conquistados" },
   { id: 5, nome: "Crossfit", img: sportCrossfit, frase: "A intensidade como arte" },
-  { id: 3, nome: "Triathlon", img: sportTriathlon, frase: "A travessia dos limites" },
+  { id: 3, nome: "Triatlo", img: sportTriathlon, frase: "A travessia dos limites" },
 ];
 
 export const Modalidades = () => {
