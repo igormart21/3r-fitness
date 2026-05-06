@@ -66,6 +66,7 @@ const App = () => (
       <BrowserRouter>
         <AppRoutes />
         <FloatingButtons />
+        <CartDrawer showTrigger={false} />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
