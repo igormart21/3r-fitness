@@ -178,9 +178,14 @@ const AtelieModalidades = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // CTA principal pula direto para a Endurance Collection (Ateliê Triathlon)
+  // CTA principal: scroll suave até o meio da lista de modalidades (mesma página)
   const goToEnduranceCollection = () => {
-    window.location.assign("/atelie/modalidade/triathlon#modalidade-linhas");
+    const el = document.getElementById("modalidades");
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const target =
+      window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
+    window.scrollTo({ top: Math.max(0, target), behavior: "smooth" });
   };
 
   // Eased progress for cinematic feel
