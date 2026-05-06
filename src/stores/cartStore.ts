@@ -10,6 +10,8 @@ import {
   removeLineFromShopifyCart,
 } from '@/lib/shopify';
 
+type CartImage = { url: string; altText: string | null };
+
 export interface CartItem {
   lineId: string | null;
   product: ShopifyProduct;
@@ -18,7 +20,65 @@ export interface CartItem {
   price: { amount: string; currencyCode: string };
   quantity: number;
   selectedOptions: Array<{ name: string; value: string }>;
+  thumbnailImage?: CartImage | null;
 }
+
+const normalizeImage = (image?: { url?: string | null; altText?: string | null } | null): CartImage | null =>
+  image?.url ? { url: image.url, altText: image.altText ?? null } : null;
+
+const getLineThumbnail = (line: any): CartImage | null => {
+  const merchandise = line?.merchandise;
+  const product = merchandise?.product;
+  return (
+    normalizeImage(merchandise?.image) ||
+    normalizeImage(product?.featuredImage) ||
+    normalizeImage(product?.images?.edges?.[0]?.node) ||
+    normalizeImage(product?.media?.edges?.[0]?.node?.image)
+  );
+};
+
+const getFallbackProduct = (fallback?: Omit<CartItem, 'lineId'> | CartItem): ShopifyProduct | null =>
+  fallback?.product ?? null;
+
+const itemFromCartLine = (
+  line: any,
+  fallback?: Omit<CartItem, 'lineId'> | CartItem,
+): CartItem | null => {
+  const merchandise = line?.merchandise;
+  const product = merchandise?.product;
+  if (!merchandise?.id) return null;
+
+  const fallbackProduct = getFallbackProduct(fallback);
+  const productForCart: ShopifyProduct | null = product
+    ? {
+        node: {
+          id: product.id,
+          title: product.title,
+          description: product.description ?? fallbackProduct?.node.description ?? '',
+          handle: product.handle,
+          featuredImage: product.featuredImage ?? null,
+          priceRange: product.priceRange ?? fallbackProduct?.node.priceRange,
+          images: product.images ?? { edges: [] },
+          media: product.media ?? { edges: [] },
+          variants: product.variants ?? fallbackProduct?.node.variants ?? { edges: [] },
+          options: product.options ?? fallbackProduct?.node.options ?? [],
+        },
+      }
+    : fallbackProduct;
+
+  if (!productForCart) return null;
+
+  return {
+    lineId: line.id ?? ('lineId' in (fallback ?? {}) ? (fallback as CartItem).lineId : null),
+    product: productForCart,
+    variantId: merchandise.id,
+    variantTitle: merchandise.title ?? fallback?.variantTitle ?? 'Default Title',
+    price: merchandise.price ?? fallback?.price ?? productForCart.node.priceRange.minVariantPrice,
+    quantity: line.quantity ?? fallback?.quantity ?? 1,
+    selectedOptions: merchandise.selectedOptions ?? fallback?.selectedOptions ?? [],
+    thumbnailImage: getLineThumbnail(line) ?? fallback?.thumbnailImage ?? null,
+  };
+};
 
 interface CartStore {
   items: CartItem[];
@@ -48,13 +108,25 @@ export const useCartStore = create<CartStore>()(
         const existingItem = items.find(i => i.variantId === item.variantId);
         set({ isLoading: true });
         try {
-          if (!cartId) {
+          if (existingItem && !existingItem.lineId) {
+            clearCart();
             const result = await createShopifyCart({ variantId: item.variantId, quantity: item.quantity });
             if (result) {
+              const cartLineItem = itemFromCartLine(result.line, item);
               set({
                 cartId: result.cartId,
                 checkoutUrl: result.checkoutUrl,
-                items: [{ ...item, lineId: result.lineId }],
+                items: [cartLineItem ?? { ...item, lineId: result.lineId }],
+              });
+            }
+          } else if (!cartId) {
+            const result = await createShopifyCart({ variantId: item.variantId, quantity: item.quantity });
+            if (result) {
+              const cartLineItem = itemFromCartLine(result.line, item);
+              set({
+                cartId: result.cartId,
+                checkoutUrl: result.checkoutUrl,
+                items: [cartLineItem ?? { ...item, lineId: result.lineId }],
               });
             }
           } else if (existingItem) {
@@ -63,13 +135,14 @@ export const useCartStore = create<CartStore>()(
             const result = await updateShopifyCartLine(cartId, existingItem.lineId, newQuantity);
             if (result.success) {
               const currentItems = get().items;
-              set({ items: currentItems.map(i => i.variantId === item.variantId ? { ...i, quantity: newQuantity } : i) });
+              set({ items: currentItems.map(i => i.variantId === item.variantId ? { ...i, ...item, quantity: newQuantity, lineId: i.lineId } : i) });
             } else if (result.cartNotFound) clearCart();
           } else {
             const result = await addLineToShopifyCart(cartId, { variantId: item.variantId, quantity: item.quantity });
             if (result.success) {
               const currentItems = get().items;
-              set({ items: [...currentItems, { ...item, lineId: result.lineId ?? null }] });
+              const cartLineItem = itemFromCartLine(result.line, item);
+              set({ items: [...currentItems, cartLineItem ?? { ...item, lineId: result.lineId ?? null }] });
             } else if (result.cartNotFound) clearCart();
           }
         } catch (error) {
@@ -125,6 +198,20 @@ export const useCartStore = create<CartStore>()(
           if (!data) return;
           const cart = data?.data?.cart;
           if (!cart || cart.totalQuantity === 0) clearCart();
+          else {
+            const currentItems = get().items;
+            const syncedItems = (cart.lines?.edges ?? [])
+              .map((edge: any) => {
+                const line = edge.node;
+                const fallback = currentItems.find((item) => item.variantId === line?.merchandise?.id);
+                return itemFromCartLine(line, fallback);
+              })
+              .filter(Boolean) as CartItem[];
+            set({
+              checkoutUrl: cart.checkoutUrl ? cart.checkoutUrl : get().checkoutUrl,
+              items: syncedItems.length > 0 ? syncedItems : currentItems,
+            });
+          }
         } catch (error) {
           console.error('Failed to sync cart:', error);
         } finally {

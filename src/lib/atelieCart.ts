@@ -1,7 +1,7 @@
 import { storefrontApiRequest, PRODUCT_BY_HANDLE_QUERY, ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartUIStore } from "@/stores/cartUIStore";
-import type { Material } from "@/data/atelie";
+import { LINHAS, type Material } from "@/data/atelie";
 
 // Mapa: slug da linha → handle do produto Shopify
 const ATELIE_HANDLES: Record<string, string> = {
@@ -67,8 +67,11 @@ export async function addAtelieLineToCart(
         ?.map((e: any) => e.node?.image)
         .filter(Boolean)
         .map((i: any) => ({ url: i.url, altText: i.altText ?? null })) ?? [];
+    const atelieImg = LINHAS[slug]?.imagens?.[material]
+      ? { url: LINHAS[slug].imagens[material], altText: `${LINHAS[slug].nome} ${material === "ouro" ? "Ouro" : "Prata"}` }
+      : null;
 
-    const orderedImgs = [variantImg, featuredImg, ...productImgs, ...mediaImgs].filter(
+    const orderedImgs = [variantImg, featuredImg, ...productImgs, ...mediaImgs, atelieImg].filter(
       (img): img is { url: string; altText: string | null } => !!img?.url,
     );
     // Dedupe por url, preservando ordem
@@ -81,10 +84,12 @@ export async function addAtelieLineToCart(
         title: product.title,
         description: product.description,
         handle: product.handle,
+        featuredImage: featuredImg,
         priceRange: product.priceRange ?? {
           minVariantPrice: variant.price,
         },
         images: { edges: dedupedImgs.map((node) => ({ node })) },
+        media: product.media ?? { edges: [] },
         variants: product.variants,
         options: product.options ?? [],
       },
@@ -97,12 +102,13 @@ export async function addAtelieLineToCart(
       price: variant.price,
       quantity: 1,
       selectedOptions: variant.selectedOptions ?? [],
+      thumbnailImage: dedupedImgs[0] ?? null,
     });
 
     // Garante que items persistidos antigos (sem imagem) recebam o produto atualizado
     useCartStore.setState((state) => ({
       items: state.items.map((it) =>
-        it.variantId === variant.id ? { ...it, product: productForCart } : it,
+        it.variantId === variant.id ? { ...it, product: productForCart, thumbnailImage: dedupedImgs[0] ?? null } : it,
       ),
     }));
 
