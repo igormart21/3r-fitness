@@ -178,8 +178,9 @@ const AtelieModalidades = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollToModalidades = () => {
-    document.getElementById("modalidades")?.scrollIntoView({ behavior: "smooth" });
+  // CTA principal pula direto para a Endurance Collection (Ateliê Triathlon)
+  const goToEnduranceCollection = () => {
+    window.location.assign("/atelie/modalidade/triathlon#modalidade-linhas");
   };
 
   // Eased progress for cinematic feel
@@ -369,7 +370,7 @@ const AtelieModalidades = () => {
           </p>
 
           <button
-            onClick={scrollToModalidades}
+            onClick={goToEnduranceCollection}
             className="group"
             style={{
               marginTop: "2.5rem",

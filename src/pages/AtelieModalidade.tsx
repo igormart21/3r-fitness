@@ -27,7 +27,20 @@ const AtelieModalidade = () => {
 
   useEffect(() => {
     setActiveSlug(linhas[0]?.slug);
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    const hash = typeof window !== "undefined" ? window.location.hash : "";
+    if (hash === "#modalidade-linhas") {
+      // Aguarda render para garantir que a seção exista
+      requestAnimationFrame(() => {
+        const el = document.getElementById("modalidade-linhas");
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          const targetCenter = rect.top + window.scrollY + rect.height / 2;
+          window.scrollTo({ top: Math.max(0, targetCenter - window.innerHeight / 2), behavior: "auto" });
+        }
+      });
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
     if (slug) {
       import("@/stores/modalidadeStore").then(({ useModalidadeStore }) =>
         useModalidadeStore.getState().setModalidade(slug),
@@ -148,32 +161,6 @@ const AtelieModalidade = () => {
             >
               {modalidade.subtitulo}.
             </p>
-            <div className="mt-10">
-              <button
-                type="button"
-                onClick={() => {
-                  smoothScrollToLinhas();
-                }}
-                className="inline-flex items-center gap-3 px-10 py-4 transition-all duration-500"
-                style={{
-                  color: "#0a0a0a",
-                  background: "#d4af37",
-                  border: "1px solid #d4af37",
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  letterSpacing: "0.42em",
-                  textTransform: "uppercase",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = "0 0 40px rgba(212,175,55,0.5)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = "none";
-                }}
-              >
-                Descobrir assinaturas
-              </button>
-            </div>
           </div>
         </div>
       </section>
