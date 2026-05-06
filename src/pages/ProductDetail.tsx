@@ -37,6 +37,33 @@ const ProductDetail = () => {
     product?.variants.edges.find((e: any) => e.node.id === selectedVariantId)
       ?.node ?? product?.variants.edges[0]?.node;
 
+  // Galeria unificada: imagem da variante + media + images + featuredImage (sem duplicatas)
+  const galleryImages: { url: string; altText: string | null }[] = (() => {
+    if (!product) return [];
+    const collected: { url: string; altText: string | null }[] = [];
+    const seen = new Set<string>();
+    const push = (img?: { url?: string; altText?: string | null } | null) => {
+      if (img?.url && !seen.has(img.url)) {
+        seen.add(img.url);
+        collected.push({ url: img.url, altText: img.altText ?? null });
+      }
+    };
+    push(variant?.image);
+    push(product.featuredImage);
+    (product.media?.edges ?? []).forEach((e: any) => push(e?.node?.image));
+    (product.images?.edges ?? []).forEach((e: any) => push(e?.node));
+    return collected;
+  })();
+
+  // Reset índice ao trocar de variante quando ela tem imagem própria
+  useEffect(() => {
+    if (variant?.image?.url) {
+      const idx = galleryImages.findIndex((g) => g.url === variant.image.url);
+      if (idx >= 0) setActiveImage(idx);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedVariantId]);
+
   const handleAdd = async () => {
     if (!variant || !product) return;
     await addItem({
