@@ -27,11 +27,21 @@ const AtelieLinha = () => {
   const [forma, setForma] = useState<Forma>("masculino");
   const [revealKey, setRevealKey] = useState(0);
   const [adding, setAdding] = useState(false);
-
+  const [parallax, setParallax] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     setRevealKey((k) => k + 1);
   }, [material, forma, slug]);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+      setParallax({ x, y });
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, []);
 
   useEffect(() => {
     if (!linha) return;
@@ -97,6 +107,7 @@ const AtelieLinha = () => {
 
   const isCiclismo = parentModalidade?.slug === "ciclismo";
   const hasEditorial = !!linha.editorial;
+  const hasCinematic = !!linha.cinematic;
 
   return (
     <div
