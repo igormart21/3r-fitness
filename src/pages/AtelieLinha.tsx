@@ -46,10 +46,10 @@ const AtelieLinha = () => {
   );
   const showFormaSelector = linha.slug !== "halter" && parentModalidade?.slug !== "crossfit";
 
-  // Configuração universal de navegação Shopify (ver src/lib/shopifyExternal.ts).
-  // Cada linha aponta automaticamente para o produto correspondente no Shopify,
-  // sempre como link externo absoluto, abrindo em nova aba.
-  const externalCartUrl = getShopifyProductUrl(linha.slug);
+  // Produto abre DENTRO do Lovable em /product/:handle (mesmo layout premium).
+  // O checkout final é redirecionado ao Shopify pelo carrinho (Storefront API).
+  const productHandle = SHOPIFY_PRODUCT_HANDLES[linha.slug];
+  const internalProductUrl = productHandle ? `/product/${productHandle}` : undefined;
 
   const imgSrc =
     linha.slug === "imperium" && material === "ouro"
