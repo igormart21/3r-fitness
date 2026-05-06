@@ -183,6 +183,12 @@ export const CartDrawer = () => {
                     )}
                   </span>
                 </button>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="w-full h-12 bg-transparent border border-[hsl(43,30%,18%)] text-[hsl(43,30%,70%)] text-[10px] uppercase tracking-[0.4em] font-light transition-colors duration-500 hover:border-[hsl(43,65%,55%)] hover:text-[hsl(43,65%,60%)]"
+                >
+                  Continuar explorando
+                </button>
               </div>
             </>
           )}
