@@ -462,7 +462,7 @@ const AtelieModalidades = () => {
       {/* MODALIDADES — full-screen sections */}
       <main id="modalidades">
         {modalidades.map((m, i) => (
-          <ModalidadeSection key={m.slug} m={m} index={i} />
+          <ModalidadeSection key={m.slug} m={m} index={i} onNavigate={navigateWithFade} />
         ))}
       </main>
 
