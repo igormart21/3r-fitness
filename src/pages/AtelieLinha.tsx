@@ -118,10 +118,18 @@ const AtelieLinha = () => {
 
   // Link externo do produto no Shopify por linha.
   // Adicione novas linhas mapeando o slug para a URL pública do produto.
-  const externalProductLinksBySlug: Record<string, string> = {
-    halter: "https://3r-fitness-5605.myshopify.com/products/halter",
+  // Domínio público da loja Shopify. Todos os botões "Selecionar minha peça"
+  // abrem o produto correspondente em nova aba, fora do Lovable.
+  const SHOPIFY_PUBLIC_BASE = "https://3rfitness.com.br/products";
+  // Mapeia slug da linha para o handle do produto no Shopify (quando difere do slug).
+  const productHandleBySlug: Record<string, string> = {
+    halter: "halter",
+    vigor: "vigor",
   };
-  const externalCartUrl = externalProductLinksBySlug[linha.slug];
+  const productHandle = productHandleBySlug[linha.slug];
+  const externalCartUrl = productHandle
+    ? `${SHOPIFY_PUBLIC_BASE}/${productHandle}`
+    : undefined;
 
   const imgSrc =
     linha.slug === "imperium" && material === "ouro"
