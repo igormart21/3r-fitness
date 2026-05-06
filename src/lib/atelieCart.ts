@@ -108,7 +108,7 @@ export async function addAtelieLineToCart(
     // Garante que items persistidos antigos (sem imagem) recebam o produto atualizado
     useCartStore.setState((state) => ({
       items: state.items.map((it) =>
-        it.variantId === variant.id ? { ...it, product: productForCart } : it,
+        it.variantId === variant.id ? { ...it, product: productForCart, thumbnailImage: dedupedImgs[0] ?? null } : it,
       ),
     }));
 
