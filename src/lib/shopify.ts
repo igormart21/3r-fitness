@@ -234,9 +234,10 @@ export async function createShopifyCart(item: { variantId: string; quantity: num
   }
   const cart = data?.data?.cartCreate?.cart;
   if (!cart?.checkoutUrl) return null;
-  const lineId = cart.lines.edges[0]?.node?.id;
+  const line = cart.lines.edges[0]?.node;
+  const lineId = line?.id;
   if (!lineId) return null;
-  return { cartId: cart.id, checkoutUrl: formatCheckoutUrl(cart.checkoutUrl), lineId };
+  return { cartId: cart.id, checkoutUrl: formatCheckoutUrl(cart.checkoutUrl), lineId, line };
 }
 
 export async function addLineToShopifyCart(cartId: string, item: { variantId: string; quantity: number }) {
@@ -249,7 +250,7 @@ export async function addLineToShopifyCart(cartId: string, item: { variantId: st
   if (userErrors.length > 0) return { success: false };
   const lines = data?.data?.cartLinesAdd?.cart?.lines?.edges || [];
   const newLine = lines.find((l: any) => l.node.merchandise.id === item.variantId);
-  return { success: true, lineId: newLine?.node?.id };
+  return { success: true, lineId: newLine?.node?.id, line: newLine?.node };
 }
 
 export async function updateShopifyCartLine(cartId: string, lineId: string, quantity: number) {
