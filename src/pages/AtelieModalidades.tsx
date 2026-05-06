@@ -10,9 +10,11 @@ const ORDER = ["triathlon", "fisiculturismo", "musculacao", "corrida", "ciclismo
 const ModalidadeSection = ({
   m,
   index,
+  onNavigate,
 }: {
   m: { slug: string; nome: string; img: string; subtitulo: string };
   index: number;
+  onNavigate: (slug: string) => void;
 }) => {
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
