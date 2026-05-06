@@ -108,7 +108,18 @@ export const useCartStore = create<CartStore>()(
         const existingItem = items.find(i => i.variantId === item.variantId);
         set({ isLoading: true });
         try {
-          if (!cartId) {
+          if (existingItem && !existingItem.lineId) {
+            clearCart();
+            const result = await createShopifyCart({ variantId: item.variantId, quantity: item.quantity });
+            if (result) {
+              const cartLineItem = itemFromCartLine(result.line, item);
+              set({
+                cartId: result.cartId,
+                checkoutUrl: result.checkoutUrl,
+                items: [cartLineItem ?? { ...item, lineId: result.lineId }],
+              });
+            }
+          } else if (!cartId) {
             const result = await createShopifyCart({ variantId: item.variantId, quantity: item.quantity });
             if (result) {
               const cartLineItem = itemFromCartLine(result.line, item);
