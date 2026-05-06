@@ -259,42 +259,103 @@ const AtelieModalidade = () => {
           </>
         )}
         <div className="relative z-10 container mx-auto px-6 max-w-6xl">
-          <div className="text-center mb-20">
+          <div className="text-center mb-24 atelie-linhas-fade">
             <p
-              className="text-[10px] uppercase tracking-[0.55em] mb-4"
-              style={{ color: "rgba(212,175,55,0.75)" }}
+              className="text-[10px] uppercase mb-5"
+              style={{ color: "rgba(212,175,55,0.7)", letterSpacing: "0.7em" }}
             >
-              Assinaturas
+              {modalidade.slug === "triathlon" ? "Endurance Collection" : "Assinaturas"}
             </p>
             <h2
-              className="font-display font-light"
+              className="font-display font-extralight"
               style={{
-                fontSize: "clamp(28px, 3vw, 42px)",
-                letterSpacing: "0.06em",
+                fontSize: "clamp(30px, 3.4vw, 52px)",
+                letterSpacing: "0.14em",
                 color: "#f4ead0",
+                textTransform: "uppercase",
               }}
             >
-              As linhas de {modalidade.nome.toLowerCase()}
+              {modalidade.slug === "triathlon"
+                ? "O Ateliê Triathlon"
+                : `As linhas de ${modalidade.nome.toLowerCase()}`}
             </h2>
+            <div
+              className="mx-auto mt-8 h-px"
+              style={{
+                width: "64px",
+                background:
+                  "linear-gradient(90deg, transparent, rgba(212,175,55,0.85), transparent)",
+              }}
+            />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-20 md:gap-12">
-            {linhas.map((l) => (
-              <div key={l.slug} className="flex flex-col items-center text-center">
-                <div className="w-full max-w-sm aspect-[3/4] overflow-hidden mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 max-w-5xl mx-auto">
+            {linhas.map((l, idx) => (
+              <div
+                key={l.slug}
+                className="atelie-linha-card group flex flex-col items-center text-center"
+                style={{
+                  position: "relative",
+                  padding: "26px 22px 30px",
+                  background:
+                    "linear-gradient(180deg, rgba(15,15,15,0.55) 0%, rgba(5,5,5,0.62) 100%)",
+                  backdropFilter: "blur(14px) saturate(1.05)",
+                  WebkitBackdropFilter: "blur(14px) saturate(1.05)",
+                  border: "1px solid rgba(212,175,55,0.18)",
+                  boxShadow:
+                    "0 24px 60px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)",
+                  animation: `atelie-card-rise 900ms cubic-bezier(0.22,1,0.36,1) ${idx * 120}ms both`,
+                  transition: "transform 700ms cubic-bezier(0.22,1,0.36,1), box-shadow 700ms ease, border-color 700ms ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-6px)";
+                  e.currentTarget.style.borderColor = "rgba(212,175,55,0.42)";
+                  e.currentTarget.style.boxShadow =
+                    "0 36px 80px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 0 1px rgba(212,175,55,0.14)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "";
+                  e.currentTarget.style.borderColor = "rgba(212,175,55,0.18)";
+                  e.currentTarget.style.boxShadow =
+                    "0 24px 60px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)";
+                }}
+              >
+                <div
+                  className="relative w-full aspect-[3/4] overflow-hidden mb-7"
+                  style={{ background: "radial-gradient(ellipse at 50% 55%, rgba(212,175,55,0.10) 0%, transparent 65%)" }}
+                >
                   <img
                     src={l.imagens.ouro}
                     alt={l.nome}
-                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                    style={{ filter: "contrast(1.05) saturate(1.04)" }}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
+                    style={{ filter: "contrast(1.06) saturate(1.05) brightness(1.02)" }}
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 pointer-events-none opacity-70 transition-opacity duration-700 group-hover:opacity-100"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse 55% 45% at 50% 50%, rgba(244,215,122,0.18) 0%, transparent 70%)",
+                      mixBlendMode: "screen",
+                    }}
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.45) 100%)",
+                    }}
                   />
                 </div>
                 <h3
-                  className="font-display font-light"
+                  className="font-display font-extralight"
                   style={{
-                    fontSize: "clamp(24px, 2.2vw, 32px)",
-                    letterSpacing: "0.18em",
+                    fontSize: "clamp(18px, 1.4vw, 22px)",
+                    letterSpacing: "0.34em",
                     color: "#f4ead0",
+                    textTransform: "uppercase",
                   }}
                 >
                   {l.nome}
@@ -303,8 +364,9 @@ const AtelieModalidade = () => {
                   className="mt-3 italic font-light"
                   style={{
                     fontFamily: '"Fraunces",serif',
-                    color: "rgba(255,255,255,0.6)",
-                    fontSize: "14px",
+                    color: "rgba(255,255,255,0.55)",
+                    fontSize: "13px",
+                    letterSpacing: "0.04em",
                   }}
                 >
                   {l.assinatura}
@@ -312,31 +374,50 @@ const AtelieModalidade = () => {
                 <button
                   type="button"
                   onClick={() => navigate(`/atelie/linha/${l.slug}`)}
-                  className="mt-8 inline-flex items-center gap-3 px-9 py-3 transition-all duration-500"
+                  className="mt-7 inline-flex items-center gap-3 transition-all duration-700"
                   style={{
+                    padding: "11px 24px",
                     color: "#d4af37",
-                    border: "1px solid rgba(212,175,55,0.55)",
+                    border: "1px solid rgba(212,175,55,0.45)",
                     background: "transparent",
                     fontFamily: "Inter, sans-serif",
-                    fontSize: "10px",
-                    letterSpacing: "0.42em",
+                    fontSize: "9.5px",
+                    letterSpacing: "0.5em",
                     textTransform: "uppercase",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = "#d4af37";
-                    e.currentTarget.style.color = "#000";
+                    e.currentTarget.style.color = "#0a0a0a";
+                    e.currentTarget.style.boxShadow = "0 0 30px rgba(212,175,55,0.32)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = "transparent";
                     e.currentTarget.style.color = "#d4af37";
+                    e.currentTarget.style.boxShadow = "none";
                   }}
                 >
+                  <span className="h-px w-4" style={{ background: "currentColor" }} />
                   Explorar linha
+                  <span className="h-px w-4" style={{ background: "currentColor" }} />
                 </button>
               </div>
             ))}
           </div>
         </div>
+        <style>{`
+          @keyframes atelie-card-rise {
+            0% { opacity: 0; transform: translateY(28px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes atelie-linhas-fade {
+            0% { opacity: 0; transform: translateY(14px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+          .atelie-linhas-fade { animation: atelie-linhas-fade 1100ms cubic-bezier(0.22,1,0.36,1) both; }
+          @media (prefers-reduced-motion: reduce) {
+            .atelie-linha-card, .atelie-linhas-fade { animation: none !important; }
+          }
+        `}</style>
       </section>
 
       {/* 4. STORYTELLING CINEMATOGRÁFICO */}
