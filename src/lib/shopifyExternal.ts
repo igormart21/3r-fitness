@@ -10,7 +10,7 @@ const SHOPIFY_PUBLIC_BASE = "https://3rfitness.com.br/products";
 // Mapeia o slug da linha (ou produto) para o handle do produto no Shopify.
 // Ao adicionar uma nova linha, basta adicionar uma entrada aqui.
 export const SHOPIFY_PRODUCT_HANDLES: Record<string, string> = {
-  halter: "halter",
+  halter: "halter-1",
   vigor: "vigor",
 };
 
