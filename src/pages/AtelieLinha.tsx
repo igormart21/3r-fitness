@@ -427,8 +427,18 @@ const AtelieLinha = () => {
           )}
 
           {/* DIREITA — interface */}
-          <section className={hasEditorial ? "w-full max-w-md lg:max-w-[520px]" : "lg:col-span-6"}>
-            <div className="max-w-md mx-auto lg:mx-0">
+          <section className={hasEditorial || hasCinematic ? "w-full max-w-md lg:max-w-[560px]" : "lg:col-span-6"}>
+            <div
+              className={`max-w-md mx-auto lg:mx-0 ${hasCinematic ? "p-8 md:p-10" : ""}`}
+              style={hasCinematic ? {
+                background: "linear-gradient(180deg, rgba(15,15,18,0.45) 0%, rgba(5,5,8,0.6) 100%)",
+                backdropFilter: "blur(20px) saturate(1.1)",
+                WebkitBackdropFilter: "blur(20px) saturate(1.1)",
+                border: "1px solid rgba(212,175,55,0.22)",
+                boxShadow: "0 40px 100px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05)",
+                transition: "border-color 700ms ease, box-shadow 700ms ease",
+              } : undefined}
+            >
               <p
                 className="text-[10px] uppercase tracking-[0.5em] mb-5"
                 style={{ color: "rgba(212,175,55,0.75)" }}
