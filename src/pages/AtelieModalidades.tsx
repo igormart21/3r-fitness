@@ -129,9 +129,10 @@ const ModalidadeSection = ({
             {m.subtitulo}
           </p>
 
-          <Link
-            to={`/atelie/modalidade/${m.slug}`}
-            className="inline-flex items-center gap-4 mt-12 group/btn"
+          <button
+            type="button"
+            onClick={() => onNavigate(m.slug)}
+            className="inline-flex items-center gap-4 mt-12 group/btn bg-transparent border-0 cursor-pointer p-0"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(10px)",
@@ -154,7 +155,7 @@ const ModalidadeSection = ({
               className="h-px transition-all duration-500"
               style={{ width: 24, background: "#d4af37" }}
             />
-          </Link>
+          </button>
         </div>
       </div>
     </section>
