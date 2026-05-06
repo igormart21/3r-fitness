@@ -124,7 +124,7 @@ export const LINHAS: Record<string, Linha> = {
   },
   travessia: {
     slug: "travessia",
-    nome: "TRAVESSIA",
+    nome: "VELARION",
     assinatura: "Assinatura da Resistência",
     frase: "Atravessar é mais que vencer.",
     imagens: { ouro: vigorOuroClean, prata: vigorPrataClean },
@@ -132,7 +132,7 @@ export const LINHAS: Record<string, Linha> = {
   },
   elite: {
     slug: "elite",
-    nome: "ÉLITE",
+    nome: "TRION ELITE",
     assinatura: "Assinatura da Excelência",
     frase: "O refinamento dos que vão além.",
     imagens: { ouro: imperiumOuroClean, prata: imperiumPrataClean },
