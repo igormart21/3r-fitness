@@ -10,6 +10,8 @@ import {
   removeLineFromShopifyCart,
 } from '@/lib/shopify';
 
+type CartImage = { url: string; altText: string | null };
+
 export interface CartItem {
   lineId: string | null;
   product: ShopifyProduct;
@@ -18,7 +20,65 @@ export interface CartItem {
   price: { amount: string; currencyCode: string };
   quantity: number;
   selectedOptions: Array<{ name: string; value: string }>;
+  thumbnailImage?: CartImage | null;
 }
+
+const normalizeImage = (image?: { url?: string | null; altText?: string | null } | null): CartImage | null =>
+  image?.url ? { url: image.url, altText: image.altText ?? null } : null;
+
+const getLineThumbnail = (line: any): CartImage | null => {
+  const merchandise = line?.merchandise;
+  const product = merchandise?.product;
+  return (
+    normalizeImage(merchandise?.image) ||
+    normalizeImage(product?.featuredImage) ||
+    normalizeImage(product?.images?.edges?.[0]?.node) ||
+    normalizeImage(product?.media?.edges?.[0]?.node?.image)
+  );
+};
+
+const getFallbackProduct = (fallback?: Omit<CartItem, 'lineId'> | CartItem): ShopifyProduct | null =>
+  fallback?.product ?? null;
+
+const itemFromCartLine = (
+  line: any,
+  fallback?: Omit<CartItem, 'lineId'> | CartItem,
+): CartItem | null => {
+  const merchandise = line?.merchandise;
+  const product = merchandise?.product;
+  if (!merchandise?.id) return null;
+
+  const fallbackProduct = getFallbackProduct(fallback);
+  const productForCart: ShopifyProduct | null = product
+    ? {
+        node: {
+          id: product.id,
+          title: product.title,
+          description: product.description ?? fallbackProduct?.node.description ?? '',
+          handle: product.handle,
+          featuredImage: product.featuredImage ?? null,
+          priceRange: product.priceRange ?? fallbackProduct?.node.priceRange,
+          images: product.images ?? { edges: [] },
+          media: product.media ?? { edges: [] },
+          variants: product.variants ?? fallbackProduct?.node.variants ?? { edges: [] },
+          options: product.options ?? fallbackProduct?.node.options ?? [],
+        },
+      }
+    : fallbackProduct;
+
+  if (!productForCart) return null;
+
+  return {
+    lineId: line.id ?? ('lineId' in (fallback ?? {}) ? (fallback as CartItem).lineId : null),
+    product: productForCart,
+    variantId: merchandise.id,
+    variantTitle: merchandise.title ?? fallback?.variantTitle ?? 'Default Title',
+    price: merchandise.price ?? fallback?.price ?? productForCart.node.priceRange.minVariantPrice,
+    quantity: line.quantity ?? fallback?.quantity ?? 1,
+    selectedOptions: merchandise.selectedOptions ?? fallback?.selectedOptions ?? [],
+    thumbnailImage: getLineThumbnail(line) ?? fallback?.thumbnailImage ?? null,
+  };
+};
 
 interface CartStore {
   items: CartItem[];
