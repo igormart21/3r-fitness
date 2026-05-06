@@ -26,6 +26,7 @@ const AtelieLinha = () => {
   const [material, setMaterial] = useState<Material>("ouro");
   const [forma, setForma] = useState<Forma>("masculino");
   const [revealKey, setRevealKey] = useState(0);
+  const [adding, setAdding] = useState(false);
 
 
   useEffect(() => {
@@ -47,9 +48,15 @@ const AtelieLinha = () => {
   );
   const showFormaSelector = linha.slug !== "halter" && parentModalidade?.slug !== "crossfit";
 
-  // Botão envia direto para o Shopify cart permalink com a variante selecionada.
-  // Se a variação ainda não tiver variant ID mapeado, exibimos aviso discreto.
-  const cartUrl = getShopifyCartUrl(linha.slug, material);
+  const handleSelecionar = async () => {
+    if (adding) return;
+    setAdding(true);
+    const result = await addAtelieLineToCart(linha.slug, material);
+    setAdding(false);
+    if (!result.success) {
+      toast.error(result.error ?? "Variação ainda não configurada.");
+    }
+  };
 
   const imgSrc =
     linha.slug === "imperium" && material === "ouro"
