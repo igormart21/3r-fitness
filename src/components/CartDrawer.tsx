@@ -90,13 +90,18 @@ export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {
                   <div key={item.variantId} className="group">
                     <div className="flex gap-5">
                       {/* Imagem grande */}
-                      <div className="w-28 h-36 bg-[hsl(0,0%,8%)] overflow-hidden flex-shrink-0 border border-[hsl(43,30%,12%)]">
-                        {item.product.node.images?.edges?.[0]?.node && (
+                      <div className="w-28 h-36 bg-[hsl(0,0%,8%)] overflow-hidden flex-shrink-0 border border-[hsl(43,30%,12%)] flex items-center justify-center">
+                        {item.product.node.images?.edges?.[0]?.node?.url ? (
                           <img
                             src={item.product.node.images.edges[0].node.url}
-                            alt={item.product.node.title}
+                            alt={item.product.node.images.edges[0].node.altText || item.product.node.title}
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            loading="lazy"
                           />
+                        ) : (
+                          <span className="font-display text-[hsl(43,65%,55%)] text-xl tracking-[0.3em] font-light">
+                            3R
+                          </span>
                         )}
                       </div>
 
