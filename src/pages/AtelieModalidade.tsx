@@ -316,14 +316,18 @@ const AtelieModalidade = () => {
                 }}
               >
                 <div
-                  className="relative w-full aspect-[3/4] overflow-hidden mb-7"
-                  style={{ background: "radial-gradient(ellipse at 50% 55%, rgba(212,175,55,0.10) 0%, transparent 65%)" }}
+                  className="relative w-full aspect-[3/4] overflow-hidden mb-7 flex items-center justify-center"
+                  style={{
+                    background: l.cardFit === "contain"
+                      ? "radial-gradient(ellipse at 50% 50%, rgba(212,175,55,0.14) 0%, #050505 70%)"
+                      : "radial-gradient(ellipse at 50% 55%, rgba(212,175,55,0.10) 0%, transparent 65%)",
+                  }}
                 >
                   <img
                     src={l.imagens.ouro}
                     alt={l.nome}
                     loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
+                    className={`${l.cardFit === "contain" ? "max-w-full max-h-full object-contain" : "w-full h-full object-cover"} transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]`}
                     style={{ filter: "contrast(1.06) saturate(1.05) brightness(1.02)" }}
                   />
                   <div
