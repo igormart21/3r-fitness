@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { useCartStore } from "@/stores/cartStore";
 import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/lib/shopify";
+import { getShopifyProductUrl } from "@/lib/shopifyExternal";
 import { supabase } from "@/integrations/supabase/client";
 import fisiculturismoHero from "@/assets/fisiculturismo-hero.png";
 import fisiculturismoHeroBg from "@/assets/fisiculturismo-hero-bg.png";
@@ -512,10 +513,18 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
   };
 
   const handleComprar = async () => {
+    // Configuração universal: se o slug da modalidade/linha tiver produto
+    // mapeado no Shopify, abre o produto externo em nova aba (sem passar
+    // pelo carrinho interno). Caso contrário, usa o fluxo de checkout interno.
+    const externalUrl = getShopifyProductUrl(config?.slug);
+    if (externalUrl) {
+      window.open(externalUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
     await handleAdicionar();
     setTimeout(() => {
       const url = getCheckoutUrl();
-      if (url) window.open(url, "_blank");
+      if (url) window.open(url, "_blank", "noopener,noreferrer");
     }, 800);
   };
 

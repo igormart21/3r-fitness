@@ -21,6 +21,7 @@ import strataPrata from "@/assets/linha-strata-prata.jpg";
 import imperiumOuro from "@/assets/linha-imperium-ouro.jpg";
 import imperiumPrata from "@/assets/linha-imperium-prata.jpg";
 import ciclismoBg from "@/assets/atelie-ciclismo-bg.jpg";
+import { getShopifyProductUrl } from "@/lib/shopifyExternal";
 
 const AtelieLinha = () => {
   const { slug } = useParams();
@@ -116,20 +117,10 @@ const AtelieLinha = () => {
   );
   const showFormaSelector = linha.slug !== "halter" && parentModalidade?.slug !== "crossfit";
 
-  // Link externo do produto no Shopify por linha.
-  // Adicione novas linhas mapeando o slug para a URL pública do produto.
-  // Domínio público da loja Shopify. Todos os botões "Selecionar minha peça"
-  // abrem o produto correspondente em nova aba, fora do Lovable.
-  const SHOPIFY_PUBLIC_BASE = "https://3rfitness.com.br/products";
-  // Mapeia slug da linha para o handle do produto no Shopify (quando difere do slug).
-  const productHandleBySlug: Record<string, string> = {
-    halter: "halter",
-    vigor: "vigor",
-  };
-  const productHandle = productHandleBySlug[linha.slug];
-  const externalCartUrl = productHandle
-    ? `${SHOPIFY_PUBLIC_BASE}/${productHandle}`
-    : undefined;
+  // Configuração universal de navegação Shopify (ver src/lib/shopifyExternal.ts).
+  // Cada linha aponta automaticamente para o produto correspondente no Shopify,
+  // sempre como link externo absoluto, abrindo em nova aba.
+  const externalCartUrl = getShopifyProductUrl(linha.slug);
 
   const imgSrc =
     linha.slug === "imperium" && material === "ouro"
