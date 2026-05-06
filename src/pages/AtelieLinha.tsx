@@ -377,11 +377,9 @@ const AtelieLinha = () => {
               </div>
 
               <div className="mt-14">
-                {externalCartUrl ? (
-                  <a
-                    href={externalCartUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                {internalProductUrl ? (
+                  <Link
+                    to={internalProductUrl}
                     className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500"
                     style={{
                       color: "#d4af37",
@@ -404,7 +402,7 @@ const AtelieLinha = () => {
                     <span className="h-px w-5" style={{ background: "currentColor" }} />
                     Selecionar peça
                     <span className="h-px w-5" style={{ background: "currentColor" }} />
-                  </a>
+                  </Link>
                 ) : (
                   <button
                     type="button"
