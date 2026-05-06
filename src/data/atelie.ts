@@ -25,6 +25,8 @@ import veloxEditorialMascOuro from "@/assets/velox-royale-masculino-ouro.png";
 import veloxEditorialMascPrata from "@/assets/velox-royale-masculino-prata.png";
 import velarionOuro from "@/assets/linha-velarion-ouro.png";
 import trionEliteOuro from "@/assets/linha-trion-elite-ouro.png";
+import trionEliteAtletaOuro from "@/assets/trion-elite-atleta-ouro.jpg";
+import trionEliteAtletaPrata from "@/assets/trion-elite-atleta-prata.jpg";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
@@ -46,6 +48,7 @@ export type Linha = {
   campaign: string;
   editorial?: EditorialBackground;
   cardFit?: "cover" | "contain";
+  cinematic?: { ouro: string; prata: string };
 };
 
 export type Modalidade = {
@@ -142,6 +145,7 @@ export const LINHAS: Record<string, Linha> = {
     imagens: { ouro: trionEliteOuro, prata: trionEliteOuro },
     campaign: trionEliteOuro,
     cardFit: "contain",
+    cinematic: { ouro: trionEliteAtletaOuro, prata: trionEliteAtletaPrata },
   },
 };
 

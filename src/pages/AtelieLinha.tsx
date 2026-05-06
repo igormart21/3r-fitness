@@ -27,11 +27,21 @@ const AtelieLinha = () => {
   const [forma, setForma] = useState<Forma>("masculino");
   const [revealKey, setRevealKey] = useState(0);
   const [adding, setAdding] = useState(false);
-
+  const [parallax, setParallax] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     setRevealKey((k) => k + 1);
   }, [material, forma, slug]);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+      setParallax({ x, y });
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, []);
 
   useEffect(() => {
     if (!linha) return;
@@ -97,6 +107,7 @@ const AtelieLinha = () => {
 
   const isCiclismo = parentModalidade?.slug === "ciclismo";
   const hasEditorial = !!linha.editorial;
+  const hasCinematic = !!linha.cinematic;
 
   return (
     <div
@@ -230,6 +241,105 @@ const AtelieLinha = () => {
         </>
       )}
 
+      {hasCinematic && linha.cinematic && (
+        <>
+          <div
+            aria-hidden
+            className="fixed inset-0 pointer-events-none overflow-hidden"
+            style={{ zIndex: 0 }}
+          >
+            {[
+              { src: linha.cinematic.ouro, active: material === "ouro" },
+              { src: linha.cinematic.prata, active: material === "prata" },
+            ].map((layer, i) => (
+              <div
+                key={i}
+                className="absolute inset-0 cinematic-breathing"
+                style={{
+                  backgroundImage: `url(${layer.src})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "50% 38%",
+                  opacity: layer.active ? 1 : 0,
+                  transform: `scale(${layer.active ? 1.05 : 1.12}) translate3d(${parallax.x * -8}px, ${parallax.y * -8}px, 0)`,
+                  filter:
+                    material === "ouro"
+                      ? "contrast(1.12) saturate(1.08) brightness(0.95)"
+                      : "contrast(1.15) saturate(0.85) brightness(0.92) hue-rotate(-6deg)",
+                  transition:
+                    "opacity 750ms cubic-bezier(0.4,0,0.2,1), transform 1200ms cubic-bezier(0.22,1,0.36,1), filter 800ms ease",
+                }}
+              />
+            ))}
+            {/* vinheta cinematográfica */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(ellipse 95% 85% at 50% 50%, transparent 40%, rgba(0,0,0,0.7) 100%)",
+              }}
+            />
+            {/* overlay atmosfera */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  material === "ouro"
+                    ? "radial-gradient(ellipse 50% 45% at 50% 55%, rgba(244,180,70,0.16) 0%, transparent 70%), linear-gradient(180deg, rgba(20,10,0,0.45) 0%, rgba(0,0,0,0.55) 100%)"
+                    : "radial-gradient(ellipse 50% 45% at 50% 55%, rgba(170,200,230,0.12) 0%, transparent 70%), linear-gradient(180deg, rgba(0,5,15,0.55) 0%, rgba(0,0,0,0.65) 100%)",
+                transition: "background 700ms ease-in-out",
+              }}
+            />
+            {/* glow no pingente (centro inferior) */}
+            <div
+              className="absolute inset-0 pendant-glow"
+              style={{
+                background:
+                  material === "ouro"
+                    ? "radial-gradient(circle 140px at 50% 62%, rgba(255,210,120,0.28) 0%, transparent 70%)"
+                    : "radial-gradient(circle 140px at 50% 62%, rgba(200,225,255,0.22) 0%, transparent 70%)",
+                mixBlendMode: "screen",
+                transition: "background 700ms ease-in-out",
+              }}
+            />
+            {/* partículas */}
+            <div className="absolute inset-0 cinematic-particles" />
+          </div>
+          <style>{`
+            @keyframes cinematic-breathing {
+              0%, 100% { background-position: 50% 38%; }
+              50% { background-position: 50% 41%; }
+            }
+            .cinematic-breathing { animation: cinematic-breathing 14s ease-in-out infinite; }
+            @keyframes pendant-glow-pulse {
+              0%, 100% { opacity: 0.85; }
+              50% { opacity: 1; }
+            }
+            .pendant-glow { animation: pendant-glow-pulse 4s ease-in-out infinite; }
+            .cinematic-particles {
+              background-image:
+                radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,0.5), transparent 60%),
+                radial-gradient(1px 1px at 78% 34%, rgba(255,255,255,0.35), transparent 60%),
+                radial-gradient(1.5px 1.5px at 28% 68%, rgba(255,255,255,0.4), transparent 60%),
+                radial-gradient(1px 1px at 62% 80%, rgba(255,255,255,0.3), transparent 60%),
+                radial-gradient(1px 1px at 88% 18%, rgba(255,255,255,0.4), transparent 60%),
+                radial-gradient(1.5px 1.5px at 42% 14%, rgba(255,255,255,0.35), transparent 60%);
+              animation: cinematic-particles-drift 22s linear infinite;
+              opacity: 0.55;
+            }
+            @keyframes cinematic-particles-drift {
+              0% { transform: translateY(0) translateX(0); }
+              100% { transform: translateY(-30px) translateX(10px); }
+            }
+            @media (max-width: 768px) {
+              .cinematic-breathing { background-position: 50% 48% !important; background-size: cover; }
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .cinematic-breathing, .pendant-glow, .cinematic-particles { animation: none !important; }
+            }
+          `}</style>
+        </>
+      )}
+
       <header className="absolute top-0 inset-x-0 z-30">
         <div className="container mx-auto px-6 py-6 flex items-center justify-between">
           <Link
@@ -254,9 +364,9 @@ const AtelieLinha = () => {
       </header>
 
       <main className="relative z-10 w-full min-h-screen pt-24 md:pt-28 pb-12">
-        <div className={`container mx-auto max-w-6xl px-6 ${hasEditorial ? "flex justify-center lg:justify-end items-center min-h-[calc(100vh-180px)]" : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"}`}>
+        <div className={`container mx-auto max-w-6xl px-6 ${hasEditorial || hasCinematic ? "flex justify-center lg:justify-end items-center min-h-[calc(100vh-180px)]" : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"}`}>
           {/* ESQUERDA — imagem (omitida no Velox Royale ciclismo: o fundo split é o produto) */}
-          {!hasEditorial && (
+          {!hasEditorial && !hasCinematic && (
             <section className="lg:col-span-6 relative">
             <div
               className="relative w-full overflow-hidden mx-auto group"
@@ -317,8 +427,18 @@ const AtelieLinha = () => {
           )}
 
           {/* DIREITA — interface */}
-          <section className={hasEditorial ? "w-full max-w-md lg:max-w-[520px]" : "lg:col-span-6"}>
-            <div className="max-w-md mx-auto lg:mx-0">
+          <section className={hasEditorial || hasCinematic ? "w-full max-w-md lg:max-w-[560px]" : "lg:col-span-6"}>
+            <div
+              className={`max-w-md mx-auto lg:mx-0 ${hasCinematic ? "p-8 md:p-10" : ""}`}
+              style={hasCinematic ? {
+                background: "linear-gradient(180deg, rgba(15,15,18,0.45) 0%, rgba(5,5,8,0.6) 100%)",
+                backdropFilter: "blur(20px) saturate(1.1)",
+                WebkitBackdropFilter: "blur(20px) saturate(1.1)",
+                border: "1px solid rgba(212,175,55,0.22)",
+                boxShadow: "0 40px 100px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05)",
+                transition: "border-color 700ms ease, box-shadow 700ms ease",
+              } : undefined}
+            >
               <p
                 className="text-[10px] uppercase tracking-[0.5em] mb-5"
                 style={{ color: "rgba(212,175,55,0.75)" }}
