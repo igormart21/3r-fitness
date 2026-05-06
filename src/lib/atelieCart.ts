@@ -52,7 +52,7 @@ export async function addAtelieLineToCart(
     const product = data?.data?.product;
     if (!product) return { success: false, error: "Produto não encontrado." };
 
-    const variant = matchVariantByMaterial(product, material);
+    const variant = matchVariantByMaterial(product, material, slug);
     if (!variant) return { success: false, error: "Variação não disponível." };
 
     // Monta ShopifyProduct-shape esperado pelo cart store (usa .node.images[0] no drawer)
