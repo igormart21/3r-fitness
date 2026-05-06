@@ -190,8 +190,8 @@ const AtelieModalidades = () => {
     );
     const distance = end - start;
     if (Math.abs(distance) < 4) return;
-    // Duração proporcional à distância — ~1.2s por 1000px, mín 2.8s, máx 6s
-    const duration = Math.min(6000, Math.max(2800, Math.abs(distance) * 1.2));
+    // Duração proporcional à distância — bem mais lento e cinematográfico
+    const duration = Math.min(14000, Math.max(7000, Math.abs(distance) * 3));
     const ease = (t: number) =>
       t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     let t0: number | null = null;
