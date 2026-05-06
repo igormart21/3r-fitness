@@ -2,6 +2,9 @@
 // Todo botão de compra do site deve usar `getShopifyProductUrl(slug)`
 // para abrir o produto correspondente em nova aba, fora do Lovable.
 
+export const HALTER_SHOPIFY_PRODUCT_URL = "https://3rfitness.com.br/products/halter";
+export const VIGOR_SHOPIFY_PRODUCT_URL = "https://3rfitness.com.br/products/vigor";
+
 const SHOPIFY_PUBLIC_BASE = "https://3rfitness.com.br/products";
 
 // Mapeia o slug da linha (ou produto) para o handle do produto no Shopify.
@@ -9,6 +12,11 @@ const SHOPIFY_PUBLIC_BASE = "https://3rfitness.com.br/products";
 export const SHOPIFY_PRODUCT_HANDLES: Record<string, string> = {
   halter: "halter",
   vigor: "vigor",
+};
+
+const SHOPIFY_PRODUCT_URLS: Record<string, string> = {
+  halter: HALTER_SHOPIFY_PRODUCT_URL,
+  vigor: VIGOR_SHOPIFY_PRODUCT_URL,
 };
 
 /**
@@ -22,6 +30,11 @@ export const SHOPIFY_PRODUCT_HANDLES: Record<string, string> = {
  */
 export function getShopifyProductUrl(slug?: string | null): string | undefined {
   if (!slug) return undefined;
+  if (slug === "halter") return HALTER_SHOPIFY_PRODUCT_URL;
+
+  const mappedUrl = SHOPIFY_PRODUCT_URLS[slug];
+  if (mappedUrl) return mappedUrl;
+
   const handle = SHOPIFY_PRODUCT_HANDLES[slug];
   if (!handle) return undefined;
   const url = `${SHOPIFY_PUBLIC_BASE}/${handle}`;
