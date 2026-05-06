@@ -271,6 +271,12 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
   const addItem = useCartStore((s) => s.addItem);
   const getCheckoutUrl = useCartStore((s) => s.getCheckoutUrl);
 
+  useEffect(() => {
+    import("@/stores/modalidadeStore").then(({ useModalidadeStore }) =>
+      useModalidadeStore.getState().setModalidade(config.slug),
+    );
+  }, [config.slug]);
+
   const [genero, setGenero] = useState<Genero | null>(null);
   const [material, setMaterial] = useState<Material | null>(null);
   const [estilo, setEstilo] = useState<Estilo | null>(null);

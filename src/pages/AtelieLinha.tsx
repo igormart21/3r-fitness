@@ -39,6 +39,12 @@ const AtelieLinha = () => {
       const img = new Image();
       img.src = src;
     });
+    const parent = MODALIDADES.find((m) => m.linhas.includes(linha.slug));
+    if (parent) {
+      import("@/stores/modalidadeStore").then(({ useModalidadeStore }) =>
+        useModalidadeStore.getState().setModalidade(parent.slug),
+      );
+    }
   }, [linha]);
 
   if (!linha) return <Navigate to="/atelie/modalidades" replace />;

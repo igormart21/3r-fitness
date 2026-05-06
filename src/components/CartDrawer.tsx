@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -6,10 +7,12 @@ import { ShoppingBag, Minus, Plus, X, ArrowRight, Loader2 } from "lucide-react";
 import { ShippingAnnouncementBar } from "@/components/ShippingAnnouncementBar";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartUIStore } from "@/stores/cartUIStore";
+import { buildContinuarPath } from "@/lib/continuar";
 
 export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {}) => {
   const isOpen = useCartUIStore((s) => s.isOpen);
   const setIsOpen = useCartUIStore((s) => s.setOpen);
+  const navigate = useNavigate();
   const { items, isLoading, isSyncing, updateQuantity, removeItem, getCheckoutUrl, syncCart } = useCartStore();
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
@@ -23,6 +26,11 @@ export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {
       window.open(checkoutUrl, "_blank");
       setIsOpen(false);
     }
+  };
+
+  const handleContinuarComprando = () => {
+    setIsOpen(false);
+    navigate(buildContinuarPath());
   };
 
   return (
@@ -185,10 +193,10 @@ export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {
                   </span>
                 </button>
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleContinuarComprando}
                   className="w-full h-12 bg-transparent border border-[hsl(43,30%,18%)] text-[hsl(43,30%,70%)] text-[10px] uppercase tracking-[0.4em] font-light transition-colors duration-500 hover:border-[hsl(43,65%,55%)] hover:text-[hsl(43,65%,60%)]"
                 >
-                  Continuar explorando
+                  Continuar comprando
                 </button>
               </div>
             </>
