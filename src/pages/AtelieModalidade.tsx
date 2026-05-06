@@ -178,27 +178,87 @@ const AtelieModalidade = () => {
         </div>
       </section>
 
-      {/* 2. FAIXA DE TRANSIÇÃO / HERO CINEMATOGRÁFICO (triathlon) */}
-      {modalidade.slug === "triathlon" ? (
-        <TriathlonCinematicHero />
-      ) : (
-        <section className="w-full bg-black flex items-center justify-center" style={{ minHeight: "110px" }}>
-          <p
-            className="text-[11px] uppercase text-center"
-            style={{
-              color: "rgba(255,255,255,0.7)",
-              letterSpacing: "0.7em",
-              fontFamily: "Inter, sans-serif",
-            }}
-          >
-            Disciplina &nbsp;·&nbsp; Foco &nbsp;·&nbsp; Superação
-          </p>
-        </section>
-      )}
+      {/* 2. FAIXA DE TRANSIÇÃO */}
+      <section className="w-full bg-black flex items-center justify-center" style={{ minHeight: "110px" }}>
+        <p
+          className="text-[11px] uppercase text-center"
+          style={{
+            color: "rgba(255,255,255,0.7)",
+            letterSpacing: "0.7em",
+            fontFamily: "Inter, sans-serif",
+          }}
+        >
+          Disciplina &nbsp;·&nbsp; Foco &nbsp;·&nbsp; Superação
+        </p>
+      </section>
 
       {/* 3. PRODUTOS */}
-      <section id="modalidade-linhas" className="w-full bg-black py-28 md:py-40">
-        <div className="container mx-auto px-6 max-w-6xl">
+      <section
+        id="modalidade-linhas"
+        className="relative w-full py-28 md:py-40 overflow-hidden"
+        style={{ backgroundColor: "#000" }}
+      >
+        {modalidade.slug === "triathlon" && (
+          <>
+            <img
+              src={triathlonCinematic}
+              alt=""
+              aria-hidden
+              className="absolute inset-0 w-full h-full object-cover triathlon-linhas-zoom"
+              style={{
+                objectPosition: "center 38%",
+                filter: "contrast(1.06) saturate(0.92) brightness(0.9)",
+              }}
+            />
+            <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ backgroundColor: "rgba(0,0,0,0.62)" }} />
+            <div
+              aria-hidden
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.10) 28%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.10) 72%, rgba(0,0,0,0.55) 100%)",
+              }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(circle at 8% 48%, rgba(212,175,55,0.16) 0%, rgba(212,175,55,0.05) 14%, rgba(212,175,55,0) 32%)",
+                mixBlendMode: "screen",
+              }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: "radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.55) 100%)" }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-x-0 top-0 pointer-events-none"
+              style={{ height: "22%", background: "linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%)" }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 pointer-events-none"
+              style={{ height: "30%", background: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 100%)" }}
+            />
+            <style>{`
+              @keyframes triathlon-linhas-zoom {
+                0% { transform: scale(1); }
+                100% { transform: scale(1.06); }
+              }
+              .triathlon-linhas-zoom {
+                animation: triathlon-linhas-zoom 18s ease-in-out infinite alternate;
+                will-change: transform;
+              }
+              @media (prefers-reduced-motion: reduce) {
+                .triathlon-linhas-zoom { animation: none !important; }
+              }
+            `}</style>
+          </>
+        )}
+        <div className="relative z-10 container mx-auto px-6 max-w-6xl">
           <div className="text-center mb-20">
             <p
               className="text-[10px] uppercase tracking-[0.55em] mb-4"
