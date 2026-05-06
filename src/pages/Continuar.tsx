@@ -68,7 +68,7 @@ const ATMOSFERAS: Record<ModalidadeKey, Atmosfera> = {
     accent: "#d4af37",
   },
   triathlon: {
-    nome: "Triathlon",
+    nome: "Triatlo",
     fraseHero: "Três forças. Uma identidade.",
     bg: triathlonBg,
     overlay:
@@ -99,7 +99,7 @@ const MODALIDADE_OPTIONS: { slug: ModalidadeSlug; nome: string }[] = [
   { slug: "corrida", nome: "Corrida" },
   { slug: "ciclismo", nome: "Ciclismo" },
   { slug: "crossfit", nome: "Crossfit" },
-  { slug: "triathlon", nome: "Triathlon" },
+  { slug: "triathlon", nome: "Triatlo" },
   { slug: "fisiculturismo", nome: "Fisiculturismo" },
 ];
 

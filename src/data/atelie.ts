@@ -171,7 +171,7 @@ export const MODALIDADES: Modalidade[] = [
   },
   {
     slug: "triathlon",
-    nome: "Triathlon",
+    nome: "Triatlo",
     subtitulo: "A travessia dos limites",
     img: sportTriathlon,
     linhas: ["travessia", "elite"],
