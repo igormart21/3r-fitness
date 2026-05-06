@@ -149,12 +149,22 @@ const ProductDetail = () => {
                         "0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(212,175,55,0.1)",
                     }}
                   >
-                    {product.images.edges[activeImage]?.node && (
+                    {galleryImages[activeImage] ? (
                       <img
-                        src={product.images.edges[activeImage].node.url}
-                        alt={product.title}
+                        src={galleryImages[activeImage].url}
+                        alt={galleryImages[activeImage].altText || product.title}
                         className="w-full h-full object-cover"
+                        loading="eager"
                       />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span
+                          className="font-serif italic text-sm tracking-[0.4em] uppercase"
+                          style={{ color: "rgba(212,175,55,0.55)" }}
+                        >
+                          Imagem em breve
+                        </span>
+                      </div>
                     )}
                     {/* Cantos dourados */}
                     <span
@@ -175,11 +185,11 @@ const ProductDetail = () => {
                     />
                   </div>
 
-                  {product.images.edges.length > 1 && (
+                  {galleryImages.length > 1 && (
                     <div className="grid grid-cols-5 gap-2 mt-4">
-                      {product.images.edges.map((img: any, i: number) => (
+                      {galleryImages.map((img, i) => (
                         <button
-                          key={i}
+                          key={img.url}
                           onClick={() => setActiveImage(i)}
                           className="aspect-square overflow-hidden transition-all duration-300"
                           style={{
@@ -191,9 +201,10 @@ const ProductDetail = () => {
                           }}
                         >
                           <img
-                            src={img.node.url}
-                            alt=""
+                            src={img.url}
+                            alt={img.altText || ""}
                             className="w-full h-full object-cover"
+                            loading="lazy"
                           />
                         </button>
                       ))}
