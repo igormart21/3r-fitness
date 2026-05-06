@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -6,6 +7,7 @@ import { ShoppingBag, Minus, Plus, X, ArrowRight, Loader2 } from "lucide-react";
 import { ShippingAnnouncementBar } from "@/components/ShippingAnnouncementBar";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartUIStore } from "@/stores/cartUIStore";
+import { buildContinuarPath } from "@/lib/continuar";
 
 export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {}) => {
   const isOpen = useCartUIStore((s) => s.isOpen);
