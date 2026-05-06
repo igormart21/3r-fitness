@@ -21,6 +21,7 @@ import strataPrata from "@/assets/linha-strata-prata.jpg";
 import imperiumOuro from "@/assets/linha-imperium-ouro.jpg";
 import imperiumPrata from "@/assets/linha-imperium-prata.jpg";
 import ciclismoBg from "@/assets/atelie-ciclismo-bg.jpg";
+import { getShopifyProductUrl } from "@/lib/shopifyExternal";
 
 const AtelieLinha = () => {
   const { slug } = useParams();
