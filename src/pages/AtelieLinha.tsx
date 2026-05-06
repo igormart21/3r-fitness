@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
-import { getShopifyCartUrl } from "@/lib/shopifyCart";
-import { ArrowLeft } from "lucide-react";
+import { toast } from "sonner";
+import { addAtelieLineToCart } from "@/lib/atelieCart";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
 import vigorMasculinoPrata from "@/assets/linha-vigor-masculino-prata.jpg";
@@ -25,6 +26,7 @@ const AtelieLinha = () => {
   const [material, setMaterial] = useState<Material>("ouro");
   const [forma, setForma] = useState<Forma>("masculino");
   const [revealKey, setRevealKey] = useState(0);
+  const [adding, setAdding] = useState(false);
 
 
   useEffect(() => {
@@ -46,9 +48,15 @@ const AtelieLinha = () => {
   );
   const showFormaSelector = linha.slug !== "halter" && parentModalidade?.slug !== "crossfit";
 
-  // Botão envia direto para o Shopify cart permalink com a variante selecionada.
-  // Se a variação ainda não tiver variant ID mapeado, exibimos aviso discreto.
-  const cartUrl = getShopifyCartUrl(linha.slug, material);
+  const handleSelecionar = async () => {
+    if (adding) return;
+    setAdding(true);
+    const result = await addAtelieLineToCart(linha.slug, material);
+    setAdding(false);
+    if (!result.success) {
+      toast.error(result.error ?? "Variação ainda não configurada.");
+    }
+  };
 
   const imgSrc =
     linha.slug === "imperium" && material === "ouro"
@@ -376,67 +384,42 @@ const AtelieLinha = () => {
               </div>
 
               <div className="mt-14">
-                {cartUrl ? (
-                  <a
-                    href={cartUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500"
-                    style={{
-                      color: "#d4af37",
-                      border: "1px solid rgba(212,175,55,0.55)",
-                      background: "transparent",
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "11px",
-                      letterSpacing: "0.42em",
-                      textTransform: "uppercase",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "#d4af37";
-                      e.currentTarget.style.color = "#000";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.color = "#d4af37";
-                    }}
-                  >
-                    <span className="h-px w-5" style={{ background: "currentColor" }} />
-                    Selecionar minha peça
-                    <span className="h-px w-5" style={{ background: "currentColor" }} />
-                  </a>
-                ) : (
-                  <div>
-                    <button
-                      type="button"
-                      disabled
-                      className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 cursor-not-allowed"
-                      style={{
-                        color: "rgba(212,175,55,0.45)",
-                        border: "1px solid rgba(212,175,55,0.25)",
-                        background: "transparent",
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "11px",
-                        letterSpacing: "0.42em",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      <span className="h-px w-5" style={{ background: "currentColor" }} />
-                      Selecionar minha peça
-                      <span className="h-px w-5" style={{ background: "currentColor" }} />
-                    </button>
-                    <p
-                      className="mt-4 italic font-light"
-                      style={{
-                        fontFamily: '"Fraunces",serif',
-                        color: "rgba(255,255,255,0.5)",
-                        fontSize: "12px",
-                        letterSpacing: "0.04em",
-                      }}
-                    >
-                      Variação ainda não configurada.
-                    </p>
-                  </div>
-                )}
+                <button
+                  type="button"
+                  onClick={handleSelecionar}
+                  disabled={adding}
+                  className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500 disabled:opacity-60 disabled:cursor-wait"
+                  style={{
+                    color: "#d4af37",
+                    border: "1px solid rgba(212,175,55,0.55)",
+                    background: "transparent",
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: "11px",
+                    letterSpacing: "0.42em",
+                    textTransform: "uppercase",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (adding) return;
+                    e.currentTarget.style.background = "#d4af37";
+                    e.currentTarget.style.color = "#000";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (adding) return;
+                    e.currentTarget.style.background = "transparent";
+                    e.currentTarget.style.color = "#d4af37";
+                  }}
+                >
+                  <span className="h-px w-5" style={{ background: "currentColor" }} />
+                  {adding ? (
+                    <>
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      Adicionando
+                    </>
+                  ) : (
+                    "Selecionar minha peça"
+                  )}
+                  <span className="h-px w-5" style={{ background: "currentColor" }} />
+                </button>
               </div>
 
             </div>
