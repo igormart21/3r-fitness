@@ -46,10 +46,9 @@ const AtelieLinha = () => {
   );
   const showFormaSelector = linha.slug !== "halter" && parentModalidade?.slug !== "crossfit";
 
-  // Produto abre DENTRO do Lovable em /product/:handle (mesmo layout premium).
-  // O checkout final é redirecionado ao Shopify pelo carrinho (Storefront API).
-  const productHandle = SHOPIFY_PRODUCT_HANDLES[linha.slug];
-  const internalProductUrl = productHandle ? `/product/${productHandle}` : undefined;
+  // Botão envia direto para o Shopify cart permalink com a variante selecionada.
+  // Se a variação ainda não tiver variant ID mapeado, exibimos aviso discreto.
+  const cartUrl = getShopifyCartUrl(linha.slug, material);
 
   const imgSrc =
     linha.slug === "imperium" && material === "ouro"
