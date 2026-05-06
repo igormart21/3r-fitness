@@ -33,6 +33,14 @@ export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {
     navigate(buildContinuarPath());
   };
 
+  const getItemThumbnail = (item: typeof items[number]) =>
+    item.thumbnailImage ||
+    item.product.node.variants?.edges?.find((edge) => edge.node.id === item.variantId)?.node.image ||
+    item.product.node.featuredImage ||
+    item.product.node.images?.edges?.[0]?.node ||
+    item.product.node.media?.edges?.[0]?.node?.image ||
+    null;
+
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       {showTrigger && (
@@ -86,15 +94,17 @@ export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {
             <>
               <ShippingAnnouncementBar />
               <div className="flex-1 overflow-y-auto px-8 py-6 space-y-8">
-                {items.map((item) => (
+                {items.map((item) => {
+                  const thumbnail = getItemThumbnail(item);
+                  return (
                   <div key={item.variantId} className="group">
                     <div className="flex gap-5">
                       {/* Imagem grande */}
                       <div className="w-28 h-36 bg-[hsl(0,0%,8%)] overflow-hidden flex-shrink-0 border border-[hsl(43,30%,12%)] flex items-center justify-center">
-                        {item.product.node.images?.edges?.[0]?.node?.url ? (
+                        {thumbnail?.url ? (
                           <img
-                            src={item.product.node.images.edges[0].node.url}
-                            alt={item.product.node.images.edges[0].node.altText || item.product.node.title}
+                            src={thumbnail.url}
+                            alt={thumbnail.altText || item.product.node.title}
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                             loading="lazy"
                           />
@@ -146,7 +156,8 @@ export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {
                       </div>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Footer */}
