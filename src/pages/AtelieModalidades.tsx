@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { MODALIDADES } from "@/data/atelie";
@@ -10,9 +10,11 @@ const ORDER = ["triathlon", "fisiculturismo", "musculacao", "corrida", "ciclismo
 const ModalidadeSection = ({
   m,
   index,
+  onNavigate,
 }: {
   m: { slug: string; nome: string; img: string; subtitulo: string };
   index: number;
+  onNavigate: (slug: string) => void;
 }) => {
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
@@ -127,9 +129,10 @@ const ModalidadeSection = ({
             {m.subtitulo}
           </p>
 
-          <Link
-            to={`/atelie/modalidade/${m.slug}`}
-            className="inline-flex items-center gap-4 mt-12 group/btn"
+          <button
+            type="button"
+            onClick={() => onNavigate(m.slug)}
+            className="inline-flex items-center gap-4 mt-12 group/btn bg-transparent border-0 cursor-pointer p-0"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(10px)",
@@ -152,7 +155,7 @@ const ModalidadeSection = ({
               className="h-px transition-all duration-500"
               style={{ width: 24, background: "#d4af37" }}
             />
-          </Link>
+          </button>
         </div>
       </div>
     </section>
@@ -160,11 +163,20 @@ const ModalidadeSection = ({
 };
 
 const AtelieModalidades = () => {
+  const navigate = useNavigate();
   const modalidades = ORDER
     .map((s) => MODALIDADES.find((m) => m.slug === s))
     .filter(Boolean) as typeof MODALIDADES;
 
   const [progress, setProgress] = useState(0); // 0 → 1 across first viewport
+  const [isFading, setIsFading] = useState(false);
+
+  const navigateWithFade = (slug: string) => {
+    setIsFading(true);
+    window.setTimeout(() => {
+      navigate(`/atelie/modalidade/${slug}`);
+    }, 650);
+  };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -450,7 +462,7 @@ const AtelieModalidades = () => {
       {/* MODALIDADES — full-screen sections */}
       <main id="modalidades">
         {modalidades.map((m, i) => (
-          <ModalidadeSection key={m.slug} m={m} index={i} />
+          <ModalidadeSection key={m.slug} m={m} index={i} onNavigate={navigateWithFade} />
         ))}
       </main>
 
@@ -471,6 +483,20 @@ const AtelieModalidades = () => {
           ATELIÊ
         </span>
       </footer>
+
+      {/* Cinematic fade-out overlay on navigation */}
+      <div
+        aria-hidden
+        style={{
+          position: "fixed",
+          inset: 0,
+          background: "#050505",
+          opacity: isFading ? 1 : 0,
+          pointerEvents: isFading ? "auto" : "none",
+          transition: "opacity 650ms ease-in-out",
+          zIndex: 9999,
+        }}
+      />
     </div>
     </>
   );

@@ -88,7 +88,12 @@ const AtelieModalidade = () => {
   const heroBg = modalidade.slug === "ciclismo" ? ciclismoBg : modalidade.img;
 
   return (
-    <div className="w-full text-white" style={{ backgroundColor: "#050505" }}>
+    <div className="w-full text-white atelie-page-fade-in" style={{ backgroundColor: "#050505" }}>
+      <style>{`
+        @keyframes atelie-page-fade-in { from { opacity: 0; } to { opacity: 1; } }
+        .atelie-page-fade-in { animation: atelie-page-fade-in 700ms ease-out both; }
+        @media (prefers-reduced-motion: reduce) { .atelie-page-fade-in { animation: none !important; } }
+      `}</style>
       <header className="absolute top-0 inset-x-0 z-30">
         <div className="container mx-auto px-6 py-6 flex items-center justify-between">
           <Link
