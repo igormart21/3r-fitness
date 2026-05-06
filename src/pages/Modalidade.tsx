@@ -513,10 +513,18 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
   };
 
   const handleComprar = async () => {
+    // Configuração universal: se o slug da modalidade/linha tiver produto
+    // mapeado no Shopify, abre o produto externo em nova aba (sem passar
+    // pelo carrinho interno). Caso contrário, usa o fluxo de checkout interno.
+    const externalUrl = getShopifyProductUrl(config?.slug);
+    if (externalUrl) {
+      window.open(externalUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
     await handleAdicionar();
     setTimeout(() => {
       const url = getCheckoutUrl();
-      if (url) window.open(url, "_blank");
+      if (url) window.open(url, "_blank", "noopener,noreferrer");
     }, 800);
   };
 
