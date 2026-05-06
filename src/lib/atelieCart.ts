@@ -55,7 +55,26 @@ export async function addAtelieLineToCart(
     const variant = matchVariantByMaterial(product, material, slug);
     if (!variant) return { success: false, error: "Variação não disponível." };
 
-    // Monta ShopifyProduct-shape esperado pelo cart store (usa .node.images[0] no drawer)
+    // Resolve imagem com prioridade: variante → featured → images → media
+    const variantImg = variant.image?.url ? { url: variant.image.url, altText: variant.image.altText ?? null } : null;
+    const featuredImg = product.featuredImage?.url
+      ? { url: product.featuredImage.url, altText: product.featuredImage.altText ?? null }
+      : null;
+    const productImgs: Array<{ url: string; altText: string | null }> =
+      product.images?.edges?.map((e: any) => ({ url: e.node.url, altText: e.node.altText ?? null })) ?? [];
+    const mediaImgs: Array<{ url: string; altText: string | null }> =
+      product.media?.edges
+        ?.map((e: any) => e.node?.image)
+        .filter(Boolean)
+        .map((i: any) => ({ url: i.url, altText: i.altText ?? null })) ?? [];
+
+    const orderedImgs = [variantImg, featuredImg, ...productImgs, ...mediaImgs].filter(
+      (img): img is { url: string; altText: string | null } => !!img?.url,
+    );
+    // Dedupe por url, preservando ordem
+    const seen = new Set<string>();
+    const dedupedImgs = orderedImgs.filter((i) => (seen.has(i.url) ? false : (seen.add(i.url), true)));
+
     const productForCart: ShopifyProduct = {
       node: {
         id: product.id,
@@ -65,7 +84,7 @@ export async function addAtelieLineToCart(
         priceRange: product.priceRange ?? {
           minVariantPrice: variant.price,
         },
-        images: product.images ?? { edges: [] },
+        images: { edges: dedupedImgs.map((node) => ({ node })) },
         variants: product.variants,
         options: product.options ?? [],
       },
