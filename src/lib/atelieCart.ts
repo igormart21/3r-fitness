@@ -99,6 +99,13 @@ export async function addAtelieLineToCart(
       selectedOptions: variant.selectedOptions ?? [],
     });
 
+    // Garante que items persistidos antigos (sem imagem) recebam o produto atualizado
+    useCartStore.setState((state) => ({
+      items: state.items.map((it) =>
+        it.variantId === variant.id ? { ...it, product: productForCart } : it,
+      ),
+    }));
+
     useCartUIStore.getState().openCart();
     return { success: true };
   } catch (err: any) {
