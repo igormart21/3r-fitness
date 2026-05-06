@@ -11,7 +11,7 @@ const CART_BASE = "https://3rfitness.com.br/cart";
 const VARIANT_IDS: Record<string, Partial<Record<Material, string>>> = {
   halter: {
     ouro: "48912055468259",
-    // prata: ainda não configurado
+    prata: "48912055501027",
   },
 };
 
