@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
-import { getShopifyCartUrl } from "@/lib/shopifyCart";
-import { ArrowLeft } from "lucide-react";
+import { toast } from "sonner";
+import { addAtelieLineToCart } from "@/lib/atelieCart";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
 import vigorMasculinoPrata from "@/assets/linha-vigor-masculino-prata.jpg";
