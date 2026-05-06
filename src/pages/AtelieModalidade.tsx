@@ -177,19 +177,23 @@ const AtelieModalidade = () => {
         </div>
       </section>
 
-      {/* 2. FAIXA DE TRANSIÇÃO */}
-      <section className="w-full bg-black flex items-center justify-center" style={{ minHeight: "110px" }}>
-        <p
-          className="text-[11px] uppercase text-center"
-          style={{
-            color: "rgba(255,255,255,0.7)",
-            letterSpacing: "0.7em",
-            fontFamily: "Inter, sans-serif",
-          }}
-        >
-          Disciplina &nbsp;·&nbsp; Foco &nbsp;·&nbsp; Superação
-        </p>
-      </section>
+      {/* 2. FAIXA DE TRANSIÇÃO / HERO CINEMATOGRÁFICO (triathlon) */}
+      {modalidade.slug === "triathlon" ? (
+        <TriathlonCinematicHero />
+      ) : (
+        <section className="w-full bg-black flex items-center justify-center" style={{ minHeight: "110px" }}>
+          <p
+            className="text-[11px] uppercase text-center"
+            style={{
+              color: "rgba(255,255,255,0.7)",
+              letterSpacing: "0.7em",
+              fontFamily: "Inter, sans-serif",
+            }}
+          >
+            Disciplina &nbsp;·&nbsp; Foco &nbsp;·&nbsp; Superação
+          </p>
+        </section>
+      )}
 
       {/* 3. PRODUTOS */}
       <section id="modalidade-linhas" className="w-full bg-black py-28 md:py-40">
