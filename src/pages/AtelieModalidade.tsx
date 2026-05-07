@@ -288,7 +288,7 @@ const AtelieModalidade = () => {
             {linhas.map((l, idx) => (
               <div
                 key={l.slug}
-                className="atelie-linha-card group flex flex-col items-center text-center w-full max-w-[220px]"
+                className="atelie-linha-card group flex flex-col items-center text-center w-full max-w-[220px] h-full"
                 style={{
                   position: "relative",
                   padding: "16px 14px 20px",
@@ -373,7 +373,7 @@ const AtelieModalidade = () => {
                 <button
                   type="button"
                   onClick={() => navigate(`/atelie/linha/${l.slug}`)}
-                  className="mt-7 inline-flex items-center gap-3 transition-all duration-700"
+                  className="mt-auto pt-7 inline-flex items-center gap-3 transition-all duration-700"
                   style={{
                     padding: "11px 24px",
                     color: "#d4af37",
