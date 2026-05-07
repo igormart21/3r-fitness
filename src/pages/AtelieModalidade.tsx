@@ -339,6 +339,7 @@ const AtelieModalidade = () => {
                     src={l.imagens.ouro}
                     alt={l.nome}
                     loading="lazy"
+                    decoding="async"
                     className={`${l.cardFit === "contain" ? "max-w-full max-h-full object-contain" : "w-full h-full object-cover"} transition-transform duration-[1400ms] ease-out group-hover:scale-[1.02]`}
                     style={{ filter: "contrast(1.04) saturate(1.02) brightness(1.01)" }}
                   />
