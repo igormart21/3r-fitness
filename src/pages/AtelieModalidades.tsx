@@ -294,14 +294,16 @@ const AtelieModalidades = () => {
 
       {/* HERO */}
       <section
-        className="relative w-full flex items-center justify-center overflow-hidden"
-        style={{ height: "100vh", minHeight: 640 }}
+        className="relative w-full flex items-center justify-center overflow-hidden h-screen-safe"
+        style={{ minHeight: 580 }}
       >
         {/* Background image full screen */}
         <img
           src={heroBg}
           alt=""
           aria-hidden
+          decoding="async"
+          fetchPriority="high"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div
