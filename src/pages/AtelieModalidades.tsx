@@ -46,9 +46,12 @@ const ModalidadeSection = ({
           opacity: visible ? 1 : 0,
           transform: visible ? "scale(1) translateY(0)" : "scale(1.08) translateY(40px)",
           transition:
-            "opacity 800ms ease-out 200ms, transform 800ms cubic-bezier(0.22,1,0.36,1) 200ms",
+            "opacity 800ms ease-out 200ms, transform 1200ms cubic-bezier(0.22,1,0.36,1) 200ms",
           filter: "contrast(1.05) saturate(1.03)",
           willChange: "opacity, transform",
+          animation: visible
+            ? `ken-burns-${m.slug === "triathlon" ? "tri" : (index % 2 === 0 ? "a" : "b")} 18s ease-in-out 1400ms infinite alternate`
+            : undefined,
         }}
       />
       {/* Base readability overlay */}
@@ -248,6 +251,19 @@ const AtelieModalidades = () => {
           10% { opacity: var(--p-opacity, 0.5); }
           90% { opacity: var(--p-opacity, 0.5); }
           100% { transform: translateY(-120vh) translateX(var(--p-drift, 20px)); opacity: 0; }
+        }
+        @keyframes ken-burns-a {
+          0%   { transform: scale(1) translate(0, 0); }
+          100% { transform: scale(1.12) translate(-1.5%, -1%); }
+        }
+        @keyframes ken-burns-b {
+          0%   { transform: scale(1.05) translate(0.5%, 0.5%); }
+          100% { transform: scale(1.15) translate(-1%, -1.5%); }
+        }
+        @keyframes ken-burns-tri {
+          0%   { transform: scale(1) translate(0, 0); }
+          50%  { transform: scale(1.08) translate(-1%, -0.8%); }
+          100% { transform: scale(1.14) translate(-2%, -0.4%); }
         }
       `}</style>
     <div
