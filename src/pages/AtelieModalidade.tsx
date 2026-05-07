@@ -327,15 +327,15 @@ const AtelieModalidade = () => {
                     src={l.imagens.ouro}
                     alt={l.nome}
                     loading="lazy"
-                    className={`${l.cardFit === "contain" ? "max-w-full max-h-full object-contain" : "w-full h-full object-cover"} transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]`}
-                    style={{ filter: "contrast(1.06) saturate(1.05) brightness(1.02)" }}
+                    className={`${l.cardFit === "contain" ? "max-w-full max-h-full object-contain" : "w-full h-full object-cover"} transition-transform duration-[1400ms] ease-out group-hover:scale-[1.02]`}
+                    style={{ filter: "contrast(1.04) saturate(1.02) brightness(1.01)" }}
                   />
                   <div
                     aria-hidden
-                    className="absolute inset-0 pointer-events-none opacity-70 transition-opacity duration-700 group-hover:opacity-100"
+                    className="absolute inset-0 pointer-events-none opacity-50 transition-opacity duration-700 group-hover:opacity-70"
                     style={{
                       background:
-                        "radial-gradient(ellipse 55% 45% at 50% 50%, rgba(244,215,122,0.18) 0%, transparent 70%)",
+                        "radial-gradient(ellipse 55% 45% at 50% 50%, rgba(244,215,122,0.10) 0%, transparent 70%)",
                       mixBlendMode: "screen",
                     }}
                   />
