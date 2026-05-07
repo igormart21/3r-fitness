@@ -97,8 +97,9 @@ export const LINHAS: Record<string, Linha> = {
     nome: "STRATA",
     assinatura: "Assinatura da Intensidade",
     frase: "A intensidade transformada em arte.",
-    imagens: { ouro: triadeOuroClean, prata: triadePrataClean },
-    campaign: triadeCampaign,
+    imagens: { ouro: strataCard, prata: strataCard },
+    campaign: strataCard,
+    cardFit: "cover",
   },
   triade: {
     slug: "triade",
