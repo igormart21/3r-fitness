@@ -288,10 +288,10 @@ const AtelieModalidade = () => {
             {linhas.map((l, idx) => (
               <div
                 key={l.slug}
-                className="atelie-linha-card group flex flex-col items-center text-center w-full max-w-[280px]"
+                className="atelie-linha-card group flex flex-col items-center text-center w-full max-w-[220px]"
                 style={{
                   position: "relative",
-                  padding: "20px 18px 24px",
+                  padding: "16px 14px 20px",
                   background:
                     "linear-gradient(180deg, rgba(15,15,15,0.55) 0%, rgba(5,5,5,0.62) 100%)",
                   backdropFilter: "blur(14px) saturate(1.05)",
