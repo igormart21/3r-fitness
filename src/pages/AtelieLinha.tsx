@@ -367,7 +367,7 @@ const AtelieLinha = () => {
       </header>
 
       <main className="relative z-10 w-full min-h-screen pt-24 md:pt-28 pb-12">
-        <div className={`container mx-auto max-w-6xl px-6 ${hasEditorial || hasCinematic ? "flex justify-center lg:justify-start items-center min-h-[calc(100vh-180px)]" : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"}`}>
+        <div className={`container mx-auto max-w-6xl px-6 ${hasEditorial || hasCinematic ? "flex justify-center items-center min-h-[calc(100vh-180px)]" : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"}`}>
           {/* ESQUERDA — imagem (omitida no Velox Royale ciclismo: o fundo split é o produto) */}
           {!hasEditorial && !hasCinematic && (
             <section className="lg:col-span-6 relative">
