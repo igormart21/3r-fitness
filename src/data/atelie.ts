@@ -93,7 +93,7 @@ export const LINHAS: Record<string, Linha> = {
   },
   strata: {
     slug: "strata",
-    nome: "LINE STRATA",
+    nome: "STRATA",
     assinatura: "Assinatura da Intensidade",
     frase: "A intensidade transformada em arte.",
     imagens: { ouro: triadeOuroClean, prata: triadePrataClean },
