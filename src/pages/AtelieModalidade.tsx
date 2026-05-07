@@ -241,10 +241,10 @@ const AtelieModalidade = () => {
             <style>{`
               @keyframes triathlon-linhas-zoom {
                 0% { transform: scale(1); }
-                100% { transform: scale(1.06); }
+                100% { transform: scale(1.02); }
               }
               .triathlon-linhas-zoom {
-                animation: triathlon-linhas-zoom 18s ease-in-out infinite alternate;
+                animation: triathlon-linhas-zoom 28s ease-in-out infinite alternate;
                 will-change: transform;
               }
               @media (prefers-reduced-motion: reduce) {
@@ -303,10 +303,10 @@ const AtelieModalidade = () => {
                   transition: "transform 700ms cubic-bezier(0.22,1,0.36,1), box-shadow 700ms ease, border-color 700ms ease",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-6px)";
-                  e.currentTarget.style.borderColor = "rgba(212,175,55,0.42)";
+                  e.currentTarget.style.transform = "translateY(-3px)";
+                  e.currentTarget.style.borderColor = "rgba(212,175,55,0.30)";
                   e.currentTarget.style.boxShadow =
-                    "0 36px 80px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 0 1px rgba(212,175,55,0.14)";
+                    "0 28px 64px rgba(0,0,0,0.58), inset 0 1px 0 rgba(255,255,255,0.05)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "";
@@ -327,15 +327,15 @@ const AtelieModalidade = () => {
                     src={l.imagens.ouro}
                     alt={l.nome}
                     loading="lazy"
-                    className={`${l.cardFit === "contain" ? "max-w-full max-h-full object-contain" : "w-full h-full object-cover"} transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]`}
-                    style={{ filter: "contrast(1.06) saturate(1.05) brightness(1.02)" }}
+                    className={`${l.cardFit === "contain" ? "max-w-full max-h-full object-contain" : "w-full h-full object-cover"} transition-transform duration-[1400ms] ease-out group-hover:scale-[1.02]`}
+                    style={{ filter: "contrast(1.04) saturate(1.02) brightness(1.01)" }}
                   />
                   <div
                     aria-hidden
-                    className="absolute inset-0 pointer-events-none opacity-70 transition-opacity duration-700 group-hover:opacity-100"
+                    className="absolute inset-0 pointer-events-none opacity-50 transition-opacity duration-700 group-hover:opacity-70"
                     style={{
                       background:
-                        "radial-gradient(ellipse 55% 45% at 50% 50%, rgba(244,215,122,0.18) 0%, transparent 70%)",
+                        "radial-gradient(ellipse 55% 45% at 50% 50%, rgba(244,215,122,0.10) 0%, transparent 70%)",
                       mixBlendMode: "screen",
                     }}
                   />
