@@ -46,9 +46,9 @@ const AtelieModalidade = () => {
         useModalidadeStore.getState().setModalidade(slug),
       );
     }
-    // Auto-scroll suave até as linhas para Ciclismo após 2s
+    // Auto-scroll suave até as linhas após 2s para todas as modalidades
     let autoScrollTimer: number | undefined;
-    if (slug === "ciclismo" && hash !== "#modalidade-linhas") {
+    if (hash !== "#modalidade-linhas") {
       autoScrollTimer = window.setTimeout(() => {
         smoothScrollToLinhas();
       }, 2000);
