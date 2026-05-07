@@ -154,7 +154,7 @@ const ProductDetail = () => {
                         key={galleryImages[activeImage].url}
                         src={galleryImages[activeImage].url}
                         alt={galleryImages[activeImage].altText || product.title}
-                        className="w-full h-full object-cover img-premium is-loaded animate-fade-in"
+                        className="w-full h-full object-contain p-4 sm:p-6 img-premium is-loaded animate-fade-in"
                         loading="eager"
                         decoding="async"
                         fetchPriority="high"
