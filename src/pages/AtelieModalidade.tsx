@@ -46,6 +46,16 @@ const AtelieModalidade = () => {
         useModalidadeStore.getState().setModalidade(slug),
       );
     }
+    // Auto-scroll suave até as linhas para Ciclismo após 2s
+    let autoScrollTimer: number | undefined;
+    if (slug === "ciclismo" && hash !== "#modalidade-linhas") {
+      autoScrollTimer = window.setTimeout(() => {
+        smoothScrollToLinhas();
+      }, 2000);
+    }
+    return () => {
+      if (autoScrollTimer) window.clearTimeout(autoScrollTimer);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
