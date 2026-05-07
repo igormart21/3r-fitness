@@ -419,139 +419,143 @@ const AtelieModalidade = () => {
         `}</style>
       </section>
 
-      {/* 4. STORYTELLING CINEMATOGRÁFICO */}
-      <section className="relative w-screen h-[70vh] overflow-hidden">
-        <img
-          src={heroBg}
-          alt=""
-          aria-hidden
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ objectPosition: "center 40%", filter: "contrast(1.1) saturate(1.05) brightness(0.85)" }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.6) 100%)",
-          }}
-        />
-        <div className="relative z-10 h-full container mx-auto px-6 lg:px-12 flex items-center">
-          <div className="max-w-2xl">
-            <p
-              className="text-[10px] uppercase tracking-[0.55em] mb-6"
-              style={{ color: "rgba(212,175,55,0.85)" }}
-            >
-              Storytelling
-            </p>
-            <h2
-              className="font-display font-light leading-tight"
+      {modalidade.slug !== "triathlon" && (
+        <>
+          {/* 4. STORYTELLING CINEMATOGRÁFICO */}
+          <section className="relative w-screen h-[70vh] overflow-hidden">
+            <img
+              src={heroBg}
+              alt=""
+              aria-hidden
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ objectPosition: "center 40%", filter: "contrast(1.1) saturate(1.05) brightness(0.85)" }}
+            />
+            <div
+              className="absolute inset-0"
               style={{
-                fontSize: "clamp(36px, 5vw, 72px)",
-                letterSpacing: "0.04em",
-                color: "#f4ead0",
+                background:
+                  "linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.6) 100%)",
               }}
-            >
-              Representado em uma joia.
-            </h2>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. PROVA / AUTORIDADE */}
-      <section className="w-full bg-black py-28 md:py-36">
-        <div className="container mx-auto px-6 max-w-5xl text-center">
-          <p
-            className="text-[10px] uppercase tracking-[0.55em] mb-6"
-            style={{ color: "rgba(212,175,55,0.75)" }}
-          >
-            A marca
-          </p>
-          <h2
-            className="font-display font-light leading-tight max-w-3xl mx-auto"
-            style={{
-              fontSize: "clamp(28px, 3.4vw, 46px)",
-              letterSpacing: "0.04em",
-              color: "#f4ead0",
-            }}
-          >
-            Criado para quem vive disciplina todos os dias.
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 mt-20">
-            {[
-              { t: "Artesanal", d: "Cada peça forjada à mão por mestres ourives." },
-              { t: "Premium", d: "Ouro e prata da mais alta pureza." },
-              { t: "Eterno", d: "Joias pensadas para atravessar gerações." },
-            ].map((b) => (
-              <div key={b.t}>
-                <h3
-                  className="font-display font-light mb-3"
-                  style={{
-                    fontSize: "18px",
-                    letterSpacing: "0.3em",
-                    textTransform: "uppercase",
-                    color: "#d4af37",
-                  }}
-                >
-                  {b.t}
-                </h3>
+            />
+            <div className="relative z-10 h-full container mx-auto px-6 lg:px-12 flex items-center">
+              <div className="max-w-2xl">
                 <p
-                  className="italic font-light max-w-xs mx-auto"
+                  className="text-[10px] uppercase tracking-[0.55em] mb-6"
+                  style={{ color: "rgba(212,175,55,0.85)" }}
+                >
+                  Storytelling
+                </p>
+                <h2
+                  className="font-display font-light leading-tight"
                   style={{
-                    fontFamily: '"Fraunces",serif',
-                    color: "rgba(255,255,255,0.6)",
-                    fontSize: "15px",
+                    fontSize: "clamp(36px, 5vw, 72px)",
+                    letterSpacing: "0.04em",
+                    color: "#f4ead0",
                   }}
                 >
-                  {b.d}
-                </p>
+                  Representado em uma joia.
+                </h2>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
 
-      {/* 6. CTA FINAL */}
-      <section className="w-full bg-black py-32 md:py-44">
-        <div className="container mx-auto px-6 text-center">
-          <h2
-            className="font-display font-light leading-tight"
-            style={{
-              fontSize: "clamp(36px, 5vw, 72px)",
-              letterSpacing: "0.04em",
-              color: "#f4ead0",
-            }}
-          >
-            Escolha sua assinatura.
-          </h2>
-          <div className="mt-12">
-            <button
-              type="button"
-              onClick={() => {
-                smoothScrollToLinhas();
-              }}
-              className="inline-flex items-center gap-3 px-12 py-5 transition-all duration-500"
-              style={{
-                color: "#0a0a0a",
-                background: "#d4af37",
-                border: "1px solid #d4af37",
-                fontFamily: "Inter, sans-serif",
-                fontSize: "11px",
-                letterSpacing: "0.42em",
-                textTransform: "uppercase",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = "0 0 40px rgba(212,175,55,0.5)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = "none";
-              }}
-            >
-              Ver linhas
-            </button>
-          </div>
-        </div>
-      </section>
+          {/* 5. PROVA / AUTORIDADE */}
+          <section className="w-full bg-black py-28 md:py-36">
+            <div className="container mx-auto px-6 max-w-5xl text-center">
+              <p
+                className="text-[10px] uppercase tracking-[0.55em] mb-6"
+                style={{ color: "rgba(212,175,55,0.75)" }}
+              >
+                A marca
+              </p>
+              <h2
+                className="font-display font-light leading-tight max-w-3xl mx-auto"
+                style={{
+                  fontSize: "clamp(28px, 3.4vw, 46px)",
+                  letterSpacing: "0.04em",
+                  color: "#f4ead0",
+                }}
+              >
+                Criado para quem vive disciplina todos os dias.
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 mt-20">
+                {[
+                  { t: "Artesanal", d: "Cada peça forjada à mão por mestres ourives." },
+                  { t: "Premium", d: "Ouro e prata da mais alta pureza." },
+                  { t: "Eterno", d: "Joias pensadas para atravessar gerações." },
+                ].map((b) => (
+                  <div key={b.t}>
+                    <h3
+                      className="font-display font-light mb-3"
+                      style={{
+                        fontSize: "18px",
+                        letterSpacing: "0.3em",
+                        textTransform: "uppercase",
+                        color: "#d4af37",
+                      }}
+                    >
+                      {b.t}
+                    </h3>
+                    <p
+                      className="italic font-light max-w-xs mx-auto"
+                      style={{
+                        fontFamily: '"Fraunces",serif',
+                        color: "rgba(255,255,255,0.6)",
+                        fontSize: "15px",
+                      }}
+                    >
+                      {b.d}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* 6. CTA FINAL */}
+          <section className="w-full bg-black py-32 md:py-44">
+            <div className="container mx-auto px-6 text-center">
+              <h2
+                className="font-display font-light leading-tight"
+                style={{
+                  fontSize: "clamp(36px, 5vw, 72px)",
+                  letterSpacing: "0.04em",
+                  color: "#f4ead0",
+                }}
+              >
+                Escolha sua assinatura.
+              </h2>
+              <div className="mt-12">
+                <button
+                  type="button"
+                  onClick={() => {
+                    smoothScrollToLinhas();
+                  }}
+                  className="inline-flex items-center gap-3 px-12 py-5 transition-all duration-500"
+                  style={{
+                    color: "#0a0a0a",
+                    background: "#d4af37",
+                    border: "1px solid #d4af37",
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: "11px",
+                    letterSpacing: "0.42em",
+                    textTransform: "uppercase",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = "0 0 40px rgba(212,175,55,0.5)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
+                >
+                  Ver linhas
+                </button>
+              </div>
+            </div>
+          </section>
+        </>
+      )}
 
       <style>{`
         @keyframes modalidade-hero-zoom {
