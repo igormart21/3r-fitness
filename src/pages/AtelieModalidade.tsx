@@ -241,10 +241,10 @@ const AtelieModalidade = () => {
             <style>{`
               @keyframes triathlon-linhas-zoom {
                 0% { transform: scale(1); }
-                100% { transform: scale(1.06); }
+                100% { transform: scale(1.02); }
               }
               .triathlon-linhas-zoom {
-                animation: triathlon-linhas-zoom 18s ease-in-out infinite alternate;
+                animation: triathlon-linhas-zoom 28s ease-in-out infinite alternate;
                 will-change: transform;
               }
               @media (prefers-reduced-motion: reduce) {
