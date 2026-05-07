@@ -429,7 +429,7 @@ const AtelieModalidade = () => {
         `}</style>
       </section>
 
-      {modalidade.slug !== "triathlon" && (
+      {modalidade.slug !== "triathlon" && modalidade.slug !== "crossfit" && (
         <>
           {/* 4. STORYTELLING CINEMATOGRÁFICO */}
           <section className="relative w-screen h-[70vh] overflow-hidden">
