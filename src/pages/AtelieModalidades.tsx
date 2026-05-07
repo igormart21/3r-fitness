@@ -252,6 +252,19 @@ const AtelieModalidades = () => {
           90% { opacity: var(--p-opacity, 0.5); }
           100% { transform: translateY(-120vh) translateX(var(--p-drift, 20px)); opacity: 0; }
         }
+        @keyframes ken-burns-a {
+          0%   { transform: scale(1) translate(0, 0); }
+          100% { transform: scale(1.12) translate(-1.5%, -1%); }
+        }
+        @keyframes ken-burns-b {
+          0%   { transform: scale(1.05) translate(0.5%, 0.5%); }
+          100% { transform: scale(1.15) translate(-1%, -1.5%); }
+        }
+        @keyframes ken-burns-tri {
+          0%   { transform: scale(1) translate(0, 0); }
+          50%  { transform: scale(1.08) translate(-1%, -0.8%); }
+          100% { transform: scale(1.14) translate(-2%, -0.4%); }
+        }
       `}</style>
     <div
       className="min-h-screen w-full text-white"
