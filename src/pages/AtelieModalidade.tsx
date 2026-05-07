@@ -303,10 +303,10 @@ const AtelieModalidade = () => {
                   transition: "transform 700ms cubic-bezier(0.22,1,0.36,1), box-shadow 700ms ease, border-color 700ms ease",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-6px)";
-                  e.currentTarget.style.borderColor = "rgba(212,175,55,0.42)";
+                  e.currentTarget.style.transform = "translateY(-3px)";
+                  e.currentTarget.style.borderColor = "rgba(212,175,55,0.30)";
                   e.currentTarget.style.boxShadow =
-                    "0 36px 80px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 0 1px rgba(212,175,55,0.14)";
+                    "0 28px 64px rgba(0,0,0,0.58), inset 0 1px 0 rgba(255,255,255,0.05)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "";
