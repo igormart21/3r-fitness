@@ -207,7 +207,7 @@ const ProductDetail = () => {
                           <img
                             src={img.url}
                             alt={img.altText || ""}
-                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                            className="w-full h-full object-contain p-1.5 transition-transform duration-700 hover:scale-105"
                             loading="lazy"
                             decoding="async"
                           />
