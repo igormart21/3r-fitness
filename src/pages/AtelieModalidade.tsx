@@ -435,11 +435,13 @@ const AtelieModalidade = () => {
       {modalidade.slug !== "triathlon" && modalidade.slug !== "crossfit" && (
         <>
           {/* 4. STORYTELLING CINEMATOGRÁFICO */}
-          <section className="relative w-screen h-[70vh] overflow-hidden">
+          <section className="relative w-screen h-[70svh] min-h-[480px] overflow-hidden">
             <img
               src={heroBg}
               alt=""
               aria-hidden
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 w-full h-full object-cover"
               style={{ objectPosition: "center 40%", filter: "contrast(1.1) saturate(1.05) brightness(0.85)" }}
             />
