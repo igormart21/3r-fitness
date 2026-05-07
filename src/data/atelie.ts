@@ -17,6 +17,7 @@ import imperiumCampaign from "@/assets/linha-imperium-ouro.jpg";
 import triadeOuroClean from "@/assets/linha-triade-ouro-clean.jpg";
 import triadePrataClean from "@/assets/linha-triade-prata-clean.jpg";
 import triadeCampaign from "@/assets/linha-triade-ouro.jpg";
+import strataCard from "@/assets/linha-strata-card.png";
 import aeronOuro from "@/assets/linha-aeron-ouro.png";
 import veloxOuro from "@/assets/linha-velox-ouro.png";
 import veloxEditorialFemOuro from "@/assets/velox-royale-feminina-ouro.png";
@@ -96,8 +97,9 @@ export const LINHAS: Record<string, Linha> = {
     nome: "STRATA",
     assinatura: "Assinatura da Intensidade",
     frase: "A intensidade transformada em arte.",
-    imagens: { ouro: triadeOuroClean, prata: triadePrataClean },
-    campaign: triadeCampaign,
+    imagens: { ouro: strataCard, prata: strataCard },
+    campaign: strataCard,
+    cardFit: "cover",
   },
   triade: {
     slug: "triade",
