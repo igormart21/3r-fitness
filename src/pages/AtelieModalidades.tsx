@@ -385,9 +385,12 @@ const AtelieModalidades = () => {
           <img
             src={logo3R}
             alt="3R Fitness"
+            decoding="async"
+            fetchPriority="high"
             style={{
-              height: "60vh",
+              height: "clamp(220px, 52vh, 580px)",
               width: "auto",
+              maxWidth: "82vw",
               filter:
                 "brightness(0) saturate(100%) invert(78%) sepia(38%) saturate(540%) hue-rotate(7deg) brightness(95%) contrast(88%) drop-shadow(0 4px 24px rgba(212,175,55,0.25))",
               opacity: logoOpacity,
