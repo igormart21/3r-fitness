@@ -5,7 +5,7 @@ import { Testimonials } from "@/components/Testimonials";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#000" }}>
+    <div className="min-h-screen-safe flex flex-col" style={{ backgroundColor: "#000" }}>
       <main className="flex-1">
         <Hero />
         <Modalidades />

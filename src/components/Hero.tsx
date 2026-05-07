@@ -54,8 +54,8 @@ export const Hero = () => {
 
   return (
     <section
-      className="relative w-full overflow-hidden"
-      style={{ minHeight: "100vh", backgroundColor: "#000" }}
+      className="relative w-full overflow-hidden h-screen-safe"
+      style={{ minHeight: 560, backgroundColor: "#000" }}
       aria-label="Hero"
     >
       {HERO_IMAGES.map((src, i) => {
@@ -66,6 +66,9 @@ export const Hero = () => {
             src={src}
             alt="Atletas 3R Fitness"
             aria-hidden={!isActive}
+            decoding="async"
+            loading={i === 0 ? "eager" : "lazy"}
+            fetchPriority={i === 0 ? "high" : "low"}
             className="hero-slide absolute inset-0 w-full h-full object-cover"
             style={{
               objectPosition: "center 30%",
