@@ -9,10 +9,14 @@ export const HomeFloatingButton = () => {
     <Link
       to="/"
       aria-label="Voltar para a página inicial"
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 inline-flex items-center gap-2 px-5 h-11 rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2"
+      className="fixed top-5 right-20 sm:top-6 sm:right-24 z-50 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full text-white shadow-lg transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2"
+      style={{
+        background: "linear-gradient(135deg, hsl(0 0% 18%) 0%, hsl(0 0% 8%) 100%)",
+        boxShadow: "0 10px 25px rgba(0,0,0,0.45), 0 0 18px rgba(212,175,55,0.18)",
+        border: "1px solid rgba(212,175,55,0.45)",
+      }}
     >
-      <Home className="h-4 w-4" strokeWidth={2} />
-      <span className="text-xs font-semibold uppercase tracking-[0.2em]">Home</span>
+      <Home className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.75} />
     </Link>
   );
 };
