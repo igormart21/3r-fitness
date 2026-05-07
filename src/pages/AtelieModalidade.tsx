@@ -126,13 +126,15 @@ const AtelieModalidade = () => {
       {/* 1. HERO + 2. FAIXA — ocultos no Triathlon (vai direto para "O Ateliê Triatlo") */}
       {modalidade.slug !== "triathlon" && (
         <>
-          <section className="relative w-screen h-screen overflow-hidden">
+          <section className="relative w-screen h-screen-safe overflow-hidden">
             <img
               src={heroBg}
               alt=""
               aria-hidden
+              decoding="async"
+              fetchPriority="high"
               className="absolute inset-0 w-full h-full object-cover modalidade-hero-zoom"
-              style={{ objectPosition: "center center", filter: "contrast(1.08) saturate(1.05)" }}
+              style={{ objectPosition: "center 30%", filter: "contrast(1.06) saturate(1.03)" }}
             />
             <div
               className="absolute inset-0"
@@ -337,6 +339,7 @@ const AtelieModalidade = () => {
                     src={l.imagens.ouro}
                     alt={l.nome}
                     loading="lazy"
+                    decoding="async"
                     className={`${l.cardFit === "contain" ? "max-w-full max-h-full object-contain" : "w-full h-full object-cover"} transition-transform duration-[1400ms] ease-out group-hover:scale-[1.02]`}
                     style={{ filter: "contrast(1.04) saturate(1.02) brightness(1.01)" }}
                   />
@@ -432,11 +435,13 @@ const AtelieModalidade = () => {
       {modalidade.slug !== "triathlon" && modalidade.slug !== "crossfit" && (
         <>
           {/* 4. STORYTELLING CINEMATOGRÁFICO */}
-          <section className="relative w-screen h-[70vh] overflow-hidden">
+          <section className="relative w-screen h-[70svh] min-h-[480px] overflow-hidden">
             <img
               src={heroBg}
               alt=""
               aria-hidden
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 w-full h-full object-cover"
               style={{ objectPosition: "center 40%", filter: "contrast(1.1) saturate(1.05) brightness(0.85)" }}
             />

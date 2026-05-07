@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 const Atelie = () => {
   return (
     <div
-      className="min-h-screen w-full text-white relative overflow-hidden"
+      className="min-h-screen-safe w-full text-white relative overflow-hidden"
       style={{ backgroundColor: "#050505" }}
     >
       {/* Header */}
@@ -37,7 +37,7 @@ const Atelie = () => {
         }}
       />
 
-      <main className="relative w-full min-h-screen flex items-center justify-center px-6 py-32">
+      <main className="relative w-full min-h-screen-safe flex items-center justify-center px-6 py-24 md:py-32">
         <div className="max-w-2xl mx-auto text-center">
           <p
             className="text-[10px] uppercase tracking-[0.6em] mb-8"

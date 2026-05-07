@@ -34,23 +34,25 @@ const ModalidadeSection = ({
     <section
       ref={ref}
       className="relative w-full overflow-hidden group"
-      style={{ height: "92vh", minHeight: 620 }}
+      style={{ height: "92svh", minHeight: 560 }}
     >
       <img
         src={m.img}
         alt={m.nome}
         loading="lazy"
+        decoding="async"
+        fetchPriority={index === 0 ? "high" : "low"}
         className="absolute inset-0 w-full h-full object-cover"
         style={{
-          objectPosition: m.slug === "triathlon" ? "75% 18%" : "center 18%",
+          objectPosition: m.slug === "triathlon" ? "75% 18%" : "center 22%",
           opacity: visible ? 1 : 0,
           transform: visible ? "scale(1) translateY(0)" : "scale(1.08) translateY(40px)",
           transition:
-            "opacity 800ms ease-out 200ms, transform 1200ms cubic-bezier(0.22,1,0.36,1) 200ms",
-          filter: "contrast(1.05) saturate(1.03)",
+            "opacity 900ms cubic-bezier(0.22,1,0.36,1) 200ms, transform 1400ms cubic-bezier(0.22,1,0.36,1) 200ms",
+          filter: "contrast(1.04) saturate(1.02)",
           willChange: "opacity, transform",
           animation: visible
-            ? `ken-burns-${m.slug === "triathlon" ? "tri" : (index % 2 === 0 ? "a" : "b")} 18s ease-in-out 1400ms infinite alternate`
+            ? `ken-burns-${m.slug === "triathlon" ? "tri" : (index % 2 === 0 ? "a" : "b")} 22s ease-in-out 1600ms infinite alternate`
             : undefined,
         }}
       />
@@ -292,14 +294,16 @@ const AtelieModalidades = () => {
 
       {/* HERO */}
       <section
-        className="relative w-full flex items-center justify-center overflow-hidden"
-        style={{ height: "100vh", minHeight: 640 }}
+        className="relative w-full flex items-center justify-center overflow-hidden h-screen-safe"
+        style={{ minHeight: 580 }}
       >
         {/* Background image full screen */}
         <img
           src={heroBg}
           alt=""
           aria-hidden
+          decoding="async"
+          fetchPriority="high"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div
@@ -381,9 +385,12 @@ const AtelieModalidades = () => {
           <img
             src={logo3R}
             alt="3R Fitness"
+            decoding="async"
+            fetchPriority="high"
             style={{
-              height: "60vh",
+              height: "clamp(220px, 52vh, 580px)",
               width: "auto",
+              maxWidth: "82vw",
               filter:
                 "brightness(0) saturate(100%) invert(78%) sepia(38%) saturate(540%) hue-rotate(7deg) brightness(95%) contrast(88%) drop-shadow(0 4px 24px rgba(212,175,55,0.25))",
               opacity: logoOpacity,
