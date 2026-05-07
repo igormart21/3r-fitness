@@ -284,14 +284,14 @@ const AtelieModalidade = () => {
             />
           </div>
 
-          <div className={`grid grid-cols-1 sm:grid-cols-2 ${linhas.length >= 3 ? "lg:grid-cols-3" : ""} gap-8 md:gap-10 ${linhas.length === 2 ? "max-w-3xl" : "max-w-5xl"} mx-auto justify-items-center`}>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 ${linhas.length >= 3 ? "lg:grid-cols-3" : ""} gap-6 md:gap-8 ${linhas.length === 2 ? "max-w-2xl" : "max-w-5xl"} mx-auto justify-items-center`}>
             {linhas.map((l, idx) => (
               <div
                 key={l.slug}
-                className="atelie-linha-card group flex flex-col items-center text-center"
+                className="atelie-linha-card group flex flex-col items-center text-center w-full max-w-[280px]"
                 style={{
                   position: "relative",
-                  padding: "26px 22px 30px",
+                  padding: "20px 18px 24px",
                   background:
                     "linear-gradient(180deg, rgba(15,15,15,0.55) 0%, rgba(5,5,5,0.62) 100%)",
                   backdropFilter: "blur(14px) saturate(1.05)",
