@@ -97,7 +97,7 @@ export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {
                 {items.map((item) => {
                   const thumbnail = getItemThumbnail(item);
                   return (
-                  <div key={item.variantId} className="group">
+                  <div key={item.variantId} className="group animate-fade-in">
                     <div className="flex gap-5">
                       {/* Imagem grande */}
                       <div className="w-28 h-36 bg-[hsl(0,0%,8%)] overflow-hidden flex-shrink-0 border border-[hsl(43,30%,12%)] flex items-center justify-center">
@@ -105,8 +105,9 @@ export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {
                           <img
                             src={thumbnail.url}
                             alt={thumbnail.altText || item.product.node.title}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            className="w-full h-full object-contain p-2 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                             loading="lazy"
+                            decoding="async"
                           />
                         ) : (
                           <span className="font-display text-[hsl(43,65%,55%)] text-xl tracking-[0.3em] font-light">
