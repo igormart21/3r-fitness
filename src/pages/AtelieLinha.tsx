@@ -248,12 +248,15 @@ const AtelieLinha = () => {
             className="fixed inset-0 pointer-events-none overflow-hidden"
             style={{ zIndex: 0 }}
           >
-            {[
-              { src: linha.cinematic.ouro, active: material === "ouro" },
-              { src: linha.cinematic.prata, active: material === "prata" },
-            ].map((layer, i) => (
+            {(() => {
+              const set = (linha.cinematic && (forma === "feminino" ? linha.cinematic.feminino : linha.cinematic.masculino)) || { ouro: linha.cinematic!.ouro, prata: linha.cinematic!.prata };
+              return [
+                { src: set.ouro, active: material === "ouro", key: `${forma}-ouro` },
+                { src: set.prata, active: material === "prata", key: `${forma}-prata` },
+              ];
+            })().map((layer) => (
               <div
-                key={i}
+                key={layer.key}
                 className="absolute inset-0 cinematic-breathing"
                 style={{
                   backgroundImage: `url(${layer.src})`,
