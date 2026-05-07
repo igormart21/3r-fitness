@@ -135,8 +135,8 @@ export const LINHAS: Record<string, Linha> = {
     imagens: { ouro: aeronOuro, prata: triadePrataClean },
     campaign: triadeCampaign,
   },
-  travessia: {
-    slug: "travessia",
+  velarion: {
+    slug: "velarion",
     nome: "VELARION",
     assinatura: "Assinatura da Resistência",
     frase: "Atravessar é mais que vencer.",
@@ -195,7 +195,7 @@ export const MODALIDADES: Modalidade[] = [
     nome: "Triatlo",
     subtitulo: "A travessia dos limites",
     img: sportTriathlon,
-    linhas: ["travessia", "elite"],
+    linhas: ["velarion", "elite"],
   },
   {
     slug: "fisiculturismo",
