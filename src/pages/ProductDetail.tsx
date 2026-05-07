@@ -111,7 +111,7 @@ const ProductDetail = () => {
         </div>
       </header>
 
-      <main className="pt-24">
+      <main className="pt-24 pb-24 md:pb-0">
         {loading ? (
           <div className="flex justify-center py-40">
             <Loader2
@@ -463,6 +463,51 @@ const ProductDetail = () => {
           </>
         )}
       </main>
+
+      {/* Sticky CTA mobile */}
+      {product && variant && (
+        <div
+          className="md:hidden fixed bottom-0 inset-x-0 z-40 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom)+12px)] backdrop-blur-xl animate-fade-in"
+          style={{
+            background: "linear-gradient(180deg, rgba(7,7,7,0.55) 0%, rgba(7,7,7,0.92) 60%)",
+            borderTop: "1px solid rgba(212,175,55,0.18)",
+          }}
+        >
+          <div className="flex items-center gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-[9px] uppercase tracking-[0.35em] text-white/45">
+                {product.title}
+              </p>
+              <p
+                className="font-serif text-base leading-tight truncate"
+                style={{ color: "#d4af37" }}
+              >
+                {variant.price.currencyCode}{" "}
+                {parseFloat(variant.price.amount).toFixed(2)}
+              </p>
+            </div>
+            <button
+              onClick={handleAdd}
+              disabled={isLoading || !variant?.availableForSale}
+              className="px-6 py-3.5 text-[10px] uppercase tracking-[0.35em] transition-all duration-500 disabled:opacity-50 active:scale-[0.98]"
+              style={{
+                color: "#070707",
+                background:
+                  "linear-gradient(135deg, #f4d77a 0%, #d4af37 50%, #b8860b 100%)",
+                boxShadow: "0 8px 30px rgba(212,175,55,0.3)",
+              }}
+            >
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin mx-auto" />
+              ) : variant?.availableForSale ? (
+                "Adicionar"
+              ) : (
+                "Indisponível"
+              )}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
