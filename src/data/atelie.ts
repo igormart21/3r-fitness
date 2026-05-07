@@ -135,8 +135,8 @@ export const LINHAS: Record<string, Linha> = {
     imagens: { ouro: aeronOuro, prata: triadePrataClean },
     campaign: triadeCampaign,
   },
-  travessia: {
-    slug: "travessia",
+  velarion: {
+    slug: "velarion",
     nome: "VELARION",
     assinatura: "Assinatura da Resistência",
     frase: "Atravessar é mais que vencer.",
