@@ -284,7 +284,7 @@ const AtelieModalidade = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 max-w-5xl mx-auto">
+          <div className={`grid grid-cols-1 sm:grid-cols-2 ${linhas.length >= 3 ? "lg:grid-cols-3" : ""} gap-8 md:gap-10 ${linhas.length === 2 ? "max-w-3xl" : "max-w-5xl"} mx-auto justify-items-center`}>
             {linhas.map((l, idx) => (
               <div
                 key={l.slug}
