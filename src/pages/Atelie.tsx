@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 const Atelie = () => {
   return (
     <div
-      className="min-h-screen w-full text-white relative overflow-hidden"
+      className="min-h-screen-safe w-full text-white relative overflow-hidden"
       style={{ backgroundColor: "#050505" }}
     >
       {/* Header */}
