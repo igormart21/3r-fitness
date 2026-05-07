@@ -27,6 +27,8 @@ import velarionOuro from "@/assets/linha-velarion-ouro.png";
 import trionEliteOuro from "@/assets/linha-trion-elite-ouro.png";
 import trionEliteAtletaOuro from "@/assets/trion-elite-atleta-ouro.jpg";
 import trionEliteAtletaPrata from "@/assets/trion-elite-atleta-prata.jpg";
+import trionEliteAtletaFemOuro from "@/assets/trion-elite-atleta-fem-ouro.jpg";
+import trionEliteAtletaFemPrata from "@/assets/trion-elite-atleta-fem-prata.jpg";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
@@ -48,7 +50,12 @@ export type Linha = {
   campaign: string;
   editorial?: EditorialBackground;
   cardFit?: "cover" | "contain";
-  cinematic?: { ouro: string; prata: string };
+  cinematic?: {
+    ouro: string;
+    prata: string;
+    feminino?: { ouro: string; prata: string };
+    masculino?: { ouro: string; prata: string };
+  };
 };
 
 export type Modalidade = {
@@ -145,7 +152,12 @@ export const LINHAS: Record<string, Linha> = {
     imagens: { ouro: trionEliteOuro, prata: trionEliteOuro },
     campaign: trionEliteOuro,
     cardFit: "contain",
-    cinematic: { ouro: trionEliteAtletaOuro, prata: trionEliteAtletaPrata },
+    cinematic: {
+      ouro: trionEliteAtletaOuro,
+      prata: trionEliteAtletaPrata,
+      masculino: { ouro: trionEliteAtletaOuro, prata: trionEliteAtletaPrata },
+      feminino: { ouro: trionEliteAtletaFemOuro, prata: trionEliteAtletaFemPrata },
+    },
   },
 };
 
