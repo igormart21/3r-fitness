@@ -67,7 +67,7 @@ const AtelieLinha = () => {
   const handleSelecionar = async () => {
     if (adding) return;
     setAdding(true);
-    const result = await addAtelieLineToCart(linha.slug, material);
+    const result = await addAtelieLineToCart(linha.slug, material, showFormaSelector ? forma : undefined);
     setAdding(false);
     if (!result.success) {
       toast.error(result.error ?? "Variação ainda não configurada.");

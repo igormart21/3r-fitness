@@ -1,48 +1,78 @@
 import { storefrontApiRequest, PRODUCT_BY_HANDLE_QUERY, ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartUIStore } from "@/stores/cartUIStore";
-import { LINHAS, type Material } from "@/data/atelie";
+import { LINHAS, type Material, type Forma } from "@/data/atelie";
 
-// Mapa: slug da linha → handle do produto Shopify
+// Mapa: slug da linha (rota) → handle do produto Shopify
 const ATELIE_HANDLES: Record<string, string> = {
+  elite: "trion-elite",
+  velarion: "velarion",
+  // legados / outras linhas (mantidos para compatibilidade)
   halter: "halter-1",
   vigor: "vigor",
 };
 
-// Override explícito de variant ID por linha + material (ID numérico Shopify).
-// Garante que a variante exata configurada na Shopify seja usada no checkout.
-const VARIANT_ID_OVERRIDES: Record<string, Partial<Record<Material, string>>> = {
-  halter: {
-    ouro: "48912055468259",
-    prata: "48912055501027",
-  },
-};
-
-function toGid(numericId: string) {
-  return `gid://shopify/ProductVariant/${numericId}`;
+function normalize(s: string | undefined | null) {
+  return (s ?? "")
+    .toString()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
 }
 
-function matchVariantByMaterial(product: any, material: Material, slug: string) {
-  const variants = product?.variants?.edges ?? [];
-  const overrideId = VARIANT_ID_OVERRIDES[slug]?.[material];
-  if (overrideId) {
-    const gid = toGid(overrideId);
-    const byId = variants.find((v: any) => v.node.id === gid);
-    if (byId) return byId.node;
+function materialMatches(value: string, material: Material) {
+  const v = normalize(value);
+  return material === "ouro" ? v.includes("ouro") : v.includes("prata");
+}
+
+function formaMatches(value: string, forma: Forma) {
+  const v = normalize(value);
+  if (forma === "feminino") return v.startsWith("femin"); // feminino / feminina
+  return v.startsWith("masc");
+}
+
+function matchVariant(product: any, material: Material, forma?: Forma) {
+  const variants: any[] = (product?.variants?.edges ?? []).map((e: any) => e.node);
+
+  // 1) match estrito material + forma quando houver opção Forma
+  if (forma) {
+    const strict = variants.find((v) => {
+      const mat = v.selectedOptions?.find((o: any) => normalize(o.name).includes("material"));
+      const fr = v.selectedOptions?.find((o: any) => normalize(o.name).includes("forma"));
+      return (
+        (mat ? materialMatches(mat.value, material) : false) &&
+        (fr ? formaMatches(fr.value, forma) : false)
+      );
+    });
+    if (strict) return strict;
+
+    // fallback: parse pelo title "Ouro 18K / masculino"
+    const byTitle = variants.find((v) => {
+      const parts = (v.title ?? "").split("/").map((s: string) => s.trim());
+      const matPart = parts[0] ?? v.title;
+      const frPart = parts[1] ?? "";
+      return materialMatches(matPart, material) && formaMatches(frPart, forma);
+    });
+    if (byTitle) return byTitle;
   }
-  const target = material === "ouro" ? "ouro" : "prata";
-  const byOption = variants.find((v: any) =>
-    v.node.selectedOptions?.some((o: any) => o.value?.toLowerCase().includes(target))
+
+  // 2) match apenas material
+  const byMaterial = variants.find((v) =>
+    v.selectedOptions?.some((o: any) => materialMatches(o.value, material)),
   );
-  if (byOption) return byOption.node;
-  const byTitle = variants.find((v: any) => v.node.title?.toLowerCase().includes(target));
-  if (byTitle) return byTitle.node;
-  return variants[0]?.node;
+  if (byMaterial) return byMaterial;
+
+  const byMaterialTitle = variants.find((v) => materialMatches(v.title ?? "", material));
+  if (byMaterialTitle) return byMaterialTitle;
+
+  return variants[0];
 }
 
 export async function addAtelieLineToCart(
   slug: string,
   material: Material,
+  forma?: Forma,
 ): Promise<{ success: boolean; error?: string }> {
   const handle = ATELIE_HANDLES[slug];
   if (!handle) return { success: false, error: "Linha ainda não configurada." };
@@ -50,13 +80,14 @@ export async function addAtelieLineToCart(
   try {
     const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
     const product = data?.data?.product;
-    if (!product) return { success: false, error: "Produto não encontrado." };
+    if (!product) return { success: false, error: "Produto não encontrado na loja." };
 
-    const variant = matchVariantByMaterial(product, material, slug);
+    const variant = matchVariant(product, material, forma);
     if (!variant) return { success: false, error: "Variação não disponível." };
 
-    // Resolve imagem com prioridade: variante → featured → images → media
-    const variantImg = variant.image?.url ? { url: variant.image.url, altText: variant.image.altText ?? null } : null;
+    const variantImg = variant.image?.url
+      ? { url: variant.image.url, altText: variant.image.altText ?? null }
+      : null;
     const featuredImg = product.featuredImage?.url
       ? { url: product.featuredImage.url, altText: product.featuredImage.altText ?? null }
       : null;
@@ -68,13 +99,15 @@ export async function addAtelieLineToCart(
         .filter(Boolean)
         .map((i: any) => ({ url: i.url, altText: i.altText ?? null })) ?? [];
     const atelieImg = LINHAS[slug]?.imagens?.[material]
-      ? { url: LINHAS[slug].imagens[material], altText: `${LINHAS[slug].nome} ${material === "ouro" ? "Ouro" : "Prata"}` }
+      ? {
+          url: LINHAS[slug].imagens[material],
+          altText: `${LINHAS[slug].nome} ${material === "ouro" ? "Ouro" : "Prata"}`,
+        }
       : null;
 
     const orderedImgs = [variantImg, featuredImg, ...productImgs, ...mediaImgs, atelieImg].filter(
       (img): img is { url: string; altText: string | null } => !!img?.url,
     );
-    // Dedupe por url, preservando ordem
     const seen = new Set<string>();
     const dedupedImgs = orderedImgs.filter((i) => (seen.has(i.url) ? false : (seen.add(i.url), true)));
 
@@ -85,9 +118,7 @@ export async function addAtelieLineToCart(
         description: product.description,
         handle: product.handle,
         featuredImage: featuredImg,
-        priceRange: product.priceRange ?? {
-          minVariantPrice: variant.price,
-        },
+        priceRange: product.priceRange ?? { minVariantPrice: variant.price },
         images: { edges: dedupedImgs.map((node) => ({ node })) },
         media: product.media ?? { edges: [] },
         variants: product.variants,
@@ -105,10 +136,11 @@ export async function addAtelieLineToCart(
       thumbnailImage: dedupedImgs[0] ?? null,
     });
 
-    // Garante que items persistidos antigos (sem imagem) recebam o produto atualizado
     useCartStore.setState((state) => ({
       items: state.items.map((it) =>
-        it.variantId === variant.id ? { ...it, product: productForCart, thumbnailImage: dedupedImgs[0] ?? null } : it,
+        it.variantId === variant.id
+          ? { ...it, product: productForCart, thumbnailImage: dedupedImgs[0] ?? null }
+          : it,
       ),
     }));
 
