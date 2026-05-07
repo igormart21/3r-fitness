@@ -284,11 +284,11 @@ const AtelieModalidade = () => {
             />
           </div>
 
-          <div className={`grid grid-cols-1 sm:grid-cols-2 ${linhas.length >= 3 ? "lg:grid-cols-3" : ""} gap-6 md:gap-8 ${linhas.length === 2 ? "max-w-2xl ml-auto mr-auto md:ml-[55%] md:-translate-x-1/2" : "max-w-5xl mx-auto"} justify-items-center`}>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 ${linhas.length >= 3 ? "lg:grid-cols-3" : ""} gap-6 md:gap-8 ${linhas.length === 2 ? "max-w-2xl ml-auto mr-auto md:ml-[55%] md:-translate-x-1/2" : "max-w-5xl mx-auto"} justify-items-center items-stretch`}>
             {linhas.map((l, idx) => (
               <div
                 key={l.slug}
-                className="atelie-linha-card group flex flex-col items-center text-center w-full max-w-[220px]"
+                className="atelie-linha-card group flex flex-col items-center text-center w-full max-w-[220px] h-full"
                 style={{
                   position: "relative",
                   padding: "16px 14px 20px",
@@ -373,7 +373,7 @@ const AtelieModalidade = () => {
                 <button
                   type="button"
                   onClick={() => navigate(`/atelie/linha/${l.slug}`)}
-                  className="mt-7 inline-flex items-center gap-3 transition-all duration-700"
+                  className="mt-auto pt-7 inline-flex items-center gap-3 transition-all duration-700"
                   style={{
                     padding: "11px 24px",
                     color: "#d4af37",
