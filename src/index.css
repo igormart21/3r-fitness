@@ -77,6 +77,12 @@
 
 @layer base {
   * { @apply border-border; }
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
@@ -87,6 +93,17 @@
     font-optical-sizing: auto;
     letter-spacing: -0.02em;
   }
+  img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
 }
 
 @layer utilities {
@@ -96,6 +113,12 @@
   .shadow-soft { box-shadow: var(--shadow-soft); }
   .shadow-elegant { box-shadow: var(--shadow-elegant); }
   .transition-smooth { transition: all 0.3s var(--transition-smooth); }
+  /* Mobile-safe full viewport (evita corte por barras do iOS/Android) */
+  .h-screen-safe { height: 100vh; height: 100svh; }
+  .min-h-screen-safe { min-height: 100vh; min-height: 100svh; }
+  /* Lazy fade-in para imagens cinematográficas */
+  .img-premium { opacity: 0; transition: opacity 900ms cubic-bezier(0.22,1,0.36,1); }
+  .img-premium.is-loaded { opacity: 1; }
 }
 
 /* HERO EDITORIAL - 3R FITNESS */
