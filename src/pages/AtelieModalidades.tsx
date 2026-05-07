@@ -42,7 +42,7 @@ const ModalidadeSection = ({
         loading="lazy"
         className="absolute inset-0 w-full h-full object-cover"
         style={{
-          objectPosition: "center 18%",
+          objectPosition: m.slug === "triathlon" ? "75% 18%" : "center 18%",
           opacity: visible ? 1 : 0,
           transform: visible ? "scale(1) translateY(0)" : "scale(1.08) translateY(40px)",
           transition:
