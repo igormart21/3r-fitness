@@ -81,7 +81,7 @@ const ProductDetail = () => {
 
   return (
     <div
-      className="min-h-screen text-foreground relative"
+      className="min-h-screen-safe text-foreground relative"
       style={{
         backgroundColor: "#070707",
         ["--background" as any]: "0 0% 4%",
@@ -134,8 +134,8 @@ const ProductDetail = () => {
         ) : (
           <>
             {/* HERO da peça */}
-            <section className="relative w-full px-6 py-12 md:py-20">
-              <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <section className="relative w-full px-5 sm:px-6 py-10 sm:py-14 md:py-20 animate-fade-in">
+              <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 sm:gap-12 lg:gap-20 items-start md:items-center">
                 {/* Imagem dramática */}
                 <div className="relative">
                   <div
@@ -151,10 +151,14 @@ const ProductDetail = () => {
                   >
                     {galleryImages[activeImage] ? (
                       <img
+                        key={galleryImages[activeImage].url}
                         src={galleryImages[activeImage].url}
                         alt={galleryImages[activeImage].altText || product.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover img-premium is-loaded animate-fade-in"
                         loading="eager"
+                        decoding="async"
+                        fetchPriority="high"
+                        style={{ willChange: "opacity, transform" }}
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
@@ -203,8 +207,9 @@ const ProductDetail = () => {
                           <img
                             src={img.url}
                             alt={img.altText || ""}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                             loading="lazy"
+                            decoding="async"
                           />
                         </button>
                       ))}
@@ -231,7 +236,7 @@ const ProductDetail = () => {
                   </div>
 
                   <h1
-                    className="font-serif italic font-light text-4xl md:text-6xl leading-tight mb-6"
+                    className="font-serif italic font-light text-[2.25rem] sm:text-5xl md:text-6xl leading-[1.05] mb-5 sm:mb-6"
                     style={{
                       fontFamily:
                         '"Cormorant Garamond","Playfair Display",Georgia,serif',
@@ -304,7 +309,7 @@ const ProductDetail = () => {
                   <button
                     onClick={handleAdd}
                     disabled={isLoading || !variant?.availableForSale}
-                    className="w-full py-5 text-[11px] uppercase tracking-[0.45em] transition-all duration-500 disabled:opacity-50"
+                    className="w-full py-5 text-[11px] uppercase tracking-[0.45em] transition-all duration-500 disabled:opacity-50 hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0"
                     style={{
                       color: "#070707",
                       background:
