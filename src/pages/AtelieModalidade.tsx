@@ -126,13 +126,15 @@ const AtelieModalidade = () => {
       {/* 1. HERO + 2. FAIXA — ocultos no Triathlon (vai direto para "O Ateliê Triatlo") */}
       {modalidade.slug !== "triathlon" && (
         <>
-          <section className="relative w-screen h-screen overflow-hidden">
+          <section className="relative w-screen h-screen-safe overflow-hidden">
             <img
               src={heroBg}
               alt=""
               aria-hidden
+              decoding="async"
+              fetchPriority="high"
               className="absolute inset-0 w-full h-full object-cover modalidade-hero-zoom"
-              style={{ objectPosition: "center center", filter: "contrast(1.08) saturate(1.05)" }}
+              style={{ objectPosition: "center 30%", filter: "contrast(1.06) saturate(1.03)" }}
             />
             <div
               className="absolute inset-0"
