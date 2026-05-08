@@ -77,9 +77,9 @@ const ModalidadeSection = ({
       ref={ref}
       className="relative w-full overflow-hidden group"
       style={{
-        height: isMobile ? "88svh" : "94svh",
-        minHeight: 560,
-        marginTop: index === 0 ? 0 : "clamp(24px, 4vw, 64px)",
+        height: isMobile ? "92svh" : "100svh",
+        minHeight: 600,
+        marginTop: index === 0 ? 0 : "clamp(40px, 6vw, 96px)",
       }}
     >
       <img
