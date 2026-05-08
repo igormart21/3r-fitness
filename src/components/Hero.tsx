@@ -90,8 +90,6 @@ export const Hero = () => {
     return () => window.clearInterval(id);
   }, []);
 
-  const activeSlide = HERO_SLIDES[index];
-  const safeIndex = ((index - 1 + HERO_SLIDES.length) % HERO_SLIDES.length) + 1;
 
   const handleScrollToModalidades = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
