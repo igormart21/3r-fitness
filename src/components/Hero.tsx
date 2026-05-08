@@ -68,8 +68,8 @@ const HERO_SLIDES: HeroSlide[] = [
   },
 ];
 
-const DISPLAY_MS = 5200;
-const TRANSITION_MS = 1800;
+const DISPLAY_MS = 7200;
+const TRANSITION_MS = 2400;
 
 export const Hero = () => {
   const [index, setIndex] = useState(0);
@@ -90,8 +90,6 @@ export const Hero = () => {
     return () => window.clearInterval(id);
   }, []);
 
-  const activeSlide = HERO_SLIDES[index];
-  const safeIndex = ((index - 1 + HERO_SLIDES.length) % HERO_SLIDES.length) + 1;
 
   const handleScrollToModalidades = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -156,53 +154,29 @@ export const Hero = () => {
         ))}
       </div>
 
-      <div className="hero-light-sweep" aria-hidden />
-      <div className="hero-particles" aria-hidden />
-      <div className="hero-overlay-base" aria-hidden />
-      <div className="hero-overlay-legibility" aria-hidden />
+      <div className="hero-overlay-soft" aria-hidden />
       <div className="hero-overlay-vignette" aria-hidden />
-      <div className="hero-overlay-bottom" aria-hidden />
 
       <div className="hero-main-content">
-        <div className="hero-kicker-row animate-fade-in">
-          <span className="hero-kicker-line" aria-hidden />
-          <p className="hero-kicker">Ateliê 3R Fitness</p>
-        </div>
-
         <div className="hero-copy-wrap">
-          <span key={`${activeSlide.id}-label`} className="hero-slide-label animate-fade-in">
-            {activeSlide.label}
-          </span>
           <h1 className="hero-title">
-            Alta performance transformada em símbolo.
+            Alta performance transformada em <span className="hero-title__accent">símbolo</span>.
           </h1>
           <p className="hero-subtitle">
             Joias premium desenvolvidas para atletas que transformam disciplina em identidade.
           </p>
-        </div>
 
-        <div className="hero-actions">
-          <button
-            type="button"
-            onClick={handleScrollToModalidades}
-            className="hero-luxury-button"
-            aria-label="Explorar Modalidades"
-          >
-            <span className="hero-luxury-button__shine" aria-hidden />
-            <span className="hero-luxury-button__label">Explorar Modalidades</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="hero-status-rail" aria-hidden>
-        <span className="hero-status-index">0{safeIndex}</span>
-        <div className="hero-status-track">
-          {HERO_SLIDES.map((slide, i) => (
-            <span
-              key={slide.id}
-              className={`hero-status-dot ${i === index ? "is-active" : ""}`}
-            />
-          ))}
+          <div className="hero-actions">
+            <button
+              type="button"
+              onClick={handleScrollToModalidades}
+              className="hero-luxury-button"
+              aria-label="Explorar Modalidades"
+            >
+              <span className="hero-luxury-button__shine" aria-hidden />
+              <span className="hero-luxury-button__label">Explorar Modalidades</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>
