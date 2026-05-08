@@ -28,69 +28,120 @@ const ModalidadeSection = ({
   onNavigate: (slug: string) => void;
 }) => {
   const ref = useRef<HTMLElement | null>(null);
+  const imgRef = useRef<HTMLImageElement | null>(null);
   const [visible, setVisible] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
       ([entry]) => entry.isIntersecting && setVisible(true),
-      { threshold: 0.2 }
+      { threshold: 0.18 }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
 
+  // Subtle parallax — desktop only, rAF-throttled
+  useEffect(() => {
+    if (isMobile) return;
+    const el = ref.current;
+    const img = imgRef.current;
+    if (!el || !img) return;
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight;
+        // -1 (above) → 1 (below)
+        const t = Math.max(-1, Math.min(1, (rect.top + rect.height / 2 - vh / 2) / vh));
+        img.style.setProperty("--parallax", `${(-t * 24).toFixed(2)}px`);
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [isMobile]);
+
+  const focus = FOCUS[m.slug] ?? { desktop: "center 22%", mobile: "center 30%" };
+  const objectPosition = isMobile ? focus.mobile : focus.desktop;
+
   return (
     <section
       ref={ref}
       className="relative w-full overflow-hidden group"
-      style={{ height: "92svh", minHeight: 560 }}
+      style={{
+        height: isMobile ? "88svh" : "94svh",
+        minHeight: 560,
+        marginTop: index === 0 ? 0 : "clamp(24px, 4vw, 64px)",
+      }}
     >
       <img
+        ref={imgRef}
         src={m.img}
         alt={m.nome}
         loading="lazy"
         decoding="async"
         fetchPriority={index === 0 ? "high" : "low"}
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
         style={{
-          objectPosition: m.slug === "triathlon" ? "75% 18%" : "center 22%",
+          objectPosition,
           opacity: visible ? 1 : 0,
-          transform: visible ? "scale(1) translateY(0)" : "scale(1.08) translateY(40px)",
+          transform: visible
+            ? "translate3d(0, var(--parallax, 0px), 0) scale(1)"
+            : "translate3d(0, 40px, 0) scale(1.08)",
           transition:
-            "opacity 900ms cubic-bezier(0.22,1,0.36,1) 200ms, transform 1400ms cubic-bezier(0.22,1,0.36,1) 200ms",
+            "opacity 1100ms cubic-bezier(0.22,1,0.36,1) 150ms, transform 1600ms cubic-bezier(0.22,1,0.36,1) 150ms",
           filter: "contrast(1.04) saturate(1.02)",
           willChange: "opacity, transform",
-          animation: visible
-            ? `ken-burns-${m.slug === "triathlon" ? "tri" : (index % 2 === 0 ? "a" : "b")} 22s ease-in-out 1600ms infinite alternate`
-            : undefined,
         }}
       />
-      {/* Base readability overlay */}
+      {/* Unified cinematic overlay (per spec) */}
       <div
-        className="absolute inset-0"
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.85) 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0.12), rgba(0,0,0,0.38))",
+        }}
+      />
+      {/* Bottom legibility gradient (kept subtle for headline) */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.55) 80%, rgba(0,0,0,0.92) 100%)",
+        }}
+      />
+      {/* Cinematic vignette */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none opacity-90"
+        style={{
+          background:
+            "radial-gradient(ellipse 110% 80% at 50% 45%, transparent 55%, rgba(0,0,0,0.55) 100%)",
         }}
       />
       {/* Hover gold sheen */}
       <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
+        aria-hidden
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-[1400ms] pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 55% at 50% 45%, rgba(212,175,55,0.18) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 55% at 50% 45%, rgba(212,175,55,0.16) 0%, transparent 70%)",
           mixBlendMode: "screen",
         }}
       />
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-        style={{ background: "rgba(0,0,0,0.10)" }}
-      />
 
       {/* Content */}
-      <div className="relative z-10 h-full container mx-auto px-6 flex items-end pb-20 md:pb-28">
+      <div className="relative z-10 h-full container mx-auto px-6 sm:px-10 flex items-end pb-20 md:pb-32">
         <div className="max-w-2xl">
           <span
             className="block text-[10px] mb-6"
@@ -100,7 +151,7 @@ const ModalidadeSection = ({
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(10px)",
               transition:
-                "opacity 500ms ease-out 500ms, transform 500ms ease-out 500ms, letter-spacing 600ms ease-out 500ms",
+                "opacity 600ms ease-out 500ms, transform 600ms ease-out 500ms, letter-spacing 700ms ease-out 500ms",
             }}
           >
             {String(index + 1).padStart(2, "0")} — MODALIDADE
@@ -110,7 +161,7 @@ const ModalidadeSection = ({
             style={{
               width: visible ? 64 : 0,
               background: "linear-gradient(90deg, #d4af37, transparent)",
-              transition: "width 700ms ease-out 600ms",
+              transition: "width 800ms ease-out 600ms",
             }}
           />
           <h2
@@ -124,7 +175,7 @@ const ModalidadeSection = ({
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(20px)",
               transition:
-                "opacity 700ms ease-out 500ms, transform 700ms ease-out 500ms, letter-spacing 900ms ease-out 500ms",
+                "opacity 800ms ease-out 500ms, transform 900ms ease-out 500ms, letter-spacing 1000ms ease-out 500ms",
             }}
           >
             {m.nome}
@@ -139,7 +190,7 @@ const ModalidadeSection = ({
               maxWidth: "32ch",
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(15px)",
-              transition: "opacity 600ms ease-out 700ms, transform 600ms ease-out 700ms",
+              transition: "opacity 700ms ease-out 750ms, transform 700ms ease-out 750ms",
             }}
           >
             {m.subtitulo}
@@ -152,7 +203,7 @@ const ModalidadeSection = ({
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(10px)",
-              transition: "opacity 400ms ease-out 1000ms, transform 400ms ease-out 1000ms",
+              transition: "opacity 500ms ease-out 1000ms, transform 500ms ease-out 1000ms",
             }}
           >
             <span
@@ -168,7 +219,7 @@ const ModalidadeSection = ({
               EXPLORAR MODALIDADE
             </span>
             <span
-              className="h-px transition-all duration-500"
+              className="h-px transition-all duration-500 group-hover/btn:w-12"
               style={{ width: 24, background: "#d4af37" }}
             />
           </button>
