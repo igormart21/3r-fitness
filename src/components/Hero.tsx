@@ -155,23 +155,22 @@ export const Hero = () => {
           <span key={`${activeSlide.id}-label`} className="hero-slide-label animate-fade-in">
             {activeSlide.label}
           </span>
-          <h1 key={activeSlide.id} className="hero-title animate-fade-in">
-            {activeSlide.title}
+          <h1 className="hero-title">
+            Alta performance transformada em símbolo.
           </h1>
-          <p className="hero-subtitle animate-fade-in">
-            Joias esportivas com presença editorial, disciplina visual e sofisticação internacional.
+          <p className="hero-subtitle">
+            Joias premium desenvolvidas para atletas que transformam disciplina em identidade.
           </p>
         </div>
 
-        <div className="hero-actions animate-fade-in">
-          <a
-            href="#modalidades"
+        <div className="hero-actions">
+          <Link
+            to="/atelie"
             className="hero-luxury-button"
-            aria-label="Explorar modalidades"
-            onClick={handleScrollToModalidades}
+            aria-label="Conheça o Ateliê"
           >
-            Explorar modalidades
-          </a>
+            Conheça o Ateliê
+          </Link>
         </div>
       </div>
 
