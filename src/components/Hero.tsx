@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import heroFisiculturismo from "@/assets/hero-fisiculturismo.png";
 import heroMusculacao from "@/assets/hero-musculacao.png";
