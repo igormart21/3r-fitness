@@ -2,8 +2,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { MODALIDADES } from "@/data/atelie";
+import { useIsMobile } from "@/hooks/use-mobile";
 import heroBg from "@/assets/atelie-modalidades-hero.jpg";
 import logo3R from "@/assets/logo-3r-fitness.png";
+
+// Mobile-aware crop positioning to keep athlete + jewelry in frame
+const FOCUS: Record<string, { desktop: string; mobile: string }> = {
+  triathlon:     { desktop: "75% 18%", mobile: "70% 28%" },
+  fisiculturismo:{ desktop: "center 22%", mobile: "center 30%" },
+  musculacao:    { desktop: "center 22%", mobile: "center 32%" },
+  corrida:       { desktop: "center 22%", mobile: "center 30%" },
+  ciclismo:      { desktop: "center 22%", mobile: "center 32%" },
+  crossfit:      { desktop: "center 22%", mobile: "center 30%" },
+};
 
 const ORDER = ["triathlon", "fisiculturismo", "musculacao", "corrida", "ciclismo", "crossfit"];
 
