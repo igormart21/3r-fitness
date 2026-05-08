@@ -68,8 +68,8 @@ const HERO_SLIDES: HeroSlide[] = [
   },
 ];
 
-const DISPLAY_MS = 5200;
-const TRANSITION_MS = 1800;
+const DISPLAY_MS = 7200;
+const TRANSITION_MS = 2400;
 
 export const Hero = () => {
   const [index, setIndex] = useState(0);
