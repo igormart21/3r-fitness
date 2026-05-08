@@ -1,147 +1,190 @@
-import { useEffect, useState } from "react";
-import heroImg from "@/assets/hero-atletas.png";
-import hero1 from "@/assets/hero-1.png";
-import hero2 from "@/assets/hero-2.png";
-import hero3 from "@/assets/hero-3.png";
-import hero4 from "@/assets/hero-4.png";
-import hero5 from "@/assets/hero-5.png";
+import { useEffect, useMemo, useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import heroFisiculturismo from "@/assets/hero-fisiculturismo.png";
+import heroMusculacao from "@/assets/hero-musculacao.png";
+import heroCorrida from "@/assets/hero-corrida.png";
+import heroCiclismo from "@/assets/hero-ciclismo.png";
+import heroTriatlo from "@/assets/hero-triatlo.png";
+import heroCrossfit from "@/assets/hero-crossfit.png";
 
-const HERO_IMAGES = [heroImg, hero1, hero2, hero3, hero4, hero5];
-const DISPLAY_MS = 3800;
-const FADE_MS = 1400;
+type HeroSlide = {
+  id: string;
+  title: string;
+  label: string;
+  image: string;
+  desktopPosition: string;
+  mobilePosition: string;
+};
+
+const HERO_SLIDES: HeroSlide[] = [
+  {
+    id: "fisiculturismo",
+    title: "Força esculpida em legado",
+    label: "Fisiculturismo",
+    image: heroFisiculturismo,
+    desktopPosition: "center 38%",
+    mobilePosition: "center 42%",
+  },
+  {
+    id: "musculacao",
+    title: "Disciplina em forma de joia",
+    label: "Musculação",
+    image: heroMusculacao,
+    desktopPosition: "center 34%",
+    mobilePosition: "70% 38%",
+  },
+  {
+    id: "corrida",
+    title: "Velocidade com assinatura própria",
+    label: "Corrida",
+    image: heroCorrida,
+    desktopPosition: "center 28%",
+    mobilePosition: "46% 24%",
+  },
+  {
+    id: "ciclismo",
+    title: "Horizontes conquistados em silêncio",
+    label: "Ciclismo",
+    image: heroCiclismo,
+    desktopPosition: "center 34%",
+    mobilePosition: "67% 30%",
+  },
+  {
+    id: "triatlo",
+    title: "Travessia elevada ao extraordinário",
+    label: "Triatlo",
+    image: heroTriatlo,
+    desktopPosition: "center 34%",
+    mobilePosition: "54% 32%",
+  },
+  {
+    id: "crossfit",
+    title: "Intensidade tratada como arte",
+    label: "Crossfit",
+    image: heroCrossfit,
+    desktopPosition: "center 40%",
+    mobilePosition: "center 34%",
+  },
+];
+
+const DISPLAY_MS = 5200;
+const TRANSITION_MS = 1800;
 
 export const Hero = () => {
   const [index, setIndex] = useState(0);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
-    HERO_IMAGES.forEach((src) => {
+    HERO_SLIDES.forEach(({ image }) => {
       const img = new Image();
-      img.src = src;
+      img.src = image;
     });
   }, []);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % HERO_IMAGES.length);
+    const id = window.setInterval(() => {
+      setIndex((current) => (current + 1) % HERO_SLIDES.length);
     }, DISPLAY_MS);
-    return () => clearInterval(id);
+
+    return () => window.clearInterval(id);
   }, []);
 
-  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const activeSlide = HERO_SLIDES[index];
+  const safeIndex = ((index - 1 + HERO_SLIDES.length) % HERO_SLIDES.length) + 1;
+
+  const handleScrollToModalidades = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const target = document.getElementById("modalidades");
     if (!target) return;
 
-    const startY = window.scrollY;
-    const endY = target.getBoundingClientRect().top + startY;
-    const distance = endY - startY;
-    const duration = 1200;
-    let startTime: number | null = null;
-
-    const easeInOut = (t: number) =>
-      t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-
-    const step = (timestamp: number) => {
-      if (startTime === null) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      window.scrollTo(0, startY + distance * easeInOut(progress));
-      if (elapsed < duration) requestAnimationFrame(step);
-    };
-
-    requestAnimationFrame(step);
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
+  const imageLayers = useMemo(
+    () =>
+      HERO_SLIDES.map((slide, i) => {
+        const isActive = i === index;
+        return {
+          ...slide,
+          isActive,
+          objectPosition: isMobile ? slide.mobilePosition : slide.desktopPosition,
+        };
+      }),
+    [index, isMobile],
+  );
 
   return (
     <section
-      className="relative w-full overflow-hidden h-screen-safe"
-      style={{ minHeight: 560, backgroundColor: "#000" }}
-      aria-label="Hero"
+      className="relative isolate w-full overflow-hidden h-screen-safe"
+      style={{ minHeight: 620, backgroundColor: "#000" }}
+      aria-label="Campanha principal 3R Fitness"
     >
-      {HERO_IMAGES.map((src, i) => {
-        const isActive = i === index;
-        return (
+      <div className="absolute inset-0">
+        {imageLayers.map((slide, i) => (
           <img
-            key={i}
-            src={src}
-            alt="Atletas 3R Fitness"
-            aria-hidden={!isActive}
-            decoding="async"
+            key={slide.id}
+            src={slide.image}
+            alt={`Campanha ${slide.label} 3R Fitness`}
+            aria-hidden={!slide.isActive}
             loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
             fetchPriority={i === 0 ? "high" : "low"}
-            className="hero-slide absolute inset-0 w-full h-full object-cover"
+            className={`absolute inset-0 h-full w-full object-cover hero-campaign-image ${slide.isActive ? "is-active" : ""}`}
             style={{
-              objectPosition: "center 30%",
-              opacity: isActive ? 1 : 0,
-              transform: isActive ? "scale(1.05)" : "scale(1.0)",
-              filter: isActive
-                ? "contrast(1.05) saturate(1.03) brightness(1) blur(0px)"
-                : "contrast(1.02) saturate(1.0) brightness(0.92) blur(6px)",
-              transition: `opacity ${FADE_MS}ms cubic-bezier(0.65,0,0.35,1), transform ${DISPLAY_MS + FADE_MS}ms cubic-bezier(0.22,1,0.36,1), filter ${FADE_MS}ms ease-in-out`,
-              willChange: "opacity, transform, filter",
+              objectPosition: slide.objectPosition,
+              transition: `opacity ${TRANSITION_MS}ms cubic-bezier(0.22,1,0.36,1), transform ${DISPLAY_MS + TRANSITION_MS}ms cubic-bezier(0.22,1,0.36,1), filter ${TRANSITION_MS}ms ease`,
             }}
           />
-        );
-      })}
+        ))}
+      </div>
 
-      {/* Soft dark gradient on the left for text readability */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(to right, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.55) 25%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0) 75%)",
-        }}
-      />
+      <div className="hero-light-sweep" aria-hidden />
+      <div className="hero-particles" aria-hidden />
+      <div className="hero-overlay-base" aria-hidden />
+      <div className="hero-overlay-legibility" aria-hidden />
+      <div className="hero-overlay-vignette" aria-hidden />
+      <div className="hero-overlay-bottom" aria-hidden />
 
-      {/* Subtle vignette */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.45) 100%)",
-        }}
-      />
+      <div className="hero-main-content">
+        <div className="hero-kicker-row animate-fade-in">
+          <span className="hero-kicker-line" aria-hidden />
+          <p className="hero-kicker">Ateliê 3R Fitness</p>
+        </div>
 
-      {/* Subtle glow accent on pendants area (center) */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle at 52% 58%, rgba(212,175,55,0.10) 0%, rgba(212,175,55,0) 22%)",
-          mixBlendMode: "screen",
-        }}
-      />
+        <div className="hero-copy-wrap">
+          <span key={`${activeSlide.id}-label`} className="hero-slide-label animate-fade-in">
+            {activeSlide.label}
+          </span>
+          <h1 key={activeSlide.id} className="hero-title animate-fade-in">
+            {activeSlide.title}
+          </h1>
+          <p className="hero-subtitle animate-fade-in">
+            Joias esportivas com presença editorial, disciplina visual e sofisticação internacional.
+          </p>
+        </div>
 
-      {/* Bottom fade */}
-      <div
-        aria-hidden
-        className="absolute inset-x-0 bottom-0 pointer-events-none"
-        style={{
-          height: "28%",
-          background:
-            "linear-gradient(180deg, rgba(5,5,5,0) 0%, rgba(5,5,5,0.85) 70%, rgba(5,5,5,1) 100%)",
-        }}
-      />
+        <div className="hero-actions animate-fade-in">
+          <a
+            href="#modalidades"
+            className="hero-luxury-button"
+            aria-label="Explorar modalidades"
+            onClick={handleScrollToModalidades}
+          >
+            Explorar modalidades
+          </a>
+        </div>
+      </div>
 
-      {/* Editorial block */}
-      <div className="hero-editorial">
-        <div className="eyebrow"><span className="eyebrow-gold">Joias</span> que representam</div>
-        <h1 className="headline">
-          Quem você
-          <br />
-          se tornou
-        </h1>
-        <a
-          href="#modalidades"
-          className="luxury-cta"
-          aria-label="Iniciar Criação"
-          onClick={handleCtaClick}
-        >
-          Iniciar Criação
-        </a>
+      <div className="hero-status-rail" aria-hidden>
+        <span className="hero-status-index">0{safeIndex}</span>
+        <div className="hero-status-track">
+          {HERO_SLIDES.map((slide, i) => (
+            <span
+              key={slide.id}
+              className={`hero-status-dot ${i === index ? "is-active" : ""}`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
