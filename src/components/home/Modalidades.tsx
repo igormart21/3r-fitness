@@ -77,14 +77,29 @@ export const Modalidades = () => {
               src={img}
               alt={nome}
               loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-110"
-              style={{ filter: "contrast(1.04) saturate(1.02)" }}
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+              style={{
+                objectPosition: "center 30%",
+                filter: "contrast(1.03) saturate(1.01)",
+                willChange: "transform",
+              }}
             />
+            {/* Overlay editorial premium */}
             <div
               className="absolute inset-0 transition-opacity duration-700"
               style={{
                 background:
-                  "linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.40) 55%, rgba(0,0,0,0.92) 100%)",
+                  "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.30) 55%, rgba(0,0,0,0.88) 100%)",
+              }}
+            />
+            {/* Vinheta cinematográfica sutil */}
+            <div
+              aria-hidden
+              className="absolute inset-0 pointer-events-none opacity-90"
+              style={{
+                background:
+                  "radial-gradient(ellipse 100% 80% at 50% 40%, transparent 55%, rgba(0,0,0,0.45) 100%)",
               }}
             />
             <div
