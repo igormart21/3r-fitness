@@ -93,12 +93,29 @@ export const Hero = () => {
   const activeSlide = HERO_SLIDES[index];
   const safeIndex = ((index - 1 + HERO_SLIDES.length) % HERO_SLIDES.length) + 1;
 
-  const handleScrollToModalidades = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleScrollToModalidades = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const target = document.getElementById("modalidades");
     if (!target) return;
 
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    const start = window.scrollY;
+    const rect = target.getBoundingClientRect();
+    const end = Math.max(0, start + rect.top);
+    const distance = end - start;
+    if (Math.abs(distance) < 4) return;
+    // Cinematic, slow, luxury easing — proportional to distance
+    const duration = Math.min(2600, Math.max(1600, Math.abs(distance) * 1.4));
+    // easeInOutQuart
+    const ease = (t: number) =>
+      t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+    let t0: number | null = null;
+    const step = (ts: number) => {
+      if (t0 === null) t0 = ts;
+      const p = Math.min(1, (ts - t0) / duration);
+      window.scrollTo(0, start + distance * ease(p));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
   };
 
   const imageLayers = useMemo(
@@ -165,21 +182,15 @@ export const Hero = () => {
         </div>
 
         <div className="hero-actions">
-          <Link
-            to="/catalogo"
+          <button
+            type="button"
+            onClick={handleScrollToModalidades}
             className="hero-luxury-button"
-            aria-label="Criar Minha Joia"
+            aria-label="Explorar Modalidades"
           >
             <span className="hero-luxury-button__shine" aria-hidden />
-            <span className="hero-luxury-button__label">Criar Minha Joia</span>
-          </Link>
-          <Link
-            to="/atelie"
-            className="hero-ghost-link"
-            aria-label="Explorar o Ateliê"
-          >
-            Explorar o Ateliê
-          </Link>
+            <span className="hero-luxury-button__label">Explorar Modalidades</span>
+          </button>
         </div>
       </div>
 
