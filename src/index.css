@@ -231,7 +231,7 @@
 .hero-actions {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 14px;
   margin-top: clamp(28px, 3.4vw, 44px);
 }
