@@ -166,11 +166,19 @@ export const Hero = () => {
 
         <div className="hero-actions">
           <Link
-            to="/atelie"
+            to="/catalogo"
             className="hero-luxury-button"
-            aria-label="Conheça o Ateliê"
+            aria-label="Criar Minha Joia"
           >
-            Conheça o Ateliê
+            <span className="hero-luxury-button__shine" aria-hidden />
+            <span className="hero-luxury-button__label">Criar Minha Joia</span>
+          </Link>
+          <Link
+            to="/atelie"
+            className="hero-ghost-link"
+            aria-label="Explorar o Ateliê"
+          >
+            Explorar o Ateliê
           </Link>
         </div>
       </div>
