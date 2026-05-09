@@ -56,21 +56,21 @@ export const Modalidades = () => {
           <Link
             key={id}
             to={`/modalidade/${id}`}
-            className={`group relative overflow-hidden block transition-all duration-700 hover:-translate-y-1.5 hover:scale-[1.015] ${
+            className={`group relative overflow-hidden block transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 ${
               featured ? "col-span-2 row-span-2 md:col-span-2 md:row-span-2" : ""
             }`}
             style={{
-              border: "1px solid rgba(212,175,55,0.18)",
-              boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
+              border: "1px solid rgba(212,175,55,0.12)",
+              boxShadow: "0 18px 44px rgba(0,0,0,0.42)",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow =
-                "0 30px 70px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,175,55,0.55), 0 0 40px rgba(212,175,55,0.25)";
-              e.currentTarget.style.borderColor = "rgba(212,175,55,0.55)";
+                "0 26px 60px rgba(0,0,0,0.52), 0 0 0 1px rgba(212,175,55,0.38), 0 0 32px rgba(212,175,55,0.14)";
+              e.currentTarget.style.borderColor = "rgba(212,175,55,0.42)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = "0 20px 50px rgba(0,0,0,0.5)";
-              e.currentTarget.style.borderColor = "rgba(212,175,55,0.18)";
+              e.currentTarget.style.boxShadow = "0 18px 44px rgba(0,0,0,0.42)";
+              e.currentTarget.style.borderColor = "rgba(212,175,55,0.12)";
             }}
           >
             <img
@@ -78,7 +78,7 @@ export const Modalidades = () => {
               alt={nome}
               loading="lazy"
               decoding="async"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
               style={{
                 objectPosition: "center 30%",
                 filter: "contrast(1.02) saturate(1.02) brightness(1.06)",
