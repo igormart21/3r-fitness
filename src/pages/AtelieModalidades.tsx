@@ -95,11 +95,13 @@ const ModalidadeSection = ({
           opacity: visible ? 1 : 0,
           transform: visible
             ? "translate3d(0, var(--parallax, 0px), 0) scale(1)"
-            : "translate3d(0, 40px, 0) scale(1.08)",
+            : "translate3d(0, 40px, 0) scale(1.03)",
+          filter: visible
+            ? "contrast(1.04) saturate(1.02) blur(0px)"
+            : "contrast(1.04) saturate(1.02) blur(6px)",
           transition:
-            "opacity 1100ms cubic-bezier(0.22,1,0.36,1) 150ms, transform 1600ms cubic-bezier(0.22,1,0.36,1) 150ms",
-          filter: "contrast(1.04) saturate(1.02)",
-          willChange: "opacity, transform",
+            "opacity 1400ms cubic-bezier(0.22,1,0.36,1) 150ms, transform 1800ms cubic-bezier(0.22,1,0.36,1) 150ms, filter 1600ms cubic-bezier(0.22,1,0.36,1) 200ms",
+          willChange: "opacity, transform, filter",
         }}
       />
       {/* Unified cinematic overlay (per spec) */}
@@ -127,6 +129,18 @@ const ModalidadeSection = ({
         style={{
           background:
             "radial-gradient(ellipse 110% 80% at 50% 45%, transparent 55%, rgba(0,0,0,0.55) 100%)",
+        }}
+      />
+      {/* Gold overlay — surge lentamente conforme a seção entra */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(212,175,55,0.10) 0%, transparent 70%)",
+          mixBlendMode: "screen",
+          opacity: visible ? 1 : 0,
+          transition: "opacity 1800ms cubic-bezier(0.22,1,0.36,1) 600ms",
         }}
       />
       {/* Hover gold sheen */}
