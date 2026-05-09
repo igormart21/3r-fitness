@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { toast } from "sonner";
 import { addAtelieLineToCart } from "@/lib/atelieCart";
+import { createDirectCheckout, HALTER_OURO_VARIANT_GID } from "@/lib/shopify";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
@@ -67,6 +68,23 @@ const AtelieLinha = () => {
   const handleSelecionar = async () => {
     if (adding) return;
     setAdding(true);
+    if (linha.slug === "halter" && material === "ouro") {
+      try {
+        const result = await createDirectCheckout(HALTER_OURO_VARIANT_GID, 1);
+        if (!result.success || !result.checkoutUrl) {
+          toast.error("Não foi possível iniciar o checkout. Tente novamente.");
+          return;
+        }
+        window.location.href = result.checkoutUrl;
+      } catch (error) {
+        console.error("[Checkout] cartCreate falhou:", error);
+        toast.error("Não foi possível iniciar o checkout. Tente novamente.");
+      } finally {
+        setAdding(false);
+      }
+      return;
+    }
+
     const result = await addAtelieLineToCart(
       linha.slug,
       material,

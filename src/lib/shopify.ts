@@ -1,9 +1,10 @@
 import { toast } from "sonner";
 
-export const SHOPIFY_API_VERSION = '2025-07';
+export const SHOPIFY_API_VERSION = '2026-04';
 export const SHOPIFY_STORE_PERMANENT_DOMAIN = 'store-store-builder-joaax.myshopify.com';
 export const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 export const SHOPIFY_STOREFRONT_TOKEN = '99fc35c7d6efe707fa332ac8633b6934';
+export const HALTER_OURO_VARIANT_GID = 'gid://shopify/ProductVariant/48912055468259';
 
 export interface ShopifyProduct {
   node: {
@@ -152,6 +153,21 @@ export const CART_CREATE_MUTATION = `
   ${CART_LINE_FRAGMENT}
 `;
 
+export const HEADLESS_CART_CREATE_MUTATION = `
+  mutation cartCreate($input: CartInput!) {
+    cartCreate(input: $input) {
+      cart {
+        id
+        checkoutUrl
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
 export const CART_LINES_ADD_MUTATION = `
   mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
     cartLinesAdd(cartId: $cartId, lines: $lines) {
@@ -184,27 +200,50 @@ export const CART_LINES_REMOVE_MUTATION = `
 `;
 
 export async function storefrontApiRequest(query: string, variables: any = {}) {
-  const response = await fetch(SHOPIFY_STOREFRONT_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
-    },
-    body: JSON.stringify({ query, variables }),
-  });
-
-  if (response.status === 402) {
-    toast.error("Shopify: pagamento necessário", {
-      description: "É necessário um plano Shopify ativo. Acesse admin.shopify.com para fazer upgrade.",
+  try {
+    const response = await fetch(SHOPIFY_STOREFRONT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
+      },
+      body: JSON.stringify({ query, variables }),
     });
-    return;
+
+    const responseText = await response.text();
+    let data: any = null;
+    try {
+      data = responseText ? JSON.parse(responseText) : null;
+    } catch (parseError) {
+      console.error('[Shopify] resposta não-JSON:', responseText, parseError);
+    }
+
+    if (response.status === 402) {
+      console.error('[Shopify] status HTTP:', response.status);
+      console.error('[Shopify] resposta completa:', data ?? responseText);
+      toast.error("Shopify: pagamento necessário", {
+        description: "É necessário um plano Shopify ativo. Acesse admin.shopify.com para fazer upgrade.",
+      });
+      return;
+    }
+
+    if (!response.ok) {
+      console.error('[Shopify] status HTTP:', response.status);
+      console.error('[Shopify] resposta completa:', data ?? responseText);
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    if (data?.errors) {
+      console.error('[Shopify] status HTTP:', response.status);
+      console.error('[Shopify] resposta completa:', data);
+      throw new Error(`Erro no Shopify: ${data.errors.map((e: any) => e.message).join(', ')}`);
+    }
+
+    return data;
+  } catch (error) {
+    console.error('[Shopify] mensagem de erro do fetch:', error);
+    throw error;
   }
-
-  if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-  const data = await response.json();
-  if (data.errors) throw new Error(`Erro no Shopify: ${data.errors.map((e: any) => e.message).join(', ')}`);
-  return data;
 }
 
 export function formatCheckoutUrl(checkoutUrl: string): string {
@@ -229,15 +268,42 @@ export async function createShopifyCart(item: { variantId: string; quantity: num
     input: { lines: [{ quantity: item.quantity, merchandiseId: item.variantId }] },
   });
   if (data?.data?.cartCreate?.userErrors?.length > 0) {
-    console.error('Cart creation failed:', data.data.cartCreate.userErrors);
+    console.error('[Shopify] resposta completa:', data);
+    console.error('[Shopify] cartCreate.userErrors:', data.data.cartCreate.userErrors);
     return null;
   }
   const cart = data?.data?.cartCreate?.cart;
-  if (!cart?.checkoutUrl) return null;
+  if (!cart?.checkoutUrl) {
+    console.error('[Shopify] resposta completa:', data);
+    console.error('[Shopify] cartCreate.userErrors:', data?.data?.cartCreate?.userErrors ?? []);
+    return null;
+  }
   const line = cart.lines.edges[0]?.node;
   const lineId = line?.id;
   if (!lineId) return null;
   return { cartId: cart.id, checkoutUrl: formatCheckoutUrl(cart.checkoutUrl), lineId, line };
+}
+
+export async function createDirectCheckout(variantId: string, quantity = 1) {
+  const data = await storefrontApiRequest(HEADLESS_CART_CREATE_MUTATION, {
+    input: { lines: [{ quantity, merchandiseId: variantId }] },
+  });
+  const cartCreate = data?.data?.cartCreate;
+  const userErrors = cartCreate?.userErrors ?? [];
+
+  if (userErrors.length > 0 || !cartCreate?.cart?.checkoutUrl) {
+    console.error('[Shopify] resposta completa:', data);
+    console.error('[Shopify] cartCreate.userErrors:', userErrors);
+    return { success: false, checkoutUrl: null, data, userErrors };
+  }
+
+  return {
+    success: true,
+    checkoutUrl: formatCheckoutUrl(cartCreate.cart.checkoutUrl),
+    cartId: cartCreate.cart.id,
+    data,
+    userErrors,
+  };
 }
 
 export async function addLineToShopifyCart(cartId: string, item: { variantId: string; quantity: number }) {
