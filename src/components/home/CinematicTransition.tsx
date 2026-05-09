@@ -12,7 +12,7 @@ export const CinematicTransition = () => {
         src={bg}
         alt=""
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: "center 15%", transform: "scale(1.05)", filter: "contrast(1.02) saturate(1.02) brightness(1.06)" }}
+        style={{ objectPosition: "center 20%", transform: "scale(1.05)", filter: "contrast(1.02) saturate(1.02) brightness(1.06)" }}
       />
       {/* Fade topo + base + vinheta atmosférica — luz cinematográfica natural */}
       <div
