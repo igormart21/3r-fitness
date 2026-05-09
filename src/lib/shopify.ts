@@ -200,27 +200,50 @@ export const CART_LINES_REMOVE_MUTATION = `
 `;
 
 export async function storefrontApiRequest(query: string, variables: any = {}) {
-  const response = await fetch(SHOPIFY_STOREFRONT_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
-    },
-    body: JSON.stringify({ query, variables }),
-  });
-
-  if (response.status === 402) {
-    toast.error("Shopify: pagamento necessário", {
-      description: "É necessário um plano Shopify ativo. Acesse admin.shopify.com para fazer upgrade.",
+  try {
+    const response = await fetch(SHOPIFY_STOREFRONT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
+      },
+      body: JSON.stringify({ query, variables }),
     });
-    return;
+
+    const responseText = await response.text();
+    let data: any = null;
+    try {
+      data = responseText ? JSON.parse(responseText) : null;
+    } catch (parseError) {
+      console.error('[Shopify] resposta não-JSON:', responseText, parseError);
+    }
+
+    if (response.status === 402) {
+      console.error('[Shopify] status HTTP:', response.status);
+      console.error('[Shopify] resposta completa:', data ?? responseText);
+      toast.error("Shopify: pagamento necessário", {
+        description: "É necessário um plano Shopify ativo. Acesse admin.shopify.com para fazer upgrade.",
+      });
+      return;
+    }
+
+    if (!response.ok) {
+      console.error('[Shopify] status HTTP:', response.status);
+      console.error('[Shopify] resposta completa:', data ?? responseText);
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    if (data?.errors) {
+      console.error('[Shopify] status HTTP:', response.status);
+      console.error('[Shopify] resposta completa:', data);
+      throw new Error(`Erro no Shopify: ${data.errors.map((e: any) => e.message).join(', ')}`);
+    }
+
+    return data;
+  } catch (error) {
+    console.error('[Shopify] mensagem de erro do fetch:', error);
+    throw error;
   }
-
-  if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-  const data = await response.json();
-  if (data.errors) throw new Error(`Erro no Shopify: ${data.errors.map((e: any) => e.message).join(', ')}`);
-  return data;
 }
 
 export function formatCheckoutUrl(checkoutUrl: string): string {
