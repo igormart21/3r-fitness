@@ -22,7 +22,7 @@ export const Modalidades = () => {
       className="relative w-full scroll-mt-0 flex flex-col justify-center"
       style={{
         background:
-          "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(244,215,122,0.055) 0%, transparent 65%), radial-gradient(ellipse 70% 50% at 50% 100%, rgba(244,215,122,0.04) 0%, transparent 65%), linear-gradient(180deg, #050505 0%, #0c0a08 35%, #0c0a08 65%, #050505 100%)",
+          "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(244,215,122,0.07) 0%, transparent 65%), radial-gradient(ellipse 70% 50% at 50% 100%, rgba(244,215,122,0.05) 0%, transparent 65%), linear-gradient(180deg, #0a0908 0%, #131110 35%, #131110 65%, #0a0908 100%)",
         minHeight: "100vh",
         paddingTop: "clamp(80px, 9vw, 140px)",
         paddingBottom: "clamp(80px, 9vw, 140px)",
