@@ -459,11 +459,17 @@ const AtelieModalidades = () => {
             animation: "logo-enter 1.2s ease-out both",
           }}
         />
+        <style>{`
+          @keyframes explorar-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.55), 0 0 22px rgba(212,175,55,0.18); }
+            50% { box-shadow: 0 0 0 10px rgba(212,175,55,0), 0 0 36px rgba(212,175,55,0.30); }
+          }
+        `}</style>
         <div
           style={{
             position: "absolute",
             bottom: "clamp(28px, 4vw, 56px)",
-            right: "clamp(20px, 3vw, 48px)",
+            left: "clamp(20px, 3vw, 48px)",
             zIndex: 20,
           }}
         >
@@ -475,32 +481,26 @@ const AtelieModalidades = () => {
               alignItems: "center",
               justifyContent: "center",
               padding: "16px 44px",
-              border: "1px solid rgba(212,175,55,0.6)",
-              background: "rgba(0,0,0,0.18)",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
+              border: "1px solid rgba(212,175,55,0.7)",
+              background: "#0a0a0a",
               color: "#d4af37",
               fontFamily: "Inter, sans-serif",
               fontSize: 11,
               letterSpacing: "0.45em",
               textTransform: "uppercase",
               transition: "all 500ms ease",
-              animation: "fade-in 1.2s ease-out 0.6s both",
+              animation: "fade-in 1.2s ease-out 0.6s both, explorar-pulse 2.6s ease-in-out infinite",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background =
-                "linear-gradient(135deg, rgba(244,215,122,0.92) 0%, rgba(212,175,55,0.92) 100%)";
-              e.currentTarget.style.color = "#0a0a0a";
-              e.currentTarget.style.borderColor = "rgba(244,215,122,0.85)";
-              e.currentTarget.style.boxShadow =
-                "0 0 24px rgba(212,175,55,0.28), 0 0 60px rgba(212,175,55,0.18)";
+              e.currentTarget.style.background = "#000";
+              e.currentTarget.style.color = "#f4d77a";
+              e.currentTarget.style.borderColor = "rgba(244,215,122,0.95)";
               e.currentTarget.style.transform = "translateY(-1px)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = "rgba(0,0,0,0.18)";
+              e.currentTarget.style.background = "#0a0a0a";
               e.currentTarget.style.color = "#d4af37";
-              e.currentTarget.style.borderColor = "rgba(212,175,55,0.6)";
-              e.currentTarget.style.boxShadow = "none";
+              e.currentTarget.style.borderColor = "rgba(212,175,55,0.7)";
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
