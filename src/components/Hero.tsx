@@ -160,10 +160,10 @@ export const Hero = () => {
       <div className="hero-main-content">
         <div className="hero-copy-wrap">
           <h1 className="hero-title">
-            Alta performance transformada em <span className="hero-title__accent">símbolo</span>.
+            Joias criadas para quem vive em <span className="hero-title__accent">alta performance</span>.
           </h1>
           <p className="hero-subtitle">
-            Joias premium desenvolvidas para atletas que transformam disciplina em identidade.
+            Peças premium desenvolvidas para atletas que transformam disciplina em identidade.
           </p>
 
           <div className="hero-actions">
