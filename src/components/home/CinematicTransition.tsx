@@ -24,7 +24,7 @@ export const CinematicTransition = () => {
         }}
       />
 
-      <div className="absolute bottom-2 left-6 sm:bottom-4 sm:left-12 z-10">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-12 sm:bottom-10 z-10">
         <Link
           to="/atelie/modalidades"
           aria-label="Entrar no Ateliê"
