@@ -441,51 +441,27 @@ const AtelieModalidades = () => {
             );
           })}
         </div>
+        <img
+          src={logo3R}
+          alt="3R Fitness"
+          decoding="async"
+          fetchPriority="high"
+          style={{
+            position: "absolute",
+            top: "clamp(20px, 3vw, 36px)",
+            right: "clamp(20px, 3vw, 40px)",
+            height: "clamp(56px, 7vw, 96px)",
+            width: "auto",
+            zIndex: 20,
+            filter:
+              "brightness(0) saturate(100%) invert(78%) sepia(38%) saturate(540%) hue-rotate(7deg) brightness(95%) contrast(88%) drop-shadow(0 4px 18px rgba(212,175,55,0.28))",
+            opacity: 0.95,
+            animation: "logo-enter 1.2s ease-out both",
+          }}
+        />
         <div
           className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto"
         >
-          <img
-            src={logo3R}
-            alt="3R Fitness"
-            decoding="async"
-            fetchPriority="high"
-            style={{
-              height: "clamp(220px, 52vh, 580px)",
-              width: "auto",
-              maxWidth: "82vw",
-              filter:
-                "brightness(0) saturate(100%) invert(78%) sepia(38%) saturate(540%) hue-rotate(7deg) brightness(95%) contrast(88%) drop-shadow(0 4px 24px rgba(212,175,55,0.25))",
-              opacity: logoOpacity,
-              transform: `scale(${logoScale})`,
-              transition: "opacity 400ms ease-out, transform 400ms ease-out",
-              animation: "logo-enter 1.2s ease-out both",
-              willChange: "opacity, transform",
-            }}
-          />
-
-          <p
-            style={{
-              marginTop: "1.5rem",
-              fontFamily: '"Fraunces","Cormorant Garamond",serif',
-              fontWeight: 300,
-              fontStyle: "italic",
-              fontSize: "clamp(16px, 1.5vw, 22px)",
-              letterSpacing: "0.04em",
-              color: "rgba(248,248,250,0.92)",
-              animation: "fade-in 1.4s ease-out 0.3s both",
-            }}
-          >
-            Cada disciplina inspira{" "}
-            <span
-              style={{
-                color: "#d4af37",
-                fontWeight: 400,
-                textShadow: "0 0 24px rgba(212,175,55,0.35)",
-              }}
-            >
-              sua própria linha.
-            </span>
-          </p>
 
           <button
             onClick={goToEnduranceCollection}
