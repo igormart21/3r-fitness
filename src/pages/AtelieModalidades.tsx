@@ -368,20 +368,39 @@ const AtelieModalidades = () => {
           fetchPriority="high"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 38% 30% at 50% 45%, rgba(230,232,240,0.18), transparent 60%), linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.9) 100%)",
-          }}
-        />
+        {/* Cinematic overlay — top clean, center visible, base dark, sides discreetly darkened */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(circle 32% at 50% 50%, rgba(230,232,240,0.22), transparent 55%)",
-            animation: "ambient-breath 7s ease-in-out infinite",
+              "linear-gradient(180deg, rgba(0,0,0,0.32) 0%, rgba(0,0,0,0.10) 28%, rgba(0,0,0,0.06) 48%, rgba(0,0,0,0.55) 82%, rgba(0,0,0,0.95) 100%)",
+          }}
+        />
+        {/* Side vignette — discreet lateral darkening, keeps depth on hands & pendant */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 90% at 50% 55%, transparent 55%, rgba(0,0,0,0.55) 100%)",
+          }}
+        />
+        {/* Warm haze — almost imperceptible breathing glow on pendant */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 22% 18% at 50% 58%, rgba(244,215,122,0.10), transparent 70%)",
+            animation: "ambient-breath 9s ease-in-out infinite",
             mixBlendMode: "screen",
+          }}
+        />
+        {/* DOF breathing — extremely subtle */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 55% 45% at 50% 55%, transparent 0%, rgba(0,0,0,0.18) 100%)",
+            animation: "ambient-breath 11s ease-in-out infinite",
           }}
         />
 
