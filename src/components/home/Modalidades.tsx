@@ -85,21 +85,21 @@ export const Modalidades = () => {
                 willChange: "transform",
               }}
             />
-            {/* Overlay editorial premium */}
+            {/* Overlay editorial premium — mais leve, atmosférico */}
             <div
               className="absolute inset-0 transition-opacity duration-700"
               style={{
                 background:
-                  "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.30) 55%, rgba(0,0,0,0.88) 100%)",
+                  "linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.18) 55%, rgba(0,0,0,0.72) 100%)",
               }}
             />
             {/* Vinheta cinematográfica sutil */}
             <div
               aria-hidden
-              className="absolute inset-0 pointer-events-none opacity-90"
+              className="absolute inset-0 pointer-events-none opacity-80"
               style={{
                 background:
-                  "radial-gradient(ellipse 100% 80% at 50% 40%, transparent 55%, rgba(0,0,0,0.45) 100%)",
+                  "radial-gradient(ellipse 100% 80% at 50% 40%, transparent 60%, rgba(0,0,0,0.30) 100%)",
               }}
             />
             <div
