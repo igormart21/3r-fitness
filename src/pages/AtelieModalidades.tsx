@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { MODALIDADES } from "@/data/atelie";
 import { useIsMobile } from "@/hooks/use-mobile";
-import heroBg from "@/assets/atelie-modalidades-hero.jpg";
+import heroBg from "@/assets/atelie-modalidades-hero-artisan.jpg";
 import logo3R from "@/assets/logo-3r-fitness.png";
 
 // Mobile-aware crop positioning to keep athlete + jewelry in frame
