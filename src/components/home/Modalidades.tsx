@@ -7,12 +7,12 @@ import sportCrossfit from "@/assets/sport-crossfit.jpg";
 import sportCorrida from "@/assets/sport-corrida.jpg";
 
 const modalidades = [
-  { id: 1, nome: "Fisiculturismo", img: sportFisiculturismo, frase: "A escultura do próprio corpo", featured: true },
-  { id: 2, nome: "Musculação", img: sportMusculacao, frase: "Forjado em disciplina" },
-  { id: 6, nome: "Corrida", img: sportCorrida, frase: "O ritmo de uma vida" },
-  { id: 4, nome: "Ciclismo", img: sportCiclismo, frase: "Horizontes conquistados" },
-  { id: 5, nome: "Crossfit", img: sportCrossfit, frase: "A intensidade como arte" },
-  { id: 3, nome: "Triatlo", img: sportTriathlon, frase: "A travessia dos limites" },
+  { id: 1, nome: "Fisiculturismo", img: sportFisiculturismo, frase: "A escultura do próprio corpo", featured: true, focal: "center 28%" },
+  { id: 2, nome: "Musculação", img: sportMusculacao, frase: "Forjado em disciplina", focal: "center 25%" },
+  { id: 6, nome: "Corrida", img: sportCorrida, frase: "O ritmo de uma vida", focal: "center 30%" },
+  { id: 4, nome: "Ciclismo", img: sportCiclismo, frase: "Horizontes conquistados", focal: "center 35%" },
+  { id: 5, nome: "Crossfit", img: sportCrossfit, frase: "A intensidade como arte", focal: "center 30%" },
+  { id: 3, nome: "Triatlo", img: sportTriathlon, frase: "A travessia dos limites", focal: "center 28%" },
 ];
 
 export const Modalidades = () => {
@@ -51,8 +51,8 @@ export const Modalidades = () => {
         </h2>
       </div>
 
-      <div className="container mx-auto max-w-7xl px-6 grid grid-cols-2 md:grid-cols-3 auto-rows-[clamp(160px,22vh,240px)] md:auto-rows-[clamp(180px,26vh,260px)] gap-4 sm:gap-5 md:gap-6">
-        {modalidades.map(({ id, nome, img, frase, featured }) => (
+      <div className="container mx-auto max-w-7xl px-5 sm:px-6 grid grid-cols-2 md:grid-cols-3 auto-rows-[clamp(180px,28vh,240px)] sm:auto-rows-[clamp(190px,26vh,250px)] md:auto-rows-[clamp(200px,26vh,260px)] gap-3 sm:gap-5 md:gap-6">
+        {modalidades.map(({ id, nome, img, frase, featured, focal }) => (
           <Link
             key={id}
             to={`/modalidade/${id}`}
@@ -80,7 +80,7 @@ export const Modalidades = () => {
               decoding="async"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
               style={{
-                objectPosition: "center 30%",
+                objectPosition: focal ?? "center 30%",
                 filter: "contrast(1.02) saturate(1.02) brightness(1.06)",
                 willChange: "transform",
               }}
@@ -110,25 +110,25 @@ export const Modalidades = () => {
                 mixBlendMode: "screen",
               }}
             />
-            <div className={`absolute inset-x-0 bottom-0 z-10 ${featured ? "p-8 sm:p-10" : "p-5 sm:p-7"}`}>
+            <div className={`absolute inset-x-0 bottom-0 z-10 ${featured ? "p-6 sm:p-9 md:p-10" : "p-4 sm:p-6 md:p-7"}`}>
               <h3
                 className={`font-display text-white font-light tracking-wide ${
                   featured
                     ? "text-2xl sm:text-3xl md:text-4xl"
-                    : "text-lg sm:text-xl md:text-2xl"
+                    : "text-base sm:text-xl md:text-2xl"
                 }`}
                 style={{ textShadow: "0 2px 12px rgba(0,0,0,0.65)", letterSpacing: featured ? "0.04em" : "0.02em" }}
               >
                 {nome}
               </h3>
               <p
-                className={`mt-3 italic font-light ${featured ? "text-sm sm:text-base" : "text-xs sm:text-sm"}`}
+                className={`mt-2 sm:mt-3 italic font-light ${featured ? "text-sm sm:text-base" : "text-[11px] sm:text-sm"}`}
                 style={{ color: "rgba(244,215,122,0.82)", letterSpacing: "0.04em" }}
               >
                 {frase}
               </p>
               <div
-                className="mt-5 h-px w-0 group-hover:w-20 transition-all duration-700"
+                className="mt-4 sm:mt-5 h-px w-0 group-hover:w-20 transition-all duration-700"
                 style={{ background: "linear-gradient(90deg, #d4af37, transparent)" }}
               />
             </div>

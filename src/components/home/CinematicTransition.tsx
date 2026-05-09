@@ -12,7 +12,7 @@ export const CinematicTransition = () => {
         src={bg}
         alt=""
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: "center 15%", transform: "scale(1.05)", filter: "contrast(1.02) saturate(1.02) brightness(1.06)" }}
+        style={{ objectPosition: "center 20%", transform: "scale(1.05)", filter: "contrast(1.02) saturate(1.02) brightness(1.06)" }}
       />
       {/* Fade topo + base + vinheta atmosférica — luz cinematográfica natural */}
       <div
@@ -24,7 +24,7 @@ export const CinematicTransition = () => {
         }}
       />
 
-      <div className="absolute bottom-2 left-6 sm:bottom-4 sm:left-12 z-10">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-12 sm:bottom-10 z-10">
         <Link
           to="/atelie/modalidades"
           aria-label="Entrar no Ateliê"
