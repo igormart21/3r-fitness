@@ -519,20 +519,17 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
   };
 
   const handleComprar = async () => {
-    // Configuração universal: se o slug da modalidade/linha tiver produto
-    // mapeado no Shopify, abre o produto externo em nova aba (sem passar
-    // pelo carrinho interno). Caso contrário, usa o fluxo de checkout interno.
-    const externalUrl = getShopifyProductUrl(config?.slug);
-    if (externalUrl) {
-      window.open(externalUrl, "_blank", "noopener,noreferrer");
+    // Headless: adiciona ao carrinho Shopify e abre o checkoutUrl real
+    // retornado pela Storefront API. Sem rotas /products ou /cart.
+    const checkoutWindow = window.open("about:blank", "_blank", "noopener,noreferrer");
+    await handleAdicionar();
+    const checkoutUrl = useCartStore.getState().getCheckoutUrl();
+    if (!checkoutUrl) {
+      checkoutWindow?.close();
       return;
     }
-    await handleAdicionar();
-    setTimeout(() => {
-      const checkoutUrl = useCartStore.getState().getCheckoutUrl();
-      const target = checkoutUrl || "https://www.3rfitness.com.br/cart";
-      window.open(target, "_blank", "noopener,noreferrer");
-    }, 800);
+    if (checkoutWindow) checkoutWindow.location.href = checkoutUrl;
+    else window.open(checkoutUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
