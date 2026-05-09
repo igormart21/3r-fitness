@@ -59,7 +59,7 @@ export const Testimonials = () => {
       className="relative overflow-hidden py-32 sm:py-40 md:py-48"
       style={{
         background:
-          "radial-gradient(ellipse 80% 55% at 50% 0%, hsl(40 65% 50% / 0.09) 0%, transparent 65%), radial-gradient(ellipse 65% 45% at 50% 100%, hsl(40 55% 45% / 0.07) 0%, transparent 70%), linear-gradient(180deg, hsl(30 20% 8%) 0%, hsl(20 18% 6%) 50%, hsl(0 0% 4%) 100%)",
+          "radial-gradient(ellipse 80% 55% at 50% 0%, hsl(40 65% 50% / 0.10) 0%, transparent 65%), radial-gradient(ellipse 65% 45% at 50% 100%, hsl(40 55% 45% / 0.08) 0%, transparent 70%), linear-gradient(180deg, hsl(30 18% 11%) 0%, hsl(20 16% 8%) 50%, hsl(0 0% 6%) 100%)",
       }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
