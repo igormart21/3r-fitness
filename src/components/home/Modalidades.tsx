@@ -110,25 +110,25 @@ export const Modalidades = () => {
                 mixBlendMode: "screen",
               }}
             />
-            <div className={`absolute inset-x-0 bottom-0 z-10 ${featured ? "p-8 sm:p-10" : "p-5 sm:p-7"}`}>
+            <div className={`absolute inset-x-0 bottom-0 z-10 ${featured ? "p-6 sm:p-9 md:p-10" : "p-4 sm:p-6 md:p-7"}`}>
               <h3
                 className={`font-display text-white font-light tracking-wide ${
                   featured
                     ? "text-2xl sm:text-3xl md:text-4xl"
-                    : "text-lg sm:text-xl md:text-2xl"
+                    : "text-base sm:text-xl md:text-2xl"
                 }`}
                 style={{ textShadow: "0 2px 12px rgba(0,0,0,0.65)", letterSpacing: featured ? "0.04em" : "0.02em" }}
               >
                 {nome}
               </h3>
               <p
-                className={`mt-3 italic font-light ${featured ? "text-sm sm:text-base" : "text-xs sm:text-sm"}`}
+                className={`mt-2 sm:mt-3 italic font-light ${featured ? "text-sm sm:text-base" : "text-[11px] sm:text-sm"}`}
                 style={{ color: "rgba(244,215,122,0.82)", letterSpacing: "0.04em" }}
               >
                 {frase}
               </p>
               <div
-                className="mt-5 h-px w-0 group-hover:w-20 transition-all duration-700"
+                className="mt-4 sm:mt-5 h-px w-0 group-hover:w-20 transition-all duration-700"
                 style={{ background: "linear-gradient(90deg, #d4af37, transparent)" }}
               />
             </div>
