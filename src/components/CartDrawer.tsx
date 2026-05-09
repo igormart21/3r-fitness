@@ -22,9 +22,12 @@ export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {
 
   const handleCheckout = () => {
     const checkoutUrl = getCheckoutUrl();
-    if (!checkoutUrl) return;
-    window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+    if (!checkoutUrl) {
+      console.error("[Checkout] checkoutUrl ausente no carrinho");
+      return;
+    }
     setIsOpen(false);
+    window.location.href = checkoutUrl;
   };
 
   const handleContinuarComprando = () => {
