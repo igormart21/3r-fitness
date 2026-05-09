@@ -21,7 +21,12 @@ export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {
   useEffect(() => { if (isOpen) syncCart(); }, [isOpen, syncCart]);
 
   const handleCheckout = () => {
-    window.open("https://www.3rfitness.com.br/cart", "_blank", "noopener,noreferrer");
+    const checkoutUrl = getCheckoutUrl();
+    if (checkoutUrl) {
+      window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+    } else {
+      window.open("https://www.3rfitness.com.br/cart", "_blank", "noopener,noreferrer");
+    }
     setIsOpen(false);
   };
 
