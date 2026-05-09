@@ -66,6 +66,11 @@ const AtelieLinha = () => {
 
   const handleSelecionar = async () => {
     if (adding) return;
+    // Halter Ouro: checkout direto via permalink Shopify (sem etapas intermediárias)
+    if (linha.slug === "halter" && material === "ouro") {
+      window.location.href = "https://store-store-builder-joaax.myshopify.com/cart/48912055468259:1";
+      return;
+    }
     setAdding(true);
     const result = await addAtelieLineToCart(linha.slug, material, showFormaSelector ? forma : undefined);
     setAdding(false);
