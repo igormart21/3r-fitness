@@ -137,11 +137,11 @@ export const Testimonials = () => {
         />
 
         {/* Carrossel */}
-        <div className="relative min-h-[420px] sm:min-h-[460px]">
+        <div className="relative min-h-[380px] sm:min-h-[440px]">
           <div key={index} className="animate-fade-in flex flex-col items-center">
             {/* Imagem do cliente — circular, refinada */}
             <div
-              className="relative h-24 w-24 sm:h-28 sm:w-28 rounded-full overflow-hidden mb-10 sm:mb-12"
+              className="relative h-20 w-20 sm:h-28 sm:w-28 rounded-full overflow-hidden mb-8 sm:mb-12"
               style={{
                 boxShadow:
                   "0 0 0 1px hsl(42 60% 45% / 0.5), 0 0 0 6px hsl(350 45% 8%), 0 0 0 7px hsl(42 60% 45% / 0.3), 0 20px 40px hsl(0 0% 0% / 0.6)",
@@ -152,7 +152,7 @@ export const Testimonials = () => {
                 alt={current.name}
                 className="h-full w-full object-cover"
                 style={{
-                  objectPosition: "center 20%",
+                  objectPosition: "center 18%",
                   filter: "contrast(1.05) brightness(1.02) saturate(0.95)",
                 }}
                 loading="lazy"
@@ -161,7 +161,7 @@ export const Testimonials = () => {
 
             {/* Frase principal */}
             <blockquote
-              className="font-display text-2xl sm:text-3xl md:text-4xl leading-[1.4] font-light italic max-w-2xl px-4"
+              className="font-display text-xl sm:text-3xl md:text-4xl leading-[1.45] sm:leading-[1.4] font-light italic max-w-2xl px-2 sm:px-4"
               style={{ color: "hsl(36 30% 96%)" }}
             >
               “{current.quote}”
