@@ -7,12 +7,12 @@ import sportCrossfit from "@/assets/sport-crossfit.jpg";
 import sportCorrida from "@/assets/sport-corrida.jpg";
 
 const modalidades = [
-  { id: 1, nome: "Fisiculturismo", img: sportFisiculturismo, frase: "A escultura do próprio corpo", featured: true },
-  { id: 2, nome: "Musculação", img: sportMusculacao, frase: "Forjado em disciplina" },
-  { id: 6, nome: "Corrida", img: sportCorrida, frase: "O ritmo de uma vida" },
-  { id: 4, nome: "Ciclismo", img: sportCiclismo, frase: "Horizontes conquistados" },
-  { id: 5, nome: "Crossfit", img: sportCrossfit, frase: "A intensidade como arte" },
-  { id: 3, nome: "Triatlo", img: sportTriathlon, frase: "A travessia dos limites" },
+  { id: 1, nome: "Fisiculturismo", img: sportFisiculturismo, frase: "A escultura do próprio corpo", featured: true, focal: "center 28%" },
+  { id: 2, nome: "Musculação", img: sportMusculacao, frase: "Forjado em disciplina", focal: "center 25%" },
+  { id: 6, nome: "Corrida", img: sportCorrida, frase: "O ritmo de uma vida", focal: "center 30%" },
+  { id: 4, nome: "Ciclismo", img: sportCiclismo, frase: "Horizontes conquistados", focal: "center 35%" },
+  { id: 5, nome: "Crossfit", img: sportCrossfit, frase: "A intensidade como arte", focal: "center 30%" },
+  { id: 3, nome: "Triatlo", img: sportTriathlon, frase: "A travessia dos limites", focal: "center 28%" },
 ];
 
 export const Modalidades = () => {
