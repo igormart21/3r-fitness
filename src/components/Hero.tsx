@@ -24,7 +24,7 @@ const HERO_SLIDES: HeroSlide[] = [
     label: "Fisiculturismo",
     image: heroFisiculturismo,
     desktopPosition: "center 38%",
-    mobilePosition: "center 42%",
+    mobilePosition: "55% 35%",
   },
   {
     id: "musculacao",
@@ -32,7 +32,7 @@ const HERO_SLIDES: HeroSlide[] = [
     label: "Musculação",
     image: heroMusculacao,
     desktopPosition: "center 34%",
-    mobilePosition: "70% 38%",
+    mobilePosition: "62% 32%",
   },
   {
     id: "corrida",
@@ -40,7 +40,7 @@ const HERO_SLIDES: HeroSlide[] = [
     label: "Corrida",
     image: heroCorrida,
     desktopPosition: "center 28%",
-    mobilePosition: "46% 24%",
+    mobilePosition: "42% 28%",
   },
   {
     id: "ciclismo",
@@ -48,7 +48,7 @@ const HERO_SLIDES: HeroSlide[] = [
     label: "Ciclismo",
     image: heroCiclismo,
     desktopPosition: "center 34%",
-    mobilePosition: "67% 30%",
+    mobilePosition: "60% 32%",
   },
   {
     id: "triatlo",
@@ -56,7 +56,7 @@ const HERO_SLIDES: HeroSlide[] = [
     label: "Triatlo",
     image: heroTriatlo,
     desktopPosition: "center 34%",
-    mobilePosition: "54% 32%",
+    mobilePosition: "50% 30%",
   },
   {
     id: "crossfit",
@@ -64,7 +64,7 @@ const HERO_SLIDES: HeroSlide[] = [
     label: "Crossfit",
     image: heroCrossfit,
     desktopPosition: "center 40%",
-    mobilePosition: "center 34%",
+    mobilePosition: "50% 36%",
   },
 ];
 
