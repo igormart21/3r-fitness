@@ -460,20 +460,25 @@ const AtelieModalidades = () => {
           }}
         />
         <div
-          className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto"
+          style={{
+            position: "absolute",
+            bottom: "clamp(28px, 4vw, 56px)",
+            right: "clamp(20px, 3vw, 48px)",
+            zIndex: 20,
+          }}
         >
-
           <button
             onClick={goToEnduranceCollection}
             className="group"
             style={{
-              marginTop: "2.5rem",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
               padding: "16px 44px",
               border: "1px solid rgba(212,175,55,0.6)",
-              background: "transparent",
+              background: "rgba(0,0,0,0.18)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
               color: "#d4af37",
               fontFamily: "Inter, sans-serif",
               fontSize: 11,
@@ -492,7 +497,7 @@ const AtelieModalidades = () => {
               e.currentTarget.style.transform = "translateY(-1px)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.background = "rgba(0,0,0,0.18)";
               e.currentTarget.style.color = "#d4af37";
               e.currentTarget.style.borderColor = "rgba(212,175,55,0.6)";
               e.currentTarget.style.boxShadow = "none";
