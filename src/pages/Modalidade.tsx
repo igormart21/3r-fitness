@@ -529,7 +529,9 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
     }
     await handleAdicionar();
     setTimeout(() => {
-      window.open("https://www.3rfitness.com.br/cart", "_blank", "noopener,noreferrer");
+      const checkoutUrl = useCartStore.getState().getCheckoutUrl();
+      const target = checkoutUrl || "https://www.3rfitness.com.br/cart";
+      window.open(target, "_blank", "noopener,noreferrer");
     }, 800);
   };
 
