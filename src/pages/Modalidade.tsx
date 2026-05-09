@@ -519,17 +519,16 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
   };
 
   const handleComprar = async () => {
-    // Headless: adiciona ao carrinho Shopify e abre o checkoutUrl real
-    // retornado pela Storefront API. Sem rotas /products ou /cart.
-    const checkoutWindow = window.open("about:blank", "_blank", "noopener,noreferrer");
+    // Headless: cria carrinho via Storefront API e redireciona para o
+    // checkoutUrl oficial Shopify na mesma aba (sem popup, sem /cart).
     await handleAdicionar();
     const checkoutUrl = useCartStore.getState().getCheckoutUrl();
     if (!checkoutUrl) {
-      checkoutWindow?.close();
+      console.error("[Checkout] checkoutUrl ausente após cartCreate");
+      toast.error("Não foi possível iniciar o checkout. Tente novamente.");
       return;
     }
-    if (checkoutWindow) checkoutWindow.location.href = checkoutUrl;
-    else window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+    window.location.href = checkoutUrl;
   };
 
   return (

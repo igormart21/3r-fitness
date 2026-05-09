@@ -67,9 +67,6 @@ const AtelieLinha = () => {
   const handleSelecionar = async () => {
     if (adding) return;
     setAdding(true);
-    // Abre janela imediatamente (no clique) para evitar bloqueio de pop-up,
-    // depois redireciona para o checkout real do Shopify quando estiver pronto.
-    const checkoutWindow = window.open("about:blank", "_blank", "noopener,noreferrer");
     const result = await addAtelieLineToCart(
       linha.slug,
       material,
@@ -78,12 +75,12 @@ const AtelieLinha = () => {
     );
     setAdding(false);
     if (!result.success || !result.checkoutUrl) {
-      checkoutWindow?.close();
-      toast.error(result.error ?? "Variação ainda não configurada.");
+      console.error("[Checkout] cartCreate falhou ou checkoutUrl ausente:", result);
+      toast.error("Não foi possível iniciar o checkout. Tente novamente.");
       return;
     }
-    if (checkoutWindow) checkoutWindow.location.href = result.checkoutUrl;
-    else window.open(result.checkoutUrl, "_blank", "noopener,noreferrer");
+    // Redireciona na mesma aba (evita popup blocker / página em branco)
+    window.location.href = result.checkoutUrl;
   };
 
   const imgSrc =
