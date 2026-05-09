@@ -81,7 +81,7 @@ export const Modalidades = () => {
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
               style={{
                 objectPosition: "center 30%",
-                filter: "contrast(1.03) saturate(1.01)",
+                filter: "contrast(1.02) saturate(1.02) brightness(1.06)",
                 willChange: "transform",
               }}
             />
