@@ -51,8 +51,8 @@ export const Modalidades = () => {
         </h2>
       </div>
 
-      <div className="container mx-auto max-w-7xl px-6 grid grid-cols-2 md:grid-cols-3 auto-rows-[clamp(160px,22vh,240px)] md:auto-rows-[clamp(180px,26vh,260px)] gap-4 sm:gap-5 md:gap-6">
-        {modalidades.map(({ id, nome, img, frase, featured }) => (
+      <div className="container mx-auto max-w-7xl px-5 sm:px-6 grid grid-cols-2 md:grid-cols-3 auto-rows-[clamp(180px,28vh,240px)] sm:auto-rows-[clamp(190px,26vh,250px)] md:auto-rows-[clamp(200px,26vh,260px)] gap-3 sm:gap-5 md:gap-6">
+        {modalidades.map(({ id, nome, img, frase, featured, focal }) => (
           <Link
             key={id}
             to={`/modalidade/${id}`}
@@ -80,7 +80,7 @@ export const Modalidades = () => {
               decoding="async"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
               style={{
-                objectPosition: "center 30%",
+                objectPosition: focal ?? "center 30%",
                 filter: "contrast(1.02) saturate(1.02) brightness(1.06)",
                 willChange: "transform",
               }}
