@@ -543,8 +543,8 @@ const AtelieModalidades = () => {
 
         {/* Centered cinematic copy + CTA */}
         <div
-          className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center pointer-events-none"
-          style={{ padding: "0 24px" }}
+          className="absolute inset-0 z-10 flex flex-col items-center justify-end text-center pointer-events-none"
+          style={{ padding: "0 24px clamp(80px, 14vh, 160px)" }}
         >
 
           <div
