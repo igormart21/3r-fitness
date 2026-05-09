@@ -5,22 +5,22 @@ export const CinematicTransition = () => {
   return (
     <section
       className="relative w-full overflow-hidden"
-      style={{ minHeight: "78vh", backgroundColor: "#050505" }}
+      style={{ minHeight: "78vh", backgroundColor: "#0a0908" }}
       aria-label="Explorar coleções"
     >
       <img
         src={bg}
         alt=""
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: "center 15%", transform: "scale(1.05)" }}
+        style={{ objectPosition: "center 15%", transform: "scale(1.05)", filter: "contrast(1.02) saturate(1.02) brightness(1.06)" }}
       />
-      {/* Fade topo + base + vinheta atmosférica — mais luz e profundidade */}
+      {/* Fade topo + base + vinheta atmosférica — luz cinematográfica natural */}
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(180deg, #050505 0%, rgba(8,8,8,0.40) 18%, rgba(0,0,0,0.08) 45%, rgba(8,8,8,0.40) 82%, #050505 100%), radial-gradient(ellipse 75% 65% at 55% 45%, rgba(244,215,122,0.13) 0%, transparent 70%), radial-gradient(ellipse 40% 30% at 20% 80%, rgba(244,215,122,0.06) 0%, transparent 70%)",
+            "linear-gradient(180deg, #0a0908 0%, rgba(10,9,8,0.28) 18%, rgba(0,0,0,0.04) 45%, rgba(10,9,8,0.30) 82%, #0a0908 100%), radial-gradient(ellipse 75% 65% at 55% 45%, rgba(244,215,122,0.11) 0%, transparent 70%), radial-gradient(ellipse 40% 30% at 20% 80%, rgba(244,215,122,0.05) 0%, transparent 70%)",
         }}
       />
 
