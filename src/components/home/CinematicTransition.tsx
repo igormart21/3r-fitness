@@ -30,27 +30,31 @@ export const CinematicTransition = () => {
           aria-label="Entrar no Ateliê"
           style={{
             display: "inline-block",
-            padding: "14px 32px",
+            padding: "13px 30px",
             fontFamily: "Inter, sans-serif",
-            fontSize: "12px",
-            letterSpacing: "0.32em",
+            fontSize: "11px",
+            fontWeight: 400,
+            letterSpacing: "0.36em",
             textTransform: "uppercase",
-            color: "#e6c977",
-            border: "1px solid rgba(217,189,114,0.7)",
-            background: "rgba(0,0,0,0.18)",
-            backdropFilter: "blur(2px)",
+            color: "rgba(230,201,119,0.92)",
+            border: "1px solid rgba(217,189,114,0.42)",
+            background: "rgba(0,0,0,0.12)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
             textDecoration: "none",
-            transition: "background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease",
+            transition: "background-color 900ms cubic-bezier(0.22,1,0.36,1), color 900ms cubic-bezier(0.22,1,0.36,1), border-color 900ms cubic-bezier(0.22,1,0.36,1), letter-spacing 900ms cubic-bezier(0.22,1,0.36,1)",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#d9bd72";
-            e.currentTarget.style.color = "#0a0a0a";
-            e.currentTarget.style.borderColor = "#d9bd72";
+            e.currentTarget.style.background = "rgba(217,189,114,0.10)";
+            e.currentTarget.style.color = "#f7dfa1";
+            e.currentTarget.style.borderColor = "rgba(217,189,114,0.66)";
+            e.currentTarget.style.letterSpacing = "0.40em";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = "rgba(0,0,0,0.18)";
-            e.currentTarget.style.color = "#e6c977";
-            e.currentTarget.style.borderColor = "rgba(217,189,114,0.7)";
+            e.currentTarget.style.background = "rgba(0,0,0,0.12)";
+            e.currentTarget.style.color = "rgba(230,201,119,0.92)";
+            e.currentTarget.style.borderColor = "rgba(217,189,114,0.42)";
+            e.currentTarget.style.letterSpacing = "0.36em";
           }}
         >
           Entrar no Ateliê
