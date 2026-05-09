@@ -73,7 +73,9 @@ export async function addAtelieLineToCart(
   slug: string,
   material: Material,
   forma?: Forma,
-): Promise<{ success: boolean; error?: string }> {
+  options: { openDrawer?: boolean } = {},
+): Promise<{ success: boolean; error?: string; checkoutUrl?: string | null }> {
+  const openDrawer = options.openDrawer ?? true;
   const handle = ATELIE_HANDLES[slug];
   if (!handle) return { success: false, error: "Linha ainda não configurada." };
 
@@ -144,8 +146,9 @@ export async function addAtelieLineToCart(
       ),
     }));
 
-    useCartUIStore.getState().openCart();
-    return { success: true };
+    if (openDrawer) useCartUIStore.getState().openCart();
+    const checkoutUrl = useCartStore.getState().getCheckoutUrl();
+    return { success: true, checkoutUrl };
   } catch (err: any) {
     console.error("addAtelieLineToCart failed:", err);
     return { success: false, error: "Não foi possível adicionar ao carrinho." };

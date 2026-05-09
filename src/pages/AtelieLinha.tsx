@@ -66,17 +66,24 @@ const AtelieLinha = () => {
 
   const handleSelecionar = async () => {
     if (adding) return;
-    // Halter Ouro: checkout direto via permalink Shopify (sem etapas intermediárias)
-    if (linha.slug === "halter" && material === "ouro") {
-      window.location.href = "https://store-store-builder-joaax.myshopify.com/cart/48912055468259:1";
+    setAdding(true);
+    // Abre janela imediatamente (no clique) para evitar bloqueio de pop-up,
+    // depois redireciona para o checkout real do Shopify quando estiver pronto.
+    const checkoutWindow = window.open("about:blank", "_blank", "noopener,noreferrer");
+    const result = await addAtelieLineToCart(
+      linha.slug,
+      material,
+      showFormaSelector ? forma : undefined,
+      { openDrawer: false },
+    );
+    setAdding(false);
+    if (!result.success || !result.checkoutUrl) {
+      checkoutWindow?.close();
+      toast.error(result.error ?? "Variação ainda não configurada.");
       return;
     }
-    setAdding(true);
-    const result = await addAtelieLineToCart(linha.slug, material, showFormaSelector ? forma : undefined);
-    setAdding(false);
-    if (!result.success) {
-      toast.error(result.error ?? "Variação ainda não configurada.");
-    }
+    if (checkoutWindow) checkoutWindow.location.href = result.checkoutUrl;
+    else window.open(result.checkoutUrl, "_blank", "noopener,noreferrer");
   };
 
   const imgSrc =
