@@ -479,68 +479,140 @@ const AtelieModalidades = () => {
           }}
         />
         <style>{`
-          @keyframes explorar-pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.55), 0 0 22px rgba(212,175,55,0.18); }
-            50% { box-shadow: 0 0 0 10px rgba(212,175,55,0), 0 0 36px rgba(212,175,55,0.30); }
+          @keyframes atelie-headline-in {
+            0% { opacity: 0; transform: translateY(14px); letter-spacing: 0.18em; }
+            100% { opacity: 1; transform: translateY(0); letter-spacing: 0.24em; }
+          }
+          @keyframes atelie-sub-in {
+            0% { opacity: 0; transform: translateY(8px); }
+            100% { opacity: 0.62; transform: translateY(0); }
+          }
+          @keyframes atelie-cta-in {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes atelie-divider-in {
+            0% { opacity: 0; transform: scaleX(0); }
+            100% { opacity: 1; transform: scaleX(1); }
+          }
+          .atelie-cta-premium {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 52px;
+            border: 1px solid rgba(217,189,114,0.55);
+            background: rgba(0,0,0,0.18);
+            color: rgba(238,212,142,0.95);
+            font-family: Inter, sans-serif;
+            font-size: 10.5px;
+            letter-spacing: 0.42em;
+            text-transform: uppercase;
+            font-weight: 300;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            transition:
+              background-color 1100ms cubic-bezier(0.22,1,0.36,1),
+              color 1100ms cubic-bezier(0.22,1,0.36,1),
+              border-color 1100ms cubic-bezier(0.22,1,0.36,1),
+              box-shadow 1100ms cubic-bezier(0.22,1,0.36,1),
+              letter-spacing 1100ms cubic-bezier(0.22,1,0.36,1),
+              transform 900ms cubic-bezier(0.22,1,0.36,1);
+            cursor: pointer;
+          }
+          .atelie-cta-premium:hover {
+            background: rgba(217,189,114,0.10);
+            color: #f5e1a7;
+            border-color: rgba(238,212,142,0.85);
+            letter-spacing: 0.46em;
+            box-shadow: 0 0 0 1px rgba(217,189,114,0.18), 0 0 38px rgba(217,189,114,0.22), inset 0 0 22px rgba(217,189,114,0.08);
           }
         `}</style>
+
+        {/* Centered cinematic copy + CTA */}
         <div
-          style={{
-            position: "absolute",
-            bottom: "clamp(28px, 4vw, 56px)",
-            left: "clamp(20px, 3vw, 48px)",
-            zIndex: 20,
-          }}
+          className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center pointer-events-none"
+          style={{ padding: "0 24px" }}
         >
-          <button
-            onClick={goToEnduranceCollection}
-            className="group"
+          <h1
+            className="font-display"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "16px 44px",
-              border: "1px solid rgba(212,175,55,0.7)",
-              background: "#0a0a0a",
-              color: "#d4af37",
-              fontFamily: "Inter, sans-serif",
-              fontSize: 11,
-              letterSpacing: "0.45em",
+              fontWeight: 200,
+              fontSize: "clamp(26px, 4.2vw, 56px)",
+              lineHeight: 1.15,
+              letterSpacing: "0.24em",
               textTransform: "uppercase",
-              transition: "all 500ms ease",
-              animation: "fade-in 1.2s ease-out 0.6s both, explorar-pulse 2.6s ease-in-out infinite",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#000";
-              e.currentTarget.style.color = "#f4d77a";
-              e.currentTarget.style.borderColor = "rgba(244,215,122,0.95)";
-              e.currentTarget.style.transform = "translateY(-1px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "#0a0a0a";
-              e.currentTarget.style.color = "#d4af37";
-              e.currentTarget.style.borderColor = "rgba(212,175,55,0.7)";
-              e.currentTarget.style.transform = "translateY(0)";
+              color: "#f3e7cf",
+              textShadow: "0 2px 28px rgba(0,0,0,0.55)",
+              maxWidth: "20ch",
+              animation: "atelie-headline-in 1800ms cubic-bezier(0.22,1,0.36,1) 300ms both",
             }}
           >
-            EXPLORAR MODALIDADES
-          </button>
-        </div>
+            Disciplina transformada em símbolo.
+          </h1>
 
-        {/* Scroll cue — traço dourado animado */}
-        <div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
-          style={{ animation: "fade-in 2s ease-out 1.2s both" }}
-        >
           <span
+            aria-hidden
             style={{
               display: "block",
-              width: 1,
-              height: 48,
-              background: "linear-gradient(180deg, rgba(212,175,55,0.9), rgba(212,175,55,0))",
-              animation: "scroll-line 2.4s ease-in-out infinite",
+              marginTop: "clamp(22px, 2.6vw, 34px)",
+              width: "clamp(48px, 6vw, 72px)",
+              height: 1,
+              background: "linear-gradient(90deg, transparent, rgba(217,189,114,0.75), transparent)",
+              transformOrigin: "center",
+              animation: "atelie-divider-in 1400ms cubic-bezier(0.22,1,0.36,1) 1200ms both",
             }}
           />
+
+          <p
+            style={{
+              marginTop: "clamp(18px, 2.2vw, 28px)",
+              fontFamily: "Inter, sans-serif",
+              fontWeight: 300,
+              fontSize: "clamp(10px, 0.95vw, 12px)",
+              letterSpacing: "0.5em",
+              textTransform: "uppercase",
+              color: "rgba(243,231,207,0.78)",
+              animation: "atelie-sub-in 1600ms cubic-bezier(0.22,1,0.36,1) 1500ms both",
+            }}
+          >
+            Bem-vindo ao Ateliê 3R Fitness
+          </p>
+
+          <div
+            className="pointer-events-auto"
+            style={{
+              marginTop: "clamp(40px, 5vw, 64px)",
+              animation: "atelie-cta-in 1400ms cubic-bezier(0.22,1,0.36,1) 2100ms both",
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => {
+                const target = document.getElementById("modalidades");
+                if (!target) return;
+                const start = window.scrollY;
+                const end = start + target.getBoundingClientRect().top;
+                const distance = end - start;
+                if (Math.abs(distance) < 4) return;
+                const duration = Math.min(2800, Math.max(1800, Math.abs(distance) * 1.4));
+                const ease = (t: number) =>
+                  t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+                let t0: number | null = null;
+                const step = (ts: number) => {
+                  if (t0 === null) t0 = ts;
+                  const p = Math.min(1, (ts - t0) / duration);
+                  window.scrollTo(0, start + distance * ease(p));
+                  if (p < 1) requestAnimationFrame(step);
+                };
+                requestAnimationFrame(step);
+              }}
+              className="atelie-cta-premium"
+              aria-label="Explorar Modalidades"
+            >
+              Explorar Modalidades
+            </button>
+          </div>
         </div>
       </section>
 
