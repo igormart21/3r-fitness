@@ -546,50 +546,6 @@ const AtelieModalidades = () => {
           className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center pointer-events-none"
           style={{ padding: "0 24px" }}
         >
-          <h1
-            className="font-display"
-            style={{
-              fontWeight: 200,
-              fontSize: "clamp(26px, 4.2vw, 56px)",
-              lineHeight: 1.15,
-              letterSpacing: "0.24em",
-              textTransform: "uppercase",
-              color: "#f3e7cf",
-              textShadow: "0 2px 28px rgba(0,0,0,0.55)",
-              maxWidth: "20ch",
-              animation: "atelie-headline-in 1800ms cubic-bezier(0.22,1,0.36,1) 300ms both",
-            }}
-          >
-            Disciplina transformada em símbolo.
-          </h1>
-
-          <span
-            aria-hidden
-            style={{
-              display: "block",
-              marginTop: "clamp(22px, 2.6vw, 34px)",
-              width: "clamp(48px, 6vw, 72px)",
-              height: 1,
-              background: "linear-gradient(90deg, transparent, rgba(217,189,114,0.75), transparent)",
-              transformOrigin: "center",
-              animation: "atelie-divider-in 1400ms cubic-bezier(0.22,1,0.36,1) 1200ms both",
-            }}
-          />
-
-          <p
-            style={{
-              marginTop: "clamp(18px, 2.2vw, 28px)",
-              fontFamily: "Inter, sans-serif",
-              fontWeight: 300,
-              fontSize: "clamp(10px, 0.95vw, 12px)",
-              letterSpacing: "0.5em",
-              textTransform: "uppercase",
-              color: "rgba(243,231,207,0.78)",
-              animation: "atelie-sub-in 1600ms cubic-bezier(0.22,1,0.36,1) 1500ms both",
-            }}
-          >
-            Bem-vindo ao Ateliê 3R Fitness
-          </p>
 
           <div
             className="pointer-events-auto"
