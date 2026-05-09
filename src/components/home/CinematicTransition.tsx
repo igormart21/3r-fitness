@@ -5,7 +5,7 @@ export const CinematicTransition = () => {
   return (
     <section
       className="relative w-full overflow-hidden"
-      style={{ minHeight: "75vh", backgroundColor: "#000" }}
+      style={{ minHeight: "78vh", backgroundColor: "#050505" }}
       aria-label="Explorar coleções"
     >
       <img
@@ -14,13 +14,13 @@ export const CinematicTransition = () => {
         className="absolute inset-0 w-full h-full object-cover"
         style={{ objectPosition: "center 15%", transform: "scale(1.05)" }}
       />
-      {/* Fade topo + base + vinheta — dissolve sem cortes */}
+      {/* Fade topo + base + vinheta atmosférica — mais luz e profundidade */}
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(180deg, #000 0%, rgba(0,0,0,0.55) 18%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0.55) 80%, #000 100%), radial-gradient(ellipse 70% 60% at 55% 45%, rgba(244,215,122,0.10) 0%, transparent 65%)",
+            "linear-gradient(180deg, #050505 0%, rgba(8,8,8,0.40) 18%, rgba(0,0,0,0.08) 45%, rgba(8,8,8,0.40) 82%, #050505 100%), radial-gradient(ellipse 75% 65% at 55% 45%, rgba(244,215,122,0.13) 0%, transparent 70%), radial-gradient(ellipse 40% 30% at 20% 80%, rgba(244,215,122,0.06) 0%, transparent 70%)",
         }}
       />
 
@@ -35,20 +35,22 @@ export const CinematicTransition = () => {
             fontSize: "12px",
             letterSpacing: "0.32em",
             textTransform: "uppercase",
-            color: "#d4af37",
-            border: "1px solid #d4af37",
-            background: "rgba(0,0,0,0.25)",
+            color: "#e6c977",
+            border: "1px solid rgba(217,189,114,0.7)",
+            background: "rgba(0,0,0,0.18)",
             backdropFilter: "blur(2px)",
             textDecoration: "none",
-            transition: "background-color 0.5s ease, color 0.5s ease",
+            transition: "background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#d4af37";
-            e.currentTarget.style.color = "#000";
+            e.currentTarget.style.background = "#d9bd72";
+            e.currentTarget.style.color = "#0a0a0a";
+            e.currentTarget.style.borderColor = "#d9bd72";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = "rgba(0,0,0,0.25)";
-            e.currentTarget.style.color = "#d4af37";
+            e.currentTarget.style.background = "rgba(0,0,0,0.18)";
+            e.currentTarget.style.color = "#e6c977";
+            e.currentTarget.style.borderColor = "rgba(217,189,114,0.7)";
           }}
         >
           Entrar no Ateliê
