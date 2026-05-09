@@ -5,7 +5,7 @@ import { Testimonials } from "@/components/Testimonials";
 
 const Index = () => {
   return (
-    <div className="min-h-screen-safe flex flex-col" style={{ backgroundColor: "#000" }}>
+    <div className="min-h-screen-safe flex flex-col" style={{ background: "linear-gradient(180deg, #050505 0%, #0a0908 50%, #050505 100%)" }}>
       <main className="flex-1">
         <Hero />
         <Modalidades />
