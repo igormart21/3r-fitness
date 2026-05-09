@@ -268,15 +268,42 @@ export async function createShopifyCart(item: { variantId: string; quantity: num
     input: { lines: [{ quantity: item.quantity, merchandiseId: item.variantId }] },
   });
   if (data?.data?.cartCreate?.userErrors?.length > 0) {
-    console.error('Cart creation failed:', data.data.cartCreate.userErrors);
+    console.error('[Shopify] resposta completa:', data);
+    console.error('[Shopify] cartCreate.userErrors:', data.data.cartCreate.userErrors);
     return null;
   }
   const cart = data?.data?.cartCreate?.cart;
-  if (!cart?.checkoutUrl) return null;
+  if (!cart?.checkoutUrl) {
+    console.error('[Shopify] resposta completa:', data);
+    console.error('[Shopify] cartCreate.userErrors:', data?.data?.cartCreate?.userErrors ?? []);
+    return null;
+  }
   const line = cart.lines.edges[0]?.node;
   const lineId = line?.id;
   if (!lineId) return null;
   return { cartId: cart.id, checkoutUrl: formatCheckoutUrl(cart.checkoutUrl), lineId, line };
+}
+
+export async function createDirectCheckout(variantId: string, quantity = 1) {
+  const data = await storefrontApiRequest(HEADLESS_CART_CREATE_MUTATION, {
+    input: { lines: [{ quantity, merchandiseId: variantId }] },
+  });
+  const cartCreate = data?.data?.cartCreate;
+  const userErrors = cartCreate?.userErrors ?? [];
+
+  if (userErrors.length > 0 || !cartCreate?.cart?.checkoutUrl) {
+    console.error('[Shopify] resposta completa:', data);
+    console.error('[Shopify] cartCreate.userErrors:', userErrors);
+    return { success: false, checkoutUrl: null, data, userErrors };
+  }
+
+  return {
+    success: true,
+    checkoutUrl: formatCheckoutUrl(cartCreate.cart.checkoutUrl),
+    cartId: cartCreate.cart.id,
+    data,
+    userErrors,
+  };
 }
 
 export async function addLineToShopifyCart(cartId: string, item: { variantId: string; quantity: number }) {
