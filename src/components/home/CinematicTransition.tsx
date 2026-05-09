@@ -35,20 +35,22 @@ export const CinematicTransition = () => {
             fontSize: "12px",
             letterSpacing: "0.32em",
             textTransform: "uppercase",
-            color: "#d4af37",
-            border: "1px solid #d4af37",
-            background: "rgba(0,0,0,0.25)",
+            color: "#e6c977",
+            border: "1px solid rgba(217,189,114,0.7)",
+            background: "rgba(0,0,0,0.18)",
             backdropFilter: "blur(2px)",
             textDecoration: "none",
-            transition: "background-color 0.5s ease, color 0.5s ease",
+            transition: "background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#d4af37";
-            e.currentTarget.style.color = "#000";
+            e.currentTarget.style.background = "#d9bd72";
+            e.currentTarget.style.color = "#0a0a0a";
+            e.currentTarget.style.borderColor = "#d9bd72";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = "rgba(0,0,0,0.25)";
-            e.currentTarget.style.color = "#d4af37";
+            e.currentTarget.style.background = "rgba(0,0,0,0.18)";
+            e.currentTarget.style.color = "#e6c977";
+            e.currentTarget.style.borderColor = "rgba(217,189,114,0.7)";
           }}
         >
           Entrar no Ateliê
