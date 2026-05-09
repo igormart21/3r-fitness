@@ -95,11 +95,13 @@ const ModalidadeSection = ({
           opacity: visible ? 1 : 0,
           transform: visible
             ? "translate3d(0, var(--parallax, 0px), 0) scale(1)"
-            : "translate3d(0, 40px, 0) scale(1.08)",
+            : "translate3d(0, 40px, 0) scale(1.03)",
+          filter: visible
+            ? "contrast(1.04) saturate(1.02) blur(0px)"
+            : "contrast(1.04) saturate(1.02) blur(6px)",
           transition:
-            "opacity 1100ms cubic-bezier(0.22,1,0.36,1) 150ms, transform 1600ms cubic-bezier(0.22,1,0.36,1) 150ms",
-          filter: "contrast(1.04) saturate(1.02)",
-          willChange: "opacity, transform",
+            "opacity 1400ms cubic-bezier(0.22,1,0.36,1) 150ms, transform 1800ms cubic-bezier(0.22,1,0.36,1) 150ms, filter 1600ms cubic-bezier(0.22,1,0.36,1) 200ms",
+          willChange: "opacity, transform, filter",
         }}
       />
       {/* Unified cinematic overlay (per spec) */}
@@ -127,6 +129,18 @@ const ModalidadeSection = ({
         style={{
           background:
             "radial-gradient(ellipse 110% 80% at 50% 45%, transparent 55%, rgba(0,0,0,0.55) 100%)",
+        }}
+      />
+      {/* Gold overlay — surge lentamente conforme a seção entra */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(212,175,55,0.10) 0%, transparent 70%)",
+          mixBlendMode: "screen",
+          opacity: visible ? 1 : 0,
+          transition: "opacity 1800ms cubic-bezier(0.22,1,0.36,1) 600ms",
         }}
       />
       {/* Hover gold sheen */}
@@ -500,32 +514,30 @@ const AtelieModalidades = () => {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 13px 52px;
-            border: 1px solid rgba(217,189,114,0.55);
-            background: rgba(0,0,0,0.18);
-            color: rgba(238,212,142,0.95);
+            padding: 9px 64px;
+            border: 1px solid rgba(217,189,114,0.38);
+            background: transparent;
+            color: rgba(238,212,142,0.88);
             font-family: Inter, sans-serif;
-            font-size: 10.5px;
-            letter-spacing: 0.42em;
+            font-size: 9.5px;
+            letter-spacing: 0.48em;
             text-transform: uppercase;
             font-weight: 300;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            line-height: 1;
             transition:
-              background-color 1100ms cubic-bezier(0.22,1,0.36,1),
-              color 1100ms cubic-bezier(0.22,1,0.36,1),
-              border-color 1100ms cubic-bezier(0.22,1,0.36,1),
-              box-shadow 1100ms cubic-bezier(0.22,1,0.36,1),
-              letter-spacing 1100ms cubic-bezier(0.22,1,0.36,1),
-              transform 900ms cubic-bezier(0.22,1,0.36,1);
+              background-color 1000ms cubic-bezier(0.22,1,0.36,1),
+              color 1000ms cubic-bezier(0.22,1,0.36,1),
+              border-color 1000ms cubic-bezier(0.22,1,0.36,1),
+              box-shadow 1000ms cubic-bezier(0.22,1,0.36,1),
+              letter-spacing 1000ms cubic-bezier(0.22,1,0.36,1);
             cursor: pointer;
           }
           .atelie-cta-premium:hover {
-            background: rgba(217,189,114,0.10);
-            color: #f5e1a7;
-            border-color: rgba(238,212,142,0.85);
-            letter-spacing: 0.46em;
-            box-shadow: 0 0 0 1px rgba(217,189,114,0.18), 0 0 38px rgba(217,189,114,0.22), inset 0 0 22px rgba(217,189,114,0.08);
+            background: rgba(217,189,114,0.04);
+            color: #f1dba0;
+            border-color: rgba(238,212,142,0.62);
+            letter-spacing: 0.52em;
+            box-shadow: 0 0 24px rgba(217,189,114,0.12), inset 0 0 14px rgba(217,189,114,0.05);
           }
         `}</style>
 
@@ -595,9 +607,9 @@ const AtelieModalidades = () => {
                 const end = start + target.getBoundingClientRect().top;
                 const distance = end - start;
                 if (Math.abs(distance) < 4) return;
-                const duration = Math.min(2800, Math.max(1800, Math.abs(distance) * 1.4));
-                const ease = (t: number) =>
-                  t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+                const duration = 2800;
+                // cubic-bezier(0.22, 1, 0.36, 1) approximation
+                const ease = (t: number) => 1 - Math.pow(1 - t, 3);
                 let t0: number | null = null;
                 const step = (ts: number) => {
                   if (t0 === null) t0 = ts;
