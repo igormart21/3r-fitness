@@ -19,25 +19,25 @@ export const SHOPIFY_VARIANTS_MAP: Record<string, Record<string, Record<string, 
   musculacao: {
     halter: {
       ouro: "gid://shopify/ProductVariant/48912055468259",
-      prata: null,
+      prata: "gid://shopify/ProductVariant/48912055501027",
     },
     vigor: {
       ouro_masculino: null,
       ouro_feminino: null,
-      prata_masculino: null,
-      prata_feminino: null,
+      prata_masculino: "gid://shopify/ProductVariant/48914112381155",
+      prata_feminino: "gid://shopify/ProductVariant/48914112413923",
     },
   },
   crossfit: {
     imperium: {
       ouro_masculino: null,
       ouro_feminino: null,
-      prata_masculino: null,
-      prata_feminino: null,
+      prata_masculino: "gid://shopify/ProductVariant/48916550811875",
+      prata_feminino: "gid://shopify/ProductVariant/48916550844643",
     },
     strata: {
       ouro: null,
-      prata: null,
+      prata: "gid://shopify/ProductVariant/48914278514915",
     },
   },
   corrida: {
@@ -58,40 +58,40 @@ export const SHOPIFY_VARIANTS_MAP: Record<string, Record<string, Record<string, 
     velox: {
       ouro_masculino: null,
       ouro_feminino: null,
-      prata_masculino: null,
-      prata_feminino: null,
+      prata_masculino: "gid://shopify/ProductVariant/48914239160547",
+      prata_feminino: "gid://shopify/ProductVariant/48914239193315",
     },
     cadencia: {
       ouro_masculino: null,
       ouro_feminino: null,
-      prata_masculino: null,
-      prata_feminino: null,
+      prata_masculino: "gid://shopify/ProductVariant/48914242601187",
+      prata_feminino: "gid://shopify/ProductVariant/48914242633955",
     },
   },
   triathlon: {
     velarion: {
       ouro: null,
-      prata: null,
+      prata: "gid://shopify/ProductVariant/48914269077731",
     },
     elite: {
       ouro_masculino: null,
       ouro_feminino: null,
-      prata_masculino: null,
-      prata_feminino: null,
+      prata_masculino: "gid://shopify/ProductVariant/48914263900387",
+      prata_feminino: "gid://shopify/ProductVariant/48914263933155",
     },
   },
   fisiculturismo: {
     vigor: {
       ouro_masculino: null,
       ouro_feminino: null,
-      prata_masculino: null,
-      prata_feminino: null,
+      prata_masculino: "gid://shopify/ProductVariant/48914112381155",
+      prata_feminino: "gid://shopify/ProductVariant/48914112413923",
     },
     imperium: {
       ouro_masculino: null,
       ouro_feminino: null,
-      prata_masculino: null,
-      prata_feminino: null,
+      prata_masculino: "gid://shopify/ProductVariant/48916550811875",
+      prata_feminino: "gid://shopify/ProductVariant/48916550844643",
     },
   },
 };
