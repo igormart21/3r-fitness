@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { useCartStore } from "@/stores/cartStore";
-import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/lib/shopify";
+import { storefrontApiRequest, STOREFRONT_QUERY, normalizeShopifyCheckoutUrl, type ShopifyProduct } from "@/lib/shopify";
 import { getShopifyProductUrl } from "@/lib/shopifyExternal";
 import { supabase } from "@/integrations/supabase/client";
 import fisiculturismoHero from "@/assets/fisiculturismo-hero.png";
@@ -528,7 +528,9 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       toast.error("Não foi possível iniciar o checkout. Tente novamente.");
       return;
     }
-    window.location.href = checkoutUrl;
+    const finalCheckoutUrl = normalizeShopifyCheckoutUrl(checkoutUrl);
+    console.log("FINAL REDIRECT URL:", finalCheckoutUrl);
+    window.location.href = finalCheckoutUrl;
   };
 
   return (
