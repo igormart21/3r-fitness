@@ -316,42 +316,61 @@ const AtelieModalidade = () => {
           </div>
 
           <div className={`grid grid-cols-1 sm:grid-cols-2 ${linhas.length >= 3 ? "lg:grid-cols-3" : ""} gap-6 md:gap-8 ${linhas.length === 2 ? "max-w-2xl mx-auto" : "max-w-5xl mx-auto"} justify-items-center items-stretch`}>
-            {linhas.map((l, idx) => (
+            {linhas.map((l, idx) => {
+              const isFisi = modalidade.slug === "fisiculturismo";
+              return (
               <div
                 key={l.slug}
                 className="atelie-linha-card group flex flex-col items-center text-center w-full max-w-[220px] h-full"
                 style={{
                   position: "relative",
                   padding: "16px 14px 20px",
-                  background:
-                    "linear-gradient(180deg, rgba(15,15,15,0.55) 0%, rgba(5,5,5,0.62) 100%)",
-                  backdropFilter: "blur(14px) saturate(1.05)",
-                  WebkitBackdropFilter: "blur(14px) saturate(1.05)",
-                  border: "1px solid rgba(212,175,55,0.18)",
-                  boxShadow:
-                    "0 24px 60px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)",
+                  background: isFisi
+                    ? "linear-gradient(180deg, #f4d77a 0%, #d4af37 55%, #b8902a 100%)"
+                    : "linear-gradient(180deg, rgba(15,15,15,0.55) 0%, rgba(5,5,5,0.62) 100%)",
+                  backdropFilter: isFisi ? undefined : "blur(14px) saturate(1.05)",
+                  WebkitBackdropFilter: isFisi ? undefined : "blur(14px) saturate(1.05)",
+                  border: isFisi
+                    ? "1px solid rgba(0,0,0,0.55)"
+                    : "1px solid rgba(212,175,55,0.18)",
+                  boxShadow: isFisi
+                    ? "0 24px 60px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.35)"
+                    : "0 24px 60px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)",
                   animation: `atelie-card-rise 900ms cubic-bezier(0.22,1,0.36,1) ${idx * 120}ms both`,
                   transition: "transform 700ms cubic-bezier(0.22,1,0.36,1), box-shadow 700ms ease, border-color 700ms ease",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-3px)";
-                  e.currentTarget.style.borderColor = "rgba(212,175,55,0.30)";
-                  e.currentTarget.style.boxShadow =
-                    "0 28px 64px rgba(0,0,0,0.58), inset 0 1px 0 rgba(255,255,255,0.05)";
+                  if (!isFisi) {
+                    e.currentTarget.style.borderColor = "rgba(212,175,55,0.30)";
+                    e.currentTarget.style.boxShadow =
+                      "0 28px 64px rgba(0,0,0,0.58), inset 0 1px 0 rgba(255,255,255,0.05)";
+                  } else {
+                    e.currentTarget.style.boxShadow =
+                      "0 32px 70px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.45)";
+                  }
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "";
-                  e.currentTarget.style.borderColor = "rgba(212,175,55,0.18)";
-                  e.currentTarget.style.boxShadow =
-                    "0 24px 60px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)";
+                  if (!isFisi) {
+                    e.currentTarget.style.borderColor = "rgba(212,175,55,0.18)";
+                    e.currentTarget.style.boxShadow =
+                      "0 24px 60px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)";
+                  } else {
+                    e.currentTarget.style.boxShadow =
+                      "0 24px 60px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.35)";
+                  }
                 }}
               >
                 <div
                   className="relative w-full aspect-[3/4] overflow-hidden mb-7 flex items-center justify-center"
                   style={{
-                    background: l.cardFit === "contain"
+                    background: isFisi
+                      ? "linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.12) 100%)"
+                      : l.cardFit === "contain"
                       ? "radial-gradient(ellipse at 50% 50%, rgba(212,175,55,0.14) 0%, #050505 70%)"
                       : "radial-gradient(ellipse at 50% 55%, rgba(212,175,55,0.10) 0%, transparent 65%)",
+                    border: isFisi ? "1px solid rgba(0,0,0,0.25)" : undefined,
                   }}
                 >
                   <img
@@ -362,30 +381,34 @@ const AtelieModalidade = () => {
                     className={`${l.cardFit === "contain" ? "max-w-full max-h-full object-contain" : "w-full h-full object-cover"} transition-transform duration-[1400ms] ease-out group-hover:scale-[1.02]`}
                     style={{ filter: "contrast(1.04) saturate(1.02) brightness(1.01)" }}
                   />
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 pointer-events-none opacity-50 transition-opacity duration-700 group-hover:opacity-70"
-                    style={{
-                      background:
-                        "radial-gradient(ellipse 55% 45% at 50% 50%, rgba(244,215,122,0.10) 0%, transparent 70%)",
-                      mixBlendMode: "screen",
-                    }}
-                  />
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                      background:
-                        "linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.45) 100%)",
-                    }}
-                  />
+                  {!isFisi && (
+                    <>
+                      <div
+                        aria-hidden
+                        className="absolute inset-0 pointer-events-none opacity-50 transition-opacity duration-700 group-hover:opacity-70"
+                        style={{
+                          background:
+                            "radial-gradient(ellipse 55% 45% at 50% 50%, rgba(244,215,122,0.10) 0%, transparent 70%)",
+                          mixBlendMode: "screen",
+                        }}
+                      />
+                      <div
+                        aria-hidden
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                          background:
+                            "linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.45) 100%)",
+                        }}
+                      />
+                    </>
+                  )}
                 </div>
                 <h3
                   className="font-display font-extralight"
                   style={{
                     fontSize: "clamp(18px, 1.4vw, 22px)",
                     letterSpacing: "0.34em",
-                    color: "#f4ead0",
+                    color: isFisi ? "#0a0a0a" : "#f4ead0",
                     textTransform: "uppercase",
                   }}
                 >
@@ -395,7 +418,7 @@ const AtelieModalidade = () => {
                   className="mt-3 italic font-light"
                   style={{
                     fontFamily: '"Fraunces",serif',
-                    color: "rgba(255,255,255,0.55)",
+                    color: isFisi ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.55)",
                     fontSize: "13px",
                     letterSpacing: "0.04em",
                   }}
@@ -408,8 +431,10 @@ const AtelieModalidade = () => {
                   className="mt-auto pt-7 inline-flex items-center gap-3 transition-all duration-700"
                   style={{
                     padding: "11px 24px",
-                    color: "#d4af37",
-                    border: "1px solid rgba(212,175,55,0.45)",
+                    color: isFisi ? "#0a0a0a" : "#d4af37",
+                    border: isFisi
+                      ? "1px solid rgba(0,0,0,0.7)"
+                      : "1px solid rgba(212,175,55,0.45)",
                     background: "transparent",
                     fontFamily: "Inter, sans-serif",
                     fontSize: "9.5px",
@@ -417,13 +442,19 @@ const AtelieModalidade = () => {
                     textTransform: "uppercase",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "#d4af37";
-                    e.currentTarget.style.color = "#0a0a0a";
-                    e.currentTarget.style.boxShadow = "0 0 30px rgba(212,175,55,0.32)";
+                    if (isFisi) {
+                      e.currentTarget.style.background = "#0a0a0a";
+                      e.currentTarget.style.color = "#d4af37";
+                      e.currentTarget.style.boxShadow = "0 0 24px rgba(0,0,0,0.45)";
+                    } else {
+                      e.currentTarget.style.background = "#d4af37";
+                      e.currentTarget.style.color = "#0a0a0a";
+                      e.currentTarget.style.boxShadow = "0 0 30px rgba(212,175,55,0.32)";
+                    }
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = "transparent";
-                    e.currentTarget.style.color = "#d4af37";
+                    e.currentTarget.style.color = isFisi ? "#0a0a0a" : "#d4af37";
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 >
@@ -432,7 +463,8 @@ const AtelieModalidade = () => {
                   <span className="h-px w-4" style={{ background: "currentColor" }} />
                 </button>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
         <style>{`
