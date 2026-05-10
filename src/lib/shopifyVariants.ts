@@ -171,23 +171,19 @@ export async function startShopifyCheckout(
     // Normaliza o hostname para o domínio myshopify oficial,
     // evitando que o domínio customizado (3rfitness.com.br) seja
     // interceptado pelo frontend Lovable e gere 404.
-    console.log("checkoutUrl original:", result.checkoutUrl);
+    const checkoutUrl = result.checkoutUrl;
+    const checkout = new URL(checkoutUrl);
+    checkout.hostname = "store-store-builder-joaax.myshopify.com";
+    checkout.protocol = "https:";
+    checkout.port = "";
+    const finalCheckoutUrl = checkout.toString();
 
-    let finalUrl = result.checkoutUrl;
-    try {
-      const checkout = new URL(result.checkoutUrl);
-      checkout.hostname = "store-store-builder-joaax.myshopify.com";
-      checkout.protocol = "https:";
-      checkout.port = "";
-      finalUrl = checkout.toString();
-    } catch (e) {
-      console.warn("[startShopifyCheckout] não foi possível normalizar o hostname:", e);
-    }
-    console.log("checkoutUrl normalizado:", finalUrl);
-    console.log("redirect final:", finalUrl);
+    console.log("checkoutUrl original:", checkoutUrl);
+    console.log("checkoutUrl final myshopify:", finalCheckoutUrl);
+
     // Redireciona na mesma aba — evita popup blocker e página em branco
-    window.location.href = finalUrl;
-    return { success: true, checkoutUrl: finalUrl };
+    window.location.href = finalCheckoutUrl;
+    return { success: true, checkoutUrl: finalCheckoutUrl };
   } catch (error) {
     console.error("[startShopifyCheckout] erro inesperado:", error);
     toast.error("Não foi possível iniciar o checkout. Tente novamente.");
