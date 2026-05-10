@@ -279,6 +279,35 @@ const AtelieModalidade = () => {
             `}</style>
           </>
         )}
+        {modalidade.slug !== "triathlon" && cardsBg && (
+          <>
+            <img
+              src={cardsBg}
+              alt=""
+              aria-hidden
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{
+                objectPosition: "center center",
+                filter: "contrast(1.05) saturate(1.0) brightness(0.9)",
+              }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 pointer-events-none"
+              style={{ backgroundColor: "rgba(0,0,0,0.55)" }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-x-0 top-0 pointer-events-none"
+              style={{ height: "22%", background: "linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%)" }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 pointer-events-none"
+              style={{ height: "28%", background: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 100%)" }}
+            />
+          </>
+        )}
         <div className="relative z-10 container mx-auto px-6 max-w-6xl">
           <div className="text-center mb-24 atelie-linhas-fade">
             <p
