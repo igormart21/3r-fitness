@@ -73,12 +73,8 @@ const AtelieLinha = () => {
   );
   const variantDisponivel = !!variantId;
 
-  const handleSelecionar = async () => {
-    if (adding) return;
-    await startShopifyCheckout(variantId, {
-      quantity: 1,
-      onLoadingChange: setAdding,
-    });
+  const handleSelecionar = () => {
+    setPanelOpen(true);
   };
 
   const imgSrc =
