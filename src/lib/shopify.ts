@@ -253,7 +253,7 @@ export async function storefrontApiRequest(query: string, variables: any = {}) {
 
 export function formatCheckoutUrl(checkoutUrl: string): string {
   try {
-    const url = new URL(normalizeShopifyCheckoutUrl(checkoutUrl));
+    const url = new URL(checkoutUrl);
     url.searchParams.set('channel', 'online_store');
     return url.toString();
   } catch {
