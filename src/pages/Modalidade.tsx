@@ -971,12 +971,12 @@ const LuxuryConfigurator = (p: LuxuryProps) => {
               {p.currentStep === 2 && (
                 <StepLayout
                   title="Sua disciplina tem forma"
-                  subtitle="Você escolheu o caminho do fisiculturismo. Cada músculo conta."
+                  subtitle={`Você escolheu o caminho do ${p.config.nome.toLowerCase()}. Cada movimento conta.`}
                 >
                   <div className="inline-flex items-center gap-3 px-5 py-3 border" style={{ borderColor: "rgba(212,175,55,0.5)", background: "rgba(212,175,55,0.05)" }}>
                     <Sparkles className="h-4 w-4" style={{ color: "#d4af37" }} />
                     <span className="font-display tracking-[0.3em] uppercase text-sm" style={{ color: "#d4af37" }}>
-                      Fisiculturismo
+                      {p.config.nome}
                     </span>
                   </div>
                 </StepLayout>
