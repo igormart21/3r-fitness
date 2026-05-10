@@ -64,40 +64,20 @@ const AtelieLinha = () => {
   );
   const showFormaSelector = linha.slug !== "halter" && parentModalidade?.slug !== "crossfit";
 
+  const variantId = getVariantId(
+    linha.slug,
+    material,
+    showFormaSelector ? forma : undefined,
+    parentModalidade?.slug,
+  );
+  const variantDisponivel = !!variantId;
+
   const handleSelecionar = async () => {
     if (adding) return;
-    setAdding(true);
-    if (linha.slug === "halter" && material === "ouro") {
-      try {
-        const result = await createDirectCheckout(HALTER_OURO_VARIANT_GID, 1);
-        if (!result.success || !result.checkoutUrl) {
-          toast.error("Não foi possível iniciar o checkout. Tente novamente.");
-          return;
-        }
-        window.location.href = result.checkoutUrl;
-      } catch (error) {
-        console.error("[Checkout] cartCreate falhou:", error);
-        toast.error("Não foi possível iniciar o checkout. Tente novamente.");
-      } finally {
-        setAdding(false);
-      }
-      return;
-    }
-
-    const result = await addAtelieLineToCart(
-      linha.slug,
-      material,
-      showFormaSelector ? forma : undefined,
-      { openDrawer: false },
-    );
-    setAdding(false);
-    if (!result.success || !result.checkoutUrl) {
-      console.error("[Checkout] cartCreate falhou ou checkoutUrl ausente:", result);
-      toast.error("Não foi possível iniciar o checkout. Tente novamente.");
-      return;
-    }
-    // Redireciona na mesma aba (evita popup blocker / página em branco)
-    window.location.href = result.checkoutUrl;
+    await startShopifyCheckout(variantId, {
+      quantity: 1,
+      onLoadingChange: setAdding,
+    });
   };
 
   const imgSrc =
