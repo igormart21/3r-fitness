@@ -528,9 +528,9 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       toast.error("Não foi possível iniciar o checkout. Tente novamente.");
       return;
     }
-    const finalCheckoutUrl = normalizeShopifyCheckoutUrl(checkoutUrl);
-    console.log("FINAL REDIRECT URL:", finalCheckoutUrl);
-    window.location.assign(finalCheckoutUrl);
+    console.log("checkoutUrl oficial Shopify:", checkoutUrl);
+    console.log("redirecionando externo para checkout oficial");
+    window.location.replace(checkoutUrl);
   };
 
   return (
