@@ -31,6 +31,7 @@ import trionEliteAtletaPrata from "@/assets/trion-elite-atleta-prata.jpg";
 import trionEliteAtletaFemOuro from "@/assets/trion-elite-atleta-fem-ouro.jpg";
 import trionEliteAtletaFemPrata from "@/assets/trion-elite-atleta-fem-prata.jpg";
 import valenzaOuro from "@/assets/linha-valenza-ouro.png";
+import dominusOuro from "@/assets/linha-dominus-ouro.png";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
@@ -176,8 +177,9 @@ export const LINHAS: Record<string, Linha> = {
     nome: "DOMINUS",
     assinatura: "Assinatura do Domínio",
     frase: "O domínio absoluto sobre a forma.",
-    imagens: { ouro: halterCampaign, prata: halterPrata },
-    campaign: halterCampaign,
+    imagens: { ouro: dominusOuro, prata: dominusOuro },
+    campaign: dominusOuro,
+    cardFit: "cover",
   },
   monarch: {
     slug: "monarch",
