@@ -519,8 +519,7 @@ const AtelieLinha = () => {
                 <button
                   type="button"
                   onClick={handleSelecionar}
-                  disabled={adding}
-                  className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500 disabled:opacity-60 disabled:cursor-wait"
+                  className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500"
                   style={{
                     color: "#d4af37",
                     border: "1px solid rgba(212,175,55,0.55)",
@@ -531,27 +530,16 @@ const AtelieLinha = () => {
                     textTransform: "uppercase",
                   }}
                   onMouseEnter={(e) => {
-                    if (adding) return;
                     e.currentTarget.style.background = "#d4af37";
                     e.currentTarget.style.color = "#000";
                   }}
                   onMouseLeave={(e) => {
-                    if (adding) return;
                     e.currentTarget.style.background = "transparent";
                     e.currentTarget.style.color = "#d4af37";
                   }}
                 >
                   <span className="h-px w-5" style={{ background: "currentColor" }} />
-                  {adding ? (
-                    <>
-                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                      Iniciando checkout
-                    </>
-                  ) : variantDisponivel ? (
-                    "Selecionar minha peça"
-                  ) : (
-                    "Em breve"
-                  )}
+                  {variantDisponivel ? "Selecionar minha peça" : "Em breve"}
                   <span className="h-px w-5" style={{ background: "currentColor" }} />
                 </button>
               </div>
