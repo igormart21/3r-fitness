@@ -6,6 +6,14 @@ export const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}
 export const SHOPIFY_STOREFRONT_TOKEN = '5da1ec1247816f2b379b4204005b92ad';
 export const HALTER_OURO_VARIANT_GID = 'gid://shopify/ProductVariant/48912055468259';
 
+export function normalizeShopifyCheckoutUrl(checkoutUrl: string): string {
+  const checkout = new URL(checkoutUrl);
+  checkout.hostname = SHOPIFY_STORE_PERMANENT_DOMAIN;
+  checkout.protocol = "https:";
+  checkout.port = "";
+  return checkout.toString();
+}
+
 export interface ShopifyProduct {
   node: {
     id: string;
@@ -248,7 +256,7 @@ export async function storefrontApiRequest(query: string, variables: any = {}) {
 
 export function formatCheckoutUrl(checkoutUrl: string): string {
   try {
-    const url = new URL(checkoutUrl);
+    const url = new URL(normalizeShopifyCheckoutUrl(checkoutUrl));
     url.searchParams.set('channel', 'online_store');
     return url.toString();
   } catch {
