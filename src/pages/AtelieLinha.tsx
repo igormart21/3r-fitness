@@ -556,6 +556,17 @@ const AtelieLinha = () => {
         }
         .reveal-piece { animation: reveal-piece 0.4s cubic-bezier(0.22,1,0.36,1) both; }
       `}</style>
+
+      <SelecaoPanel
+        open={panelOpen}
+        onOpenChange={setPanelOpen}
+        variantId={variantId}
+        linhaNome={linha.nome}
+        modalidadeNome={parentModalidade?.nome}
+        modalidadeSlug={parentModalidade?.slug}
+        material={material}
+        imagem={imgSrc}
+      />
     </div>
   );
 };
