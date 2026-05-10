@@ -548,10 +548,12 @@ const AtelieLinha = () => {
                   {adding ? (
                     <>
                       <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                      Adicionando
+                      Iniciando checkout
                     </>
-                  ) : (
+                  ) : variantDisponivel ? (
                     "Selecionar minha peça"
+                  ) : (
+                    "Em breve"
                   )}
                   <span className="h-px w-5" style={{ background: "currentColor" }} />
                 </button>
