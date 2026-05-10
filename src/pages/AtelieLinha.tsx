@@ -63,7 +63,10 @@ const AtelieLinha = () => {
   const parentModalidade = MODALIDADES.find((m) =>
     m.linhas.includes(linha.slug),
   );
-  const showFormaSelector = linha.slug !== "halter" && parentModalidade?.slug !== "crossfit";
+  const showFormaSelector =
+    linha.slug !== "halter" &&
+    (parentModalidade?.slug !== "crossfit" || linha.slug === "imperium");
+  const hideLeftImage = linha.slug === "imperium";
 
   const variantId = getVariantId(
     linha.slug,
@@ -370,9 +373,9 @@ const AtelieLinha = () => {
       </header>
 
       <main className="relative z-10 w-full min-h-screen pt-24 md:pt-28 pb-12">
-        <div className={`container mx-auto max-w-6xl px-6 ${hasEditorial || hasCinematic ? `flex justify-center items-center min-h-[calc(100vh-180px)] ${linha.slug === "elite" ? "lg:justify-start lg:pl-12" : "lg:justify-end lg:pr-12"}` : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"}`}>
+        <div className={`container mx-auto max-w-6xl px-6 ${hasEditorial || hasCinematic || hideLeftImage ? `flex justify-center items-center min-h-[calc(100vh-180px)]` : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"}`}>
           {/* ESQUERDA — imagem (omitida no Velox Royale ciclismo: o fundo split é o produto) */}
-          {!hasEditorial && !hasCinematic && (
+          {!hasEditorial && !hasCinematic && !hideLeftImage && (
             <section className="lg:col-span-6 relative">
             <div
               className="relative w-full overflow-hidden mx-auto group"
@@ -433,7 +436,7 @@ const AtelieLinha = () => {
           )}
 
           {/* DIREITA — interface */}
-          <section className={hasEditorial || hasCinematic ? "w-full max-w-md lg:max-w-[560px]" : "lg:col-span-6"}>
+          <section className={hasEditorial || hasCinematic || hideLeftImage ? "w-full max-w-md lg:max-w-[560px]" : "lg:col-span-6"}>
             <div
               className={`max-w-md mx-auto lg:mx-0 ${hasCinematic ? "p-8 md:p-10" : ""}`}
               style={hasCinematic ? {
