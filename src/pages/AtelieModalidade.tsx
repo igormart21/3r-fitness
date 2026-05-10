@@ -317,7 +317,7 @@ const AtelieModalidade = () => {
 
           <div className={`grid grid-cols-1 sm:grid-cols-2 ${linhas.length >= 3 ? "lg:grid-cols-3" : ""} gap-6 md:gap-8 ${linhas.length === 2 ? "max-w-2xl mx-auto" : "max-w-5xl mx-auto"} justify-items-center items-stretch`}>
             {linhas.map((l, idx) => {
-              const isFisi = modalidade.slug === "fisiculturismo";
+              const isFisi = true;
               return (
               <div
                 key={l.slug}
