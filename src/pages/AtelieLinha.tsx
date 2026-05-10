@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { toast } from "sonner";
-import { getVariantId, startShopifyCheckout } from "@/lib/shopifyVariants";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { getVariantId } from "@/lib/shopifyVariants";
+import { ArrowLeft } from "lucide-react";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
+import SelecaoPanel from "@/components/atelie/SelecaoPanel";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
 import vigorMasculinoPrata from "@/assets/linha-vigor-masculino-prata.jpg";
 import veloxRoyaleOuroMasc from "@/assets/linha-velox-royale-ouro-masculino.jpg";
