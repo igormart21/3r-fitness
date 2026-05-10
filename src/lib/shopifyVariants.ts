@@ -178,13 +178,13 @@ export async function startShopifyCheckout(
 
     const original = new URL(checkoutUrl);
     const finalCheckoutUrl =
-      "https://store-store-builder-joaax.myshopify.com" +
+      "https://checkout.3rfitness.com.br" +
       original.pathname +
       original.search +
       original.hash;
 
     console.log("checkoutUrl original Shopify:", checkoutUrl);
-    console.log("finalCheckoutUrl myshopify:", finalCheckoutUrl);
+    console.log("finalCheckoutUrl checkout domain:", finalCheckoutUrl);
 
     window.location.replace(finalCheckoutUrl);
     return { success: true, checkoutUrl: finalCheckoutUrl };
