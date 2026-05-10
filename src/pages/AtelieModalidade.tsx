@@ -271,7 +271,11 @@ const AtelieModalidade = () => {
               className="text-[10px] uppercase mb-5"
               style={{ color: "rgba(212,175,55,0.7)", letterSpacing: "0.7em" }}
             >
-              {modalidade.slug === "triathlon" ? "Endurance Collection" : "Assinaturas"}
+              {modalidade.slug === "triathlon"
+                ? "Endurance Collection"
+                : modalidade.slug === "fisiculturismo"
+                ? "Sculpture Collection"
+                : "Assinaturas"}
             </p>
             <h2
               className="font-display font-extralight"
@@ -284,8 +288,23 @@ const AtelieModalidade = () => {
             >
               {modalidade.slug === "triathlon"
                 ? "O Ateliê Triatlo"
+                : modalidade.slug === "fisiculturismo"
+                ? "Explore outras interpretações da disciplina."
                 : `As linhas de ${modalidade.nome.toLowerCase()}`}
             </h2>
+            {modalidade.slug === "fisiculturismo" && (
+              <p
+                className="mx-auto mt-6 italic font-light max-w-xl"
+                style={{
+                  fontFamily: '"Fraunces",serif',
+                  color: "rgba(255,255,255,0.55)",
+                  fontSize: "14px",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                Cada criação representa uma estética distinta da alta performance.
+              </p>
+            )}
             <div
               className="mx-auto mt-8 h-px"
               style={{

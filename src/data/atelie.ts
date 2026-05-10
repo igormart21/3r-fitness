@@ -161,6 +161,22 @@ export const LINHAS: Record<string, Linha> = {
       feminino: { ouro: trionEliteAtletaFemOuro, prata: trionEliteAtletaFemPrata },
     },
   },
+  apollo: {
+    slug: "apollo",
+    nome: "APOLLO",
+    assinatura: "Assinatura da Escultura",
+    frase: "O corpo esculpido em silêncio.",
+    imagens: { ouro: halterCampaign, prata: halterPrata },
+    campaign: halterCampaign,
+  },
+  escultura: {
+    slug: "escultura",
+    nome: "ESCULTURA",
+    assinatura: "Assinatura da Forma",
+    frase: "A forma como manifesto.",
+    imagens: { ouro: imperiumCampaign, prata: imperiumPrataClean },
+    campaign: imperiumCampaign,
+  },
 };
 
 export const MODALIDADES: Modalidade[] = [
@@ -204,6 +220,6 @@ export const MODALIDADES: Modalidade[] = [
     nome: "Fisiculturismo",
     subtitulo: "A escultura do físico",
     img: sportFisiculturismo,
-    linhas: ["vigor", "imperium"],
+    linhas: ["vigor", "apollo", "escultura"],
   },
 ];
