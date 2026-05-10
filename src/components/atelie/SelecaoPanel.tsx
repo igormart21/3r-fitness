@@ -2,7 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { Loader2, X } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { startShopifyCheckout, type VariantId } from "@/lib/shopifyVariants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { storefrontApiRequest } from "@/lib/shopify";
 
 type Props = {
   open: boolean;
@@ -14,6 +15,33 @@ type Props = {
   material: "ouro" | "prata";
   imagem?: string;
 };
+
+const VARIANT_PRICE_QUERY = `
+  query VariantPrice($id: ID!) {
+    node(id: $id) {
+      ... on ProductVariant {
+        id
+        price { amount currencyCode }
+      }
+    }
+  }
+`;
+
+const priceCache = new Map<string, { amount: string; currencyCode: string }>();
+
+function formatPrice(amount: string, currencyCode: string): string {
+  const value = Number(amount);
+  if (!isFinite(value)) return "";
+  try {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: currencyCode || "BRL",
+      maximumFractionDigits: 0,
+    }).format(value);
+  } catch {
+    return `R$ ${Math.round(value)}`;
+  }
+}
 
 export const SelecaoPanel = ({
   open,
@@ -27,7 +55,38 @@ export const SelecaoPanel = ({
 }: Props) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [price, setPrice] = useState<{ amount: string; currencyCode: string } | null>(
+    variantId ? priceCache.get(variantId) ?? null : null,
+  );
+  const [priceLoading, setPriceLoading] = useState(false);
   const disponivel = !!variantId;
+
+  useEffect(() => {
+    if (!open || !variantId) return;
+    const cached = priceCache.get(variantId);
+    if (cached) {
+      setPrice(cached);
+      return;
+    }
+    let cancelled = false;
+    setPriceLoading(true);
+    setPrice(null);
+    storefrontApiRequest(VARIANT_PRICE_QUERY, { id: variantId })
+      .then((data) => {
+        const p = data?.data?.node?.price;
+        if (!cancelled && p?.amount) {
+          priceCache.set(variantId, p);
+          setPrice(p);
+        }
+      })
+      .catch((err) => console.error("[SelecaoPanel] preço falhou", err))
+      .finally(() => {
+        if (!cancelled) setPriceLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [open, variantId]);
 
   const handleFinalizar = async () => {
     if (!disponivel || loading) return;
@@ -44,6 +103,7 @@ export const SelecaoPanel = ({
   };
 
   const materialLabel = material === "ouro" ? "Ouro 18K" : "Prata 925";
+  const priceLabel = price ? formatPrice(price.amount, price.currencyCode) : null;
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -97,7 +157,8 @@ export const SelecaoPanel = ({
             </p>
           </div>
 
-          <div className="mx-8 my-2 flex items-center gap-5 p-4"
+          <div
+            className="relative mx-8 my-2 flex items-center gap-5 p-4 pr-5"
             style={{
               background:
                 "linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.4) 100%)",
@@ -119,7 +180,7 @@ export const SelecaoPanel = ({
                 />
               </div>
             )}
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <p
                 className="font-display text-base tracking-[0.18em] uppercase truncate"
                 style={{ color: "#f4ead0" }}
@@ -141,78 +202,138 @@ export const SelecaoPanel = ({
                 {materialLabel}
               </p>
             </div>
+
+            {/* Preço discreto no canto inferior direito do quadrante */}
+            {disponivel && (
+              <div
+                className="absolute bottom-3 right-4 flex flex-col items-end leading-none"
+                aria-live="polite"
+              >
+                <span
+                  className="text-[8.5px] uppercase tracking-[0.42em]"
+                  style={{ color: "rgba(255,255,255,0.45)" }}
+                >
+                  Valor da peça
+                </span>
+                <span
+                  className="mt-1.5 font-display"
+                  style={{
+                    color: "#d4af37",
+                    fontSize: "13px",
+                    letterSpacing: "0.12em",
+                    fontWeight: 300,
+                  }}
+                >
+                  {priceLoading && !priceLabel ? "—" : priceLabel ?? "—"}
+                </span>
+              </div>
+            )}
           </div>
 
-          <p
-            className="px-8 mt-3 text-[10px] uppercase tracking-[0.42em]"
-            style={{ color: "rgba(255,255,255,0.4)" }}
-          >
-            Valor confirmado no checkout
-          </p>
+          <div className="mt-auto px-8 pb-10 pt-8">
+            {/* Resumo TOTAL acima do botão */}
+            {disponivel && (
+              <div className="mb-6">
+                <div
+                  className="h-px w-full mb-4"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.45) 50%, transparent 100%)",
+                  }}
+                />
+                <div className="flex items-baseline justify-between">
+                  <span
+                    className="text-[10px] uppercase"
+                    style={{
+                      letterSpacing: "0.5em",
+                      color: "rgba(255,255,255,0.55)",
+                    }}
+                  >
+                    Total
+                  </span>
+                  <span
+                    className="font-display"
+                    style={{
+                      color: "#f4ead0",
+                      fontSize: "20px",
+                      letterSpacing: "0.08em",
+                      fontWeight: 300,
+                    }}
+                  >
+                    {priceLoading && !priceLabel ? (
+                      <Loader2 className="h-3.5 w-3.5 animate-spin inline-block" />
+                    ) : (
+                      priceLabel ?? "—"
+                    )}
+                  </span>
+                </div>
+              </div>
+            )}
 
-          <div className="mt-auto px-8 pb-10 pt-8 space-y-4">
-            <button
-              type="button"
-              onClick={handleFinalizar}
-              disabled={!disponivel || loading}
-              className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 transition-all duration-500 disabled:opacity-60 disabled:cursor-not-allowed"
-              style={{
-                color: "#0a0a0a",
-                background: "#d4af37",
-                border: "1px solid #d4af37",
-                fontFamily: "Inter, sans-serif",
-                fontSize: "11px",
-                letterSpacing: "0.42em",
-                textTransform: "uppercase",
-                boxShadow: "0 0 30px rgba(212,175,55,0.25)",
-              }}
-              onMouseEnter={(e) => {
-                if (!disponivel || loading) return;
-                e.currentTarget.style.background = "#f4d77a";
-                e.currentTarget.style.borderColor = "#f4d77a";
-              }}
-              onMouseLeave={(e) => {
-                if (!disponivel || loading) return;
-                e.currentTarget.style.background = "#d4af37";
-                e.currentTarget.style.borderColor = "#d4af37";
-              }}
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                  Iniciando checkout
-                </>
-              ) : disponivel ? (
-                "Finalizar compra"
-              ) : (
-                "Em breve"
-              )}
-            </button>
+            <div className="space-y-4">
+              <button
+                type="button"
+                onClick={handleFinalizar}
+                disabled={!disponivel || loading}
+                className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 transition-all duration-500 disabled:opacity-60 disabled:cursor-not-allowed"
+                style={{
+                  color: "#0a0a0a",
+                  background: "#d4af37",
+                  border: "1px solid #d4af37",
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "11px",
+                  letterSpacing: "0.42em",
+                  textTransform: "uppercase",
+                  boxShadow: "0 0 30px rgba(212,175,55,0.25)",
+                }}
+                onMouseEnter={(e) => {
+                  if (!disponivel || loading) return;
+                  e.currentTarget.style.background = "#f4d77a";
+                  e.currentTarget.style.borderColor = "#f4d77a";
+                }}
+                onMouseLeave={(e) => {
+                  if (!disponivel || loading) return;
+                  e.currentTarget.style.background = "#d4af37";
+                  e.currentTarget.style.borderColor = "#d4af37";
+                }}
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                    Iniciando checkout
+                  </>
+                ) : disponivel ? (
+                  "Finalizar compra"
+                ) : (
+                  "Em breve"
+                )}
+              </button>
 
-            <button
-              type="button"
-              onClick={handleContinuar}
-              className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 transition-all duration-500"
-              style={{
-                color: "#d4af37",
-                background: "transparent",
-                border: "1px solid rgba(212,175,55,0.45)",
-                fontFamily: "Inter, sans-serif",
-                fontSize: "11px",
-                letterSpacing: "0.42em",
-                textTransform: "uppercase",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(212,175,55,0.85)";
-                e.currentTarget.style.color = "#f4d77a";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(212,175,55,0.45)";
-                e.currentTarget.style.color = "#d4af37";
-              }}
-            >
-              Continuar comprando
-            </button>
+              <button
+                type="button"
+                onClick={handleContinuar}
+                className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 transition-all duration-500"
+                style={{
+                  color: "#d4af37",
+                  background: "transparent",
+                  border: "1px solid rgba(212,175,55,0.45)",
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "11px",
+                  letterSpacing: "0.42em",
+                  textTransform: "uppercase",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(212,175,55,0.85)";
+                  e.currentTarget.style.color = "#f4d77a";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(212,175,55,0.45)";
+                  e.currentTarget.style.color = "#d4af37";
+                }}
+              >
+                Continuar comprando
+              </button>
+            </div>
           </div>
         </div>
       </SheetContent>
