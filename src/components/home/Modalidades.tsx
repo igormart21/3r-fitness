@@ -23,9 +23,8 @@ export const Modalidades = () => {
       style={{
         background:
           "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(244,215,122,0.07) 0%, transparent 65%), radial-gradient(ellipse 70% 50% at 50% 100%, rgba(244,215,122,0.05) 0%, transparent 65%), linear-gradient(180deg, #0a0908 0%, #131110 35%, #131110 65%, #0a0908 100%)",
-        minHeight: "100vh",
-        paddingTop: "clamp(80px, 9vw, 140px)",
-        paddingBottom: "clamp(80px, 9vw, 140px)",
+        paddingTop: "clamp(56px, 6vw, 96px)",
+        paddingBottom: "clamp(40px, 4.5vw, 72px)",
       }}
     >
       <div className="container mx-auto max-w-7xl px-6 text-center mb-6 sm:mb-8">
@@ -151,7 +150,7 @@ export const Modalidades = () => {
           100% { background-position: 200% 0; }
         }
       `}</style>
-      <div className="relative z-10 mt-10 sm:mt-12 flex flex-col items-center gap-4">
+      <div className="relative z-10 mt-6 sm:mt-8 flex flex-col items-center gap-3">
         <span
           className="text-[9px] sm:text-[10px] uppercase font-light"
           style={{

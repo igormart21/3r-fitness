@@ -5,7 +5,7 @@ export const CinematicTransition = () => {
   return (
     <section
       className="relative w-full overflow-hidden"
-      style={{ minHeight: "78vh", backgroundColor: "#0a0908" }}
+      style={{ minHeight: "62vh", backgroundColor: "#0a0908", marginTop: "-1px", marginBottom: "-1px" }}
       aria-label="Explorar coleções"
     >
       <img
