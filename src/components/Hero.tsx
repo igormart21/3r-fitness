@@ -1,95 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
-// Link removed — hero CTA now scrolls in-page
 import { useIsMobile } from "@/hooks/use-mobile";
-import heroFisiculturismo from "@/assets/hero-fisiculturismo.png";
-import heroMusculacao from "@/assets/hero-musculacao.png";
-import heroCorrida from "@/assets/hero-corrida.png";
-import heroCiclismo from "@/assets/hero-ciclismo.png";
-import heroTriatlo from "@/assets/hero-triatlo.png";
-import heroCrossfit from "@/assets/hero-crossfit.png";
-
-type HeroSlide = {
-  id: string;
-  title: string;
-  label: string;
-  image: string;
-  desktopPosition: string;
-  mobilePosition: string;
-};
-
-const HERO_SLIDES: HeroSlide[] = [
-  {
-    id: "fisiculturismo",
-    title: "Força esculpida em legado",
-    label: "Fisiculturismo",
-    image: heroFisiculturismo,
-    desktopPosition: "center 38%",
-    mobilePosition: "55% 35%",
-  },
-  {
-    id: "musculacao",
-    title: "Disciplina em forma de joia",
-    label: "Musculação",
-    image: heroMusculacao,
-    desktopPosition: "center 34%",
-    mobilePosition: "62% 32%",
-  },
-  {
-    id: "corrida",
-    title: "Velocidade com assinatura própria",
-    label: "Corrida",
-    image: heroCorrida,
-    desktopPosition: "center 28%",
-    mobilePosition: "42% 28%",
-  },
-  {
-    id: "ciclismo",
-    title: "Horizontes conquistados em silêncio",
-    label: "Ciclismo",
-    image: heroCiclismo,
-    desktopPosition: "center 34%",
-    mobilePosition: "60% 32%",
-  },
-  {
-    id: "triatlo",
-    title: "Travessia elevada ao extraordinário",
-    label: "Triatlo",
-    image: heroTriatlo,
-    desktopPosition: "center 34%",
-    mobilePosition: "50% 30%",
-  },
-  {
-    id: "crossfit",
-    title: "Intensidade tratada como arte",
-    label: "Crossfit",
-    image: heroCrossfit,
-    desktopPosition: "center 40%",
-    mobilePosition: "50% 36%",
-  },
-];
-
-const DISPLAY_MS = 7200;
-const TRANSITION_MS = 2400;
+import heroCapa from "@/assets/hero-capa-3r.png";
 
 export const Hero = () => {
-  const [index, setIndex] = useState(0);
   const isMobile = useIsMobile();
-
-  useEffect(() => {
-    HERO_SLIDES.forEach(({ image }) => {
-      const img = new Image();
-      img.src = image;
-    });
-  }, []);
-
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setIndex((current) => (current + 1) % HERO_SLIDES.length);
-    }, DISPLAY_MS);
-
-    return () => window.clearInterval(id);
-  }, []);
-
 
   const handleScrollToModalidades = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -101,9 +14,7 @@ export const Hero = () => {
     const end = Math.max(0, start + rect.top);
     const distance = end - start;
     if (Math.abs(distance) < 4) return;
-    // Cinematic, slow, luxury easing — proportional to distance
     const duration = Math.min(2600, Math.max(1600, Math.abs(distance) * 1.4));
-    // easeInOutQuart
     const ease = (t: number) =>
       t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
     let t0: number | null = null;
@@ -116,19 +27,6 @@ export const Hero = () => {
     requestAnimationFrame(step);
   };
 
-  const imageLayers = useMemo(
-    () =>
-      HERO_SLIDES.map((slide, i) => {
-        const isActive = i === index;
-        return {
-          ...slide,
-          isActive,
-          objectPosition: isMobile ? slide.mobilePosition : slide.desktopPosition,
-        };
-      }),
-    [index, isMobile],
-  );
-
   return (
     <section
       className="relative isolate w-full overflow-hidden h-screen-safe"
@@ -136,26 +34,56 @@ export const Hero = () => {
       aria-label="Campanha principal 3R Fitness"
     >
       <div className="absolute inset-0">
-        {imageLayers.map((slide, i) => (
-          <img
-            key={slide.id}
-            src={slide.image}
-            alt={`Campanha ${slide.label} 3R Fitness`}
-            aria-hidden={!slide.isActive}
-            loading={i === 0 ? "eager" : "lazy"}
-            decoding="async"
-            fetchPriority={i === 0 ? "high" : "low"}
-            className={`absolute inset-0 h-full w-full object-cover hero-campaign-image ${slide.isActive ? "is-active" : ""}`}
-            style={{
-              objectPosition: slide.objectPosition,
-              transition: `opacity ${TRANSITION_MS}ms cubic-bezier(0.22,1,0.36,1), transform ${DISPLAY_MS + TRANSITION_MS}ms cubic-bezier(0.22,1,0.36,1), filter ${TRANSITION_MS}ms ease`,
-            }}
-          />
-        ))}
+        <img
+          src={heroCapa}
+          alt="Campanha 3R Fitness — joias para alta performance"
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
+          className="absolute inset-0 h-full w-full object-cover hero-capa-image"
+          style={{
+            objectPosition: isMobile ? "55% center" : "center center",
+            filter:
+              "contrast(1.08) saturate(1.10) brightness(1.02)",
+            animation: "heroCapaKenBurns 24s ease-in-out infinite alternate",
+          }}
+        />
       </div>
 
-      <div className="hero-overlay-soft" aria-hidden />
-      <div className="hero-overlay-vignette" aria-hidden />
+      {/* Overlays cinematográficos — atmosfera de campanha de luxo */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.18) 28%, rgba(0,0,0,0.20) 60%, rgba(0,0,0,0.78) 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 90% 70% at 50% 55%, transparent 40%, rgba(0,0,0,0.55) 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none mix-blend-overlay"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 45% at 50% 48%, rgba(244,215,122,0.18) 0%, transparent 70%)",
+        }}
+      />
+      {/* Grão sutil de campanha editorial */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none opacity-[0.06] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>\")",
+        }}
+      />
 
       <div className="hero-main-content">
         <div className="hero-copy-wrap">
@@ -179,6 +107,13 @@ export const Hero = () => {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes heroCapaKenBurns {
+          0% { transform: scale(1.04) translate3d(0,0,0); }
+          100% { transform: scale(1.10) translate3d(-1%, -0.6%, 0); }
+        }
+      `}</style>
     </section>
   );
 };
