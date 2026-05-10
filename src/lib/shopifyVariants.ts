@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { createDirectCheckout } from "@/lib/shopify";
+import { createDirectCheckout, normalizeShopifyCheckoutUrl } from "@/lib/shopify";
 
 /**
  * MAPA GLOBAL DE VARIANTES SHOPIFY — 3R Fitness
@@ -172,14 +172,11 @@ export async function startShopifyCheckout(
     // evitando que o domínio customizado (3rfitness.com.br) seja
     // interceptado pelo frontend Lovable e gere 404.
     const checkoutUrl = result.checkoutUrl;
-    const checkout = new URL(checkoutUrl);
-    checkout.hostname = "store-store-builder-joaax.myshopify.com";
-    checkout.protocol = "https:";
-    checkout.port = "";
-    const finalCheckoutUrl = checkout.toString();
+    const finalCheckoutUrl = normalizeShopifyCheckoutUrl(checkoutUrl);
 
     console.log("checkoutUrl original:", checkoutUrl);
     console.log("checkoutUrl final myshopify:", finalCheckoutUrl);
+    console.log("FINAL REDIRECT URL:", finalCheckoutUrl);
 
     // Redireciona na mesma aba — evita popup blocker e página em branco
     window.location.href = finalCheckoutUrl;

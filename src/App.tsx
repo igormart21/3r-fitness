@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -27,6 +28,16 @@ import { CartDrawer } from "@/components/CartDrawer";
 
 const queryClient = new QueryClient();
 
+const ShopifyCheckoutRedirect = () => {
+  useEffect(() => {
+    const finalCheckoutUrl = `https://store-store-builder-joaax.myshopify.com${window.location.pathname}${window.location.search}${window.location.hash}`;
+    console.log("FINAL REDIRECT URL:", finalCheckoutUrl);
+    window.location.href = finalCheckoutUrl;
+  }, []);
+
+  return null;
+};
+
 const AppRoutes = () => {
   useCartSync();
   return (
@@ -47,6 +58,7 @@ const AppRoutes = () => {
       <Route path="/essenciais" element={<Essenciais />} />
       <Route path="/modalidade/:id" element={<Modalidade />} />
       <Route path="/personalizar/:slug" element={<Modalidade />} />
+      <Route path="/cart/c/*" element={<ShopifyCheckoutRedirect />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
