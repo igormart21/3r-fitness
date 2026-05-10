@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { toast } from "sonner";
-import { addAtelieLineToCart } from "@/lib/atelieCart";
-import { createDirectCheckout, HALTER_OURO_VARIANT_GID } from "@/lib/shopify";
+import { getVariantId, startShopifyCheckout } from "@/lib/shopifyVariants";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
