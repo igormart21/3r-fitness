@@ -167,8 +167,9 @@ export const LINHAS: Record<string, Linha> = {
     nome: "VALENZA",
     assinatura: "Assinatura da Potência",
     frase: "A potência como obra escultural.",
-    imagens: { ouro: vigorOuroClean, prata: vigorPrataClean },
-    campaign: vigorCampaign,
+    imagens: { ouro: valenzaOuro, prata: valenzaOuro },
+    campaign: valenzaOuro,
+    cardFit: "cover",
   },
   dominus: {
     slug: "dominus",
