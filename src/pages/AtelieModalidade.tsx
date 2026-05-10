@@ -14,6 +14,16 @@ import bgCrossfit from "@/assets/fundo-card-crossfit.png";
 import bgCorrida from "@/assets/fundo-card-corrida.png";
 import bgCiclismo from "@/assets/fundo-card-ciclismo.png";
 import bgFisiculturismo from "@/assets/fundo-card-fisiculturismo.png";
+import crossfitImperiumCard from "@/assets/crossfit-imperium-card.png";
+import crossfitStrataCard from "@/assets/crossfit-strata-card.png";
+
+// Override por modalidade → linha → imagem do card
+const CARD_IMAGE_OVERRIDE: Record<string, Record<string, string>> = {
+  crossfit: {
+    imperium: crossfitImperiumCard,
+    strata: crossfitStrataCard,
+  },
+};
 
 const MODALIDADE_BG: Record<string, string> = {
   musculacao: bgMusculacao,
@@ -298,7 +308,7 @@ const AtelieModalidade = () => {
                   }}
                 >
                   <img
-                    src={l.imagens.ouro}
+                    src={CARD_IMAGE_OVERRIDE[modalidade.slug]?.[l.slug] ?? l.imagens.ouro}
                     alt={l.nome}
                     loading="lazy"
                     decoding="async"
