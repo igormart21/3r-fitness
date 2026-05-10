@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { toast } from "sonner";
-import { addAtelieLineToCart } from "@/lib/atelieCart";
-import { createDirectCheckout, HALTER_OURO_VARIANT_GID } from "@/lib/shopify";
+import { getVariantId, startShopifyCheckout } from "@/lib/shopifyVariants";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
@@ -65,40 +64,20 @@ const AtelieLinha = () => {
   );
   const showFormaSelector = linha.slug !== "halter" && parentModalidade?.slug !== "crossfit";
 
+  const variantId = getVariantId(
+    linha.slug,
+    material,
+    showFormaSelector ? forma : undefined,
+    parentModalidade?.slug,
+  );
+  const variantDisponivel = !!variantId;
+
   const handleSelecionar = async () => {
     if (adding) return;
-    setAdding(true);
-    if (linha.slug === "halter" && material === "ouro") {
-      try {
-        const result = await createDirectCheckout(HALTER_OURO_VARIANT_GID, 1);
-        if (!result.success || !result.checkoutUrl) {
-          toast.error("Não foi possível iniciar o checkout. Tente novamente.");
-          return;
-        }
-        window.location.href = result.checkoutUrl;
-      } catch (error) {
-        console.error("[Checkout] cartCreate falhou:", error);
-        toast.error("Não foi possível iniciar o checkout. Tente novamente.");
-      } finally {
-        setAdding(false);
-      }
-      return;
-    }
-
-    const result = await addAtelieLineToCart(
-      linha.slug,
-      material,
-      showFormaSelector ? forma : undefined,
-      { openDrawer: false },
-    );
-    setAdding(false);
-    if (!result.success || !result.checkoutUrl) {
-      console.error("[Checkout] cartCreate falhou ou checkoutUrl ausente:", result);
-      toast.error("Não foi possível iniciar o checkout. Tente novamente.");
-      return;
-    }
-    // Redireciona na mesma aba (evita popup blocker / página em branco)
-    window.location.href = result.checkoutUrl;
+    await startShopifyCheckout(variantId, {
+      quantity: 1,
+      onLoadingChange: setAdding,
+    });
   };
 
   const imgSrc =
@@ -569,10 +548,12 @@ const AtelieLinha = () => {
                   {adding ? (
                     <>
                       <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                      Adicionando
+                      Iniciando checkout
                     </>
-                  ) : (
+                  ) : variantDisponivel ? (
                     "Selecionar minha peça"
+                  ) : (
+                    "Em breve"
                   )}
                   <span className="h-px w-5" style={{ background: "currentColor" }} />
                 </button>
