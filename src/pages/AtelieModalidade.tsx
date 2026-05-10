@@ -108,7 +108,8 @@ const AtelieModalidade = () => {
   if (!modalidade) return <Navigate to="/atelie/modalidades" replace />;
 
   // Background cinematográfico por modalidade (usa imagem da própria modalidade como fallback)
-  const heroBg = modalidade.slug === "ciclismo" ? ciclismoBg : modalidade.img;
+  const heroBg = MODALIDADE_BG[modalidade.slug] ?? (modalidade.slug === "ciclismo" ? ciclismoBg : modalidade.img);
+  const cardsBg = MODALIDADE_BG[modalidade.slug];
 
   return (
     <div className="w-full text-white atelie-page-fade-in" style={{ backgroundColor: "#050505" }}>
