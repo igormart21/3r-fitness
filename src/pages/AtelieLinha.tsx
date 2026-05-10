@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { toast } from "sonner";
-import { getVariantId, startShopifyCheckout } from "@/lib/shopifyVariants";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { getVariantId } from "@/lib/shopifyVariants";
+import { ArrowLeft } from "lucide-react";
 import { LINHAS, MODALIDADES, type Material, type Forma } from "@/data/atelie";
+import SelecaoPanel from "@/components/atelie/SelecaoPanel";
 import vigorMasculino from "@/assets/linha-vigor-masculino.jpg";
 import vigorMasculinoPrata from "@/assets/linha-vigor-masculino-prata.jpg";
 import veloxRoyaleOuroMasc from "@/assets/linha-velox-royale-ouro-masculino.jpg";
@@ -26,7 +27,7 @@ const AtelieLinha = () => {
   const [material, setMaterial] = useState<Material>("ouro");
   const [forma, setForma] = useState<Forma>("masculino");
   const [revealKey, setRevealKey] = useState(0);
-  const [adding, setAdding] = useState(false);
+  const [panelOpen, setPanelOpen] = useState(false);
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -72,12 +73,8 @@ const AtelieLinha = () => {
   );
   const variantDisponivel = !!variantId;
 
-  const handleSelecionar = async () => {
-    if (adding) return;
-    await startShopifyCheckout(variantId, {
-      quantity: 1,
-      onLoadingChange: setAdding,
-    });
+  const handleSelecionar = () => {
+    setPanelOpen(true);
   };
 
   const imgSrc =
@@ -522,8 +519,7 @@ const AtelieLinha = () => {
                 <button
                   type="button"
                   onClick={handleSelecionar}
-                  disabled={adding}
-                  className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500 disabled:opacity-60 disabled:cursor-wait"
+                  className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500"
                   style={{
                     color: "#d4af37",
                     border: "1px solid rgba(212,175,55,0.55)",
@@ -534,27 +530,16 @@ const AtelieLinha = () => {
                     textTransform: "uppercase",
                   }}
                   onMouseEnter={(e) => {
-                    if (adding) return;
                     e.currentTarget.style.background = "#d4af37";
                     e.currentTarget.style.color = "#000";
                   }}
                   onMouseLeave={(e) => {
-                    if (adding) return;
                     e.currentTarget.style.background = "transparent";
                     e.currentTarget.style.color = "#d4af37";
                   }}
                 >
                   <span className="h-px w-5" style={{ background: "currentColor" }} />
-                  {adding ? (
-                    <>
-                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                      Iniciando checkout
-                    </>
-                  ) : variantDisponivel ? (
-                    "Selecionar minha peça"
-                  ) : (
-                    "Em breve"
-                  )}
+                  {variantDisponivel ? "Selecionar minha peça" : "Em breve"}
                   <span className="h-px w-5" style={{ background: "currentColor" }} />
                 </button>
               </div>
@@ -571,6 +556,17 @@ const AtelieLinha = () => {
         }
         .reveal-piece { animation: reveal-piece 0.4s cubic-bezier(0.22,1,0.36,1) both; }
       `}</style>
+
+      <SelecaoPanel
+        open={panelOpen}
+        onOpenChange={setPanelOpen}
+        variantId={variantId}
+        linhaNome={linha.nome}
+        modalidadeNome={parentModalidade?.nome}
+        modalidadeSlug={parentModalidade?.slug}
+        material={material}
+        imagem={imgSrc}
+      />
     </div>
   );
 };

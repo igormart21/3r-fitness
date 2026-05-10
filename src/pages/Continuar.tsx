@@ -205,35 +205,61 @@ const Continuar = () => {
         {/* 3 universos */}
         <section className="flex-1 px-6 pb-20">
           <div className="container mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {/* Bloco 1 — Personalização (prioridade) */}
+            {/* Bloco 1 — Criar minha joia */}
             <BlocoUniverso
               eyebrow="01 · Autoral"
-              titulo="Crie sua assinatura."
-              subtitulo="Uma peça construída a partir da sua trajetória."
-              cta="Personalizar"
+              titulo="Criar minha joia"
+              subtitulo="Desenvolva uma peça autoral inspirada na sua disciplina, história e modalidade."
+              cta="Iniciar criação"
               onClick={() => navigate(targetPersonalizar)}
               priority
             />
-            {/* Bloco 2 — Outras linhas */}
+            {/* Bloco 2 — Peças neutras */}
             <BlocoUniverso
-              eyebrow="02 · Coleções"
-              titulo="Continue no seu universo."
-              subtitulo="Explore outras criações da modalidade que define você."
-              cta="Explorar linhas"
-              onClick={() => navigate(targetLinhas)}
-            />
-            {/* Bloco 3 — Essenciais */}
-            <BlocoUniverso
-              eyebrow="03 · Essenciais"
-              titulo="Além da modalidade."
-              subtitulo="Peças essenciais para qualquer trajetória."
-              cta="Ver essenciais"
+              eyebrow="02 · Essenciais"
+              titulo="Peças neutras"
+              subtitulo="Explore anéis, brincos e colares desenvolvidos para compor sua presença fora do treino."
+              cta="Explorar peças"
               onClick={() => navigate("/essenciais")}
+            />
+            {/* Bloco 3 — Completar minha coleção */}
+            <BlocoUniverso
+              eyebrow="03 · Coleção"
+              titulo="Completar minha coleção"
+              subtitulo="Combine sua peça principal com outros símbolos do mesmo universo esportivo."
+              cta="Ver recomendações"
+              onClick={() => navigate(targetLinhas)}
             />
           </div>
 
-          {/* Explorar outro universo */}
-          <div className="mt-14 text-center">
+          {/* Ateliê Home + trocar universo */}
+          <div className="mt-14 flex flex-col items-center gap-6">
+            <button
+              type="button"
+              onClick={() => navigate("/atelie")}
+              className="inline-flex items-center gap-3 px-8 py-3 transition-all duration-500"
+              style={{
+                color: "#d4af37",
+                border: "1px solid rgba(212,175,55,0.45)",
+                background: "transparent",
+                fontFamily: "Inter, sans-serif",
+                fontSize: "11px",
+                letterSpacing: "0.42em",
+                textTransform: "uppercase",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "rgba(212,175,55,0.85)";
+                e.currentTarget.style.color = "#f4d77a";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "rgba(212,175,55,0.45)";
+                e.currentTarget.style.color = "#d4af37";
+              }}
+            >
+              <span className="h-px w-5" style={{ background: "currentColor" }} />
+              Ateliê Home
+              <span className="h-px w-5" style={{ background: "currentColor" }} />
+            </button>
             <button
               type="button"
               onClick={() => setOpenModal(true)}
