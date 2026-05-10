@@ -177,8 +177,9 @@ export const LINHAS: Record<string, Linha> = {
     nome: "DOMINUS",
     assinatura: "Assinatura do Domínio",
     frase: "O domínio absoluto sobre a forma.",
-    imagens: { ouro: halterCampaign, prata: halterPrata },
-    campaign: halterCampaign,
+    imagens: { ouro: dominusOuro, prata: dominusOuro },
+    campaign: dominusOuro,
+    cardFit: "cover",
   },
   monarch: {
     slug: "monarch",
