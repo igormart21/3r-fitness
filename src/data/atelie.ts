@@ -32,6 +32,7 @@ import trionEliteAtletaFemOuro from "@/assets/trion-elite-atleta-fem-ouro.jpg";
 import trionEliteAtletaFemPrata from "@/assets/trion-elite-atleta-fem-prata.jpg";
 import valenzaOuro from "@/assets/linha-valenza-ouro.png";
 import dominusOuro from "@/assets/linha-dominus-ouro.png";
+import monarchOuro from "@/assets/linha-monarch-ouro.png";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
