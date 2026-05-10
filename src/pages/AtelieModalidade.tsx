@@ -40,35 +40,12 @@ const AtelieModalidade = () => {
 
   useEffect(() => {
     setActiveSlug(linhas[0]?.slug);
-    const hash = typeof window !== "undefined" ? window.location.hash : "";
-    if (hash === "#modalidade-linhas") {
-      // Aguarda render para garantir que a seção exista
-      requestAnimationFrame(() => {
-        const el = document.getElementById("modalidade-linhas");
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          const targetCenter = rect.top + window.scrollY + rect.height / 2;
-          window.scrollTo({ top: Math.max(0, targetCenter - window.innerHeight / 2), behavior: "auto" });
-        }
-      });
-    } else {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    }
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     if (slug) {
       import("@/stores/modalidadeStore").then(({ useModalidadeStore }) =>
         useModalidadeStore.getState().setModalidade(slug),
       );
     }
-    // Auto-scroll suave até as linhas após 2s para todas as modalidades
-    let autoScrollTimer: number | undefined;
-    if (hash !== "#modalidade-linhas") {
-      autoScrollTimer = window.setTimeout(() => {
-        smoothScrollToLinhas();
-      }, 2000);
-    }
-    return () => {
-      if (autoScrollTimer) window.clearTimeout(autoScrollTimer);
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
