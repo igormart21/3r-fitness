@@ -9,6 +9,19 @@ import ciclismoCampaign from "@/assets/modalidade-ciclismo-campaign.jpg";
 import crossfitCampaign from "@/assets/modalidade-crossfit-campaign.jpg";
 import crossfitStrata from "@/assets/modalidade-crossfit-strata.jpg";
 import ciclismoBg from "@/assets/atelie-ciclismo-bg.jpg";
+import bgMusculacao from "@/assets/fundo-card-musculacao.png";
+import bgCrossfit from "@/assets/fundo-card-crossfit.png";
+import bgCorrida from "@/assets/fundo-card-corrida.png";
+import bgCiclismo from "@/assets/fundo-card-ciclismo.png";
+import bgFisiculturismo from "@/assets/fundo-card-fisiculturismo.png";
+
+const MODALIDADE_BG: Record<string, string> = {
+  musculacao: bgMusculacao,
+  crossfit: bgCrossfit,
+  corrida: bgCorrida,
+  ciclismo: bgCiclismo,
+  fisiculturismo: bgFisiculturismo,
+};
 
 const AtelieModalidade = () => {
   const { slug } = useParams();
@@ -95,7 +108,8 @@ const AtelieModalidade = () => {
   if (!modalidade) return <Navigate to="/atelie/modalidades" replace />;
 
   // Background cinematográfico por modalidade (usa imagem da própria modalidade como fallback)
-  const heroBg = modalidade.slug === "ciclismo" ? ciclismoBg : modalidade.img;
+  const heroBg = MODALIDADE_BG[modalidade.slug] ?? (modalidade.slug === "ciclismo" ? ciclismoBg : modalidade.img);
+  const cardsBg = MODALIDADE_BG[modalidade.slug];
 
   return (
     <div className="w-full text-white atelie-page-fade-in" style={{ backgroundColor: "#050505" }}>
@@ -263,6 +277,35 @@ const AtelieModalidade = () => {
                 .triathlon-linhas-zoom { animation: none !important; }
               }
             `}</style>
+          </>
+        )}
+        {modalidade.slug !== "triathlon" && cardsBg && (
+          <>
+            <img
+              src={cardsBg}
+              alt=""
+              aria-hidden
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{
+                objectPosition: "center center",
+                filter: "contrast(1.05) saturate(1.0) brightness(0.9)",
+              }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 pointer-events-none"
+              style={{ backgroundColor: "rgba(0,0,0,0.55)" }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-x-0 top-0 pointer-events-none"
+              style={{ height: "22%", background: "linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%)" }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 pointer-events-none"
+              style={{ height: "28%", background: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 100%)" }}
+            />
           </>
         )}
         <div className="relative z-10 container mx-auto px-6 max-w-6xl">
