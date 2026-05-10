@@ -3,6 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        var pathname = window.location.pathname;
+        if (pathname.indexOf("/cart/c/") === 0) {
+          var checkoutUrl = "https://store-store-builder-joaax.myshopify.com" + pathname + window.location.search + window.location.hash;
+          window.location.replace(checkoutUrl);
+        }
+      })();
+    </script>
     <meta name="google" content="notranslate" />
     <!-- TODO: Set the document title to the name of your application -->
     <title>Lovable App</title>
