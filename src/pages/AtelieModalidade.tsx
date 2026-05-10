@@ -40,60 +40,15 @@ const AtelieModalidade = () => {
 
   useEffect(() => {
     setActiveSlug(linhas[0]?.slug);
-    const hash = typeof window !== "undefined" ? window.location.hash : "";
-    if (hash === "#modalidade-linhas") {
-      // Aguarda render para garantir que a seção exista
-      requestAnimationFrame(() => {
-        const el = document.getElementById("modalidade-linhas");
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          const targetCenter = rect.top + window.scrollY + rect.height / 2;
-          window.scrollTo({ top: Math.max(0, targetCenter - window.innerHeight / 2), behavior: "auto" });
-        }
-      });
-    } else {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    }
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     if (slug) {
       import("@/stores/modalidadeStore").then(({ useModalidadeStore }) =>
         useModalidadeStore.getState().setModalidade(slug),
       );
     }
-    // Auto-scroll suave até as linhas após 2s para todas as modalidades
-    let autoScrollTimer: number | undefined;
-    if (hash !== "#modalidade-linhas") {
-      autoScrollTimer = window.setTimeout(() => {
-        smoothScrollToLinhas();
-      }, 2000);
-    }
-    return () => {
-      if (autoScrollTimer) window.clearTimeout(autoScrollTimer);
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
-  const smoothScrollToLinhas = () => {
-    const el = document.getElementById("modalidade-linhas");
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const startY = window.scrollY;
-    // Center the linhas section in viewport so cards + "Explorar linha" button are fully visible
-    const targetCenter = rect.top + startY + rect.height / 2;
-    const endY = Math.max(0, targetCenter - window.innerHeight / 2);
-    const distance = endY - startY;
-    const duration = 1800;
-    let startTime: number | null = null;
-    const easeInOut = (t: number) =>
-      t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-    const step = (timestamp: number) => {
-      if (startTime === null) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      window.scrollTo(0, startY + distance * easeInOut(progress));
-      if (elapsed < duration) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  };
 
   useEffect(() => {
     setRevealKey((k) => k + 1);
@@ -137,81 +92,7 @@ const AtelieModalidade = () => {
         </div>
       </header>
 
-      {/* 1. HERO + 2. FAIXA — ocultos no Triathlon (vai direto para "O Ateliê Triatlo") */}
-      {modalidade.slug !== "triathlon" && (
-        <>
-          <section className="relative w-screen h-screen-safe overflow-hidden">
-            <img
-              src={heroBg}
-              alt=""
-              aria-hidden
-              decoding="async"
-              fetchPriority="high"
-              className="absolute inset-0 w-full h-full object-cover modalidade-hero-zoom"
-              style={{ objectPosition: "center 30%", filter: "contrast(1.06) saturate(1.03)" }}
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.75) 30%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0) 80%)",
-              }}
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(5,5,5,0.4) 0%, transparent 20%, transparent 75%, rgba(5,5,5,0.95) 100%)",
-              }}
-            />
-
-            <div className="relative z-10 h-full container mx-auto px-6 lg:px-12 flex items-center">
-              <div className="max-w-xl modalidade-fade-in">
-                <p
-                  className="text-[10px] uppercase tracking-[0.55em] mb-6"
-                  style={{ color: "rgba(212,175,55,0.85)" }}
-                >
-                  Etapa 02 · Modalidade
-                </p>
-                <h1
-                  className="font-display font-light leading-[0.95]"
-                  style={{
-                    fontSize: "clamp(56px, 8vw, 128px)",
-                    letterSpacing: "0.04em",
-                    color: "#f4ead0",
-                  }}
-                >
-                  {modalidade.nome.toUpperCase()}
-                </h1>
-                <p
-                  className="mt-6 italic font-light max-w-md"
-                  style={{
-                    fontFamily: '"Fraunces",serif',
-                    color: "rgba(255,255,255,0.75)",
-                    fontSize: "17px",
-                    letterSpacing: "0.02em",
-                  }}
-                >
-                  {modalidade.subtitulo}.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section className="w-full bg-black flex items-center justify-center" style={{ minHeight: "110px" }}>
-            <p
-              className="text-[11px] uppercase text-center"
-              style={{
-                color: "rgba(255,255,255,0.7)",
-                letterSpacing: "0.7em",
-                fontFamily: "Inter, sans-serif",
-              }}
-            >
-              Disciplina &nbsp;·&nbsp; Foco &nbsp;·&nbsp; Superação
-            </p>
-          </section>
-        </>
-      )}
+      {/* Removido: hero + faixa — abre direto nas linhas */}
 
       {/* 3. PRODUTOS */}
       <section
@@ -526,145 +407,7 @@ const AtelieModalidade = () => {
         `}</style>
       </section>
 
-      {modalidade.slug !== "triathlon" && modalidade.slug !== "crossfit" && (
-        <>
-          {/* 4. STORYTELLING CINEMATOGRÁFICO */}
-          <section className="relative w-screen h-[70svh] min-h-[480px] overflow-hidden">
-            <img
-              src={heroBg}
-              alt=""
-              aria-hidden
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ objectPosition: "center 40%", filter: "contrast(1.1) saturate(1.05) brightness(0.85)" }}
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.6) 100%)",
-              }}
-            />
-            <div className="relative z-10 h-full container mx-auto px-6 lg:px-12 flex items-center">
-              <div className="max-w-2xl">
-                <p
-                  className="text-[10px] uppercase tracking-[0.55em] mb-6"
-                  style={{ color: "rgba(212,175,55,0.85)" }}
-                >
-                  Storytelling
-                </p>
-                <h2
-                  className="font-display font-light leading-tight"
-                  style={{
-                    fontSize: "clamp(36px, 5vw, 72px)",
-                    letterSpacing: "0.04em",
-                    color: "#f4ead0",
-                  }}
-                >
-                  Representado em uma joia.
-                </h2>
-              </div>
-            </div>
-          </section>
-
-          {/* 5. PROVA / AUTORIDADE */}
-          <section className="w-full bg-black py-28 md:py-36">
-            <div className="container mx-auto px-6 max-w-5xl text-center">
-              <p
-                className="text-[10px] uppercase tracking-[0.55em] mb-6"
-                style={{ color: "rgba(212,175,55,0.75)" }}
-              >
-                A marca
-              </p>
-              <h2
-                className="font-display font-light leading-tight max-w-3xl mx-auto"
-                style={{
-                  fontSize: "clamp(28px, 3.4vw, 46px)",
-                  letterSpacing: "0.04em",
-                  color: "#f4ead0",
-                }}
-              >
-                Criado para quem vive disciplina todos os dias.
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 mt-20">
-                {[
-                  { t: "Artesanal", d: "Cada peça forjada à mão por mestres ourives." },
-                  { t: "Premium", d: "Ouro e prata da mais alta pureza." },
-                  { t: "Eterno", d: "Joias pensadas para atravessar gerações." },
-                ].map((b) => (
-                  <div key={b.t}>
-                    <h3
-                      className="font-display font-light mb-3"
-                      style={{
-                        fontSize: "18px",
-                        letterSpacing: "0.3em",
-                        textTransform: "uppercase",
-                        color: "#d4af37",
-                      }}
-                    >
-                      {b.t}
-                    </h3>
-                    <p
-                      className="italic font-light max-w-xs mx-auto"
-                      style={{
-                        fontFamily: '"Fraunces",serif',
-                        color: "rgba(255,255,255,0.6)",
-                        fontSize: "15px",
-                      }}
-                    >
-                      {b.d}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* 6. CTA FINAL */}
-          <section className="w-full bg-black py-32 md:py-44">
-            <div className="container mx-auto px-6 text-center">
-              <h2
-                className="font-display font-light leading-tight"
-                style={{
-                  fontSize: "clamp(36px, 5vw, 72px)",
-                  letterSpacing: "0.04em",
-                  color: "#f4ead0",
-                }}
-              >
-                Escolha sua assinatura.
-              </h2>
-              <div className="mt-12">
-                <button
-                  type="button"
-                  onClick={() => {
-                    smoothScrollToLinhas();
-                  }}
-                  className="inline-flex items-center gap-3 px-12 py-5 transition-all duration-500"
-                  style={{
-                    color: "#0a0a0a",
-                    background: "#d4af37",
-                    border: "1px solid #d4af37",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "11px",
-                    letterSpacing: "0.42em",
-                    textTransform: "uppercase",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = "0 0 40px rgba(212,175,55,0.5)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
-                >
-                  Ver linhas
-                </button>
-              </div>
-            </div>
-          </section>
-        </>
-      )}
+      {/* Removido: storytelling, autoridade e CTA final — apenas a seção de cards permanece */}
 
       <style>{`
         @keyframes modalidade-hero-zoom {
