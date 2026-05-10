@@ -9,6 +9,19 @@ import ciclismoCampaign from "@/assets/modalidade-ciclismo-campaign.jpg";
 import crossfitCampaign from "@/assets/modalidade-crossfit-campaign.jpg";
 import crossfitStrata from "@/assets/modalidade-crossfit-strata.jpg";
 import ciclismoBg from "@/assets/atelie-ciclismo-bg.jpg";
+import bgMusculacao from "@/assets/fundo-card-musculacao.png";
+import bgCrossfit from "@/assets/fundo-card-crossfit.png";
+import bgCorrida from "@/assets/fundo-card-corrida.png";
+import bgCiclismo from "@/assets/fundo-card-ciclismo.png";
+import bgFisiculturismo from "@/assets/fundo-card-fisiculturismo.png";
+
+const MODALIDADE_BG: Record<string, string> = {
+  musculacao: bgMusculacao,
+  crossfit: bgCrossfit,
+  corrida: bgCorrida,
+  ciclismo: bgCiclismo,
+  fisiculturismo: bgFisiculturismo,
+};
 
 const AtelieModalidade = () => {
   const { slug } = useParams();
