@@ -168,18 +168,16 @@ export async function startShopifyCheckout(
       onLoadingChange?.(false);
       return { success: false };
     }
-    // Normaliza o hostname para o domínio myshopify oficial,
-    // evitando que o domínio customizado (3rfitness.com.br) seja
-    // interceptado pelo frontend Lovable e gere 404.
-    const checkoutUrl = result.checkoutUrl;
-    const finalCheckoutUrl = normalizeShopifyCheckoutUrl(checkoutUrl);
+    const checkoutUrlFromShopify = result.data?.data?.cartCreate?.cart?.checkoutUrl ?? result.checkoutUrl;
+    const parsed = new URL(checkoutUrlFromShopify);
+    const finalCheckoutUrl = normalizeShopifyCheckoutUrl(checkoutUrlFromShopify);
 
-    console.log("checkoutUrl original:", checkoutUrl);
-    console.log("checkoutUrl final myshopify:", finalCheckoutUrl);
+    console.log("checkoutUrl original:", checkoutUrlFromShopify);
+    console.log("checkout path:", parsed.pathname);
+    console.log("checkout search:", parsed.search);
     console.log("FINAL REDIRECT URL:", finalCheckoutUrl);
 
-    // Redireciona na mesma aba — evita popup blocker e página em branco
-    window.location.href = finalCheckoutUrl;
+    window.location.assign(finalCheckoutUrl);
     return { success: true, checkoutUrl: finalCheckoutUrl };
   } catch (error) {
     console.error("[startShopifyCheckout] erro inesperado:", error);

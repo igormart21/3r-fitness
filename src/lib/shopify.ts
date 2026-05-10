@@ -7,11 +7,8 @@ export const SHOPIFY_STOREFRONT_TOKEN = '5da1ec1247816f2b379b4204005b92ad';
 export const HALTER_OURO_VARIANT_GID = 'gid://shopify/ProductVariant/48912055468259';
 
 export function normalizeShopifyCheckoutUrl(checkoutUrl: string): string {
-  const checkout = new URL(checkoutUrl);
-  checkout.hostname = SHOPIFY_STORE_PERMANENT_DOMAIN;
-  checkout.protocol = "https:";
-  checkout.port = "";
-  return checkout.toString();
+  const parsed = new URL(checkoutUrl);
+  return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}${parsed.pathname}${parsed.search}`;
 }
 
 export interface ShopifyProduct {

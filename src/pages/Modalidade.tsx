@@ -530,7 +530,7 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
     }
     const finalCheckoutUrl = normalizeShopifyCheckoutUrl(checkoutUrl);
     console.log("FINAL REDIRECT URL:", finalCheckoutUrl);
-    window.location.href = finalCheckoutUrl;
+    window.location.assign(finalCheckoutUrl);
   };
 
   return (
