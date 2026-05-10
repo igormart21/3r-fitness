@@ -32,6 +32,7 @@ import trionEliteAtletaFemOuro from "@/assets/trion-elite-atleta-fem-ouro.jpg";
 import trionEliteAtletaFemPrata from "@/assets/trion-elite-atleta-fem-prata.jpg";
 import valenzaOuro from "@/assets/linha-valenza-ouro.png";
 import dominusOuro from "@/assets/linha-dominus-ouro.png";
+import monarchOuro from "@/assets/linha-monarch-ouro.png";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
@@ -186,8 +187,9 @@ export const LINHAS: Record<string, Linha> = {
     nome: "MONARCH",
     assinatura: "Assinatura da Soberania",
     frase: "Soberania esculpida em silêncio.",
-    imagens: { ouro: imperiumCampaign, prata: imperiumPrataClean },
-    campaign: imperiumCampaign,
+    imagens: { ouro: monarchOuro, prata: monarchOuro },
+    campaign: monarchOuro,
+    cardFit: "cover",
   },
 };
 
