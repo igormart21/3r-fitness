@@ -220,6 +220,6 @@ export const MODALIDADES: Modalidade[] = [
     nome: "Fisiculturismo",
     subtitulo: "A escultura do físico",
     img: sportFisiculturismo,
-    linhas: ["vigor", "imperium"],
+    linhas: ["vigor", "apollo", "escultura"],
   },
 ];
