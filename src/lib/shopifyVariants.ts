@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { createDirectCheckout, normalizeShopifyCheckoutUrl } from "@/lib/shopify";
+import { createDirectCheckout } from "@/lib/shopify";
 
 /**
  * MAPA GLOBAL DE VARIANTES SHOPIFY — 3R Fitness
@@ -168,17 +168,19 @@ export async function startShopifyCheckout(
       onLoadingChange?.(false);
       return { success: false };
     }
-    const checkoutUrlFromShopify = result.data?.data?.cartCreate?.cart?.checkoutUrl ?? result.checkoutUrl;
-    const parsed = new URL(checkoutUrlFromShopify);
-    const finalCheckoutUrl = normalizeShopifyCheckoutUrl(checkoutUrlFromShopify);
+    const checkoutUrl = result.data?.data?.cartCreate?.cart?.checkoutUrl ?? result.checkoutUrl;
+    if (!checkoutUrl) {
+      console.error("[startShopifyCheckout] checkoutUrl ausente no retorno");
+      toast.error("Não foi possível iniciar o checkout. Tente novamente.");
+      onLoadingChange?.(false);
+      return { success: false };
+    }
 
-    console.log("checkoutUrl original:", checkoutUrlFromShopify);
-    console.log("checkout path:", parsed.pathname);
-    console.log("checkout search:", parsed.search);
-    console.log("FINAL REDIRECT URL:", finalCheckoutUrl);
+    console.log("checkoutUrl oficial Shopify:", checkoutUrl);
+    console.log("redirecionando externo para checkout oficial");
 
-    window.location.assign(finalCheckoutUrl);
-    return { success: true, checkoutUrl: finalCheckoutUrl };
+    window.location.replace(checkoutUrl);
+    return { success: true, checkoutUrl };
   } catch (error) {
     console.error("[startShopifyCheckout] erro inesperado:", error);
     toast.error("Não foi possível iniciar o checkout. Tente novamente.");

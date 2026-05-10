@@ -8,7 +8,7 @@ import { ShippingAnnouncementBar } from "@/components/ShippingAnnouncementBar";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartUIStore } from "@/stores/cartUIStore";
 import { buildContinuarPath } from "@/lib/continuar";
-import { normalizeShopifyCheckoutUrl } from "@/lib/shopify";
+
 
 export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {}) => {
   const isOpen = useCartUIStore((s) => s.isOpen);
@@ -28,9 +28,9 @@ export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {
       return;
     }
     setIsOpen(false);
-    const finalCheckoutUrl = normalizeShopifyCheckoutUrl(checkoutUrl);
-    console.log("FINAL REDIRECT URL:", finalCheckoutUrl);
-    window.location.assign(finalCheckoutUrl);
+    console.log("checkoutUrl oficial Shopify:", checkoutUrl);
+    console.log("redirecionando externo para checkout oficial");
+    window.location.replace(checkoutUrl);
   };
 
   const handleContinuarComprando = () => {
