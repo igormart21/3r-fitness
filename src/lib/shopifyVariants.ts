@@ -171,6 +171,8 @@ export async function startShopifyCheckout(
     // Normaliza o hostname para o domínio myshopify oficial,
     // evitando que o domínio customizado (3rfitness.com.br) seja
     // interceptado pelo frontend Lovable e gere 404.
+    console.log("checkoutUrl original:", result.checkoutUrl);
+
     let finalUrl = result.checkoutUrl;
     try {
       const checkout = new URL(result.checkoutUrl);
@@ -181,6 +183,8 @@ export async function startShopifyCheckout(
     } catch (e) {
       console.warn("[startShopifyCheckout] não foi possível normalizar o hostname:", e);
     }
+    console.log("checkoutUrl normalizado:", finalUrl);
+    console.log("redirect final:", finalUrl);
     // Redireciona na mesma aba — evita popup blocker e página em branco
     window.location.href = finalUrl;
     return { success: true, checkoutUrl: finalUrl };
