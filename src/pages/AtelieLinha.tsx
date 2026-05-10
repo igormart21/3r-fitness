@@ -27,7 +27,7 @@ const AtelieLinha = () => {
   const [material, setMaterial] = useState<Material>("ouro");
   const [forma, setForma] = useState<Forma>("masculino");
   const [revealKey, setRevealKey] = useState(0);
-  const [adding, setAdding] = useState(false);
+  const [panelOpen, setPanelOpen] = useState(false);
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
