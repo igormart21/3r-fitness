@@ -103,7 +103,7 @@ export const SHOPIFY_VARIANTS_MAP: Record<string, Record<string, Record<string, 
     },
   },
   fisiculturismo: {
-    vigor: {
+    valenza: {
       ouro: "gid://shopify/ProductVariant/48914112315619",
       prata: "gid://shopify/ProductVariant/48914112381155",
       ouro_masculino: "gid://shopify/ProductVariant/48914112315619",
@@ -111,13 +111,13 @@ export const SHOPIFY_VARIANTS_MAP: Record<string, Record<string, Record<string, 
       prata_masculino: "gid://shopify/ProductVariant/48914112381155",
       prata_feminino: "gid://shopify/ProductVariant/48914112413923",
     },
-    imperium: {
-      ouro: "gid://shopify/ProductVariant/48916550746339",
-      prata: "gid://shopify/ProductVariant/48916550811875",
-      ouro_masculino: "gid://shopify/ProductVariant/48916550746339",
-      ouro_feminino: "gid://shopify/ProductVariant/48916550779107",
-      prata_masculino: "gid://shopify/ProductVariant/48916550811875",
-      prata_feminino: "gid://shopify/ProductVariant/48916550844643",
+    dominus: {
+      ouro: null,
+      prata: null,
+    },
+    monarch: {
+      ouro: null,
+      prata: null,
     },
   },
 };
