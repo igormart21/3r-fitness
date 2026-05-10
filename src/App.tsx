@@ -30,9 +30,9 @@ const queryClient = new QueryClient();
 
 const ShopifyCheckoutRedirect = () => {
   useEffect(() => {
-    const finalCheckoutUrl = `https://store-store-builder-joaax.myshopify.com${window.location.pathname}${window.location.search}${window.location.hash}`;
+    const finalCheckoutUrl = `https://store-store-builder-joaax.myshopify.com${window.location.pathname}${window.location.search}`;
     console.log("FINAL REDIRECT URL:", finalCheckoutUrl);
-    window.location.href = finalCheckoutUrl;
+    window.location.assign(finalCheckoutUrl);
   }, []);
 
   return null;
