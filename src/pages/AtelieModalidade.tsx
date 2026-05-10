@@ -404,7 +404,7 @@ const AtelieModalidade = () => {
                   )}
                 </div>
                 <h3
-                  className="font-display font-extralight"
+                  className={`font-display ${isFisi ? "font-bold" : "font-extralight"}`}
                   style={{
                     fontSize: "clamp(18px, 1.4vw, 22px)",
                     letterSpacing: "0.34em",
