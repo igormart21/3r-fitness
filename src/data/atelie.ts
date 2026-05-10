@@ -187,8 +187,9 @@ export const LINHAS: Record<string, Linha> = {
     nome: "MONARCH",
     assinatura: "Assinatura da Soberania",
     frase: "Soberania esculpida em silêncio.",
-    imagens: { ouro: imperiumCampaign, prata: imperiumPrataClean },
-    campaign: imperiumCampaign,
+    imagens: { ouro: monarchOuro, prata: monarchOuro },
+    campaign: monarchOuro,
+    cardFit: "cover",
   },
 };
 
