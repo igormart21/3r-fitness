@@ -30,6 +30,7 @@ import trionEliteAtletaOuro from "@/assets/trion-elite-atleta-ouro.jpg";
 import trionEliteAtletaPrata from "@/assets/trion-elite-atleta-prata.jpg";
 import trionEliteAtletaFemOuro from "@/assets/trion-elite-atleta-fem-ouro.jpg";
 import trionEliteAtletaFemPrata from "@/assets/trion-elite-atleta-fem-prata.jpg";
+import valenzaOuro from "@/assets/linha-valenza-ouro.png";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
