@@ -30,7 +30,7 @@ export const CartDrawer = ({ showTrigger = true }: { showTrigger?: boolean } = {
     setIsOpen(false);
     const finalCheckoutUrl = normalizeShopifyCheckoutUrl(checkoutUrl);
     console.log("FINAL REDIRECT URL:", finalCheckoutUrl);
-    window.location.href = finalCheckoutUrl;
+    window.location.assign(finalCheckoutUrl);
   };
 
   const handleContinuarComprando = () => {
