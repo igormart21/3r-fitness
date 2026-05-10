@@ -158,17 +158,17 @@ export async function startShopifyCheckout(
 
   onLoadingChange?.(true);
   try {
-    const result = await createDirectCheckout(variantId, quantity);
-    if (!result.success || !result.checkoutUrl) {
+    const cartCreateResult = await createDirectCheckout(variantId, quantity);
+    if (!cartCreateResult.success || !cartCreateResult.checkoutUrl) {
       console.error("[startShopifyCheckout] cartCreate falhou", {
         variantId,
-        result,
+        result: cartCreateResult,
       });
       toast.error("Não foi possível iniciar o checkout. Tente novamente.");
       onLoadingChange?.(false);
       return { success: false };
     }
-    const checkoutUrl = result.data?.data?.cartCreate?.cart?.checkoutUrl ?? result.checkoutUrl;
+    const checkoutUrl = cartCreateResult.data?.data?.cartCreate?.cart?.checkoutUrl;
     if (!checkoutUrl) {
       console.error("[startShopifyCheckout] checkoutUrl ausente no retorno");
       toast.error("Não foi possível iniciar o checkout. Tente novamente.");
@@ -176,11 +176,18 @@ export async function startShopifyCheckout(
       return { success: false };
     }
 
-    console.log("checkoutUrl oficial Shopify:", checkoutUrl);
-    console.log("redirecionando externo para checkout oficial");
+    const original = new URL(checkoutUrl);
+    const finalCheckoutUrl =
+      "https://store-store-builder-joaax.myshopify.com" +
+      original.pathname +
+      original.search +
+      original.hash;
 
-    window.location.replace(checkoutUrl);
-    return { success: true, checkoutUrl };
+    console.log("checkoutUrl original Shopify:", checkoutUrl);
+    console.log("finalCheckoutUrl myshopify:", finalCheckoutUrl);
+
+    window.location.replace(finalCheckoutUrl);
+    return { success: true, checkoutUrl: finalCheckoutUrl };
   } catch (error) {
     console.error("[startShopifyCheckout] erro inesperado:", error);
     toast.error("Não foi possível iniciar o checkout. Tente novamente.");
