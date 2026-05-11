@@ -30,6 +30,8 @@ import titanAtletaMascOuro from "@/assets/titan-atleta-masc-ouro.png";
 import titanAtletaMascPrata from "@/assets/titan-atleta-masc-prata.png";
 import titanAtletaFemOuro from "@/assets/titan-atleta-fem-ouro.png";
 import titanAtletaFemPrata from "@/assets/titan-atleta-fem-prata.png";
+import velocitaAtletaFemOuro from "@/assets/velocita-atleta-fem-ouro.png";
+import velocitaAtletaFemPrata from "@/assets/velocita-atleta-fem-prata.png";
 import trionEliteAtletaOuro from "@/assets/trion-elite-atleta-ouro.jpg";
 import trionEliteAtletaPrata from "@/assets/trion-elite-atleta-prata.jpg";
 import trionEliteAtletaFemOuro from "@/assets/trion-elite-atleta-fem-ouro.jpg";
@@ -130,11 +132,16 @@ export const LINHAS: Record<string, Linha> = {
   },
   ritmo: {
     slug: "ritmo",
-    nome: "RITMO",
+    nome: "VELOCITA",
     assinatura: "Assinatura do Movimento",
     frase: "O ritmo de uma vida em marcha.",
     imagens: { ouro: vigorOuroClean, prata: vigorPrataClean },
     campaign: vigorCampaign,
+    cinematic: {
+      ouro: velocitaAtletaFemOuro,
+      prata: velocitaAtletaFemPrata,
+      feminino: { ouro: velocitaAtletaFemOuro, prata: velocitaAtletaFemPrata },
+    },
   },
   velox: {
     slug: "velox",
