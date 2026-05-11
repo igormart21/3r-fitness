@@ -32,6 +32,10 @@ import titanAtletaFemOuro from "@/assets/titan-atleta-fem-ouro.png";
 import titanAtletaFemPrata from "@/assets/titan-atleta-fem-prata.png";
 import velocitaAtletaFemOuro from "@/assets/velocita-atleta-fem-ouro.png";
 import velocitaAtletaFemPrata from "@/assets/velocita-atleta-fem-prata.png";
+import aeronAtletaMascOuro from "@/assets/aeron-atleta-masc-ouro.jpg";
+import aeronAtletaMascPrata from "@/assets/aeron-atleta-masc-prata.jpg";
+import aeronAtletaFemOuro from "@/assets/aeron-atleta-fem-ouro.jpg";
+import aeronAtletaFemPrata from "@/assets/aeron-atleta-fem-prata.jpg";
 import trionEliteAtletaOuro from "@/assets/trion-elite-atleta-ouro.jpg";
 import trionEliteAtletaPrata from "@/assets/trion-elite-atleta-prata.jpg";
 import trionEliteAtletaFemOuro from "@/assets/trion-elite-atleta-fem-ouro.jpg";
@@ -166,6 +170,12 @@ export const LINHAS: Record<string, Linha> = {
     frase: "Cada giro, um pulso eterno.",
     imagens: { ouro: aeronOuro, prata: triadePrataClean },
     campaign: triadeCampaign,
+    cinematic: {
+      ouro: aeronAtletaMascOuro,
+      prata: aeronAtletaMascPrata,
+      masculino: { ouro: aeronAtletaMascOuro, prata: aeronAtletaMascPrata },
+      feminino: { ouro: aeronAtletaFemOuro, prata: aeronAtletaFemPrata },
+    },
   },
   velarion: {
     slug: "velarion",
