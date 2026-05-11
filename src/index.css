@@ -359,23 +359,23 @@
 /* TABLET — composição cinematográfica intermediária */
 @media (min-width: 769px) and (max-width: 1024px) {
   .hero-main-content {
-    padding: clamp(110px, 12vw, 150px) clamp(36px, 5vw, 64px) clamp(72px, 8vw, 110px);
+    padding: clamp(60px, 8vw, 100px) clamp(36px, 5vw, 56px) clamp(96px, 10vw, 130px);
   }
 
   .hero-copy-wrap {
-    max-width: min(560px, 78vw);
+    max-width: min(460px, 78vw);
   }
 
   .hero-title {
-    font-size: clamp(2.6rem, 5.4vw, 4.4rem);
-    max-width: 16ch;
-    line-height: 1.06;
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    max-width: 26ch;
+    line-height: 1.22;
   }
 
   .hero-subtitle {
-    max-width: 46ch;
-    font-size: 13.5px;
-    line-height: 1.72;
+    max-width: 40ch;
+    font-size: 12px;
+    line-height: 1.7;
   }
 
   .hero-luxury-button {
