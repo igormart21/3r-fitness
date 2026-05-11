@@ -171,8 +171,9 @@ export const LINHAS: Record<string, Linha> = {
     nome: "AERON",
     assinatura: "Assinatura do Compasso",
     frase: "Cada giro, um pulso eterno.",
-    imagens: { ouro: aeronOuro, prata: triadePrataClean },
-    campaign: triadeCampaign,
+    imagens: { ouro: aeronCardCover, prata: aeronCardCover },
+    campaign: aeronCardCover,
+    cardFit: "cover",
     cinematic: {
       ouro: aeronAtletaMascOuro,
       prata: aeronAtletaMascPrata,
