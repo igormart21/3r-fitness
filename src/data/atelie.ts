@@ -137,6 +137,12 @@ export const LINHAS: Record<string, Linha> = {
     imagens: { ouro: strataCard, prata: strataCard },
     campaign: strataCard,
     cardFit: "cover",
+    cinematic: {
+      ouro: strataAtletaMascOuro,
+      prata: strataAtletaMascPrata,
+      masculino: { ouro: strataAtletaMascOuro, prata: strataAtletaMascPrata },
+      feminino: { ouro: strataAtletaFemOuro, prata: strataAtletaFemPrata },
+    },
   },
   triade: {
     slug: "triade",
