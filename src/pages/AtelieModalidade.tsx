@@ -258,7 +258,7 @@ const AtelieModalidade = () => {
                 className="atelie-linha-card group flex flex-col items-center text-center w-full max-w-[220px] h-full"
                 style={{
                   position: "relative",
-                  padding: "16px 14px 20px",
+                  padding: "12px 12px 16px",
                   background: isFisi
                     ? "linear-gradient(180deg, #f4d77a 0%, #d4af37 55%, #b8902a 100%)"
                     : "linear-gradient(180deg, rgba(15,15,15,0.55) 0%, rgba(5,5,5,0.62) 100%)",
