@@ -26,6 +26,10 @@ import veloxEditorialMascOuro from "@/assets/velox-royale-masculino-ouro.png";
 import veloxEditorialMascPrata from "@/assets/velox-royale-masculino-prata.png";
 import velarionOuro from "@/assets/linha-velarion-ouro.png";
 import trionEliteOuro from "@/assets/linha-trion-elite-ouro.png";
+import titanAtletaMascOuro from "@/assets/titan-atleta-masc-ouro.png";
+import titanAtletaMascPrata from "@/assets/titan-atleta-masc-prata.png";
+import titanAtletaFemOuro from "@/assets/titan-atleta-fem-ouro.png";
+import titanAtletaFemPrata from "@/assets/titan-atleta-fem-prata.png";
 import trionEliteAtletaOuro from "@/assets/trion-elite-atleta-ouro.jpg";
 import trionEliteAtletaPrata from "@/assets/trion-elite-atleta-prata.jpg";
 import trionEliteAtletaFemOuro from "@/assets/trion-elite-atleta-fem-ouro.jpg";
@@ -117,6 +121,12 @@ export const LINHAS: Record<string, Linha> = {
     frase: "A travessia que define o espírito.",
     imagens: { ouro: triadeOuroClean, prata: triadePrataClean },
     campaign: triadeCampaign,
+    cinematic: {
+      ouro: titanAtletaMascOuro,
+      prata: titanAtletaMascPrata,
+      masculino: { ouro: titanAtletaMascOuro, prata: titanAtletaMascPrata },
+      feminino: { ouro: titanAtletaFemOuro, prata: titanAtletaFemPrata },
+    },
   },
   ritmo: {
     slug: "ritmo",
