@@ -18,6 +18,18 @@ import strataPrata from "@/assets/linha-strata-prata.jpg";
 import imperiumOuro from "@/assets/linha-imperium-ouro.jpg";
 import imperiumPrata from "@/assets/linha-imperium-prata.jpg";
 import ciclismoBg from "@/assets/atelie-ciclismo-bg.jpg";
+import pingenteValenzaOuro from "@/assets/pingente-valenza-ouro.png";
+import pingenteValenzaPrata from "@/assets/pingente-valenza-prata.png";
+import pingenteDominusOuro from "@/assets/pingente-dominus-ouro.png";
+import pingenteDominusPrata from "@/assets/pingente-dominus-prata.png";
+import pingenteMonarchOuro from "@/assets/pingente-monarch-ouro.png";
+import pingenteMonarchPrata from "@/assets/pingente-monarch-prata.png";
+
+const FLOATING_PENDANTS: Record<string, { ouro: string; prata: string }> = {
+  valenza: { ouro: pingenteValenzaOuro, prata: pingenteValenzaPrata },
+  dominus: { ouro: pingenteDominusOuro, prata: pingenteDominusPrata },
+  monarch: { ouro: pingenteMonarchOuro, prata: pingenteMonarchPrata },
+};
 // Mapa de slug da linha → handle do produto Shopify (importado pelo Storefront API).
 
 const AtelieLinha = () => {
