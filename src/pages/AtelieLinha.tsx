@@ -440,7 +440,7 @@ const AtelieLinha = () => {
               } : undefined}
             >
               <p
-                className="text-[10px] uppercase tracking-[0.5em] mb-5"
+                className="text-[10px] uppercase tracking-[0.5em] mb-3"
                 style={{ color: "rgba(212,175,55,0.75)" }}
               >
                 Etapa 03 · Linha autoral
@@ -448,7 +448,7 @@ const AtelieLinha = () => {
               <h1
                 className="font-display font-light leading-none"
                 style={{
-                  fontSize: "clamp(44px, 5vw, 68px)",
+                  fontSize: "clamp(34px, 4vw, 52px)",
                   letterSpacing: "0.04em",
                   color: "#f4ead0",
                 }}
@@ -456,11 +456,11 @@ const AtelieLinha = () => {
                 {linha.nome}
               </h1>
               <p
-                className="mt-4 italic font-light"
+                className="mt-3 italic font-light"
                 style={{
                   fontFamily: '"Fraunces","Cormorant Garamond",serif',
                   color: "rgba(244,215,122,0.9)",
-                  fontSize: "15px",
+                  fontSize: "14px",
                   letterSpacing: "0.06em",
                 }}
               >
@@ -468,7 +468,7 @@ const AtelieLinha = () => {
               </p>
 
               <div
-                className="my-8 h-px w-20"
+                className="my-5 h-px w-20"
                 style={{
                   background:
                     "linear-gradient(90deg, rgba(212,175,55,0.7), transparent)",
@@ -479,14 +479,14 @@ const AtelieLinha = () => {
                 className="font-light leading-relaxed italic"
                 style={{
                   color: "rgba(255,255,255,0.72)",
-                  fontSize: "16px",
+                  fontSize: "14.5px",
                   fontFamily: '"Fraunces",serif',
                 }}
               >
                 {linha.frase}
               </p>
 
-              <div className="mt-12 space-y-9">
+              <div className="mt-7 space-y-6">
                 <Selector
                   label="Material"
                   options={[
@@ -509,11 +509,11 @@ const AtelieLinha = () => {
                 )}
               </div>
 
-              <div className="mt-14">
+              <div className="mt-8">
                 <button
                   type="button"
                   onClick={handleSelecionar}
-                  className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500"
+                  className="group relative inline-flex items-center justify-center gap-3 px-9 py-3.5 transition-all duration-500"
                   style={{
                     color: "#d4af37",
                     border: "1px solid rgba(212,175,55,0.55)",
