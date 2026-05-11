@@ -300,42 +300,6 @@ const AtelieLinha = () => {
                 transition: "background 700ms ease-in-out",
               }}
             />
-            {/* SPOTLIGHT cinematográfico no pingente — feixe de luz suave */}
-            <div
-              className="absolute inset-0 pendant-spotlight"
-              style={{
-                background:
-                  material === "ouro"
-                    ? "radial-gradient(ellipse 28% 38% at 78% 42%, rgba(255,225,160,0.32) 0%, rgba(255,200,110,0.14) 35%, transparent 70%)"
-                    : "radial-gradient(ellipse 28% 38% at 78% 42%, rgba(220,235,255,0.28) 0%, rgba(180,210,240,0.12) 35%, transparent 70%)",
-                mixBlendMode: "screen",
-                transition: "background 700ms ease-in-out",
-              }}
-            />
-            {/* glow concentrado no coração da joia */}
-            <div
-              className="absolute inset-0 pendant-glow"
-              style={{
-                background:
-                  material === "ouro"
-                    ? "radial-gradient(circle 110px at 78% 42%, rgba(255,215,135,0.55) 0%, rgba(255,190,90,0.18) 45%, transparent 75%)"
-                    : "radial-gradient(circle 110px at 78% 42%, rgba(230,240,255,0.5) 0%, rgba(190,215,245,0.16) 45%, transparent 75%)",
-                mixBlendMode: "screen",
-                transition: "background 700ms ease-in-out",
-              }}
-            />
-            {/* halo externo amplo */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  material === "ouro"
-                    ? "radial-gradient(circle 320px at 78% 42%, rgba(255,200,110,0.10) 0%, transparent 70%)"
-                    : "radial-gradient(circle 320px at 78% 42%, rgba(200,220,245,0.09) 0%, transparent 70%)",
-                mixBlendMode: "screen",
-                transition: "background 700ms ease-in-out",
-              }}
-            />
             {/* partículas */}
             <div className="absolute inset-0 cinematic-particles" />
           </div>
