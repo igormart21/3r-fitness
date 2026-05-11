@@ -112,7 +112,7 @@ export const LINHAS: Record<string, Linha> = {
   },
   triade: {
     slug: "triade",
-    nome: "TRÍADE",
+    nome: "TITAN",
     assinatura: "Assinatura da Travessia",
     frase: "A travessia que define o espírito.",
     imagens: { ouro: triadeOuroClean, prata: triadePrataClean },
