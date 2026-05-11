@@ -40,6 +40,10 @@ import imperiumAtletaMascOuro from "@/assets/imperium-atleta-masc-ouro.png";
 import imperiumAtletaMascPrata from "@/assets/imperium-atleta-masc-prata.png";
 import imperiumAtletaFemOuro from "@/assets/imperium-atleta-fem-ouro.png";
 import imperiumAtletaFemPrata from "@/assets/imperium-atleta-fem-prata.png";
+import strataAtletaMascOuro from "@/assets/strata-atleta-masc-ouro.png";
+import strataAtletaMascPrata from "@/assets/strata-atleta-masc-prata.png";
+import strataAtletaFemOuro from "@/assets/strata-atleta-fem-ouro.png";
+import strataAtletaFemPrata from "@/assets/strata-atleta-fem-prata.png";
 import trionEliteAtletaOuro from "@/assets/trion-elite-atleta-ouro.jpg";
 import trionEliteAtletaPrata from "@/assets/trion-elite-atleta-prata.jpg";
 import trionEliteAtletaFemOuro from "@/assets/trion-elite-atleta-fem-ouro.jpg";
@@ -133,6 +137,12 @@ export const LINHAS: Record<string, Linha> = {
     imagens: { ouro: strataCard, prata: strataCard },
     campaign: strataCard,
     cardFit: "cover",
+    cinematic: {
+      ouro: strataAtletaMascOuro,
+      prata: strataAtletaMascPrata,
+      masculino: { ouro: strataAtletaMascOuro, prata: strataAtletaMascPrata },
+      feminino: { ouro: strataAtletaFemOuro, prata: strataAtletaFemPrata },
+    },
   },
   triade: {
     slug: "triade",
