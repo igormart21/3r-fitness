@@ -372,7 +372,7 @@ const AtelieLinha = () => {
               className="relative w-full overflow-hidden mx-auto group"
               style={{
                 aspectRatio: linha.slug === "strata" || linha.slug === "imperium" ? "1536 / 1024" : "1122 / 946",
-                maxHeight: "calc(100vh - 180px)",
+                maxHeight: "calc(100vh - 140px)",
                 background:
                   "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)",
                 border: "1px solid rgba(212,175,55,0.18)",
