@@ -75,7 +75,7 @@ const AtelieLinha = () => {
   const parentModalidade = MODALIDADES.find((m) =>
     m.linhas.includes(linha.slug),
   );
-  const noFormaLines = new Set(["valenza", "dominus", "monarch"]);
+  const noFormaLines = new Set(["valenza", "dominus", "monarch", "ritmo"]);
   const showFormaSelector =
     linha.slug !== "halter" &&
     !noFormaLines.has(linha.slug) &&
