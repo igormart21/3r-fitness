@@ -367,6 +367,7 @@ const AtelieLinha = () => {
             }
             @media (max-width: 768px) {
               .cinematic-breathing { background-position: 50% 48% !important; background-size: cover; }
+              .pendant-spotlight, .pendant-glow { background-position: 50% 55% !important; }
             }
             @media (prefers-reduced-motion: reduce) {
               .cinematic-breathing, .pendant-glow, .cinematic-particles { animation: none !important; }
