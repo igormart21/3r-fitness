@@ -51,6 +51,8 @@ import dominusBannerOuro from "@/assets/dominus-ouro-banner.png";
 import dominusBannerPrata from "@/assets/dominus-prata-banner.png";
 import titanCardCover from "@/assets/titan-card-cover.png";
 import velocitaCardCover from "@/assets/velocita-card-cover.png";
+import aeronCardCover from "@/assets/aeron-card-cover.png";
+import veloxCardCover from "@/assets/velox-card-cover.jpg";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
@@ -156,8 +158,9 @@ export const LINHAS: Record<string, Linha> = {
     nome: "VELOX ROYALE",
     assinatura: "Assinatura da Distância",
     frase: "Horizontes conquistados em silêncio.",
-    imagens: { ouro: veloxOuro, prata: imperiumPrataClean },
-    campaign: imperiumCampaign,
+    imagens: { ouro: veloxCardCover, prata: veloxCardCover },
+    campaign: veloxCardCover,
+    cardFit: "cover",
     editorial: {
       feminino: { ouro: veloxEditorialFemOuro, prata: veloxEditorialFemPrata },
       masculino: { ouro: veloxEditorialMascOuro, prata: veloxEditorialMascPrata },
@@ -168,8 +171,9 @@ export const LINHAS: Record<string, Linha> = {
     nome: "AERON",
     assinatura: "Assinatura do Compasso",
     frase: "Cada giro, um pulso eterno.",
-    imagens: { ouro: aeronOuro, prata: triadePrataClean },
-    campaign: triadeCampaign,
+    imagens: { ouro: aeronCardCover, prata: aeronCardCover },
+    campaign: aeronCardCover,
+    cardFit: "cover",
     cinematic: {
       ouro: aeronAtletaMascOuro,
       prata: aeronAtletaMascPrata,
