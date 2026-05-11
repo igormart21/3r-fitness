@@ -184,28 +184,29 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: flex-end;
-  text-align: right;
-  padding: clamp(96px, 10vw, 140px) clamp(24px, 6vw, 96px) clamp(56px, 6vw, 96px);
+  align-items: flex-start;
+  text-align: left;
+  padding: clamp(48px, 6vw, 80px) clamp(24px, 6vw, 72px) clamp(80px, 8vw, 120px);
 }
 
 .hero-copy-wrap {
-  max-width: min(640px, 86vw);
+  max-width: min(520px, 86vw);
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
+  width: 100%;
 }
 
 .hero-title {
   margin: 0;
   font-family: "Fraunces", "Cormorant Garamond", Georgia, serif;
   font-weight: 300;
-  font-size: clamp(2.6rem, 6.4vw, 6rem);
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-  max-width: 18ch;
-  color: rgba(248, 244, 234, 0.94);
-  text-shadow: 0 8px 28px rgba(0, 0, 0, 0.32);
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  line-height: 1.2;
+  letter-spacing: 0.005em;
+  max-width: 28ch;
+  color: rgba(248, 244, 234, 0.78);
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
 }
 
 .hero-title__accent {
@@ -219,23 +220,27 @@
 }
 
 .hero-subtitle {
-  margin: clamp(20px, 2.6vw, 32px) 0 0;
-  max-width: 56ch;
+  margin: 14px 0 0;
+  max-width: 44ch;
   font-family: "Inter", sans-serif;
-  font-size: clamp(13px, 1.05vw, 16px);
+  font-size: clamp(11px, 0.85vw, 13px);
   font-weight: 300;
-  line-height: 1.75;
-  letter-spacing: 0.06em;
-  color: rgba(244, 238, 222, 0.74);
+  line-height: 1.7;
+  letter-spacing: 0.05em;
+  color: rgba(244, 238, 222, 0.55);
 }
 
 
 .hero-actions {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(36px, 5vw, 64px);
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 14px;
-  margin-top: clamp(28px, 3.4vw, 44px);
+  z-index: 4;
 }
 
 .hero-luxury-button {
@@ -354,23 +359,23 @@
 /* TABLET — composição cinematográfica intermediária */
 @media (min-width: 769px) and (max-width: 1024px) {
   .hero-main-content {
-    padding: clamp(110px, 12vw, 150px) clamp(36px, 5vw, 64px) clamp(72px, 8vw, 110px);
+    padding: clamp(60px, 8vw, 100px) clamp(36px, 5vw, 56px) clamp(96px, 10vw, 130px);
   }
 
   .hero-copy-wrap {
-    max-width: min(560px, 78vw);
+    max-width: min(460px, 78vw);
   }
 
   .hero-title {
-    font-size: clamp(2.6rem, 5.4vw, 4.4rem);
-    max-width: 16ch;
-    line-height: 1.06;
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    max-width: 26ch;
+    line-height: 1.22;
   }
 
   .hero-subtitle {
-    max-width: 46ch;
-    font-size: 13.5px;
-    line-height: 1.72;
+    max-width: 40ch;
+    font-size: 12px;
+    line-height: 1.7;
   }
 
   .hero-luxury-button {
@@ -384,55 +389,53 @@
 @media (max-width: 768px) {
   .hero-main-content {
     justify-content: flex-end;
-    align-items: flex-end;
-    text-align: right;
-    padding: 96px 20px 84px;
+    align-items: flex-start;
+    text-align: left;
+    padding: 60px 20px 110px;
   }
 
   .hero-campaign-image.is-active {
-    /* Reduz o zoom em mobile para preservar o enquadramento da joia/atleta */
     transform: scale(1.04) translate3d(0, 0, 0);
   }
 
   .hero-overlay-soft {
     background:
-      linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.05) 34%, rgba(0,0,0,0.26) 68%, rgba(0,0,0,0.58) 100%);
+      linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.05) 34%, rgba(0,0,0,0.26) 68%, rgba(0,0,0,0.62) 100%);
   }
 
   .hero-overlay-vignette {
     background:
       radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.30) 100%),
-      radial-gradient(ellipse 90% 55% at 75% 85%, rgba(0,0,0,0.34) 0%, transparent 72%),
+      radial-gradient(ellipse 90% 55% at 25% 85%, rgba(0,0,0,0.38) 0%, transparent 72%),
       radial-gradient(ellipse 70% 50% at 50% 38%, rgba(244,215,122,0.06) 0%, transparent 70%);
   }
 
   .hero-copy-wrap {
     max-width: 100%;
-    align-items: flex-end;
+    align-items: flex-start;
   }
 
   .hero-title {
-    max-width: 13ch;
-    font-size: clamp(2rem, 8.4vw, 2.9rem);
-    line-height: 1.06;
-    letter-spacing: -0.012em;
+    max-width: 22ch;
+    font-size: clamp(1.15rem, 4.6vw, 1.6rem);
+    line-height: 1.25;
+    letter-spacing: 0.005em;
   }
 
   .hero-subtitle {
-    margin-top: 18px;
-    max-width: 30ch;
-    font-size: 12.5px;
-    line-height: 1.72;
-    letter-spacing: 0.05em;
+    margin-top: 10px;
+    max-width: 32ch;
+    font-size: 11.5px;
+    line-height: 1.65;
+    letter-spacing: 0.04em;
   }
 
   .hero-actions {
-    margin-top: 26px;
-    justify-content: flex-end;
+    bottom: 32px;
   }
 
   .hero-luxury-button {
-    min-height: 46px;
+    min-height: 44px;
     padding: 0 22px;
     font-size: 10px;
     letter-spacing: 0.30em;
