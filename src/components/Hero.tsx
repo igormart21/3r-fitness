@@ -93,19 +93,19 @@ export const Hero = () => {
           <p className="hero-subtitle">
             Peças premium desenvolvidas para atletas que transformam disciplina em identidade.
           </p>
-
-          <div className="hero-actions">
-            <button
-              type="button"
-              onClick={handleScrollToModalidades}
-              className="hero-luxury-button"
-              aria-label="Explorar Modalidades"
-            >
-              <span className="hero-luxury-button__shine" aria-hidden />
-              <span className="hero-luxury-button__label">Explorar Modalidades</span>
-            </button>
-          </div>
         </div>
+      </div>
+
+      <div className="hero-actions">
+        <button
+          type="button"
+          onClick={handleScrollToModalidades}
+          className="hero-luxury-button"
+          aria-label="Explorar Modalidades"
+        >
+          <span className="hero-luxury-button__shine" aria-hidden />
+          <span className="hero-luxury-button__label">Explorar Modalidades</span>
+        </button>
       </div>
 
       <style>{`
