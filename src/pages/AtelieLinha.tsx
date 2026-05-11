@@ -18,6 +18,18 @@ import strataPrata from "@/assets/linha-strata-prata.jpg";
 import imperiumOuro from "@/assets/linha-imperium-ouro.jpg";
 import imperiumPrata from "@/assets/linha-imperium-prata.jpg";
 import ciclismoBg from "@/assets/atelie-ciclismo-bg.jpg";
+import pingenteValenzaOuro from "@/assets/pingente-valenza-ouro.png";
+import pingenteValenzaPrata from "@/assets/pingente-valenza-prata.png";
+import pingenteDominusOuro from "@/assets/pingente-dominus-ouro.png";
+import pingenteDominusPrata from "@/assets/pingente-dominus-prata.png";
+import pingenteMonarchOuro from "@/assets/pingente-monarch-ouro.png";
+import pingenteMonarchPrata from "@/assets/pingente-monarch-prata.png";
+
+const FLOATING_PENDANTS: Record<string, { ouro: string; prata: string }> = {
+  valenza: { ouro: pingenteValenzaOuro, prata: pingenteValenzaPrata },
+  dominus: { ouro: pingenteDominusOuro, prata: pingenteDominusPrata },
+  monarch: { ouro: pingenteMonarchOuro, prata: pingenteMonarchPrata },
+};
 // Mapa de slug da linha → handle do produto Shopify (importado pelo Storefront API).
 
 const AtelieLinha = () => {
@@ -339,6 +351,91 @@ const AtelieLinha = () => {
           `}</style>
         </>
       )}
+
+      {slug && FLOATING_PENDANTS[slug] && (
+        <>
+          <div
+            aria-hidden
+            className="hidden md:block fixed pointer-events-none floating-pendant-wrap"
+            style={{
+              right: "4vw",
+              top: "50%",
+              transform: "translateY(-50%)",
+              width: "min(34vw, 460px)",
+              height: "min(82vh, 760px)",
+              zIndex: 5,
+            }}
+          >
+            {(["ouro", "prata"] as const).map((m) => (
+              <img
+                key={m}
+                src={FLOATING_PENDANTS[slug][m]}
+                alt=""
+                className="absolute inset-0 w-full h-full floating-pendant-img"
+                style={{
+                  objectFit: "contain",
+                  opacity: material === m ? 1 : 0,
+                  transition:
+                    "opacity 900ms cubic-bezier(0.4,0,0.2,1), filter 700ms ease",
+                  filter:
+                    m === "ouro"
+                      ? "drop-shadow(0 30px 60px rgba(0,0,0,0.65)) drop-shadow(0 0 28px rgba(212,175,55,0.28)) drop-shadow(0 0 60px rgba(212,175,55,0.12))"
+                      : "drop-shadow(0 30px 60px rgba(0,0,0,0.65)) drop-shadow(0 0 28px rgba(220,225,235,0.28)) drop-shadow(0 0 60px rgba(200,210,225,0.12))",
+                  transform: `translate3d(${parallax.x * -10}px, ${parallax.y * -10}px, 0)`,
+                  willChange: "transform, opacity",
+                }}
+              />
+            ))}
+          </div>
+          {/* Mobile: pendant menor, ancorado canto inferior direito */}
+          <div
+            aria-hidden
+            className="md:hidden fixed pointer-events-none floating-pendant-wrap"
+            style={{
+              right: "3vw",
+              bottom: "14vh",
+              width: "44vw",
+              height: "52vh",
+              zIndex: 5,
+            }}
+          >
+            {(["ouro", "prata"] as const).map((m) => (
+              <img
+                key={m}
+                src={FLOATING_PENDANTS[slug][m]}
+                alt=""
+                className="absolute inset-0 w-full h-full floating-pendant-img"
+                style={{
+                  objectFit: "contain",
+                  opacity: material === m ? 1 : 0,
+                  transition: "opacity 900ms cubic-bezier(0.4,0,0.2,1)",
+                  filter:
+                    m === "ouro"
+                      ? "drop-shadow(0 18px 36px rgba(0,0,0,0.6)) drop-shadow(0 0 22px rgba(212,175,55,0.25))"
+                      : "drop-shadow(0 18px 36px rgba(0,0,0,0.6)) drop-shadow(0 0 22px rgba(220,225,235,0.25))",
+                }}
+              />
+            ))}
+          </div>
+          <style>{`
+            @keyframes floating-pendant-breathe {
+              0%, 100% { transform: translateY(0) rotate(-0.4deg); }
+              50%      { transform: translateY(-10px) rotate(0.4deg); }
+            }
+            .floating-pendant-img {
+              animation: floating-pendant-breathe 7s ease-in-out infinite;
+            }
+            .floating-pendant-wrap:hover .floating-pendant-img,
+            .floating-pendant-wrap:focus-within .floating-pendant-img {
+              transform: scale(1.04);
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .floating-pendant-img { animation: none !important; }
+            }
+          `}</style>
+        </>
+      )}
+
 
       <header className="absolute top-0 inset-x-0 z-30">
         <div className="container mx-auto px-6 py-6 flex items-center justify-between">
