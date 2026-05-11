@@ -158,8 +158,9 @@ export const LINHAS: Record<string, Linha> = {
     nome: "VELOX ROYALE",
     assinatura: "Assinatura da Distância",
     frase: "Horizontes conquistados em silêncio.",
-    imagens: { ouro: veloxOuro, prata: imperiumPrataClean },
-    campaign: imperiumCampaign,
+    imagens: { ouro: veloxCardCover, prata: veloxCardCover },
+    campaign: veloxCardCover,
+    cardFit: "cover",
     editorial: {
       feminino: { ouro: veloxEditorialFemOuro, prata: veloxEditorialFemPrata },
       masculino: { ouro: veloxEditorialMascOuro, prata: veloxEditorialMascPrata },
