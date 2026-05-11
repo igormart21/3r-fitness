@@ -200,7 +200,7 @@ const AtelieModalidade = () => {
           </>
         )}
         <div className="relative z-10 container mx-auto px-6 max-w-6xl">
-          <div className="text-center mb-24 atelie-linhas-fade">
+          <div className="text-center mb-10 md:mb-14 atelie-linhas-fade">
             <p
               className="text-[10px] uppercase mb-5"
               style={{ color: "rgba(212,175,55,0.7)", letterSpacing: "0.7em" }}
