@@ -63,9 +63,10 @@ const AtelieLinha = () => {
   const parentModalidade = MODALIDADES.find((m) =>
     m.linhas.includes(linha.slug),
   );
+  const noFormaLines = new Set(["valenza", "dominus", "monarch"]);
   const showFormaSelector =
     linha.slug !== "halter" &&
-    linha.slug !== "valenza" &&
+    !noFormaLines.has(linha.slug) &&
     (parentModalidade?.slug !== "crossfit" || linha.slug === "imperium");
   const hideLeftImage = linha.slug === "imperium";
 
@@ -374,7 +375,7 @@ const AtelieLinha = () => {
       </header>
 
       <main className="relative z-10 w-full min-h-screen pt-24 md:pt-28 pb-12">
-        <div className={`container mx-auto max-w-6xl px-6 ${hasEditorial || hasCinematic || hideLeftImage ? `flex justify-center items-center min-h-[calc(100vh-180px)]` : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"}`}>
+        <div className={`container mx-auto max-w-6xl px-6 ${hasCinematic ? "flex justify-start items-center min-h-[calc(100vh-180px)]" : (hasEditorial || hideLeftImage ? `flex justify-center items-center min-h-[calc(100vh-180px)]` : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center")}`}>
           {/* ESQUERDA — imagem (omitida no Velox Royale ciclismo: o fundo split é o produto) */}
           {!hasEditorial && !hasCinematic && !hideLeftImage && (
             <section className="lg:col-span-6 relative">
