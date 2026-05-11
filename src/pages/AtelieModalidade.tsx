@@ -107,7 +107,7 @@ const AtelieModalidade = () => {
       {/* 3. PRODUTOS */}
       <section
         id="modalidade-linhas"
-        className="relative w-full py-28 md:py-40 overflow-hidden"
+        className="relative w-full py-16 md:py-20 overflow-hidden min-h-screen flex items-center"
         style={{ backgroundColor: "#000" }}
       >
         {modalidade.slug === "triathlon" && (
