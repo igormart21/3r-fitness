@@ -36,6 +36,10 @@ import aeronAtletaMascOuro from "@/assets/aeron-atleta-masc-ouro.jpg";
 import aeronAtletaMascPrata from "@/assets/aeron-atleta-masc-prata.jpg";
 import aeronAtletaFemOuro from "@/assets/aeron-atleta-fem-ouro.jpg";
 import aeronAtletaFemPrata from "@/assets/aeron-atleta-fem-prata.jpg";
+import imperiumAtletaMascOuro from "@/assets/imperium-atleta-masc-ouro.png";
+import imperiumAtletaMascPrata from "@/assets/imperium-atleta-masc-prata.png";
+import imperiumAtletaFemOuro from "@/assets/imperium-atleta-fem-ouro.png";
+import imperiumAtletaFemPrata from "@/assets/imperium-atleta-fem-prata.png";
 import trionEliteAtletaOuro from "@/assets/trion-elite-atleta-ouro.jpg";
 import trionEliteAtletaPrata from "@/assets/trion-elite-atleta-prata.jpg";
 import trionEliteAtletaFemOuro from "@/assets/trion-elite-atleta-fem-ouro.jpg";
@@ -114,6 +118,12 @@ export const LINHAS: Record<string, Linha> = {
     frase: "O domínio sobre os próprios limites.",
     imagens: { ouro: imperiumOuroClean, prata: imperiumPrataClean },
     campaign: imperiumCampaign,
+    cinematic: {
+      ouro: imperiumAtletaMascOuro,
+      prata: imperiumAtletaMascPrata,
+      masculino: { ouro: imperiumAtletaMascOuro, prata: imperiumAtletaMascPrata },
+      feminino: { ouro: imperiumAtletaFemOuro, prata: imperiumAtletaFemPrata },
+    },
   },
   strata: {
     slug: "strata",
