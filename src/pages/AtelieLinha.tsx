@@ -63,9 +63,10 @@ const AtelieLinha = () => {
   const parentModalidade = MODALIDADES.find((m) =>
     m.linhas.includes(linha.slug),
   );
+  const noFormaLines = new Set(["valenza", "dominus", "monarch"]);
   const showFormaSelector =
     linha.slug !== "halter" &&
-    linha.slug !== "valenza" &&
+    !noFormaLines.has(linha.slug) &&
     (parentModalidade?.slug !== "crossfit" || linha.slug === "imperium");
   const hideLeftImage = linha.slug === "imperium";
 
