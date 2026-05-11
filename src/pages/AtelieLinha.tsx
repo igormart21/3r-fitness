@@ -363,8 +363,8 @@ const AtelieLinha = () => {
         </div>
       </header>
 
-      <main className="relative z-10 w-full min-h-screen pt-24 md:pt-28 pb-12">
-        <div className={`container mx-auto max-w-6xl px-6 ${hasCinematic ? "flex justify-start items-center min-h-[calc(100vh-180px)]" : (hasEditorial || hideLeftImage ? `flex justify-center items-center min-h-[calc(100vh-180px)]` : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center")}`}>
+      <main className="relative z-10 w-full min-h-screen pt-20 md:pt-24 pb-8">
+        <div className={`container mx-auto max-w-6xl px-6 ${hasCinematic ? "flex justify-start items-center min-h-[calc(100vh-140px)]" : (hasEditorial || hideLeftImage ? `flex justify-center items-center min-h-[calc(100vh-140px)]` : "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center")}`}>
           {/* ESQUERDA — imagem (omitida no Velox Royale ciclismo: o fundo split é o produto) */}
           {!hasEditorial && !hasCinematic && !hideLeftImage && (
             <section className="lg:col-span-6 relative">
@@ -372,7 +372,7 @@ const AtelieLinha = () => {
               className="relative w-full overflow-hidden mx-auto group"
               style={{
                 aspectRatio: linha.slug === "strata" || linha.slug === "imperium" ? "1536 / 1024" : "1122 / 946",
-                maxHeight: "calc(100vh - 180px)",
+                maxHeight: "calc(100vh - 140px)",
                 background:
                   "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)",
                 border: "1px solid rgba(212,175,55,0.18)",
@@ -429,7 +429,7 @@ const AtelieLinha = () => {
           {/* DIREITA — interface */}
           <section className={hasEditorial || hasCinematic || hideLeftImage ? "w-full max-w-md lg:max-w-[560px]" : "lg:col-span-6"}>
             <div
-              className={`max-w-md mx-auto lg:mx-0 ${hasCinematic ? "p-8 md:p-10" : ""}`}
+              className={`max-w-md mx-auto lg:mx-0 ${hasCinematic ? "p-6 md:p-7" : ""}`}
               style={hasCinematic ? {
                 background: "linear-gradient(180deg, rgba(15,15,18,0.45) 0%, rgba(5,5,8,0.6) 100%)",
                 backdropFilter: "blur(20px) saturate(1.1)",
@@ -440,7 +440,7 @@ const AtelieLinha = () => {
               } : undefined}
             >
               <p
-                className="text-[10px] uppercase tracking-[0.5em] mb-5"
+                className="text-[10px] uppercase tracking-[0.5em] mb-3"
                 style={{ color: "rgba(212,175,55,0.75)" }}
               >
                 Etapa 03 · Linha autoral
@@ -448,7 +448,7 @@ const AtelieLinha = () => {
               <h1
                 className="font-display font-light leading-none"
                 style={{
-                  fontSize: "clamp(44px, 5vw, 68px)",
+                  fontSize: "clamp(34px, 4vw, 52px)",
                   letterSpacing: "0.04em",
                   color: "#f4ead0",
                 }}
@@ -456,11 +456,11 @@ const AtelieLinha = () => {
                 {linha.nome}
               </h1>
               <p
-                className="mt-4 italic font-light"
+                className="mt-3 italic font-light"
                 style={{
                   fontFamily: '"Fraunces","Cormorant Garamond",serif',
                   color: "rgba(244,215,122,0.9)",
-                  fontSize: "15px",
+                  fontSize: "14px",
                   letterSpacing: "0.06em",
                 }}
               >
@@ -468,7 +468,7 @@ const AtelieLinha = () => {
               </p>
 
               <div
-                className="my-8 h-px w-20"
+                className="my-5 h-px w-20"
                 style={{
                   background:
                     "linear-gradient(90deg, rgba(212,175,55,0.7), transparent)",
@@ -479,14 +479,14 @@ const AtelieLinha = () => {
                 className="font-light leading-relaxed italic"
                 style={{
                   color: "rgba(255,255,255,0.72)",
-                  fontSize: "16px",
+                  fontSize: "14.5px",
                   fontFamily: '"Fraunces",serif',
                 }}
               >
                 {linha.frase}
               </p>
 
-              <div className="mt-12 space-y-9">
+              <div className="mt-7 space-y-6">
                 <Selector
                   label="Material"
                   options={[
@@ -509,11 +509,11 @@ const AtelieLinha = () => {
                 )}
               </div>
 
-              <div className="mt-14">
+              <div className="mt-8">
                 <button
                   type="button"
                   onClick={handleSelecionar}
-                  className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 transition-all duration-500"
+                  className="group relative inline-flex items-center justify-center gap-3 px-9 py-3.5 transition-all duration-500"
                   style={{
                     color: "#d4af37",
                     border: "1px solid rgba(212,175,55,0.55)",
