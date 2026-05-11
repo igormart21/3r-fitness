@@ -297,7 +297,7 @@ const AtelieModalidade = () => {
                 }}
               >
                 <div
-                  className="relative w-full aspect-[3/4] overflow-hidden mb-7 flex items-center justify-center"
+                  className="relative w-full aspect-[4/5] overflow-hidden mb-4 flex items-center justify-center"
                   style={{
                     background: isFisi
                       ? "linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.12) 100%)"
