@@ -65,6 +65,7 @@ const AtelieLinha = () => {
   );
   const showFormaSelector =
     linha.slug !== "halter" &&
+    linha.slug !== "valenza" &&
     (parentModalidade?.slug !== "crossfit" || linha.slug === "imperium");
   const hideLeftImage = linha.slug === "imperium";
 
