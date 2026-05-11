@@ -33,6 +33,12 @@ import trionEliteAtletaFemPrata from "@/assets/trion-elite-atleta-fem-prata.jpg"
 import valenzaOuro from "@/assets/linha-valenza-ouro.png";
 import dominusOuro from "@/assets/linha-dominus-ouro.png";
 import monarchOuro from "@/assets/linha-monarch-ouro.png";
+import valenzaBannerOuro from "@/assets/valenza-ouro-banner.png";
+import valenzaBannerPrata from "@/assets/valenza-prata-banner.png";
+import monarchBannerOuro from "@/assets/monarch-ouro-banner.png";
+import monarchBannerPrata from "@/assets/monarch-prata-banner.png";
+import dominusBannerOuro from "@/assets/dominus-ouro-banner.png";
+import dominusBannerPrata from "@/assets/dominus-prata-banner.png";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
@@ -172,6 +178,10 @@ export const LINHAS: Record<string, Linha> = {
     imagens: { ouro: valenzaOuro, prata: valenzaOuro },
     campaign: valenzaOuro,
     cardFit: "cover",
+    cinematic: {
+      ouro: valenzaBannerOuro,
+      prata: valenzaBannerPrata,
+    },
   },
   dominus: {
     slug: "dominus",
@@ -181,6 +191,10 @@ export const LINHAS: Record<string, Linha> = {
     imagens: { ouro: dominusOuro, prata: dominusOuro },
     campaign: dominusOuro,
     cardFit: "cover",
+    cinematic: {
+      ouro: dominusBannerOuro,
+      prata: dominusBannerPrata,
+    },
   },
   monarch: {
     slug: "monarch",
@@ -190,6 +204,10 @@ export const LINHAS: Record<string, Linha> = {
     imagens: { ouro: monarchOuro, prata: monarchOuro },
     campaign: monarchOuro,
     cardFit: "cover",
+    cinematic: {
+      ouro: monarchBannerOuro,
+      prata: monarchBannerPrata,
+    },
   },
 };
 
