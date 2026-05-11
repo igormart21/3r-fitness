@@ -349,11 +349,11 @@ const AtelieModalidade = () => {
                   {l.nome}
                 </h3>
                 <p
-                  className="mt-3 italic font-light"
+                  className="mt-2 italic font-light"
                   style={{
                     fontFamily: '"Fraunces",serif',
                     color: isFisi ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.55)",
-                    fontSize: "13px",
+                    fontSize: "12.5px",
                     letterSpacing: "0.04em",
                   }}
                 >
@@ -362,7 +362,7 @@ const AtelieModalidade = () => {
                 <button
                   type="button"
                   onClick={() => navigate(`/atelie/linha/${l.slug}`)}
-                  className="mt-auto pt-7 inline-flex items-center gap-3 transition-all duration-700"
+                  className="mt-auto pt-4 inline-flex items-center gap-3 transition-all duration-700"
                   style={{
                     padding: "11px 24px",
                     color: isFisi ? "#0a0a0a" : "#d4af37",
