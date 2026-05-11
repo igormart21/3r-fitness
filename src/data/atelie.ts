@@ -45,6 +45,8 @@ import monarchBannerOuro from "@/assets/monarch-ouro-banner.png";
 import monarchBannerPrata from "@/assets/monarch-prata-banner.png";
 import dominusBannerOuro from "@/assets/dominus-ouro-banner.png";
 import dominusBannerPrata from "@/assets/dominus-prata-banner.png";
+import titanCardCover from "@/assets/titan-card-cover.png";
+import velocitaCardCover from "@/assets/velocita-card-cover.png";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
@@ -121,8 +123,9 @@ export const LINHAS: Record<string, Linha> = {
     nome: "TITAN",
     assinatura: "Assinatura da Travessia",
     frase: "A travessia que define o espírito.",
-    imagens: { ouro: triadeOuroClean, prata: triadePrataClean },
-    campaign: triadeCampaign,
+    imagens: { ouro: titanCardCover, prata: titanCardCover },
+    campaign: titanCardCover,
+    cardFit: "cover",
     cinematic: {
       ouro: titanAtletaMascOuro,
       prata: titanAtletaMascPrata,
@@ -135,8 +138,9 @@ export const LINHAS: Record<string, Linha> = {
     nome: "VELOCITA",
     assinatura: "Assinatura do Movimento",
     frase: "O ritmo de uma vida em marcha.",
-    imagens: { ouro: vigorOuroClean, prata: vigorPrataClean },
-    campaign: vigorCampaign,
+    imagens: { ouro: velocitaCardCover, prata: velocitaCardCover },
+    campaign: velocitaCardCover,
+    cardFit: "cover",
     cinematic: {
       ouro: velocitaAtletaFemOuro,
       prata: velocitaAtletaFemPrata,
