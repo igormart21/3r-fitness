@@ -389,55 +389,53 @@
 @media (max-width: 768px) {
   .hero-main-content {
     justify-content: flex-end;
-    align-items: flex-end;
-    text-align: right;
-    padding: 96px 20px 84px;
+    align-items: flex-start;
+    text-align: left;
+    padding: 60px 20px 110px;
   }
 
   .hero-campaign-image.is-active {
-    /* Reduz o zoom em mobile para preservar o enquadramento da joia/atleta */
     transform: scale(1.04) translate3d(0, 0, 0);
   }
 
   .hero-overlay-soft {
     background:
-      linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.05) 34%, rgba(0,0,0,0.26) 68%, rgba(0,0,0,0.58) 100%);
+      linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.05) 34%, rgba(0,0,0,0.26) 68%, rgba(0,0,0,0.62) 100%);
   }
 
   .hero-overlay-vignette {
     background:
       radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.30) 100%),
-      radial-gradient(ellipse 90% 55% at 75% 85%, rgba(0,0,0,0.34) 0%, transparent 72%),
+      radial-gradient(ellipse 90% 55% at 25% 85%, rgba(0,0,0,0.38) 0%, transparent 72%),
       radial-gradient(ellipse 70% 50% at 50% 38%, rgba(244,215,122,0.06) 0%, transparent 70%);
   }
 
   .hero-copy-wrap {
     max-width: 100%;
-    align-items: flex-end;
+    align-items: flex-start;
   }
 
   .hero-title {
-    max-width: 13ch;
-    font-size: clamp(2rem, 8.4vw, 2.9rem);
-    line-height: 1.06;
-    letter-spacing: -0.012em;
+    max-width: 22ch;
+    font-size: clamp(1.15rem, 4.6vw, 1.6rem);
+    line-height: 1.25;
+    letter-spacing: 0.005em;
   }
 
   .hero-subtitle {
-    margin-top: 18px;
-    max-width: 30ch;
-    font-size: 12.5px;
-    line-height: 1.72;
-    letter-spacing: 0.05em;
+    margin-top: 10px;
+    max-width: 32ch;
+    font-size: 11.5px;
+    line-height: 1.65;
+    letter-spacing: 0.04em;
   }
 
   .hero-actions {
-    margin-top: 26px;
-    justify-content: flex-end;
+    bottom: 32px;
   }
 
   .hero-luxury-button {
-    min-height: 46px;
+    min-height: 44px;
     padding: 0 22px;
     font-size: 10px;
     letter-spacing: 0.30em;
