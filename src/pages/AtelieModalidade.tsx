@@ -107,7 +107,7 @@ const AtelieModalidade = () => {
       {/* 3. PRODUTOS */}
       <section
         id="modalidade-linhas"
-        className="relative w-full py-28 md:py-40 overflow-hidden"
+        className="relative w-full py-16 md:py-20 overflow-hidden min-h-screen flex items-center"
         style={{ backgroundColor: "#000" }}
       >
         {modalidade.slug === "triathlon" && (
@@ -200,7 +200,7 @@ const AtelieModalidade = () => {
           </>
         )}
         <div className="relative z-10 container mx-auto px-6 max-w-6xl">
-          <div className="text-center mb-24 atelie-linhas-fade">
+          <div className="text-center mb-10 md:mb-14 atelie-linhas-fade">
             <p
               className="text-[10px] uppercase mb-5"
               style={{ color: "rgba(212,175,55,0.7)", letterSpacing: "0.7em" }}
@@ -258,7 +258,7 @@ const AtelieModalidade = () => {
                 className="atelie-linha-card group flex flex-col items-center text-center w-full max-w-[220px] h-full"
                 style={{
                   position: "relative",
-                  padding: "16px 14px 20px",
+                  padding: "12px 12px 16px",
                   background: isFisi
                     ? "linear-gradient(180deg, #f4d77a 0%, #d4af37 55%, #b8902a 100%)"
                     : "linear-gradient(180deg, rgba(15,15,15,0.55) 0%, rgba(5,5,5,0.62) 100%)",
@@ -297,7 +297,7 @@ const AtelieModalidade = () => {
                 }}
               >
                 <div
-                  className="relative w-full aspect-[3/4] overflow-hidden mb-7 flex items-center justify-center"
+                  className="relative w-full aspect-[4/5] overflow-hidden mb-4 flex items-center justify-center"
                   style={{
                     background: isFisi
                       ? "linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.12) 100%)"
@@ -349,11 +349,11 @@ const AtelieModalidade = () => {
                   {l.nome}
                 </h3>
                 <p
-                  className="mt-3 italic font-light"
+                  className="mt-2 italic font-light"
                   style={{
                     fontFamily: '"Fraunces",serif',
                     color: isFisi ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.55)",
-                    fontSize: "13px",
+                    fontSize: "12.5px",
                     letterSpacing: "0.04em",
                   }}
                 >
@@ -362,7 +362,7 @@ const AtelieModalidade = () => {
                 <button
                   type="button"
                   onClick={() => navigate(`/atelie/linha/${l.slug}`)}
-                  className="mt-auto pt-7 inline-flex items-center gap-3 transition-all duration-700"
+                  className="mt-auto pt-4 inline-flex items-center gap-3 transition-all duration-700"
                   style={{
                     padding: "11px 24px",
                     color: isFisi ? "#0a0a0a" : "#d4af37",
