@@ -51,6 +51,8 @@ import dominusBannerOuro from "@/assets/dominus-ouro-banner.png";
 import dominusBannerPrata from "@/assets/dominus-prata-banner.png";
 import titanCardCover from "@/assets/titan-card-cover.png";
 import velocitaCardCover from "@/assets/velocita-card-cover.png";
+import aeronCardCover from "@/assets/aeron-card-cover.png";
+import veloxCardCover from "@/assets/velox-card-cover.jpg";
 
 export type Material = "ouro" | "prata";
 export type Forma = "masculino" | "feminino";
