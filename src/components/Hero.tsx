@@ -1,121 +1,79 @@
-import { useIsMobile } from "@/hooks/use-mobile";
 import heroCapa from "@/assets/hero-capa-3r.png";
+import heroVideo from "@/assets/hero-video.mp4";
 
-export const Hero = () => {
-  const isMobile = useIsMobile();
-
-  const handleScrollToModalidades = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const target = document.getElementById("modalidades");
-    if (!target) return;
-
-    const start = window.scrollY;
-    const rect = target.getBoundingClientRect();
-    const end = Math.max(0, start + rect.top);
-    const distance = end - start;
-    if (Math.abs(distance) < 4) return;
-    const duration = Math.min(2600, Math.max(1600, Math.abs(distance) * 1.4));
-    const ease = (t: number) =>
-      t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
-    let t0: number | null = null;
-    const step = (ts: number) => {
-      if (t0 === null) t0 = ts;
-      const p = Math.min(1, (ts - t0) / duration);
-      window.scrollTo(0, start + distance * ease(p));
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  };
-
-  return (
-    <section
-      className="relative isolate w-full overflow-hidden h-screen-safe"
-      style={{ minHeight: 620, backgroundColor: "#000" }}
-      aria-label="Campanha principal 3R Fitness"
-    >
-      <div className="absolute inset-0">
-        <img
-          src={heroCapa}
-          alt="Campanha 3R Fitness — joias para alta performance"
-          loading="eager"
-          decoding="async"
-          fetchPriority="high"
-          className="absolute inset-0 h-full w-full object-cover hero-capa-image"
-          style={{
-            objectPosition: isMobile ? "55% center" : "center center",
-            filter:
-              "contrast(1.08) saturate(1.10) brightness(1.02)",
-            animation: "heroCapaKenBurns 24s ease-in-out infinite alternate",
-          }}
-        />
-      </div>
-
-      {/* Overlays cinematográficos — atmosfera de campanha de luxo */}
-      <div
+export const Hero = () => (
+  <section style={{ position: "relative", minHeight: "100svh", background: "#1C1814", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    {/* Background video */}
+    <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
         aria-hidden
-        className="absolute inset-0 pointer-events-none"
         style={{
-          background:
-            "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.18) 28%, rgba(0,0,0,0.20) 60%, rgba(0,0,0,0.78) 100%)",
+          position: "absolute",
+          top: 0, left: "50%",
+          transform: "translateX(-50%) translateY(-40%)",
+          width: "100%", height: "180%",
+          objectFit: "cover", objectPosition: "center top",
         }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 90% 70% at 50% 55%, transparent 40%, rgba(0,0,0,0.55) 100%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none mix-blend-overlay"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 45% at 50% 48%, rgba(244,215,122,0.18) 0%, transparent 70%)",
-        }}
-      />
-      {/* Grão sutil de campanha editorial */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none opacity-[0.06] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>\")",
-        }}
-      />
+      >
+        <source src={heroVideo} type="video/mp4" />
+        <img src={heroCapa} alt="" fetchPriority="high" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      </video>
+    </div>
 
-      <div className="hero-main-content">
-        <div className="hero-copy-wrap">
-          <h1 className="hero-title">
-            Joias criadas para quem vive em <span className="hero-title__accent">alta performance</span>.
-          </h1>
-          <p className="hero-subtitle">
-            Peças premium desenvolvidas para atletas que transformam disciplina em identidade.
-          </p>
+    {/* Overlay — keeps content readable */}
+    <div style={{ position: "absolute", inset: 0, background: "rgba(28,24,20,0.52)" }} />
+
+    {/* Bottom vignette */}
+    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 50%, rgba(28,24,20,0.65) 100%)" }} />
+
+    {/* Warm gold accent */}
+    <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 80% 60% at 30% 60%, rgba(201,162,32,0.08) 0%, transparent 70%)" }} />
+
+    {/* Content */}
+    <div style={{
+      position: "relative", zIndex: 2, flex: 1,
+      maxWidth: 1280, margin: "0 auto", width: "100%",
+      padding: "clamp(80px,10vh,110px) 24px clamp(40px,6vh,80px)",
+      display: "flex", flexDirection: "column", justifyContent: "center",
+      alignItems: "center", textAlign: "center",
+    }}>
+      <div style={{ maxWidth: 680 }}>
+        {/* Badge */}
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(201,162,32,0.15)", border: "1px solid rgba(201,162,32,0.35)", borderRadius: 100, padding: "6px 14px", marginBottom: 28 }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#C9A220", display: "block" }} />
+          <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.3em", textTransform: "uppercase", color: "#E8C84A" }}>
+            Medalhas premium · Ouro 18k e Prata
+          </span>
         </div>
-      </div>
 
-      <div className="hero-actions">
-        <button
-          type="button"
-          onClick={handleScrollToModalidades}
-          className="hero-luxury-button"
-          aria-label="Explorar Modalidades"
-        >
-          <span className="hero-luxury-button__shine" aria-hidden />
-          <span className="hero-luxury-button__label">Explorar Modalidades</span>
-        </button>
-      </div>
+        {/* Headline */}
+        <h1 style={{
+          fontFamily: "'Playfair Display',serif",
+          fontSize: "clamp(2.8rem, 6vw, 5.2rem)",
+          fontWeight: 400,
+          lineHeight: 1.1,
+          color: "#F8F5F0",
+          marginBottom: 20,
+          letterSpacing: "-0.02em",
+        }}>
+          Conquistas que{" "}
+          <em style={{ color: "#E8C84A" }}>ficam</em>
+          <br />
+          para sempre.
+        </h1>
 
-      <style>{`
-        @keyframes heroCapaKenBurns {
-          0% { transform: scale(1.04) translate3d(0,0,0); }
-          100% { transform: scale(1.10) translate3d(-1%, -0.6%, 0); }
-        }
-      `}</style>
-    </section>
-  );
-};
+        {/* Sub */}
+        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 16, fontWeight: 300, lineHeight: 1.7, color: "rgba(248,245,240,0.60)", maxWidth: "44ch", margin: "0 auto" }}>
+          Medalhas e troféus 100% personalizados para atletas de alta performance.
+          Fisiculturismo, Crossfit, Corrida, Ciclismo, Musculação e Triatlo.
+        </p>
+      </div>
+    </div>
+  </section>
+);
 
 export default Hero;

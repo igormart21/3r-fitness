@@ -6,231 +6,58 @@ import sportCiclismo from "@/assets/sport-ciclismo.jpg";
 import sportCrossfit from "@/assets/sport-crossfit.jpg";
 import sportCorrida from "@/assets/sport-corrida.jpg";
 
-const modalidades = [
-  { id: 1, nome: "Fisiculturismo", img: sportFisiculturismo, frase: "A escultura do próprio corpo", featured: true, focal: "center 28%" },
-  { id: 2, nome: "Musculação", img: sportMusculacao, frase: "Forjado em disciplina", focal: "center 25%" },
-  { id: 6, nome: "Corrida", img: sportCorrida, frase: "O ritmo de uma vida", focal: "center 30%" },
-  { id: 4, nome: "Ciclismo", img: sportCiclismo, frase: "Horizontes conquistados", focal: "center 35%" },
-  { id: 5, nome: "Crossfit", img: sportCrossfit, frase: "A intensidade como arte", focal: "center 30%" },
-  { id: 3, nome: "Triatlo", img: sportTriathlon, frase: "A travessia dos limites", focal: "center 28%" },
+const mods = [
+  { id: 1, nome: "Fisiculturismo", img: sportFisiculturismo, focal: "center 22%" },
+  { id: 2, nome: "Musculação",     img: sportMusculacao,     focal: "center 20%" },
+  { id: 6, nome: "Corrida",        img: sportCorrida,        focal: "center 25%" },
+  { id: 4, nome: "Ciclismo",       img: sportCiclismo,       focal: "center 30%" },
+  { id: 5, nome: "Crossfit",       img: sportCrossfit,       focal: "center 25%" },
+  { id: 3, nome: "Triatlo",        img: sportTriathlon,      focal: "center 24%" },
 ];
 
-export const Modalidades = () => {
-  return (
-    <section
-      id="modalidades"
-      className="relative w-full scroll-mt-0 flex flex-col justify-center"
-      style={{
-        background:
-          "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(244,215,122,0.07) 0%, transparent 65%), radial-gradient(ellipse 70% 50% at 50% 100%, rgba(244,215,122,0.05) 0%, transparent 65%), linear-gradient(180deg, #0a0908 0%, #131110 35%, #131110 65%, #0a0908 100%)",
-        paddingTop: "clamp(56px, 6vw, 96px)",
-        paddingBottom: "clamp(40px, 4.5vw, 72px)",
-      }}
-    >
-      <div className="container mx-auto max-w-7xl px-6 text-center mb-6 sm:mb-8">
-        <span
-          className="text-[10px] sm:text-[11px] uppercase tracking-[0.5em] font-light"
-          style={{ color: "rgba(244,215,122,0.7)" }}
-        >
+export const Modalidades = () => (
+  <section id="modalidades" style={{ background: "#fff", padding: "96px 0" }}>
+    <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+      <div style={{ textAlign: "center", marginBottom: 48 }}>
+        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A220", marginBottom: 10 }}>
           Modalidades
-        </span>
-        <h2
-          className="font-display font-light text-3xl sm:text-4xl md:text-5xl mt-6 max-w-3xl mx-auto leading-[1.15]"
-          style={{
-            background: "linear-gradient(180deg, #f4f4f4 0%, #d9d9d9 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
-        >
-          Sua essência se revela na{" "}
-          <em className="italic" style={{ color: "#d4af37", WebkitTextFillColor: "#d4af37" }}>
-            forma como você treina
-          </em>
+        </p>
+        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,3.5vw,3rem)", fontWeight: 400, color: "#1C1814", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
+          Medalhas para o <em>seu esporte</em>
         </h2>
+        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, fontWeight: 300, color: "#6B5E52", marginTop: 10, lineHeight: 1.6, maxWidth: "50ch", margin: "10px auto 0" }}>
+          Cada modalidade tem linha própria com design e bonecos exclusivos.
+        </p>
       </div>
 
-      <div className="container mx-auto max-w-7xl px-5 sm:px-6 grid grid-cols-2 md:grid-cols-3 auto-rows-[clamp(180px,28vh,240px)] sm:auto-rows-[clamp(190px,26vh,250px)] md:auto-rows-[clamp(200px,26vh,260px)] gap-3 sm:gap-5 md:gap-6">
-        {modalidades.map(({ id, nome, img, frase, featured, focal }) => (
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }} className="mods-grid">
+        <style>{`@media(max-width:640px){.mods-grid{grid-template-columns:repeat(2,1fr)!important;}}`}</style>
+        {mods.map(({ id, nome, img, focal }) => (
           <Link
             key={id}
             to={`/modalidade/${id}`}
-            className={`group relative overflow-hidden block transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 ${
-              featured ? "col-span-2 row-span-2 md:col-span-2 md:row-span-2" : ""
-            }`}
-            style={{
-              border: "1px solid rgba(212,175,55,0.12)",
-              boxShadow: "0 18px 44px rgba(0,0,0,0.42)",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow =
-                "0 26px 60px rgba(0,0,0,0.52), 0 0 0 1px rgba(212,175,55,0.38), 0 0 32px rgba(212,175,55,0.14)";
-              e.currentTarget.style.borderColor = "rgba(212,175,55,0.42)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = "0 18px 44px rgba(0,0,0,0.42)";
-              e.currentTarget.style.borderColor = "rgba(212,175,55,0.12)";
-            }}
+            style={{ display: "block", position: "relative", borderRadius: 16, overflow: "hidden", aspectRatio: "3/4" }}
+            className="mod-card"
           >
-            <img
-              src={img}
-              alt={nome}
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
-              style={{
-                objectPosition: focal ?? "center 30%",
-                filter: "contrast(1.02) saturate(1.02) brightness(1.06)",
-                willChange: "transform",
-              }}
-            />
-            {/* Overlay editorial premium — leve e atmosférico, deixa a luz natural respirar */}
-            <div
-              className="absolute inset-0 transition-opacity duration-700"
-              style={{
-                background:
-                  "linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.10) 55%, rgba(0,0,0,0.62) 100%)",
-              }}
-            />
-            {/* Vinheta cinematográfica sutil */}
-            <div
-              aria-hidden
-              className="absolute inset-0 pointer-events-none opacity-70"
-              style={{
-                background:
-                  "radial-gradient(ellipse 100% 80% at 50% 40%, transparent 65%, rgba(0,0,0,0.22) 100%)",
-              }}
-            />
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(244,215,122,0.20) 0%, transparent 65%)",
-                mixBlendMode: "screen",
-              }}
-            />
-            <div className={`absolute inset-x-0 bottom-0 z-10 ${featured ? "p-6 sm:p-9 md:p-10" : "p-4 sm:p-6 md:p-7"}`}>
-              <h3
-                className={`font-display text-white font-light tracking-wide ${
-                  featured
-                    ? "text-2xl sm:text-3xl md:text-4xl"
-                    : "text-base sm:text-xl md:text-2xl"
-                }`}
-                style={{ textShadow: "0 2px 12px rgba(0,0,0,0.65)", letterSpacing: featured ? "0.04em" : "0.02em" }}
-              >
-                {nome}
-              </h3>
-              <p
-                className={`mt-2 sm:mt-3 italic font-light ${featured ? "text-sm sm:text-base" : "text-[11px] sm:text-sm"}`}
-                style={{ color: "rgba(244,215,122,0.82)", letterSpacing: "0.04em" }}
-              >
-                {frase}
-              </p>
-              <div
-                className="mt-4 sm:mt-5 h-px w-0 group-hover:w-20 transition-all duration-700"
-                style={{ background: "linear-gradient(90deg, #d4af37, transparent)" }}
-              />
+            <style>{`
+              .mod-card img { transition: transform 1.4s cubic-bezier(0.22,1,0.36,1); }
+              .mod-card:hover img { transform: scale(1.06); }
+              .mod-card .mod-btn { transform: translateY(6px); opacity:0; transition: all 0.35s; }
+              .mod-card:hover .mod-btn { transform: translateY(0); opacity:1; }
+            `}</style>
+            <img src={img} alt={nome} loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: focal }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(28,24,20,0) 30%, rgba(28,24,20,0.88) 100%)" }} />
+            <div style={{ position: "absolute", inset: "auto 0 0", padding: "20px" }}>
+              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.25rem", fontWeight: 400, color: "#F8F5F0", marginBottom: 8 }}>{nome}</div>
+              <div className="mod-btn" style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(201,162,32,0.20)", border: "1px solid rgba(232,200,74,0.50)", borderRadius: 100, padding: "6px 14px" }}>
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 600, color: "#E8C84A", letterSpacing: "0.2em", textTransform: "uppercase" }}>Ver medalhas</span>
+              </div>
             </div>
           </Link>
         ))}
       </div>
-
-      {/* Cinematic transition cue → Ateliê */}
-      <style>{`
-        @keyframes atelie-pulse-line {
-          0%, 100% { transform: scaleY(0.4); opacity: 0.35; }
-          50% { transform: scaleY(1); opacity: 1; }
-        }
-        @keyframes atelie-float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(6px); }
-        }
-        @keyframes atelie-shimmer-text {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
-      `}</style>
-      <div className="relative z-10 mt-6 sm:mt-8 flex flex-col items-center gap-3">
-        <span
-          className="text-[9px] sm:text-[10px] uppercase font-light"
-          style={{
-            letterSpacing: "0.7em",
-            paddingLeft: "0.7em",
-            color: "rgba(244,215,122,0.55)",
-          }}
-        >
-          Continua
-        </span>
-
-        <p
-          className="italic font-light text-center px-6"
-          style={{
-            fontFamily: '"Fraunces","Cormorant Garamond",serif',
-            fontSize: "clamp(15px, 1.3vw, 18px)",
-            letterSpacing: "0.04em",
-            background:
-              "linear-gradient(90deg, rgba(244,215,122,0.35) 0%, rgba(244,215,122,0.95) 50%, rgba(244,215,122,0.35) 100%)",
-            backgroundSize: "200% 100%",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-            animation: "atelie-shimmer-text 6s ease-in-out infinite",
-          }}
-        >
-          Descubra o Ateliê 3R
-        </p>
-
-        <button
-          type="button"
-          aria-label="Descer para a seção do Ateliê"
-          onClick={() => {
-            const start = window.scrollY;
-            const end = start + window.innerHeight * 0.95;
-            const duration = 1400;
-            let t0: number | null = null;
-            const ease = (t: number) =>
-              t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-            const step = (ts: number) => {
-              if (t0 === null) t0 = ts;
-              const p = Math.min((ts - t0) / duration, 1);
-              window.scrollTo(0, start + (end - start) * ease(p));
-              if (p < 1) requestAnimationFrame(step);
-            };
-            requestAnimationFrame(step);
-          }}
-          className="group flex flex-col items-center gap-3 cursor-pointer"
-          style={{ background: "transparent", border: "none" }}
-        >
-          <span
-            aria-hidden
-            style={{
-              display: "block",
-              width: "1px",
-              height: "56px",
-              background:
-                "linear-gradient(180deg, transparent 0%, rgba(244,215,122,0.85) 50%, transparent 100%)",
-              transformOrigin: "center",
-              animation: "atelie-pulse-line 2.4s ease-in-out infinite",
-            }}
-          />
-          <span
-            aria-hidden
-            style={{
-              display: "inline-block",
-              animation: "atelie-float 2.4s ease-in-out infinite",
-              color: "rgba(244,215,122,0.85)",
-              fontSize: "14px",
-              lineHeight: 1,
-              transition: "color 0.4s ease",
-            }}
-            className="group-hover:!text-[#f4d77a]"
-          >
-            ▾
-          </span>
-        </button>
-      </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default Modalidades;
