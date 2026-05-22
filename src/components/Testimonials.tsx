@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import modelLeft from "@/assets/model-left-new.png";
 import modelRight from "@/assets/model-original.jpg";
-import model3r from "@/assets/model-3r.png";
-import heroAtletas from "@/assets/hero-atletas.png";
+import testimonialThais from "@/assets/testimonial-thais.png";
 
 const list = [
-  { quote: "Não tiro mais. Faz parte de quem eu sou.", name: "Elizandra Fernandes", city: "Florianópolis, SC", sport: "Corrida", img: modelLeft },
-  { quote: "Primeira prova com ela. Dois troféus.", name: "Carin Marchinhacki", city: "São Paulo, SP", sport: "Corrida", img: modelRight },
-  { quote: "Transformaram um momento em eternidade.", name: "Júlia Mendes", city: "Belo Horizonte, MG", sport: "Triatlo 70.3", img: model3r },
-  { quote: "Carrego minha liberdade no peito.", name: "Catiucia Bertuol", city: "Rio de Janeiro, RJ", sport: "Corrida", img: heroAtletas },
+  { quote: "Não tiro mais. Faz parte de quem eu sou.", name: "Cinthia", city: "Florianópolis, SC", sport: "Corrida", img: modelLeft },
+  { quote: "Primeira prova com ela. Duas joias no peito.", name: "Renata", city: "São Paulo, SP", sport: "Corrida", img: modelRight },
+  { quote: "Transformaram um momento em eternidade.", name: "Thais", city: "Belo Horizonte, MG", sport: "Triatlo 70.3", img: testimonialThais },
 ];
 
 export const Testimonials = () => {
@@ -29,7 +27,7 @@ export const Testimonials = () => {
   const t = list[idx];
 
   return (
-    <section id="depoimentos" style={{ background: "#fff", padding: "96px 0" }} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+    <section id="depoimentos" className="testi-section" style={{ background: "#fff", padding: "96px 0" }} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }} className="testi-wrap">
           <style>{`@media(max-width:768px){.testi-wrap{grid-template-columns:1fr!important;gap:40px!important;} .testi-photo{display:none!important;}}`}</style>
@@ -54,7 +52,7 @@ export const Testimonials = () => {
               <blockquote style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.5rem,2.5vw,2.2rem)", fontWeight: 400, fontStyle: "italic", color: "#1C1814", lineHeight: 1.35, marginBottom: 28 }}>
                 "{t.quote}"
               </blockquote>
-              <div style={{ display: "flex", align: "center", gap: 12, marginBottom: 32 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}>
                 <div style={{ width: 44, height: 44, borderRadius: 12, overflow: "hidden", flexShrink: 0 }}>
                   <img src={t.img} alt={t.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 10%" }} />
                 </div>

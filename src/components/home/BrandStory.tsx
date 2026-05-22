@@ -4,9 +4,9 @@ const WPP = "https://wa.me/5548991486304?text=Ol%C3%A1!%20Quero%20conhecer%20as%
 
 export const BrandStory = () => {
   return (
-    <section style={{ background: "#F8F5F0", padding: "100px 24px" }}>
+    <section className="brand-section" style={{ background: "#F8F5F0", padding: "100px 24px" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }} className="brand-grid">
-        <style>{`@media(max-width:768px){.brand-grid{grid-template-columns:1fr!important; gap:48px!important;}}`}</style>
+        <style>{`@media(max-width:768px){.brand-grid{grid-template-columns:1fr!important;}}`}</style>
 
         {/* Video */}
         <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", boxShadow: "0 32px 80px rgba(28,24,20,0.14)" }}>
@@ -36,11 +36,11 @@ export const BrandStory = () => {
           </h2>
 
           <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, fontWeight: 300, color: "rgba(28,24,20,0.60)", lineHeight: 1.8, marginBottom: 16 }}>
-            A 3R Fitness nasceu da paixão pelo esporte e pela excelência artesanal. Cada medalha é criada à mão, com materiais nobres — Ouro 18k e Prata — para eternizar conquistas que vão além do pódio.
+            A 3R Fitness nasceu da paixão pelo esporte e pela excelência artesanal. Cada joia é criada à mão, com materiais nobres — Ouro 18k e Prata — para eternizar conquistas que vão além do pódio.
           </p>
 
           <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, fontWeight: 300, color: "rgba(28,24,20,0.60)", lineHeight: 1.8, marginBottom: 40 }}>
-            Do fisiculturismo ao triatlo, atendemos atletas e organizadores de eventos em todo o Brasil com peças 100% personalizadas e entregues com embalagem premium.
+            Do fisiculturismo ao triatlo, atendemos atletas e organizadores de eventos em todo o Brasil com joias 100% personalizadas e entregues com embalagem premium.
           </p>
 
           <div style={{ display: "flex", gap: 32, marginBottom: 40, flexWrap: "wrap" }}>

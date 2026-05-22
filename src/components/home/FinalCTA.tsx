@@ -3,7 +3,7 @@ import atelieBg from "@/assets/atelie-cta-bg.png";
 const WPP = "https://wa.me/5548991486304?text=Ol%C3%A1!%20Quero%20fazer%20minha%20medalha%20personalizada%203R%20Fitness.";
 
 export const FinalCTA = () => (
-  <section style={{ position: "relative", overflow: "hidden", padding: "120px 0" }}>
+  <section className="final-cta" style={{ position: "relative", overflow: "hidden", padding: "120px 0" }}>
     <img src={atelieBg} alt="" aria-hidden style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", filter: "brightness(0.30) saturate(0.9)" }} />
     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(28,24,20,0.85) 0%, rgba(28,24,20,0.55) 100%)" }} />
 
@@ -14,11 +14,11 @@ export const FinalCTA = () => (
       </div>
 
       <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.2rem,4.5vw,3.8rem)", fontWeight: 400, color: "#F8F5F0", lineHeight: 1.15, letterSpacing: "-0.02em", marginBottom: 18 }}>
-        Crie agora a sua <em style={{ color: "#E8C84A" }}>medalha única</em>
+        Crie agora a sua <em style={{ color: "#E8C84A" }}>joia única</em>
       </h2>
 
       <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 16, fontWeight: 300, color: "rgba(248,245,240,0.60)", lineHeight: 1.7, marginBottom: 40, maxWidth: "42ch", margin: "0 auto 40px" }}>
-        Atendimento personalizado pelo WhatsApp. Entregamos para todo o Brasil com embalagem premium.
+        Atendimento personalizado pelo WhatsApp. Joias entregues para todo o Brasil com embalagem premium.
       </p>
 
       <div style={{ display: "flex", justifyContent: "center", marginBottom: 36 }}>

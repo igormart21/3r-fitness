@@ -46,7 +46,7 @@ export const Hero = () => (
         <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(201,162,32,0.15)", border: "1px solid rgba(201,162,32,0.35)", borderRadius: 100, padding: "6px 14px", marginBottom: 28 }}>
           <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#C9A220", display: "block" }} />
           <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.3em", textTransform: "uppercase", color: "#E8C84A" }}>
-            Medalhas premium · Ouro 18k e Prata
+            Joias artesanais · Ouro 18k e Prata
           </span>
         </div>
 
@@ -68,7 +68,7 @@ export const Hero = () => (
 
         {/* Sub */}
         <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 16, fontWeight: 300, lineHeight: 1.7, color: "rgba(248,245,240,0.60)", maxWidth: "44ch", margin: "0 auto" }}>
-          Medalhas e troféus 100% personalizados para atletas de alta performance.
+          Joias 100% personalizadas para atletas de alta performance.
           Fisiculturismo, Crossfit, Corrida, Ciclismo, Musculação e Triatlo.
         </p>
       </div>

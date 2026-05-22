@@ -26,16 +26,16 @@ export const Header = () => {
         top: 0, left: 0, right: 0,
         zIndex: 50,
         height: 68,
-        background: "#ffffff",
-        borderBottom: "1px solid rgba(28,24,20,0.09)",
-        boxShadow: scrolled ? "0 2px 16px rgba(28,24,20,0.07)" : "none",
-        transition: "box-shadow 0.35s ease",
+        background: scrolled ? "rgba(28,24,20,0.72)" : "#1C1814",
+        backdropFilter: scrolled ? "blur(18px)" : "none",
+        borderBottom: "1px solid rgba(248,245,240,0.06)",
+        transition: "background 0.4s ease, backdrop-filter 0.4s ease",
       }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
           {/* Logo */}
           <Link to="/" style={{ flexShrink: 0 }}>
-            <img src={logo} alt="3R Fitness" style={{ height: 36, width: "auto", objectFit: "contain" }} />
+            <img src={logo} alt="3R Fitness" style={{ height: 72, width: "auto", objectFit: "contain" }} />
           </Link>
 
           {/* Desktop nav */}
@@ -49,11 +49,11 @@ export const Header = () => {
                   fontFamily: "'Inter',sans-serif",
                   fontSize: 14,
                   fontWeight: 500,
-                  color: "#1C1814",
+                  color: "rgba(248,245,240,0.80)",
                   transition: "color 0.25s",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#C9A220")}
-                onMouseLeave={e => (e.currentTarget.style.color = "#1C1814")}
+                onMouseEnter={e => (e.currentTarget.style.color = "#E8C84A")}
+                onMouseLeave={e => (e.currentTarget.style.color = "rgba(248,245,240,0.80)")}
               >
                 {label}
               </Link>
@@ -69,9 +69,9 @@ export const Header = () => {
               className="show-mobile"
               style={{
                 width: 42, height: 42, borderRadius: 10,
-                border: "1.5px solid rgba(28,24,20,0.12)",
+                border: "1.5px solid rgba(248,245,240,0.20)",
                 display: "none", alignItems: "center", justifyContent: "center",
-                color: "#1C1814",
+                color: "#F8F5F0",
                 flexDirection: "column", gap: 5, padding: 11,
               }}
             >

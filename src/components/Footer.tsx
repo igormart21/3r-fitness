@@ -11,9 +11,9 @@ export const Footer = () => (
         <style>{`@media(max-width:640px){.footer-grid{grid-template-columns:1fr!important;}}`}</style>
 
         <div>
-          <img src={logo} alt="3R Fitness" style={{ height: 34, marginBottom: 18, filter: "brightness(10)" }} />
+          <img src={logo} alt="3R Fitness" style={{ height: 60, marginBottom: 18 }} />
           <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, fontWeight: 300, color: "rgba(248,245,240,0.45)", lineHeight: 1.75, maxWidth: "30ch", marginBottom: 24 }}>
-            Medalhas e troféus 100% personalizados em Ouro 18k e Prata para atletas de alta performance.
+            Joias 100% personalizadas em Ouro 18k e Prata para atletas de alta performance.
           </p>
           <div style={{ display: "flex", gap: 10 }}>
             {[
@@ -56,9 +56,9 @@ export const Footer = () => (
         </div>
       </div>
 
-      <div style={{ borderTop: "1px solid rgba(248,245,240,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
+      <div className="footer-bottom" style={{ borderTop: "1px solid rgba(248,245,240,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
         <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(248,245,240,0.22)" }}>© {new Date().getFullYear()} 3R Fitness. Todos os direitos reservados.</span>
-        <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(248,245,240,0.18)" }}>Medalhas premium para atletas</span>
+        <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(248,245,240,0.18)" }}>Joias premium para atletas</span>
       </div>
     </div>
   </footer>

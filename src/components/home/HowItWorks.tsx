@@ -4,12 +4,12 @@ const WPP = "https://wa.me/5548991486304?text=Ol%C3%A1!%20Quero%20fazer%20minha%
 
 const steps = [
   { n: "01", icon: "🏆", title: "Escolha a modalidade", desc: "Fisiculturismo, Musculação, Crossfit, Corrida, Ciclismo ou Triatlo. Cada esporte tem design feito sob medida." },
-  { n: "02", icon: "✦", title: "Personalize tudo", desc: "Defina o material (Ouro 18k ou Prata), estilo (Clássico ou Underground) e o boneco da sua modalidade." },
+  { n: "02", icon: "✦", title: "Personalize a sua joia", desc: "Defina o material (Ouro 18k ou Prata), estilo (Clássico ou Underground) e o boneco da sua modalidade." },
   { n: "03", icon: "📦", title: "Receba em casa", desc: "Enviamos para todo o Brasil. Embalagem premium, pronta para presentear ou expor com muito orgulho." },
 ];
 
 export const HowItWorks = () => (
-  <section style={{ background: "#F8F5F0", padding: "96px 0" }}>
+  <section className="sec" style={{ background: "#F8F5F0", padding: "96px 0" }}>
     <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
 
       <div style={{ textAlign: "center", marginBottom: 56 }}>
@@ -44,9 +44,9 @@ export const HowItWorks = () => (
       </div>
 
       {/* CTA strip */}
-      <div style={{ background: "#1C1814", borderRadius: 20, padding: "32px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 24 }}>
+      <div className="cta-strip" style={{ background: "#1C1814", borderRadius: 20, padding: "32px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 24 }}>
         <div>
-          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.4rem", fontWeight: 400, color: "#F8F5F0", marginBottom: 6 }}>Pronto para criar a sua medalha?</div>
+          <div className="cta-strip-title" style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.4rem", fontWeight: 400, color: "#F8F5F0", marginBottom: 6 }}>Pronto para criar a sua joia?</div>
           <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, fontWeight: 300, color: "rgba(248,245,240,0.50)" }}>Atendimento pelo WhatsApp · Entrega para todo o Brasil</div>
         </div>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>

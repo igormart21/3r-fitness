@@ -7,12 +7,12 @@ const items = Array(2).fill([
 ]).flat();
 
 export const AnnouncementBar = () => (
-  <div style={{ background: "#1C1814", overflow: "hidden", paddingTop: 10, paddingBottom: 10 }}>
+  <div style={{ background: "linear-gradient(90deg, #8B6914 0%, #C9A220 50%, #8B6914 100%)", overflow: "hidden", paddingTop: 10, paddingBottom: 10 }}>
     <div className="marquee" style={{ gap: 0 }}>
       {items.map((item, i) => (
-        <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 20, paddingLeft: 28, paddingRight: 28, fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", whiteSpace: "nowrap" }}>
+        <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 20, paddingLeft: 28, paddingRight: 28, fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(28,24,20,0.80)", whiteSpace: "nowrap" }}>
           {item}
-          <span style={{ color: "#C9A220", fontSize: 8 }}>◆</span>
+          <span style={{ color: "rgba(28,24,20,0.40)", fontSize: 8 }}>◆</span>
         </span>
       ))}
     </div>
