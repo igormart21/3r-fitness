@@ -1,6 +1,5 @@
 import brandVideo from "@/assets/brand-video.mp4";
 
-const WPP = "https://wa.me/5548991486304?text=Ol%C3%A1!%20Quero%20conhecer%20as%20medalhas%203R%20Fitness.";
 
 export const BrandStory = () => {
   return (
@@ -45,7 +44,7 @@ export const BrandStory = () => {
 
           <div style={{ display: "flex", gap: 32, marginBottom: 40, flexWrap: "wrap" }}>
             {[
-              { n: "+1.000", l: "Peças entregues" },
+              { n: "+300", l: "Peças entregues" },
               { n: "+50",    l: "Eventos atendidos" },
               { n: "100%",   l: "Personalizado" },
             ].map(({ n, l }) => (
@@ -56,26 +55,6 @@ export const BrandStory = () => {
             ))}
           </div>
 
-          <a
-            href={WPP}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 9,
-              background: "linear-gradient(135deg, #C9A220 0%, #E8C84A 100%)",
-              color: "#fff", fontFamily: "'Inter',sans-serif", fontSize: 14, fontWeight: 600,
-              padding: "14px 28px", borderRadius: 12,
-              boxShadow: "0 8px 32px rgba(201,162,32,0.30)",
-              transition: "transform 0.2s, box-shadow 0.2s",
-            }}
-            onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.transform = "translateY(-2px)"; el.style.boxShadow = "0 16px 40px rgba(201,162,32,0.45)"; }}
-            onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.transform = ""; el.style.boxShadow = "0 8px 32px rgba(201,162,32,0.30)"; }}
-          >
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-              <path d="M20.5 3.5A12 12 0 0 0 3.5 20.5L2 22l1.5-.5A12 12 0 1 0 20.5 3.5zm-8.5 18a10 10 0 0 1-5.4-1.6l-.4-.3-3.6.9.9-3.5-.3-.4A10 10 0 1 1 12 21.5zm5.5-7.5c-.3-.1-1.7-.9-2-.9s-.5.1-.6.3l-.9 1.1c-.1.2-.3.2-.5.1a8 8 0 0 1-2.4-1.5 8.5 8.5 0 0 1-1.7-2c-.1-.3 0-.5.1-.6l.5-.6.3-.6v-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.1a17 17 0 0 0 2 .7c.8.2 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.1-.4-.2-.8-.4z"/>
-            </svg>
-            Falar no WhatsApp
-          </a>
         </div>
       </div>
     </section>

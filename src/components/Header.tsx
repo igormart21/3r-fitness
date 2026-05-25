@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/3r-logo.png";
+import { useCartStore } from "@/stores/cartStore";
+import { useCartUIStore } from "@/stores/cartUIStore";
 
 const NAV = [
   { to: "/atelie/modalidades", label: "Modalidades" },
@@ -11,6 +13,8 @@ const NAV = [
 export const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen]         = useState(false);
+  const totalItems = useCartStore(s => s.items.reduce((sum, i) => sum + i.quantity, 0));
+  const openCart   = useCartUIStore(s => s.openCart);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 10);
@@ -35,7 +39,7 @@ export const Header = () => {
 
           {/* Logo */}
           <Link to="/" style={{ flexShrink: 0 }}>
-            <img src={logo} alt="3R Fitness" style={{ height: 72, width: "auto", objectFit: "contain" }} />
+            <img src={logo} alt="3R Fitness" style={{ height: 96, width: "auto", objectFit: "contain" }} />
           </Link>
 
           {/* Desktop nav */}
@@ -62,6 +66,24 @@ export const Header = () => {
 
           {/* Actions */}
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            {/* Cart icon */}
+            <button
+              onClick={openCart}
+              aria-label="Carrinho"
+              style={{ position: "relative", width: 42, height: 42, borderRadius: 10, border: "1.5px solid rgba(248,245,240,0.15)", display: "flex", alignItems: "center", justifyContent: "center", color: "#F8F5F0", background: "none", cursor: "pointer", transition: "border-color 0.25s, color 0.25s" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#C9A220"; (e.currentTarget as HTMLElement).style.color = "#E8C84A"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(248,245,240,0.15)"; (e.currentTarget as HTMLElement).style.color = "#F8F5F0"; }}
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+              </svg>
+              {totalItems > 0 && (
+                <span style={{ position: "absolute", top: -4, right: -4, minWidth: 18, height: 18, borderRadius: 100, background: "#C9A220", color: "#fff", fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 4px" }}>
+                  {totalItems}
+                </span>
+              )}
+            </button>
             {/* Hamburger */}
             <button
               onClick={() => setOpen(v => !v)}
