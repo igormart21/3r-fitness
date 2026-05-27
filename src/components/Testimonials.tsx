@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import modelLeft from "@/assets/model-left-new.png";
-import modelRight from "@/assets/model-original.jpg";
 import testimonialThais from "@/assets/testimonial-thais.png";
 
 const list = [
   { quote: "Não tiro mais. Faz parte de quem eu sou.", name: "Cinthia", city: "Florianópolis, SC", sport: "Corrida", img: modelLeft },
-  { quote: "Primeira prova com ela. Duas joias no peito.", name: "Renata", city: "São Paulo, SP", sport: "Corrida", img: modelRight },
   { quote: "Transformaram um momento em eternidade.", name: "Thais", city: "Belo Horizonte, MG", sport: "Triatlo 70.3", img: testimonialThais },
 ];
 

@@ -5,9 +5,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { useCartUIStore } from "@/stores/cartUIStore";
 
 const NAV = [
-  { to: "/atelie/modalidades", label: "Modalidades" },
   { to: "/colecao", label: "Coleções" },
-  { to: "/catalogo", label: "Personalizar" },
 ];
 
 export const Header = () => {

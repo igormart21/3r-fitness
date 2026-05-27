@@ -6,7 +6,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
 
-import Catalogo from "./pages/Catalogo.tsx";
 import Colecao from "./pages/Colecao.tsx";
 import TesteBotoes from "./pages/TesteBotoes.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -35,12 +34,10 @@ const AppRoutes = () => {
       <Route path="/" element={<Index />} />
       <Route path="/product/:handle" element={<ProductDetail />} />
       
-      <Route path="/catalogo" element={<Catalogo />} />
       <Route path="/colecao" element={<Colecao />} />
       <Route path="/teste-botoes" element={<TesteBotoes />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/atelie" element={<Atelie />} />
-      <Route path="/atelie/modalidades" element={<AtelieModalidades />} />
       <Route path="/atelie/modalidade/:slug" element={<AtelieModalidade />} />
       <Route path="/atelie/linha/:slug" element={<AtelieLinha />} />
       <Route path="/continuar" element={<Continuar />} />

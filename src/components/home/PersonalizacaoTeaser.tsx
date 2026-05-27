@@ -58,7 +58,7 @@ export const PersonalizacaoTeaser = () => {
   const materialLabel = material === "ouro" ? "Ouro 18k" : "Prata 925";
 
   return (
-    <section style={{ background: "#1C1814", padding: "100px 0", position: "relative", overflow: "hidden" }}>
+    <section id="personalizar" style={{ background: "#1C1814", padding: "100px 0", position: "relative", overflow: "hidden" }}>
       {/* Glow orbs */}
       <div style={{ position: "absolute", top: "-10%", right: "-5%", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,162,32,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: "-15%", left: "-8%", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,162,32,0.05) 0%, transparent 70%)", pointerEvents: "none" }} />

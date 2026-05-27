@@ -7,12 +7,12 @@ import sportCrossfit from "@/assets/hero-crossfit.png";
 import sportCorrida from "@/assets/sport-corrida.jpg";
 
 const mods = [
-  { id: 1, nome: "Fisiculturismo", img: sportFisiculturismo, focal: "center 22%", aspect: "3/4" },
-  { id: 2, nome: "Musculação",     img: sportMusculacao,     focal: "center 20%", aspect: "3/4" },
-  { id: 6, nome: "Corrida",        img: sportCorrida,        focal: "center 25%", aspect: "3/4" },
-  { id: 4, nome: "Ciclismo",       img: sportCiclismo,       focal: "center 30%", aspect: "3/4" },
-  { id: 5, nome: "Crossfit",       img: sportCrossfit,       focal: "center 30%", aspect: "3/4" },
-  { id: 3, nome: "Triatlo",        img: sportTriathlon,      focal: "center 24%", aspect: "3/4" },
+  { id: 1, nome: "Fisiculturismo", sport: "Fisiculturismo", img: sportFisiculturismo, focal: "center 22%", aspect: "3/4" },
+  { id: 2, nome: "Musculação", sport: "Musculação", img: sportMusculacao, focal: "center 20%", aspect: "3/4" },
+  { id: 6, nome: "Corrida", sport: "Corrida", img: sportCorrida, focal: "center 25%", aspect: "3/4" },
+  { id: 4, nome: "Ciclismo", sport: "Ciclismo", img: sportCiclismo, focal: "center 30%", aspect: "3/4" },
+  { id: 5, nome: "Crossfit", sport: "Crossfit", img: sportCrossfit, focal: "center 30%", aspect: "3/4" },
+  { id: 3, nome: "Triatlo", sport: "Triatlo", img: sportTriathlon, focal: "center 24%", aspect: "3/4" },
 ];
 
 export const Modalidades = () => (
@@ -20,22 +20,22 @@ export const Modalidades = () => (
     <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
       <div style={{ textAlign: "center", marginBottom: 48 }}>
         <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A220", marginBottom: 10 }}>
-          Modalidades
+          MODALIDADES
         </p>
         <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,3.5vw,3rem)", fontWeight: 400, color: "#1C1814", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
           Joias para o <em>seu esporte</em>
         </h2>
         <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, fontWeight: 300, color: "#6B5E52", marginTop: 10, lineHeight: 1.6, maxWidth: "50ch", margin: "10px auto 0" }}>
-          Cada modalidade tem linha própria com design e bonecos exclusivos.
+          Cada modalidade tem linha própria com design exclusivo.
         </p>
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }} className="mods-grid">
         <style>{`@media(max-width:640px){.mods-grid{grid-template-columns:repeat(2,1fr)!important;}}`}</style>
-        {mods.map(({ id, nome, img, focal, aspect }) => (
+        {mods.map(({ id, nome, sport, img, focal, aspect }) => (
           <Link
             key={id}
-            to={`/modalidade/${id}`}
+            to={`/colecao?sport=${encodeURIComponent(sport)}`}
             style={{ display: "block", position: "relative", borderRadius: 16, overflow: "hidden", aspectRatio: aspect }}
             className="mod-card"
           >
