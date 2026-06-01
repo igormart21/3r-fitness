@@ -27,7 +27,7 @@ export const Header = () => {
         position: "sticky",
         top: 0, left: 0, right: 0,
         zIndex: 50,
-        height: 68,
+        height: 100,
         background: scrolled ? "rgba(28,24,20,0.72)" : "#1C1814",
         backdropFilter: scrolled ? "blur(18px)" : "none",
         borderBottom: "1px solid rgba(248,245,240,0.06)",
@@ -37,7 +37,7 @@ export const Header = () => {
 
           {/* Logo */}
           <Link to="/" style={{ flexShrink: 0 }}>
-            <img src={logo} alt="3R Fitness" style={{ height: 96, width: "auto", objectFit: "contain" }} />
+            <img src={logo} alt="3R Fitness" style={{ height: 130, width: "auto", objectFit: "contain" }} />
           </Link>
 
           {/* Desktop nav */}

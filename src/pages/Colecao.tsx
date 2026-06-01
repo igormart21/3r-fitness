@@ -33,14 +33,64 @@ import veloxPrata    from "@/assets/linha-velox-royale-prata-masculino.jpg";
 import aeronOuro     from "@/assets/linha-aeron-ouro.png";
 import aeronPrata    from "@/assets/linha-aeron-prata-masculino.jpg";
 import trionOuro     from "@/assets/linha-trion-elite-ouro.png";
+import trionPrata    from "@/assets/trion-elite-atleta-prata.jpg";
 import velarionOuro  from "@/assets/linha-velarion-ouro.png";
 import triadeOuro    from "@/assets/linha-triade-ouro.jpg";
 import triadePrata   from "@/assets/linha-triade-prata.jpg";
 import dominusOuro   from "@/assets/linha-dominus-ouro.png";
+import dominusPrata  from "@/assets/dominus-prata-banner.png";
 import monarchOuro   from "@/assets/linha-monarch-ouro.png";
+import monarchPrata  from "@/assets/802988ab-baa6-48ce-89e9-109263359edc.png";
 import valenzaOuro   from "@/assets/linha-valenza-ouro.png";
-import titanImg      from "@/assets/boneco-corredores-masc-classico-ouro.jpg";
-import velocitaImg   from "@/assets/boneco-corredores-fem-classico-ouro.jpg";
+import valenzaPrata  from "@/assets/valenza-prata-banner.png";
+import bonecoFisiMascClassicoOuro  from "@/assets/boneco-fisiculturismo-masc-classico-ouro.jpg";
+import bonecoFisiMascClassicoPrata from "@/assets/boneco-fisiculturismo-masc-classico-prata.jpg";
+import bonecoFisiFemClassicoOuro   from "@/assets/boneco-fisiculturismo-fem-classico-ouro.jpg";
+import bonecoFisiFemClassicoPrata  from "@/assets/boneco-fisiculturismo-fem-classico-prata.jpg";
+import bonecoFisiMascUndergroundOuro  from "@/assets/boneco-fisiculturismo-masc-underground-ouro.jpg";
+import bonecoFisiMascUndergroundPrata from "@/assets/boneco-fisiculturismo-masc-underground-prata.jpg";
+import bonecoFisiFemUndergroundOuro   from "@/assets/boneco-fisiculturismo-fem-underground-ouro.jpg";
+import bonecoFisiFemUndergroundPrata  from "@/assets/boneco-fisiculturismo-fem-underground-prata.jpg";
+import titanOuro     from "@/assets/titan-atleta-masc-ouro.png";
+import titanPrata    from "@/assets/titan-atleta-masc-prata.png";
+import velocitaOuro  from "@/assets/velocita-atleta-fem-ouro.png";
+import velocitaPrata from "@/assets/velocita-atleta-fem-prata.png";
+import bikeSpeedClassicoOuro  from "@/assets/bike-speed-classico-ouro.jpg";
+import bikeSpeedClassicoPrata from "@/assets/bike-speed-classico-prata.jpg";
+import bonecoTriMascClassicoOuro  from "@/assets/boneco-triatlon-masc-classico-ouro.jpg";
+import bonecoTriMascClassicoPrata from "@/assets/boneco-triatlon-masc-classico-prata.jpg";
+import anelCorridaOuro       from "@/assets/anel-corrida-ouro.jpg";
+import anelCorridaPrata      from "@/assets/anel-corrida-prata.jpg";
+import anelFisiOuro          from "@/assets/anel-fisiculturismo-ouro.jpg";
+import anelFisiPrata         from "@/assets/anel-fisiculturismo-prata.jpg";
+import anelTriatloOuro       from "@/assets/anel-triatlo-ouro.jpg";
+import anelTriatloPrata      from "@/assets/anel-triatlo-prata.jpg";
+import anelCrossfitOuro      from "@/assets/anel-crossfit-ouro.jpg";
+import anelCrossfitPrata     from "@/assets/anel-crossfit-prata.jpg";
+import anelCiclismoOuro      from "@/assets/anel-ciclismo-ouro.jpg";
+import anelCiclismoPrata     from "@/assets/anel-ciclismo-prata.jpg";
+import anelCorridaMascOuro   from "@/assets/anel-corrida-masc-ouro.jpg";
+import anelCorridaMascPrata  from "@/assets/anel-corrida-masc-prata.jpg";
+import anelMuscOuro          from "@/assets/anel-musculacao-ouro.jpg";
+import anelMuscPrata         from "@/assets/anel-musculacao-prata.jpg";
+import brincoCorridaOuro  from "@/assets/brinco-corrida-ouro.jpg";
+import brincoCorridaPrata from "@/assets/brinco-corrida-prata.jpg";
+import colarCartierOuro   from "@/assets/colar-cartier-ouro.jpg";
+import colarCartierPrata  from "@/assets/colar-cartier-prata.jpg";
+import colarVenezianaOuro  from "@/assets/colar-veneziana-ouro.jpg";
+import colarVenezianaPrata from "@/assets/colar-veneziana-prata.jpg";
+import bonecoCrossMascClassicoOuro  from "@/assets/boneco-crossfit-masc-classico-ouro.jpg";
+import bonecoCrossMascClassicoPrata from "@/assets/boneco-crossfit-masc-classico-prata.jpg";
+import bonecoCrossFemClassicoOuro   from "@/assets/boneco-crossfit-fem-classico-ouro.jpg";
+import bonecoCrossFemClassicoPrata  from "@/assets/boneco-crossfit-fem-classico-prata.jpg";
+import bonecoCorrMascClassicoOuro  from "@/assets/boneco-corredores-masc-classico-ouro.jpg";
+import bonecoCorrMascClassicoPrata from "@/assets/boneco-corredores-masc-classico-prata.jpg";
+import bonecoCorrFemClassicoOuro   from "@/assets/boneco-corredores-fem-classico-ouro.jpg";
+import bonecoCorrFemClassicoPrata  from "@/assets/boneco-corredores-fem-classico-prata.jpg";
+import bonecoMuscMascClassicoOuro  from "@/assets/boneco-musculacao-masc-classico-ouro.jpg";
+import bonecoMuscMascClassicoPrata from "@/assets/boneco-musculacao-masc-classico-prata.jpg";
+import bonecoMuscFemClassicoOuro   from "@/assets/boneco-musculacao-fem-classico-ouro.jpg";
+import bonecoMuscFemClassicoPrata  from "@/assets/boneco-musculacao-fem-classico-prata.jpg";
 
 // ── Utils ────────────────────────────────────────────────────────────────────
 const fmtBRL = (v: string) =>
@@ -53,29 +103,53 @@ const WPP =
 export type ColItem = {
   n: string; name: string; handle: string; sport: string;
   img: string; imgPrata: string; desc: string;
+  pos?: string; posPrata?: string; skipPrata?: boolean;
+  imgFilter?: string; imgFilterPrata?: string;
 };
 
 const COLECOES: ColItem[] = [
-  { n:"01", name:"Halter",       handle:"halter",       sport:"Musculação",     img:halterOuro,   imgPrata:halterPrata,   desc:"Força que esculpe. Disciplina que constrói." },
-  { n:"02", name:"Vigor",        handle:"vigor",        sport:"Musculação",     img:vigorOuro,    imgPrata:vigorPrata,    desc:"Evolução contínua. Presença marcante." },
-  { n:"03", name:"Dominus",      handle:"dominus",      sport:"Fisiculturismo", img:dominusOuro,  imgPrata:dominusOuro,   desc:"A busca incessante pela melhor versão." },
-  { n:"04", name:"Monarch",      handle:"monarch",      sport:"Fisiculturismo", img:monarchOuro,  imgPrata:monarchOuro,   desc:"Domínio, disciplina extrema e presença absoluta." },
-  { n:"05", name:"Valenza",      handle:"valenza",      sport:"Fisiculturismo", img:valenzaOuro,  imgPrata:valenzaOuro,   desc:"A união perfeita entre força e elegância." },
-  { n:"06", name:"Imperium",     handle:"imperium",     sport:"Crossfit",       img:imperiumOuro, imgPrata:imperiumPrata, desc:"Construída para quem nasceu para dominar." },
-  { n:"07", name:"Strata",       handle:"strata",       sport:"Crossfit",       img:strataOuro,   imgPrata:strataPrata,   desc:"Movimento bruto refinado em luxo contemporâneo." },
-  { n:"08", name:"Velox Royale", handle:"velox-royale", sport:"Ciclismo",       img:veloxOuro,    imgPrata:veloxPrata,    desc:"Potência, precisão e elegância em movimento." },
-  { n:"09", name:"Aeron",        handle:"aeron",        sport:"Ciclismo",       img:aeronOuro,    imgPrata:aeronPrata,    desc:"Leveza, velocidade e constância sobre duas rodas." },
-  { n:"10", name:"Titan",        handle:"titan",        sport:"Corrida",        img:titanImg,     imgPrata:titanImg,      desc:"Resistência mental, evolução e força silenciosa." },
-  { n:"11", name:"Velocità",     handle:"velocita",     sport:"Corrida",        img:velocitaImg,  imgPrata:velocitaImg,   desc:"Movimento transformado em elegância." },
-  { n:"12", name:"Trion Elite",  handle:"trion-elite",  sport:"Triatlo",        img:trionOuro,    imgPrata:trionOuro,     desc:"Para atletas que vivem além dos limites comuns." },
-  { n:"13", name:"Velarion",     handle:"velarion",     sport:"Triatlo",        img:velarionOuro, imgPrata:velarionOuro,  desc:"Luxo silencioso. Performance elevada." },
-  { n:"14", name:"Tríade",       handle:"triade",       sport:"Triatlo",        img:triadeOuro,   imgPrata:triadePrata,   desc:"Identidade de quem atravessa três mundos." },
+  { n:"01", name:"Halter",            handle:"halter",  sport:"Musculação", img:halterOuro,             imgPrata:halterPrata,            desc:"Força que esculpe. Disciplina que constrói." },
+  { n:"02", name:"Vigor",             handle:"vigor",   sport:"Musculação", img:vigorOuro,              imgPrata:vigorPrata,             desc:"Evolução contínua. Presença marcante." },
+  { n:"19", name:"Clássico Masc",     handle:"halter",  sport:"Musculação", img:bonecoMuscMascClassicoOuro, imgPrata:bonecoMuscMascClassicoPrata, desc:"Constância e disciplina representadas em cada detalhe." },
+  { n:"20", name:"Clássico Fem",      handle:"vigor",   sport:"Musculação", img:bonecoMuscFemClassicoOuro,  imgPrata:bonecoMuscFemClassicoPrata,  desc:"Evolução feminina. Força e elegância em ouro e prata." },
+  { n:"03", name:"Dominus",           handle:"dominus",      sport:"Fisiculturismo", img:dominusOuro,              imgPrata:dominusPrata,              desc:"A busca incessante pela melhor versão." },
+  { n:"04", name:"Monarch",           handle:"monarch",      sport:"Fisiculturismo", img:monarchOuro,              imgPrata:monarchPrata,              desc:"Domínio, disciplina extrema e presença absoluta." },
+  { n:"05", name:"Valenza",           handle:"valenza",      sport:"Fisiculturismo", img:valenzaOuro,              imgPrata:valenzaPrata,              desc:"A união perfeita entre força e elegância.", posPrata:"82% center" },
+  { n:"15", name:"Clássico Masc",     handle:"dominus",      sport:"Fisiculturismo", img:bonecoFisiMascClassicoOuro,    imgPrata:bonecoFisiMascClassicoPrata,    desc:"Postura clássica. Força representada em cada detalhe." },
+  { n:"16", name:"Clássico Fem",      handle:"valenza",      sport:"Fisiculturismo", img:bonecoFisiFemClassicoOuro,     imgPrata:bonecoFisiFemClassicoPrata,     desc:"Elegância e postura que definem a campeã." },
+  { n:"17", name:"Underground Masc",  handle:"monarch",      sport:"Fisiculturismo", img:bonecoFisiMascUndergroundOuro, imgPrata:bonecoFisiMascUndergroundPrata, desc:"Identidade raw. Intensidade que não pede licença." },
+  { n:"18", name:"Underground Fem",   handle:"valenza",      sport:"Fisiculturismo", img:bonecoFisiFemUndergroundOuro,  imgPrata:bonecoFisiFemUndergroundPrata,  desc:"Atitude, estética e força sem concessões." },
+  { n:"06", name:"Imperium",      handle:"imperium", sport:"Crossfit", img:imperiumOuro,             imgPrata:imperiumPrata,              desc:"Construída para quem nasceu para dominar." },
+  { n:"07", name:"Strata",        handle:"strata",   sport:"Crossfit", img:strataOuro,               imgPrata:strataPrata,                desc:"Movimento bruto refinado em luxo contemporâneo." },
+  { n:"23", name:"Clássico Masc", handle:"imperium", sport:"Crossfit", img:bonecoCrossMascClassicoOuro, imgPrata:bonecoCrossMascClassicoPrata, desc:"Força bruta e determinação representadas em joia." },
+  { n:"24", name:"Clássico Fem",  handle:"strata",   sport:"Crossfit", img:bonecoCrossFemClassicoOuro,  imgPrata:bonecoCrossFemClassicoPrata,  desc:"Potência feminina. Precisão e estilo em cada peça." },
+  { n:"08", name:"Velox Royale", handle:"velox-royale", sport:"Ciclismo", img:veloxOuro,         imgPrata:veloxPrata,         desc:"Potência, precisão e elegância em movimento." },
+  { n:"09", name:"Aeron",        handle:"aeron",        sport:"Ciclismo", img:aeronOuro,         imgPrata:aeronPrata,         desc:"Leveza, velocidade e constância sobre duas rodas." },
+  { n:"25", name:"Speed Clássico",handle:"velox-royale",sport:"Ciclismo", img:bikeSpeedClassicoOuro, imgPrata:bikeSpeedClassicoPrata, desc:"Velocidade e estilo para quem pedala com propósito.", imgFit:"contain" },
+  { n:"10", name:"Titan",        handle:"titan",        sport:"Corrida",        img:titanOuro,    imgPrata:titanPrata,    desc:"Resistência mental, evolução e força silenciosa." },
+  { n:"11", name:"Velocità",         handle:"velocita",  sport:"Corrida", img:velocitaOuro,            imgPrata:velocitaPrata,           desc:"Movimento transformado em elegância.", pos:"88% center" },
+  { n:"21", name:"Clássico Masc",    handle:"titan",     sport:"Corrida", img:bonecoCorrMascClassicoOuro, imgPrata:bonecoCorrMascClassicoPrata, desc:"Resistência e foco representados em joia exclusiva." },
+  { n:"22", name:"Clássico Fem",     handle:"velocita",  sport:"Corrida", img:bonecoCorrFemClassicoOuro,  imgPrata:bonecoCorrFemClassicoPrata,  desc:"Leveza, ritmo e elegância em cada detalhe." },
+  { n:"12", name:"Trion Elite",  handle:"trion-elite",  sport:"Triatlo",        img:trionOuro,    imgPrata:trionOuro,     desc:"Para atletas que vivem além dos limites comuns.", imgFilterPrata:"grayscale(100%) brightness(1.15) contrast(1.05)" },
+  { n:"13", name:"Velarion",     handle:"velarion",     sport:"Triatlo",        img:velarionOuro, imgPrata:velarionOuro,  desc:"Luxo silencioso. Performance elevada.", imgFilterPrata:"grayscale(100%) brightness(1.15) contrast(1.05)" },
+  { n:"14", name:"Tríade",        handle:"triade",      sport:"Triatlo", img:triadeOuro,             imgPrata:triadePrata,             desc:"Identidade de quem atravessa três mundos." },
+  { n:"26", name:"Clássico Masc", handle:"trion-elite", sport:"Triatlo",  img:bonecoTriMascClassicoOuro, imgPrata:bonecoTriMascClassicoPrata, desc:"Resistência, força e elegância em três modalidades." },
+  { n:"27", name:"Cartier",        handle:"cartier",     sport:"Colares", img:colarCartierOuro,   imgPrata:colarCartierPrata,   desc:"Corrente elo cartier. Leveza e sofisticação para o dia a dia.", imgFit:"contain" },
+  { n:"28", name:"Veneziana",      handle:"veneziana",   sport:"Colares", img:colarVenezianaOuro, imgPrata:colarVenezianaPrata, desc:"Corrente veneziana. Elegância clássica em cada detalhe.", imgFit:"contain" },
+  { n:"29", name:"Anel Corrida Fem",  handle:"anel-corrida",    sport:"Anéis", img:anelCorridaOuro,      imgPrata:anelCorridaPrata,     desc:"Anel com silhueta de corredora feminina. Ouro 18k ou Prata 925." },
+  { n:"31", name:"Anel Fisiculturismo", handle:"anel-fisi",  sport:"Anéis", img:anelFisiOuro,         imgPrata:anelFisiPrata,        desc:"Anel com ícones de fisiculturismo gravados. Força e disciplina." },
+  { n:"32", name:"Anel Musculação",     handle:"anel-musc",  sport:"Anéis", img:anelMuscOuro,         imgPrata:anelMuscPrata,        desc:"Anel com halter gravado. Para quem treina com constância." },
+  { n:"33", name:"Anel Crossfit",       handle:"anel-cross", sport:"Anéis", img:anelCrossfitOuro,     imgPrata:anelCrossfitPrata,    desc:"Anel com ícones de crossfit. Kettlebell, levantamento e box." },
+  { n:"34", name:"Anel Ciclismo",       handle:"anel-cicl",  sport:"Anéis", img:anelCiclismoOuro,     imgPrata:anelCiclismoPrata,    desc:"Anel com ciclista gravado. Velocidade e determinação." },
+  { n:"35", name:"Anel Corrida Masc",   handle:"anel-corrm", sport:"Anéis", img:anelCorridaMascOuro,  imgPrata:anelCorridaMascPrata, desc:"Anel com corredor masculino e linhas de velocidade." },
+  { n:"36", name:"Anel Triatlo",        handle:"anel-tri",   sport:"Anéis", img:anelTriatloOuro,      imgPrata:anelTriatloPrata,     desc:"Anel com os 3 ícones do triatlo: natação, ciclismo e corrida." },
+  { n:"30", name:"Brinco Corrida", handle:"brinco",      sport:"Brincos", img:brincoCorridaOuro,  imgPrata:brincoCorridaPrata,  desc:"Brinco com silhueta de corredora. Leve, elegante e esportivo.", imgFit:"contain" },
 ];
 
-const SPORTS = ["Todas", "Musculação", "Fisiculturismo", "Crossfit", "Ciclismo", "Corrida", "Triatlo"];
+const SPORTS = ["Todas", "Musculação", "Fisiculturismo", "Crossfit", "Ciclismo", "Corrida", "Triatlo", "Colares", "Anéis", "Brincos"];
 
-type TipoJoia = "Pingentes" | "Colares" | "Pulseiras" | "Anéis";
-type MaterialFiltro = "Prata 925" | "Ouro 18k" | "Aço Inoxidável";
+type TipoJoia = "Pingentes" | "Colares" | "Anéis" | "Brincos";
+type MaterialFiltro = "Prata 925" | "Ouro 18k";
 
 type CatalogProduct = {
   id: string;
@@ -87,6 +161,9 @@ type CatalogProduct = {
   parcelas: number;
   imagem: string;
   collectionHandle: string;
+  imgPos?: string;
+  imgFilter?: string;
+  imgFit?: string;
 };
 
 const HERO_BY_SPORT: Record<string, string> = {
@@ -96,6 +173,9 @@ const HERO_BY_SPORT: Record<string, string> = {
   Ciclismo: sportCiclismo,
   Crossfit: sportCrossfit,
   Triatlo: sportTriathlon,
+  Brincos: brincoCorridaOuro,
+  "Anéis": anelCorridaOuro,
+  Colares: colarCartierOuro,
 };
 
 const SPORT_COPY: Record<string, string> = {
@@ -105,6 +185,9 @@ const SPORT_COPY: Record<string, string> = {
   Ciclismo: "Velocidade, resistência e estilo traduzidos em joias únicas.",
   Crossfit: "Força, potência e identidade em cada detalhe da peça.",
   Triatlo: "Uma joia para atletas de múltiplas frentes e grandes metas.",
+  Colares: "Correntes exclusivas em Ouro 18k e Prata 925 para complementar sua joia.",
+  "Anéis": "Anéis esportivos exclusivos em Ouro 18k e Prata 925.",
+  Brincos: "Brincos com design esportivo exclusivo em Ouro 18k e Prata 925.",
   Todas: "Selecione uma categoria para visualizar coleções específicas.",
 };
 
@@ -549,11 +632,21 @@ const Colecao = () => {
       strata: "Pingentes",
       "velox-royale": "Colares",
       aeron: "Colares",
-      titan: "Pulseiras",
+      titan: "Colares",
       velocita: "Anéis",
       "trion-elite": "Colares",
       velarion: "Colares",
       triade: "Pingentes",
+      cartier: "Colares",
+      veneziana: "Colares",
+      "anel-corrida": "Anéis",
+      "anel-fisi":  "Anéis",
+      "anel-musc":  "Anéis",
+      "anel-cross": "Anéis",
+      "anel-cicl":  "Anéis",
+      "anel-corrm": "Anéis",
+      "anel-tri":   "Anéis",
+      brinco: "Brincos",
     };
 
     const precoBase: Record<string, number> = {
@@ -571,32 +664,50 @@ const Colecao = () => {
       "trion-elite": 999.9,
       velarion: 1099.9,
       triade: 899.9,
+      cartier: 349.9,
+      veneziana: 399.9,
+      "anel-corrida": 299.9,
+      "anel-fisi":  349.9,
+      "anel-musc":  299.9,
+      "anel-cross": 349.9,
+      "anel-cicl":  299.9,
+      "anel-corrm": 299.9,
+      "anel-tri":   349.9,
+      brinco: 249.9,
     };
 
-    return COLECOES.flatMap((c) => [
-      {
-        id: `${c.handle}-prata`,
-        nome: `${c.name} ${c.sport}`,
+    return COLECOES.flatMap((c) => {
+      const ouro = {
+        id: `${c.n}-ouro`,
+        nome: c.name,
         categoria: c.sport,
         tipo: tipoPorColecao[c.handle] ?? "Pingentes",
-        material: "Prata 925",
-        preco: Math.max((precoBase[c.handle] ?? 399.9) * 0.72, 149.9),
-        parcelas: 6,
-        imagem: c.imgPrata,
-        collectionHandle: c.handle,
-      },
-      {
-        id: `${c.handle}-ouro`,
-        nome: `${c.name} ${c.sport}`,
-        categoria: c.sport,
-        tipo: tipoPorColecao[c.handle] ?? "Pingentes",
-        material: "Ouro 18k",
+        material: "Ouro 18k" as const,
         preco: precoBase[c.handle] ?? 399.9,
         parcelas: 10,
         imagem: c.img,
         collectionHandle: c.handle,
-      },
-    ]);
+        imgPos: c.pos ?? "center center",
+        imgFilter: undefined,
+        imgFit: c.imgFit,
+      };
+      if (c.skipPrata) return [ouro];
+      const prata = {
+        id: `${c.n}-prata`,
+        nome: c.name,
+        categoria: c.sport,
+        tipo: tipoPorColecao[c.handle] ?? "Pingentes",
+        material: "Prata 925" as const,
+        preco: Math.max((precoBase[c.handle] ?? 399.9) * 0.72, 149.9),
+        parcelas: 6,
+        imagem: c.imgPrata,
+        collectionHandle: c.handle,
+        imgPos: c.posPrata ?? c.pos ?? "center center",
+        imgFilter: c.imgFilterPrata,
+        imgFit: c.imgFit,
+      };
+      return [prata, ouro];
+    });
   }, []);
 
   const produtosFiltrados = useMemo(() => {
@@ -611,6 +722,15 @@ const Colecao = () => {
     if (ordem === "Mais Novos") result = [...result].reverse();
     return result;
   }, [activeSport, catalogProducts, materiais, ordem, tipos]);
+
+  // Reset filtros ao trocar de esporte
+  useEffect(() => { setTipos([]); setMateriais([]); }, [activeSport]);
+
+  // Tipos disponíveis no esporte atual
+  const tiposDisponiveis = useMemo(() => {
+    const base = activeSport === "Todas" ? catalogProducts : catalogProducts.filter(p => p.categoria === activeSport);
+    return (["Pingentes", "Colares", "Anéis", "Brincos"] as TipoJoia[]).filter(t => base.some(p => p.tipo === t));
+  }, [activeSport, catalogProducts]);
 
   const toggleTipo = (tipo: TipoJoia) => {
     setTipos((prev) => (prev.includes(tipo) ? prev.filter((t) => t !== tipo) : [...prev, tipo]));
@@ -676,11 +796,11 @@ const Colecao = () => {
   return (
     <div style={{ minHeight: "100vh", background: "#f7f7f7", color: "#1c1c1c" }}>
       <header style={{ background: "#fff", borderBottom: "1px solid #e8e8e8" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", height: 84, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", height: 160, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <Link to="/" style={{ display: "inline-flex", alignItems: "center", gap: 6, textDecoration: "none", color: "#555", fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase" }}>
             <ArrowLeft size={13} strokeWidth={1.5} /> Início
           </Link>
-          <img src={logo3r} alt="3R Fitness" style={{ height: 82 }} />
+          <img src={logo3r} alt="3R Fitness" style={{ height: 140, width: "auto", objectFit: "contain" }} />
           <button
             onClick={openCart}
             aria-label="Carrinho"
@@ -744,7 +864,9 @@ const Colecao = () => {
             <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 700, color: "#222", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14 }}>Filtrar por</div>
             <div style={{ borderTop: "1px solid #ececec", paddingTop: 12 }}>
               <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 700, color: "#555", textTransform: "uppercase", marginBottom: 10 }}>Tipo de joia</div>
-              {(["Pingentes", "Colares", "Pulseiras", "Anéis"] as TipoJoia[]).map((tipo) => (
+              {tiposDisponiveis.length === 0
+                ? <p style={{ fontFamily:"'Inter',sans-serif", fontSize:12, color:"#aaa" }}>Nenhum tipo disponível</p>
+                : tiposDisponiveis.map((tipo) => (
                 <label key={tipo} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, fontFamily: "'Inter',sans-serif", fontSize: 13, color: "#4a4a4a", cursor: "pointer" }}>
                   <input type="checkbox" checked={tipos.includes(tipo)} onChange={() => toggleTipo(tipo)} />
                   {tipo}
@@ -753,7 +875,7 @@ const Colecao = () => {
             </div>
             <div style={{ borderTop: "1px solid #ececec", paddingTop: 12, marginTop: 12 }}>
               <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 700, color: "#555", textTransform: "uppercase", marginBottom: 10 }}>Material</div>
-              {(["Prata 925", "Ouro 18k", "Aço Inoxidável"] as MaterialFiltro[]).map((material) => (
+              {(["Prata 925", "Ouro 18k"] as MaterialFiltro[]).map((material) => (
                 <label key={material} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, fontFamily: "'Inter',sans-serif", fontSize: 13, color: "#4a4a4a", cursor: "pointer" }}>
                   <input type="checkbox" checked={materiais.includes(material)} onChange={() => toggleMaterial(material)} />
                   {material}
@@ -780,23 +902,26 @@ const Colecao = () => {
 
             <div className="products-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4,minmax(0,1fr))", gap: 16 }}>
               {produtosFiltrados.map((p) => (
-                <article key={p.id} style={{ background: "#fff", borderRadius: 8, border: "1px solid #e8e8e8", overflow: "hidden" }}>
-                  <div style={{ aspectRatio: "1/1", background: "#f2f2f2" }}>
-                    <img src={p.imagem} alt={p.nome} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <article key={p.id} style={{ background: "#fff", borderRadius: 10, border: "1px solid #e8e8e8", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+                  <div style={{ aspectRatio: "3/4", background: "#0a0a0a", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <img src={p.imagem} alt={p.nome} style={{ width: "100%", height: "100%", objectFit: (p.imgFit ?? "cover") as any, objectPosition: p.imgPos ?? "center center", filter: p.imgFilter }} />
                   </div>
-                  <div style={{ padding: "10px 10px 12px" }}>
-                    <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, color: "#282828", textTransform: "uppercase", lineHeight: 1.4, minHeight: 34 }}>
-                      {p.tipo.slice(0, -1)} {p.categoria} {p.material.toUpperCase()}
+                  <div style={{ padding: "12px 12px 14px", display: "flex", flexDirection: "column", flex: 1 }}>
+                    <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 17, fontWeight: 400, color: "#1a1a1a", lineHeight: 1.2, marginBottom: 3 }}>
+                      {p.nome}
                     </div>
-                    <div style={{ marginTop: 8, fontFamily: "'Inter',sans-serif", fontSize: 22, fontWeight: 700, color: "#171717" }}>
+                    <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.28em", textTransform: "uppercase", color: "#aaa", marginBottom: 10 }}>
+                      {p.material} · {p.categoria}
+                    </div>
+                    <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 20, fontWeight: 700, color: "#171717", marginBottom: 2 }}>
                       {fmtBRL(String(p.preco))}
                     </div>
-                    <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "#666", marginTop: 2 }}>
+                    <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "#888", marginBottom: 12 }}>
                       em até {p.parcelas}x de {fmtBRL(String(p.preco / p.parcelas))}
                     </div>
                     <button
                       onClick={() => setSelectedProduct(p)}
-                      style={{ marginTop: 10, width: "100%", border: "1px solid #121212", background: "#121212", color: "#fff", borderRadius: 6, padding: "10px 12px", fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", textDecoration: "none" }}
+                      style={{ width: "100%", border: "1px solid #121212", background: "#121212", color: "#fff", borderRadius: 7, padding: "11px 12px", fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", marginTop: "auto" }}
                     >
                       Ver joia
                     </button>

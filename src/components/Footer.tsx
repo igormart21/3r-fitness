@@ -11,7 +11,7 @@ export const Footer = () => (
         <style>{`@media(max-width:640px){.footer-grid{grid-template-columns:1fr!important;}}`}</style>
 
         <div>
-          <img src={logo} alt="3R Fitness" style={{ height: 100, marginBottom: 18 }} />
+          <img src={logo} alt="3R Fitness" style={{ height: 150, marginBottom: 18 }} />
           <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, fontWeight: 300, color: "rgba(248,245,240,0.45)", lineHeight: 1.75, maxWidth: "30ch", marginBottom: 24 }}>
             Joias 100% personalizadas em Ouro 18k e Prata para atletas de alta performance.
           </p>
