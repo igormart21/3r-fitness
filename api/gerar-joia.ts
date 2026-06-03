@@ -31,9 +31,12 @@ export default async function handler(req: Request): Promise<Response> {
   const openai = new OpenAI({ apiKey });
 
   try {
+    const mimeMatch = imageBase64.match(/^data:(image\/\w+);base64,/);
+    const mimeType = mimeMatch ? mimeMatch[1] : "image/png";
+    const ext = mimeType === "image/jpeg" ? "jpg" : mimeType === "image/webp" ? "webp" : "png";
     const base64Data = imageBase64.replace(/^data:image\/\w+;base64,/, "");
     const imageBuffer = Buffer.from(base64Data, "base64");
-    const file = await toFile(imageBuffer, "reference.png", { type: "image/png" });
+    const file = await toFile(imageBuffer, `reference.${ext}`, { type: mimeType });
 
     const prompt = isOuro
       ? [
