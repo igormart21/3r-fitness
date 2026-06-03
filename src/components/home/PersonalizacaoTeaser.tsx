@@ -249,7 +249,7 @@ export const PersonalizacaoTeaser = () => {
         </div>
 
         {/* Grid */}
-        <div className="pers-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 56, alignItems: "start" }}>
+        <div className="pers-grid" style={{ display: "grid", gridTemplateColumns: estado === "pronto" ? "1fr 1.2fr" : "1.1fr 0.9fr", gap: 56, alignItems: "start" }}>
           <style>{`@media(max-width:900px){.pers-grid{grid-template-columns:1fr!important;gap:40px!important;}}`}</style>
 
           {/* Lado Esquerdo - Instruções e Configurações */}
@@ -499,22 +499,21 @@ export const PersonalizacaoTeaser = () => {
               {estado === "pronto" && resultado && (
                 <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
 
-                  {/* Imagem da Joia */}
-                  <div style={{
-                    borderRadius: 16,
-                    background: "#f4f4f4",
-                    padding: "20px",
-                    border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)",
-                    boxShadow: material === "ouro"
-                      ? "0 16px 48px rgba(232,200,74,0.12), 0 4px 16px rgba(0,0,0,0.4)"
-                      : "0 16px 48px rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.4)",
-                  }}>
-                    <img
-                      src={resultado}
-                      alt="Joia gerada por IA"
-                      style={{ width: "100%", height: "auto", display: "block" }}
-                    />
-                  </div>
+                  {/* Imagem da Joia — tamanho máximo, sem restrição */}
+                  <img
+                    src={resultado}
+                    alt="Joia gerada por IA"
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      display: "block",
+                      borderRadius: 12,
+                      border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)",
+                      boxShadow: material === "ouro"
+                        ? "0 16px 48px rgba(232,200,74,0.12), 0 4px 16px rgba(0,0,0,0.4)"
+                        : "0 16px 48px rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.4)",
+                    }}
+                  />
 
                   {/* Mensagem + Preço em destaque */}
                   <div style={{ textAlign: "center", padding: "0 8px" }}>
