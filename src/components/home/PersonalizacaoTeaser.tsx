@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartUIStore } from "@/stores/cartUIStore";
 import { createShopifyCart, ShopifyProduct } from "@/lib/shopify";
@@ -6,6 +6,15 @@ import { Loader2, ShoppingBag, Zap } from "lucide-react";
 
 const PRECO_OURO  = 1297;
 const PRECO_PRATA = 347;
+
+const MSGS_GERANDO = [
+  "Analisando a pose e proporções da foto...",
+  "Esculpindo os detalhes do rosto em metal...",
+  "Gravando detalhes do cabelo e roupas...",
+  "Aplicando polimento e reflexos metálicos...",
+  "Finalizando a peça com qualidade de joalheria...",
+  "Quase pronto, ajustando os últimos detalhes...",
+];
 
 const VARIANT_ID_OURO_PERS = "gid://shopify/ProductVariant/48912055468259"; 
 const VARIANT_ID_PRATA_PERS = "gid://shopify/ProductVariant/48912055501027";
@@ -89,8 +98,8 @@ export const PersonalizacaoTeaser = () => {
   const addItem       = useCartStore(s => s.addItem);
   const openCart      = useCartUIStore(s => s.openCart);
 
-  const [foto, setFoto]               = useState<string | null>(null);   // base64
-  const [fotoUrl, setFotoUrl]         = useState<string | null>(null);   // object URL
+  const [foto, setFoto]               = useState<string | null>(null);
+  const [fotoUrl, setFotoUrl]         = useState<string | null>(null);
   const [material, setMaterial]       = useState<"ouro" | "prata">("ouro");
   const [estado, setEstado]           = useState<Estado>("idle");
   const [resultado, setResultado]     = useState<string | null>(null);
@@ -98,6 +107,25 @@ export const PersonalizacaoTeaser = () => {
   const [comprando, setComprando]     = useState(false);
   const [adicionando, setAdicionando] = useState(false);
   const [adicionado, setAdicionado]   = useState(false);
+  const [segundos, setSegundos]       = useState(0);
+  const [msgIdx, setMsgIdx]           = useState(0);
+  const timerRef                      = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    if (estado === "gerando") {
+      setSegundos(0); setMsgIdx(0);
+      timerRef.current = setInterval(() => {
+        setSegundos(s => {
+          const next = s + 1;
+          setMsgIdx(Math.min(Math.floor(next / 12), MSGS_GERANDO.length - 1));
+          return next;
+        });
+      }, 1000);
+    } else {
+      if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
+    }
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [estado]);
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -442,10 +470,27 @@ export const PersonalizacaoTeaser = () => {
                   <h4 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 22, color: "#f4ead0", marginBottom: 8, fontWeight: 400 }}>
                     Nossa IA está esculpindo sua joia
                   </h4>
-                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.35)", lineHeight: 1.6, maxWidth: 300, margin: "0 auto" }}>
-                    Desenhando a silhueta 3D da pose e simulando a gravação a laser no pingente de {material === "ouro" ? "Ouro 18k" : "Prata 925"}...
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.8, maxWidth: 300, margin: "0 auto", minHeight: 40 }}>
+                    {MSGS_GERANDO[msgIdx]}
                   </p>
-                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: "rgba(212,175,55,0.50)", marginTop: 14 }}>Pode levar de 15 a 20 segundos</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16 }}>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600, color: "#E8C84A", minWidth: 32 }}>
+                      {segundos}s
+                    </span>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.2)" }}>·</span>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.3)" }}>
+                      pode levar até 60 segundos
+                    </span>
+                  </div>
+                  <div style={{ width: 240, height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 3, marginTop: 14, overflow: "hidden" }}>
+                    <div style={{
+                      height: "100%",
+                      background: "linear-gradient(90deg, #E8C84A, #f4ead0)",
+                      borderRadius: 3,
+                      width: `${Math.min((segundos / 60) * 100, 95)}%`,
+                      transition: "width 1s linear"
+                    }} />
+                  </div>
                 </div>
               )}
 

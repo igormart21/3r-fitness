@@ -908,17 +908,16 @@ const PersonalizarIA = () => {
                   <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.8, maxWidth: 300, margin: "0 auto", minHeight: 40, transition: "all 0.5s" }}>
                     {MENSAGENS_PROGRESSO[msgIdx]}
                   </p>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16 }}>
-                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(212,175,55,0.6)" }}>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, marginTop: 18 }}>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 28, fontWeight: 700, color: "#E8C84A", letterSpacing: "-1px", lineHeight: 1 }}>
                       {segundos}s
                     </span>
-                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.2)" }}>·</span>
                     <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.3)" }}>
-                      pode levar até 90 segundos
+                      pode levar até 60 segundos
                     </span>
                   </div>
-                  <div style={{ width: 220, height: 2, background: "rgba(255,255,255,0.06)", borderRadius: 2, marginTop: 14, overflow: "hidden" }}>
-                    <div style={{ height: "100%", background: "linear-gradient(90deg,#E8C84A,#f4ead0)", borderRadius: 2, width: `${Math.min((segundos / 90) * 100, 95)}%`, transition: "width 1s linear" }} />
+                  <div style={{ width: 240, height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 3, marginTop: 14, overflow: "hidden" }}>
+                    <div style={{ height: "100%", background: "linear-gradient(90deg,#E8C84A,#f4ead0)", borderRadius: 3, width: `${Math.min((segundos / 60) * 100, 95)}%`, transition: "width 1s linear" }} />
                   </div>
                 </div>
               )}
