@@ -112,22 +112,28 @@ export const PersonalizacaoTeaser = () => {
   };
 
   const handleGerar = async () => {
-    if (!foto) return;
+    console.log("[gerar-joia] handleGerar chamado, foto:", foto ? `${(foto.length/1024).toFixed(0)}KB` : "null");
+    if (!foto) { console.warn("[gerar-joia] foto é null"); return; }
     setEstado("gerando");
     setErro(null);
     setResultado(null);
     try {
+      console.log("[gerar-joia] enviando requisição...");
       const res = await fetch("/api/gerar-joia", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ imageBase64: foto, material }),
       });
+      console.log("[gerar-joia] status:", res.status);
       const data = await res.json();
+      console.log("[gerar-joia] keys:", Object.keys(data), "imageUrl?", !!data.imageUrl);
       if (data.error) throw new Error(data.error);
       setResultado(data.imageUrl);
       setEstado("pronto");
     } catch (err: unknown) {
-      setErro(err instanceof Error ? err.message : "Erro ao gerar imagem.");
+      const msg = err instanceof Error ? err.message : "Erro ao gerar imagem.";
+      console.error("[gerar-joia] ERRO:", msg);
+      setErro(msg);
       setEstado("erro");
     }
   };

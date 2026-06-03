@@ -545,6 +545,7 @@ const PersonalizarIA = () => {
   const [foto, setFoto]               = useState<string | null>(null);
   const [fotoUrl, setFotoUrl]         = useState<string | null>(null);
   const [material, setMaterial]       = useState<"ouro" | "prata">("ouro");
+  const [erroMsg, setErroMsg]         = useState<string>("");
   const [estado, setEstado]           = useState<"idle" | "gerando" | "pronto" | "erro">("idle");
   const [resultado, setResultado]     = useState<string | null>(null);
   const [comprando, setComprando]     = useState(false);
@@ -568,8 +569,9 @@ const PersonalizarIA = () => {
   };
 
   const handleGerar = async () => {
-    if (!foto) return;
-    setEstado("gerando"); setResultado(null); setAdicionado(false);
+    console.log("[gerar-joia] handleGerar chamado, foto:", foto ? `${(foto.length/1024).toFixed(0)}KB` : "null");
+    if (!foto) { console.warn("[gerar-joia] foto é null, abortando"); return; }
+    setEstado("gerando"); setResultado(null); setAdicionado(false); setErroMsg("");
     setSegundos(0); setMsgIdx(0);
     timerRef.current = setInterval(() => {
       setSegundos(s => {
@@ -579,15 +581,23 @@ const PersonalizarIA = () => {
       });
     }, 1000);
     try {
+      console.log("[gerar-joia] enviando requisição para /api/gerar-joia...");
       const res = await fetch("/api/gerar-joia", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ imageBase64: foto, material }),
       });
+      console.log("[gerar-joia] resposta recebida, status:", res.status);
       const data = await res.json();
+      console.log("[gerar-joia] JSON parseado, keys:", Object.keys(data), "imageUrl?", !!data.imageUrl);
       if (data.error) throw new Error(data.error);
       setResultado(data.imageUrl); setEstado("pronto");
-    } catch { setEstado("erro"); } finally {
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Erro desconhecido";
+      console.error("[gerar-joia] ERRO:", msg);
+      setErroMsg(msg);
+      setEstado("erro");
+    } finally {
       if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
     }
   };
@@ -1072,9 +1082,14 @@ const PersonalizarIA = () => {
                   <h4 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 18, color: "#f4ead0", marginBottom: 8, fontWeight: 400 }}>
                     Falha na Criação
                   </h4>
-                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.40)", lineHeight: 1.6, marginBottom: 20 }}>
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.40)", lineHeight: 1.6, marginBottom: erroMsg ? 8 : 20 }}>
                     Não conseguimos converter a foto em silhueta de joia neste momento. Pode ter ocorrido uma instabilidade temporária na IA.
                   </p>
+                  {erroMsg && (
+                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(224,112,112,0.7)", lineHeight: 1.5, marginBottom: 20, maxWidth: 280, wordBreak: "break-word" }}>
+                      Detalhe: {erroMsg}
+                    </p>
+                  )}
                   <button 
                     onClick={handleGerar}
                     style={{ padding: "10px 20px", borderRadius: 8, border: "none", background: "rgba(255,255,255,0.08)", color: "#fff", fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
