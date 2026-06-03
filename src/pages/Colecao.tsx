@@ -930,22 +930,23 @@ const PersonalizarIA = () => {
               {estado === "pronto" && resultado && (
                 <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 20 }}>
                   
-                  {/* Imagem da Joia — Grande e sem corte */}
-                  <div style={{ 
-                    borderRadius: 18, 
-                    overflow: "hidden", 
-                    border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)", 
-                    background: "#fff", 
-                    position: "relative",
-                    boxShadow: material === "ouro" 
-                      ? "0 16px 48px rgba(232,200,74,0.12), 0 4px 16px rgba(0,0,0,0.4)" 
+                  {/* Imagem da Joia */}
+                  <div style={{
+                    borderRadius: 18,
+                    border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)",
+                    background: "#fff",
+                    boxShadow: material === "ouro"
+                      ? "0 16px 48px rgba(232,200,74,0.12), 0 4px 16px rgba(0,0,0,0.4)"
                       : "0 16px 48px rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.4)",
-                    aspectRatio: "1 / 1",
-                    maxHeight: 380,
                     margin: "0 auto",
-                    width: "100%"
+                    width: "100%",
+                    lineHeight: 0,
                   }}>
-                    <img src={resultado} alt="Joia gerada por IA" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+                    <img
+                      src={resultado}
+                      alt="Joia gerada por IA"
+                      style={{ width: "100%", height: "auto", display: "block", borderRadius: 16 }}
+                    />
                   </div>
 
                   {/* Mensagem + Preço em destaque */}
