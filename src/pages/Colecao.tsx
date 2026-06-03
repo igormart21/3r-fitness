@@ -676,7 +676,7 @@ const PersonalizarIA = () => {
           </p>
         </div>
 
-        <div className="col-pers-grid" style={{ display: "grid", gridTemplateColumns: estado === "pronto" ? "1fr 1.2fr" : "1.1fr 0.9fr", gap: 56, alignItems: "start" }}>
+        <div className="col-pers-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 56, alignItems: "start" }}>
           <style>{`
             @media(max-width:900px){
               .col-pers-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
@@ -923,147 +923,10 @@ const PersonalizarIA = () => {
                 </div>
               )}
 
-              {/* ESTADO 3: Pronto (Exibição da Joia Gerada) */}
+              {/* ESTADO 3: Pronto — placeholder para manter o card visível */}
               {estado === "pronto" && resultado && (
-                <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-
-                  {/* Imagem da Joia — tamanho máximo, sem restrição */}
-                  <img
-                    src={resultado}
-                    alt="Joia gerada por IA"
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      display: "block",
-                      borderRadius: 12,
-                      border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)",
-                      boxShadow: material === "ouro"
-                        ? "0 16px 48px rgba(232,200,74,0.12), 0 4px 16px rgba(0,0,0,0.4)"
-                        : "0 16px 48px rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.4)",
-                    }}
-                  />
-
-                  {/* Mensagem + Preço em destaque */}
-                  <div style={{ textAlign: "center", padding: "0 8px" }}>
-                    <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#E8C84A", marginBottom: 8 }}>
-                      ✦ Personalizado
-                    </div>
-                    <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "1.35rem", fontStyle: "italic", color: "#f4ead0", margin: "0 0 14px", lineHeight: 1.3 }}>
-                      "Você acabou de eternizar sua paixão."
-                    </p>
-
-                    {/* Preço destacado */}
-                    <div style={{ 
-                      display: "inline-flex", 
-                      alignItems: "center", 
-                      gap: 12, 
-                      background: material === "ouro" ? "rgba(232,200,74,0.08)" : "rgba(255,255,255,0.05)", 
-                      border: material === "ouro" ? "1px solid rgba(232,200,74,0.25)" : "1px solid rgba(255,255,255,0.12)", 
-                      borderRadius: 14, 
-                      padding: "12px 24px" 
-                    }}>
-                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.50)" }}>
-                        Pingente {material === "ouro" ? "Ouro 18k" : "Prata 925"}
-                      </span>
-                      <span style={{ 
-                        fontFamily: "'Cormorant Garamond',serif", 
-                        fontSize: "1.8rem", 
-                        fontWeight: 600, 
-                        color: material === "ouro" ? "#E8C84A" : "#f0e6c8",
-                        letterSpacing: "-0.02em"
-                      }}>
-                        {fmtPreco(preco)}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Botões de Compra */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                    <button 
-                      onClick={handleComprarAgora} 
-                      disabled={comprando}
-                      style={{ 
-                        width: "100%", 
-                        padding: "15px 0", 
-                        borderRadius: 12, 
-                        border: "none", 
-                        background: "linear-gradient(135deg,#C9A220,#E8C84A)", 
-                        color: "#1C1814", 
-                        fontFamily: "'Inter',sans-serif", 
-                        fontSize: 13, 
-                        fontWeight: 700, 
-                        letterSpacing: "0.05em", 
-                        cursor: comprando ? "not-allowed" : "pointer", 
-                        display: "flex", 
-                        alignItems: "center", 
-                        justifyContent: "center", 
-                        gap: 8,
-                        boxShadow: "0 8px 24px rgba(232,200,74,0.20)",
-                        transition: "all 0.2s"
-                      }}
-                    >
-                      {comprando ? (
-                        <Loader2 size={14} style={{ animation: "col-spin 1s linear infinite" }} />
-                      ) : (
-                        <>
-                          <Zap size={14} strokeWidth={2} />
-                          Comprar Agora
-                        </>
-                      )}
-                    </button>
-
-                    <button 
-                      onClick={handleAddCart} 
-                      disabled={adicionando || adicionado}
-                      style={{ 
-                        width: "100%", 
-                        padding: "13px 0", 
-                        borderRadius: 12, 
-                        border: "1px solid rgba(212,175,55,0.30)", 
-                        background: adicionado ? "rgba(42,122,71,0.1)" : "transparent", 
-                        color: adicionado ? "#4ade80" : "#E8C84A", 
-                        fontFamily: "'Inter',sans-serif", 
-                        fontSize: 12, 
-                        fontWeight: 600, 
-                        letterSpacing: "0.05em", 
-                        cursor: adicionando || adicionado ? "not-allowed" : "pointer", 
-                        display: "flex", 
-                        alignItems: "center", 
-                        justifyContent: "center", 
-                        gap: 8,
-                        borderColor: adicionado ? "#4ade80" : "rgba(212,175,55,0.30)",
-                        transition: "all 0.2s"
-                      }}
-                    >
-                      {adicionando ? (
-                        <Loader2 size={14} style={{ animation: "col-spin 1s linear infinite" }} />
-                      ) : adicionado ? (
-                        "✓ Adicionado ao Carrinho!"
-                      ) : (
-                        <>
-                          <ShoppingBag size={14} strokeWidth={1.5} />
-                          Adicionar ao Carrinho
-                        </>
-                      )}
-                    </button>
-
-                    <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 4 }}>
-                      <button 
-                        onClick={handleGerar}
-                        disabled={estado === "gerando"}
-                        style={{ background: "none", border: "none", color: "rgba(255,255,255,0.30)", fontFamily: "'Inter',sans-serif", fontSize: 11, cursor: "pointer", textDecoration: "underline" }}
-                      >
-                        Gerar novamente
-                      </button>
-                      <button 
-                        onClick={() => { setFoto(null); setFotoUrl(null); setResultado(null); setEstado("idle"); }} 
-                        style={{ background: "none", border: "none", color: "rgba(255,255,255,0.25)", fontFamily: "'Inter',sans-serif", fontSize: 11, cursor: "pointer", textDecoration: "underline" }}
-                      >
-                        Nova foto
-                      </button>
-                    </div>
-                  </div>
-
+                <div style={{ textAlign: "center", padding: "20px 0", color: "rgba(255,255,255,0.4)", fontFamily: "'Inter',sans-serif", fontSize: 13 }}>
+                  ✦ Joia gerada — veja abaixo
                 </div>
               )}
 
@@ -1108,6 +971,55 @@ const PersonalizarIA = () => {
           </div>
 
         </div>
+
+        {/* ── RESULTADO DA JOIA — fora do grid, tamanho máximo ── */}
+        {estado === "pronto" && resultado && (
+          <div style={{ marginTop: 48, display: "flex", flexDirection: "column", alignItems: "center", gap: 24 }}>
+
+            {/* Imagem grande sem restrição */}
+            <div style={{ width: "100%", maxWidth: 600 }}>
+              <img
+                src={resultado}
+                alt="Joia gerada por IA"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                  borderRadius: 16,
+                  border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)",
+                  boxShadow: material === "ouro"
+                    ? "0 24px 64px rgba(232,200,74,0.15), 0 8px 24px rgba(0,0,0,0.5)"
+                    : "0 24px 64px rgba(255,255,255,0.08), 0 8px 24px rgba(0,0,0,0.5)",
+                }}
+              />
+            </div>
+
+            {/* Preço */}
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#E8C84A", marginBottom: 8 }}>✦ Personalizado</div>
+              <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "1.3rem", fontStyle: "italic", color: "#f4ead0", margin: "0 0 16px" }}>"Você acabou de eternizar sua paixão."</p>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 12, background: material === "ouro" ? "rgba(232,200,74,0.08)" : "rgba(255,255,255,0.05)", border: material === "ouro" ? "1px solid rgba(232,200,74,0.25)" : "1px solid rgba(255,255,255,0.12)", borderRadius: 14, padding: "12px 28px" }}>
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.5)" }}>Pingente {material === "ouro" ? "Ouro 18k" : "Prata 925"}</span>
+                <span style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "1.9rem", fontWeight: 600, color: material === "ouro" ? "#E8C84A" : "#f0e6c8" }}>{fmtPreco(preco)}</span>
+              </div>
+            </div>
+
+            {/* Botões */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, width: "100%", maxWidth: 400 }}>
+              <button onClick={handleComprarAgora} disabled={comprando} style={{ width: "100%", padding: "16px 0", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#C9A220,#E8C84A)", color: "#1C1814", fontFamily: "'Inter',sans-serif", fontSize: 14, fontWeight: 700, cursor: comprando ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, boxShadow: "0 8px 24px rgba(232,200,74,0.25)" }}>
+                {comprando ? <Loader2 size={14} style={{ animation: "col-spin 1s linear infinite" }} /> : <><Zap size={14} /> Comprar Agora</>}
+              </button>
+              <button onClick={handleAddCart} disabled={adicionando || adicionado} style={{ width: "100%", padding: "14px 0", borderRadius: 12, border: `1px solid ${adicionado ? "#4ade80" : "rgba(212,175,55,0.30)"}`, background: adicionado ? "rgba(42,122,71,0.1)" : "transparent", color: adicionado ? "#4ade80" : "#E8C84A", fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600, cursor: adicionando || adicionado ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                {adicionando ? <Loader2 size={14} style={{ animation: "col-spin 1s linear infinite" }} /> : adicionado ? "✓ Adicionado ao Carrinho!" : <><ShoppingBag size={14} /> Adicionar ao Carrinho</>}
+              </button>
+              <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 4 }}>
+                <button onClick={handleGerar} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.35)", fontFamily: "'Inter',sans-serif", fontSize: 12, cursor: "pointer", textDecoration: "underline" }}>Gerar novamente</button>
+                <button onClick={() => { setFoto(null); setFotoUrl(null); setResultado(null); setEstado("idle"); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.25)", fontFamily: "'Inter',sans-serif", fontSize: 12, cursor: "pointer", textDecoration: "underline" }}>Nova foto</button>
+              </div>
+            </div>
+
+          </div>
+        )}
 
       </div>
     </section>
