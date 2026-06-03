@@ -1,29 +1,22 @@
+import express from "express";
 import OpenAI, { toFile } from "openai";
+import * as dotenv from "dotenv";
 
-export const runtime = "nodejs";
-export const maxDuration = 60;
+dotenv.config();
 
-export default async function handler(req: Request): Promise<Response> {
-  if (req.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 });
-  }
+const app = express();
+app.use(express.json({ limit: "20mb" }));
 
+app.post("/api/gerar-joia", async (req, res) => {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
-    return Response.json({ error: "OPENAI_API_KEY não configurado." }, { status: 500 });
+    return res.status(500).json({ error: "OPENAI_API_KEY não configurado." });
   }
 
-  let body: { imageBase64?: string; material?: string };
-  try {
-    body = await req.json();
-  } catch {
-    return Response.json({ error: "Body inválido." }, { status: 400 });
-  }
-
-  const { imageBase64, material } = body;
+  const { imageBase64, material } = req.body as { imageBase64?: string; material?: string };
 
   if (!imageBase64) {
-    return Response.json({ error: "Nenhuma imagem enviada." }, { status: 400 });
+    return res.status(400).json({ error: "Nenhuma imagem enviada." });
   }
 
   const isOuro = material !== "prata";
@@ -60,7 +53,7 @@ export default async function handler(req: Request): Promise<Response> {
       `Professional macro jewelry product photography, soft diffused studio lighting from above-left, shallow depth of field, ultra-sharp photorealistic 8K detail.`,
     ].join("\n");
 
-    console.log("[gerar-joia] Using images.edit with gpt-image-1 (image-to-image)...");
+    console.log("[IA] Gerando pingente com gpt-image-1 images.edit (image-to-image)...");
 
     const response = await openai.images.edit({
       model: "gpt-image-1",
@@ -77,15 +70,16 @@ export default async function handler(req: Request): Promise<Response> {
         ? `data:image/png;base64,${(item as any).b64_json}`
         : null);
 
-    if (!imageUrl) {
-      return Response.json({ error: "Sem imagem gerada." }, { status: 500 });
-    }
+    if (!imageUrl) return res.status(500).json({ error: "Sem imagem gerada." });
 
-    console.log("[gerar-joia] Pendant image generated successfully!");
-    return Response.json({ imageUrl });
+    console.log("[IA] Pingente gerado com sucesso!");
+    return res.json({ imageUrl });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : "Erro inesperado.";
-    console.error("[gerar-joia] Error:", msg);
-    return Response.json({ error: msg }, { status: 500 });
+    console.error("[IA] Erro:", msg);
+    return res.status(500).json({ error: msg });
   }
-}
+});
+
+const PORT = 3001;
+app.listen(PORT, () => console.log(`API local rodando em http://localhost:${PORT}`));

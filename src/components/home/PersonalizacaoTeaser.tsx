@@ -1,27 +1,103 @@
 import { useRef, useState } from "react";
+import { useCartStore } from "@/stores/cartStore";
+import { useCartUIStore } from "@/stores/cartUIStore";
+import { createShopifyCart, ShopifyProduct } from "@/lib/shopify";
+import { Loader2, ShoppingBag, Zap } from "lucide-react";
 
-const WPP_BASE = "https://wa.me/5548991486304?text=";
-const wppMsg = (mat: string) =>
-  encodeURIComponent(
-    `Olá! Acabei de gerar o design da minha joia personalizada em ${mat} no site. Quero fazer o pedido!`
-  );
+const PRECO_OURO  = 1297;
+const PRECO_PRATA = 347;
+
+const VARIANT_ID_OURO_PERS = "gid://shopify/ProductVariant/48912055468259"; 
+const VARIANT_ID_PRATA_PERS = "gid://shopify/ProductVariant/48912055501027";
+
+const getPersonalizadoProductMock = (material: "ouro" | "prata", imageUrl: string): ShopifyProduct => {
+  const isOuro = material === "ouro";
+  const variantId = isOuro ? VARIANT_ID_OURO_PERS : VARIANT_ID_PRATA_PERS;
+  const priceAmount = isOuro ? "1297.00" : "347.00";
+  
+  return {
+    node: {
+      id: "gid://shopify/Product/Personalizado",
+      title: `Pingente Personalizado (IA - ${isOuro ? "Ouro 18k" : "Prata 925"})`,
+      description: "Você acabou de eternizar sua paixão com uma joia exclusiva gerada por IA.",
+      handle: "pingente-personalizado-ia",
+      featuredImage: {
+        url: imageUrl,
+        altText: "Pingente Personalizado"
+      },
+      priceRange: {
+        minVariantPrice: {
+          amount: priceAmount,
+          currencyCode: "BRL"
+        }
+      },
+      images: {
+        edges: [
+          {
+            node: {
+              url: imageUrl,
+              altText: "Pingente Personalizado"
+            }
+          }
+        ]
+      },
+      options: [
+        {
+          name: "Material",
+          values: ["Ouro 18k", "Prata 925"]
+        }
+      ],
+      variants: {
+        edges: [
+          {
+            node: {
+              id: variantId,
+              title: isOuro ? "Ouro 18k" : "Prata 925",
+              price: {
+                amount: priceAmount,
+                currencyCode: "BRL"
+              },
+              availableForSale: true,
+              selectedOptions: [
+                {
+                  name: "Material",
+                  value: isOuro ? "Ouro 18k" : "Prata 925"
+                }
+              ],
+              image: {
+                url: imageUrl,
+                altText: "Pingente Personalizado"
+              }
+            }
+          }
+        ]
+      }
+    }
+  };
+};
 
 const STEPS = [
-  { n: "01", title: "Envie sua foto", desc: "Selecione a foto que inspira a sua joia — uma competição, treino ou momento especial." },
-  { n: "02", title: "Escolha o material", desc: "Ouro 18k ou Prata 925. O design será criado com base na sua imagem." },
-  { n: "03", title: "Veja o resultado", desc: "O site gera a prévia em tempo real. Aprovou? Peça a joia com um clique." },
+  { n: "01", title: "Envie sua Foto de Referência", desc: "Uma foto sua correndo, pedalando, no palco ou treinando. Nossa IA de visão analisará sua pose com precisão para transformá-la na silhueta da joia." },
+  { n: "02", title: "Escolha a Nobreza do Metal", desc: "Trabalhamos com Ouro 18k legítimo ou Prata 925 pura. O valor e o brilho do pingente se adaptam à sua escolha." },
+  { n: "03", title: "Gere a Prévia e Compre", desc: "Veja o pingente virtual criado sob medida. Se amar o resultado, compre instantaneamente." },
 ];
 
 type Estado = "idle" | "gerando" | "pronto" | "erro";
 
 export const PersonalizacaoTeaser = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [foto, setFoto]           = useState<string | null>(null);   // base64
-  const [fotoUrl, setFotoUrl]     = useState<string | null>(null);   // object URL para preview
-  const [material, setMaterial]   = useState<"ouro" | "prata">("ouro");
-  const [estado, setEstado]       = useState<Estado>("idle");
-  const [resultado, setResultado] = useState<string | null>(null);
-  const [erro, setErro]           = useState<string | null>(null);
+  const inputRef      = useRef<HTMLInputElement>(null);
+  const addItem       = useCartStore(s => s.addItem);
+  const openCart      = useCartUIStore(s => s.openCart);
+
+  const [foto, setFoto]               = useState<string | null>(null);   // base64
+  const [fotoUrl, setFotoUrl]         = useState<string | null>(null);   // object URL
+  const [material, setMaterial]       = useState<"ouro" | "prata">("ouro");
+  const [estado, setEstado]           = useState<Estado>("idle");
+  const [resultado, setResultado]     = useState<string | null>(null);
+  const [erro, setErro]               = useState<string | null>(null);
+  const [comprando, setComprando]     = useState(false);
+  const [adicionando, setAdicionando] = useState(false);
+  const [adicionado, setAdicionado]   = useState(false);
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -36,6 +112,7 @@ export const PersonalizacaoTeaser = () => {
   };
 
   const handleGerar = async () => {
+    if (!foto) return;
     setEstado("gerando");
     setErro(null);
     setResultado(null);
@@ -43,7 +120,7 @@ export const PersonalizacaoTeaser = () => {
       const res = await fetch("/api/gerar-joia", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ imageBase64: foto ?? undefined, material }),
+        body: JSON.stringify({ imageBase64: foto, material }),
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
@@ -55,227 +132,498 @@ export const PersonalizacaoTeaser = () => {
     }
   };
 
-  const materialLabel = material === "ouro" ? "Ouro 18k" : "Prata 925";
+  const preco     = material === "ouro" ? PRECO_OURO : PRECO_PRATA;
+  const fmtPreco  = (v: number) => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }).format(v);
+
+  const handleAddCart = async () => {
+    if (!resultado) return;
+    setAdicionando(true);
+    try {
+      const mockProduct = getPersonalizadoProductMock(material, resultado);
+      const isOuro = material === "ouro";
+      const variantId = isOuro ? VARIANT_ID_OURO_PERS : VARIANT_ID_PRATA_PERS;
+      const priceAmount = isOuro ? "1297.00" : "347.00";
+
+      await addItem({
+        product: mockProduct,
+        variantId,
+        variantTitle: isOuro ? "Ouro 18k" : "Prata 925",
+        price: { amount: priceAmount, currencyCode: "BRL" },
+        quantity: 1,
+        selectedOptions: [{ name: "Material", value: isOuro ? "Ouro 18k" : "Prata 925" }],
+        thumbnailImage: { url: resultado, altText: "Pingente Personalizado" }
+      });
+      setAdicionado(true);
+      setTimeout(() => {
+        setAdicionado(false);
+        openCart();
+      }, 900);
+    } catch (err) {
+      console.error("[Shopify] Erro ao adicionar ao carrinho:", err);
+    } finally {
+      setAdicionando(false);
+    }
+  };
+
+  const handleComprarAgora = async () => {
+    if (!resultado) return;
+    setComprando(true);
+    try {
+      const isOuro = material === "ouro";
+      const variantId = isOuro ? VARIANT_ID_OURO_PERS : VARIANT_ID_PRATA_PERS;
+      
+      const r = await createShopifyCart({ variantId, quantity: 1 });
+      if (r?.checkoutUrl) {
+        window.location.href = r.checkoutUrl;
+      } else {
+        throw new Error("Não foi possível gerar a URL de checkout do Shopify.");
+      }
+    } catch (err) {
+      console.error("[Shopify] Erro no checkout direto:", err);
+    } finally {
+      setComprando(false);
+    }
+  };
 
   return (
-    <section id="personalizar" style={{ background: "#1C1814", padding: "100px 0", position: "relative", overflow: "hidden" }}>
+    <section id="personalizar" style={{ background: "radial-gradient(circle at top, #1A1512 0%, #0A0807 100%)", padding: "100px 0", position: "relative", overflow: "hidden", borderTop: "1px solid rgba(212,175,55,0.08)" }}>
       {/* Glow orbs */}
-      <div style={{ position: "absolute", top: "-10%", right: "-5%", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,162,32,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: "-15%", left: "-8%", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,162,32,0.05) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", top: "-10%", right: "-5%", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,162,32,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: "-15%", left: "-8%", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,162,32,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
 
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(201,162,32,0.12)", border: "1px solid rgba(201,162,32,0.30)", borderRadius: 100, padding: "6px 18px", marginBottom: 24 }}>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#C9A220", display: "block", animation: "pers-pulse 2s ease-in-out infinite" }} />
-            <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.35em", textTransform: "uppercase", color: "#E8C84A" }}>Exclusivo · Feito para você</span>
+        <div style={{ textAlign: "center", marginBottom: 60 }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(212,175,55,0.06)", border: "1px solid rgba(212,175,55,0.18)", borderRadius: 100, padding: "6px 18px", marginBottom: 20 }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#E8C84A", display: "block", animation: "pers-pulse 2s ease-in-out infinite" }} />
+            <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.4em", textTransform: "uppercase", color: "#d4af37" }}>
+              Exclusividade & Tecnologia
+            </span>
           </div>
           <style>{`@keyframes pers-pulse{0%,100%{opacity:1}50%{opacity:0.35}} @keyframes pers-spin{to{transform:rotate(360deg)}}`}</style>
 
-          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 400, color: "#F8F5F0", lineHeight: 1.15, letterSpacing: "-0.02em", marginBottom: 14, maxWidth: 640, margin: "0 auto 14px" }}>
-            Transforme sua melhor foto<br />em uma <em style={{ color: "#E8C84A" }}>joia exclusiva</em>
+          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "clamp(2.2rem,5vw,3.5rem)", fontWeight: 300, color: "#f4ead0", lineHeight: 1.1, marginBottom: 16 }}>
+            Eternize seu momento em uma <em style={{ fontStyle: "italic", color: "#E8C84A" }}>joia única</em>
           </h2>
-          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, fontWeight: 300, color: "rgba(248,245,240,0.50)", lineHeight: 1.7, maxWidth: "42ch", margin: "0 auto" }}>
-            Envie sua foto, escolha o material e o site gera a prévia da sua joia em tempo real.
+          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, fontWeight: 300, color: "rgba(255,255,255,0.40)", lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>
+            Envie sua foto favorita praticando seu esporte e nossa IA gerará a gravação perfeita de silhueta no pingente. Escolha seu material e veja o design instantaneamente.
           </p>
         </div>
 
         {/* Grid */}
-        <div className="pers-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "start" }}>
-          <style>{`@media(max-width:768px){.pers-grid{grid-template-columns:1fr!important;gap:40px!important;}}`}</style>
+        <div className="pers-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 56, alignItems: "stretch" }}>
+          <style>{`@media(max-width:900px){.pers-grid{grid-template-columns:1fr!important;gap:40px!important;}}`}</style>
 
-          {/* Steps */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
-            {STEPS.map(({ n, title, desc }) => (
-              <div key={n} style={{ display: "flex", gap: 20 }}>
-                <div style={{ flexShrink: 0, width: 44, height: 44, borderRadius: 12, border: "1px solid rgba(201,162,32,0.25)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: 13, fontWeight: 400, color: "#C9A220" }}>{n}</span>
-                </div>
-                <div>
-                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 18, fontWeight: 400, color: "#F8F5F0", marginBottom: 6 }}>{title}</div>
-                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 300, color: "rgba(248,245,240,0.45)", lineHeight: 1.7, margin: 0 }}>{desc}</p>
-                </div>
-              </div>
-            ))}
-            <div style={{ borderTop: "1px solid rgba(248,245,240,0.08)", paddingTop: 24 }}>
-              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 300, color: "rgba(248,245,240,0.25)", lineHeight: 1.6, margin: 0 }}>
-                ✦ Geração por IA · Ouro 18k ou Prata 925 · Entrega em todo o Brasil
-              </p>
-            </div>
-          </div>
-
-          {/* Ferramenta */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-
-            {/* Upload */}
-            <div
-              onClick={() => estado !== "gerando" && inputRef.current?.click()}
-              style={{
-                border: fotoUrl ? "1.5px solid rgba(201,162,32,0.40)" : "1.5px dashed rgba(248,245,240,0.15)",
-                borderRadius: 18,
-                background: fotoUrl ? "transparent" : "rgba(248,245,240,0.02)",
-                overflow: "hidden",
-                cursor: estado === "gerando" ? "default" : "pointer",
-                transition: "border-color 0.3s",
-                minHeight: 220,
-                display: "flex",
-                flexDirection: "column",
-                position: "relative",
-              }}
-              onMouseEnter={e => { if (!fotoUrl && estado !== "gerando") (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,162,32,0.40)"; }}
-              onMouseLeave={e => { if (!fotoUrl) (e.currentTarget as HTMLElement).style.borderColor = "rgba(248,245,240,0.15)"; }}
-            >
-              {fotoUrl ? (
-                <>
-                  <img src={fotoUrl} alt="Sua foto" style={{ width: "100%", height: 200, objectFit: "cover", display: "block" }} />
-                  <div style={{ padding: "12px 18px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 500, color: "#E8C84A" }}>✓ Foto carregada</span>
-                    {estado !== "gerando" && (
-                      <button
-                        onClick={e => { e.stopPropagation(); setFoto(null); setFotoUrl(null); setResultado(null); setEstado("idle"); }}
-                        style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(248,245,240,0.30)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
-                      >
-                        Trocar foto
-                      </button>
-                    )}
+          {/* Lado Esquerdo - Instruções e Configurações */}
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 40 }}>
+            
+            {/* Passos do Processo */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+              <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "1.8rem", fontWeight: 300, color: "#f4ead0", marginBottom: 10, borderBottom: "1px solid rgba(212,175,55,0.12)", paddingBottom: 12 }}>
+                Como Funciona
+              </h3>
+              {STEPS.map(({ n, title, desc }) => (
+                <div key={n} style={{ display: "flex", gap: 20 }}>
+                  <div style={{ flexShrink: 0, width: 44, height: 44, borderRadius: 12, border: "1px solid rgba(212,175,55,0.20)", background: "rgba(212,175,55,0.03)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <span style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 16, fontWeight: 400, color: "#E8C84A" }}>{n}</span>
                   </div>
-                </>
-              ) : (
-                <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 40, textAlign: "center" }}>
-                  <div style={{ width: 80, height: 80, borderRadius: "50%", border: "1px solid rgba(201,162,32,0.20)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
-                    <div style={{ width: 56, height: 56, borderRadius: "50%", border: "1px solid rgba(201,162,32,0.35)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A220" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="17 8 12 3 7 8"/>
-                        <line x1="12" y1="3" x2="12" y2="15"/>
-                      </svg>
-                    </div>
+                  <div>
+                    <h4 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 18, color: "#f4ead0", marginBottom: 6, fontWeight: 400 }}>{title}</h4>
+                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 300, color: "rgba(255,255,255,0.35)", lineHeight: 1.6, margin: 0 }}>{desc}</p>
                   </div>
-                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 17, fontWeight: 400, color: "#F8F5F0", marginBottom: 6 }}>Envie sua foto</div>
-                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 300, color: "rgba(248,245,240,0.35)", lineHeight: 1.6, margin: 0, maxWidth: "26ch" }}>
-                    Clique para selecionar · JPG, PNG ou WEBP
-                  </p>
                 </div>
-              )}
-            </div>
-            <input ref={inputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={handleFile} />
-
-            {/* Material selector */}
-            <div style={{ display: "flex", gap: 10 }}>
-              {(["ouro", "prata"] as const).map(m => (
-                <button
-                  key={m}
-                  onClick={() => setMaterial(m)}
-                  disabled={estado === "gerando"}
-                  style={{
-                    flex: 1, padding: "12px 0", borderRadius: 12, fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600,
-                    border: material === m ? "2px solid #C9A220" : "1.5px solid rgba(248,245,240,0.12)",
-                    background: material === m ? "rgba(201,162,32,0.10)" : "transparent",
-                    color: material === m ? "#E8C84A" : "rgba(248,245,240,0.40)",
-                    cursor: estado === "gerando" ? "not-allowed" : "pointer",
-                    transition: "all 0.2s",
-                    display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-                  }}
-                >
-                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: m === "ouro" ? "linear-gradient(135deg,#C9A220,#E8C84A)" : "linear-gradient(135deg,#A0A0A0,#D4D4D4)", display: "inline-block" }} />
-                  {m === "ouro" ? "Ouro 18k" : "Prata 925"}
-                </button>
               ))}
             </div>
 
-            {/* Gerar button */}
-            <button
-              onClick={handleGerar}
-              disabled={estado === "gerando"}
-              style={{
-                width: "100%", padding: "16px 24px", borderRadius: 14, border: "none",
-                background: estado === "gerando"
-                  ? "rgba(201,162,32,0.25)"
-                  : "linear-gradient(135deg, #C9A220 0%, #E8C84A 100%)",
-                color: estado === "gerando" ? "rgba(248,245,240,0.50)" : "#1C1814",
-                fontFamily: "'Inter',sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: "0.05em",
-                cursor: estado === "gerando" ? "not-allowed" : "pointer",
-                display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-                transition: "opacity 0.25s, transform 0.25s",
-                boxShadow: estado === "gerando" ? "none" : "0 8px 32px rgba(201,162,32,0.22)",
-              }}
-              onMouseEnter={e => { if (estado !== "gerando") (e.currentTarget as HTMLElement).style.opacity = "0.88"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; }}
-            >
-              {estado === "gerando" ? (
-                <>
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: "pers-spin 1s linear infinite" }}>
-                    <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
-                  </svg>
-                  Gerando sua joia…
-                </>
-              ) : (
-                <>
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                  </svg>
-                  {resultado ? "Gerar novamente" : "Gerar minha joia"}
-                </>
-              )}
-            </button>
+            {/* Painel de Configurações de Material e Preço */}
+            <div style={{ background: "rgba(20,16,12,0.4)", backdropFilter: "blur(10px)", border: "1px solid rgba(212,175,55,0.10)", borderRadius: 16, padding: "28px 24px" }}>
+              <h4 style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.30)", marginBottom: 16 }}>
+                Selecione o Material da Joia
+              </h4>
+              
+              <div style={{ display: "flex", gap: 14, marginBottom: 24 }}>
+                {/* Botão Ouro */}
+                <button 
+                  onClick={() => { setMaterial("ouro"); setResultado(null); setEstado("idle"); }} 
+                  disabled={estado === "gerando"}
+                  style={{ 
+                    flex: 1, 
+                    padding: "16px 20px", 
+                    borderRadius: 12, 
+                    fontFamily: "'Inter',sans-serif", 
+                    border: material === "ouro" ? "1.5px solid #E8C84A" : "1px solid rgba(255,255,255,0.08)", 
+                    background: material === "ouro" ? "rgba(232,200,74,0.08)" : "transparent", 
+                    color: material === "ouro" ? "#E8C84A" : "rgba(255,255,255,0.35)", 
+                    cursor: estado === "gerando" ? "not-allowed" : "pointer", 
+                    transition: "all 0.25s",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 4
+                  }}
+                >
+                  <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.05em" }}>Ouro 18k</span>
+                </button>
 
-            {/* Erro */}
-            {estado === "erro" && erro && (
-              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "#E07070", textAlign: "center", margin: 0 }}>
-                {erro}
-              </p>
-            )}
-
-            {/* Resultado */}
-            {estado === "pronto" && resultado && (
-              <div style={{ borderRadius: 18, overflow: "hidden", border: "1.5px solid rgba(201,162,32,0.35)", background: "#0E0B08" }}>
-                <div style={{ position: "relative" }}>
-                  <img
-                    src={resultado}
-                    alt="Sua joia gerada por IA"
-                    style={{ width: "100%", display: "block", objectFit: "cover" }}
-                  />
-                  <div style={{ position: "absolute", top: 12, left: 12, background: "rgba(201,162,32,0.90)", borderRadius: 100, padding: "4px 12px" }}>
-                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#1C1814" }}>Preview IA</span>
-                  </div>
-                </div>
-                <div style={{ padding: "20px 20px 20px" }}>
-                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 16, fontWeight: 400, color: "#F8F5F0", marginBottom: 4 }}>
-                    Design gerado · {materialLabel}
-                  </div>
-                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 300, color: "rgba(248,245,240,0.40)", lineHeight: 1.6, marginBottom: 16 }}>
-                    Esta é a prévia do design. A joia final é produzida artesanalmente com acabamento premium.
-                  </p>
-                  <a
-                    href={`${WPP_BASE}${wppMsg(materialLabel)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                      padding: "13px 20px", borderRadius: 12, textDecoration: "none",
-                      background: "#1C1814", border: "1.5px solid rgba(201,162,32,0.35)",
-                      color: "#E8C84A", fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600,
-                      transition: "background 0.25s",
-                    }}
-                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "rgba(201,162,32,0.12)"}
-                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#1C1814"}
-                  >
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-                    </svg>
-                    Pedir esta joia no WhatsApp
-                  </a>
-                </div>
+                {/* Botão Prata */}
+                <button 
+                  onClick={() => { setMaterial("prata"); setResultado(null); setEstado("idle"); }} 
+                  disabled={estado === "gerando"}
+                  style={{ 
+                    flex: 1, 
+                    padding: "16px 20px", 
+                    borderRadius: 12, 
+                    fontFamily: "'Inter',sans-serif", 
+                    border: material === "prata" ? "1.5px solid #f0e6c8" : "1px solid rgba(255,255,255,0.08)", 
+                    background: material === "prata" ? "rgba(255,255,255,0.05)" : "transparent", 
+                    color: material === "prata" ? "#f0e6c8" : "rgba(255,255,255,0.35)", 
+                    cursor: estado === "gerando" ? "not-allowed" : "pointer", 
+                    transition: "all 0.25s",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 4
+                  }}
+                >
+                  <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.05em" }}>Prata 925</span>
+                </button>
               </div>
-            )}
 
-            {estado === "gerando" && (
-              <p style={{ textAlign: "center", fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 300, color: "rgba(248,245,240,0.30)", margin: 0 }}>
-                Gerando via IA · pode levar até 20 segundos
-              </p>
-            )}
+              {/* Botão de Ação de Geração */}
+              <button 
+                onClick={handleGerar} 
+                disabled={!foto || estado === "gerando"}
+                style={{ 
+                  width: "100%", 
+                  padding: "16px 0", 
+                  borderRadius: 12, 
+                  border: "none", 
+                  background: !foto 
+                    ? "rgba(255,255,255,0.04)" 
+                    : estado === "gerando" 
+                      ? "rgba(212,175,55,0.15)" 
+                      : "linear-gradient(135deg,#C9A220,#E8C84A)", 
+                  color: !foto 
+                    ? "rgba(255,255,255,0.20)" 
+                    : estado === "gerando" 
+                      ? "rgba(255,255,255,0.40)" 
+                      : "#1C1814", 
+                  fontFamily: "'Inter',sans-serif", 
+                  fontSize: 13, 
+                  fontWeight: 700, 
+                  letterSpacing: "0.05em", 
+                  cursor: !foto || estado === "gerando" ? "not-allowed" : "pointer", 
+                  display: "flex", 
+                  alignItems: "center", 
+                  justifyContent: "center", 
+                  gap: 10,
+                  transition: "all 0.2s"
+                }}
+              >
+                {estado === "gerando" ? (
+                  <>
+                    <Loader2 size={16} style={{ animation: "col-spin 1s linear infinite" }} />
+                    Criando design da joia...
+                  </>
+                ) : (
+                  <>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                    {resultado ? "Gerar Nova Versão" : "Gerar Meu Pingente Exclusivo"}
+                  </>
+                )}
+              </button>
+              {!foto && (
+                <p style={{ textAlign: "center", fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(212,175,55,0.40)", marginTop: 10, marginBottom: 0 }}>
+                  * Envie sua foto no painel ao lado primeiro para liberar a criação por IA
+                </p>
+              )}
+            </div>
+
           </div>
+
+          {/* Lado Direito - Preview / Upload Box */}
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            
+            {/* Box Interativo Principal */}
+            <div style={{ 
+              flex: 1,
+              background: "rgba(15,12,10,0.7)", 
+              backdropFilter: "blur(12px)", 
+              border: "1px solid rgba(212,175,55,0.15)", 
+              borderRadius: 24, 
+              padding: "24px", 
+              boxShadow: "0 24px 64px rgba(0,0,0,0.6)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 20,
+              minHeight: 460,
+              justifyContent: "center"
+            }}>
+              
+              {/* ESTADO 1: Idle (Apenas Upload de Foto) */}
+              {estado === "idle" && !resultado && (
+                <div 
+                  onClick={() => inputRef.current?.click()}
+                  style={{ 
+                    flex: 1, 
+                    border: "2px dashed rgba(212,175,55,0.25)", 
+                    borderRadius: 18, 
+                    cursor: "pointer", 
+                    display: "flex", 
+                    flexDirection: "column", 
+                    alignItems: "center", 
+                    justifyContent: "center", 
+                    padding: 40, 
+                    textAlign: "center",
+                    transition: "all 0.3s",
+                    background: "rgba(255,255,255,0.01)"
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.borderColor = "#E8C84A";
+                    e.currentTarget.style.background = "rgba(212,175,55,0.02)";
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.borderColor = "rgba(212,175,55,0.25)";
+                    e.currentTarget.style.background = "rgba(255,255,255,0.01)";
+                  }}
+                >
+                  <input ref={inputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={handleFile} />
+                  
+                  {fotoUrl ? (
+                    <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 16 }}>
+                      <div style={{ position: "relative", width: 140, height: 140, margin: "0 auto", borderRadius: "50%", overflow: "hidden", border: "2px solid #E8C84A", boxShadow: "0 8px 24px rgba(0,0,0,0.4)" }}>
+                        <img src={fotoUrl} alt="Foto Carregada" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      </div>
+                      <div>
+                        <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "#E8C84A", fontWeight: 600, display: "block", marginBottom: 4 }}>✓ Imagem Carregada</span>
+                        <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.30)", textDecoration: "underline" }}>Trocar Foto</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div style={{ width: 56, height: 56, borderRadius: "50%", background: "rgba(212,175,55,0.08)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#E8C84A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                          <circle cx="8.5" cy="8.5" r="1.5" />
+                          <polyline points="21 15 16 10 5 21" />
+                        </svg>
+                      </div>
+                      <h4 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 20, color: "#f4ead0", marginBottom: 8, fontWeight: 400 }}>
+                        Envie sua Foto Esportiva
+                      </h4>
+                      <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.35)", lineHeight: 1.6, maxWidth: 260, margin: 0 }}>
+                        Arraste ou clique para carregar fotos in JPG, PNG ou WEBP.
+                      </p>
+                    </>
+                  )}
+                </div>
+              )}
+
+              {/* ESTADO 2: Gerando (Loader e Efeitos de Carregamento) */}
+              {estado === "gerando" && (
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 40, textAlign: "center" }}>
+                  <div style={{ position: "relative", marginBottom: 30 }}>
+                    <div style={{ width: 90, height: 90, borderRadius: "50%", border: "2px solid rgba(212,175,55,0.08)", borderTopColor: "#E8C84A", animation: "col-spin 1.2s linear infinite" }} />
+                    <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#E8C84A" strokeWidth="1.5" style={{ animation: "pulse 2s infinite" }}>
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                      </svg>
+                    </div>
+                  </div>
+                  <h4 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 22, color: "#f4ead0", marginBottom: 8, fontWeight: 400 }}>
+                    Nossa IA está esculpindo sua joia
+                  </h4>
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.35)", lineHeight: 1.6, maxWidth: 300, margin: "0 auto" }}>
+                    Desenhando a silhueta 3D da pose e simulando a gravação a laser no pingente de {material === "ouro" ? "Ouro 18k" : "Prata 925"}...
+                  </p>
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: "rgba(212,175,55,0.50)", marginTop: 14 }}>Pode levar de 15 a 20 segundos</span>
+                </div>
+              )}
+
+              {/* ESTADO 3: Pronto (Exibição da Joia Gerada) */}
+              {estado === "pronto" && resultado && (
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 20 }}>
+                  
+                  {/* Imagem da Joia — Grande e sem corte */}
+                  <div style={{ 
+                    borderRadius: 18, 
+                    overflow: "hidden", 
+                    border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)", 
+                    background: "#fff", 
+                    position: "relative",
+                    boxShadow: material === "ouro" 
+                      ? "0 16px 48px rgba(232,200,74,0.12), 0 4px 16px rgba(0,0,0,0.4)" 
+                      : "0 16px 48px rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.4)",
+                    aspectRatio: "1 / 1",
+                    maxHeight: 380,
+                    margin: "0 auto",
+                    width: "100%"
+                  }}>
+                    <img src={resultado} alt="Joia gerada por IA" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+                  </div>
+
+                  {/* Mensagem + Preço em destaque */}
+                  <div style={{ textAlign: "center", padding: "0 8px" }}>
+                    <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#E8C84A", marginBottom: 8 }}>
+                      ✦ Personalizado
+                    </div>
+                    <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "1.35rem", fontStyle: "italic", color: "#f4ead0", margin: "0 0 14px", lineHeight: 1.3 }}>
+                      "Você acabou de eternizar sua paixão."
+                    </p>
+
+                    {/* Preço destacado */}
+                    <div style={{ 
+                      display: "inline-flex", 
+                      alignItems: "center", 
+                      gap: 12, 
+                      background: material === "ouro" ? "rgba(232,200,74,0.08)" : "rgba(255,255,255,0.05)", 
+                      border: material === "ouro" ? "1px solid rgba(232,200,74,0.25)" : "1px solid rgba(255,255,255,0.12)", 
+                      borderRadius: 14, 
+                      padding: "12px 24px" 
+                    }}>
+                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.50)" }}>
+                        Pingente {material === "ouro" ? "Ouro 18k" : "Prata 925"}
+                      </span>
+                      <span style={{ 
+                        fontFamily: "'Cormorant Garamond',serif", 
+                        fontSize: "1.8rem", 
+                        fontWeight: 600, 
+                        color: material === "ouro" ? "#E8C84A" : "#f0e6c8",
+                        letterSpacing: "-0.02em"
+                      }}>
+                        {fmtPreco(preco)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Botões de Compra */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    <button 
+                      onClick={handleComprarAgora} 
+                      disabled={comprando}
+                      style={{ 
+                        width: "100%", 
+                        padding: "15px 0", 
+                        borderRadius: 12, 
+                        border: "none", 
+                        background: "linear-gradient(135deg,#C9A220,#E8C84A)", 
+                        color: "#1C1814", 
+                        fontFamily: "'Inter',sans-serif", 
+                        fontSize: 13, 
+                        fontWeight: 700, 
+                        letterSpacing: "0.05em", 
+                        cursor: comprando ? "not-allowed" : "pointer", 
+                        display: "flex", 
+                        alignItems: "center", 
+                        justifyContent: "center", 
+                        gap: 8,
+                        boxShadow: "0 8px 24px rgba(232,200,74,0.20)",
+                        transition: "all 0.2s"
+                      }}
+                    >
+                      {comprando ? (
+                        <Loader2 size={14} style={{ animation: "pers-spin 1s linear infinite" }} />
+                      ) : (
+                        <>
+                          <Zap size={14} strokeWidth={2} />
+                          Comprar Agora
+                        </>
+                      )}
+                    </button>
+
+                    <button 
+                      onClick={handleAddCart} 
+                      disabled={adicionando || adicionado}
+                      style={{ 
+                        width: "100%", 
+                        padding: "13px 0", 
+                        borderRadius: 12, 
+                        border: "1px solid rgba(212,175,55,0.30)", 
+                        background: adicionado ? "rgba(42,122,71,0.1)" : "transparent", 
+                        color: adicionado ? "#4ade80" : "#E8C84A", 
+                        fontFamily: "'Inter',sans-serif", 
+                        fontSize: 12, 
+                        fontWeight: 600, 
+                        letterSpacing: "0.05em", 
+                        cursor: adicionando || adicionado ? "not-allowed" : "pointer", 
+                        display: "flex", 
+                        alignItems: "center", 
+                        justifyContent: "center", 
+                        gap: 8,
+                        borderColor: adicionado ? "#4ade80" : "rgba(212,175,55,0.30)",
+                        transition: "all 0.2s"
+                      }}
+                    >
+                      {adicionando ? (
+                        <Loader2 size={14} style={{ animation: "pers-spin 1s linear infinite" }} />
+                      ) : adicionado ? (
+                        "✓ Adicionado ao Carrinho!"
+                      ) : (
+                        <>
+                          <ShoppingBag size={14} strokeWidth={1.5} />
+                          Adicionar ao Carrinho
+                        </>
+                      )}
+                    </button>
+
+                    <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 4 }}>
+                      <button 
+                        onClick={handleGerar}
+                        disabled={estado === "gerando"}
+                        style={{ background: "none", border: "none", color: "rgba(255,255,255,0.30)", fontFamily: "'Inter',sans-serif", fontSize: 11, cursor: "pointer", textDecoration: "underline" }}
+                      >
+                        Gerar novamente
+                      </button>
+                      <button 
+                        onClick={() => { setFoto(null); setFotoUrl(null); setResultado(null); setEstado("idle"); }} 
+                        style={{ background: "none", border: "none", color: "rgba(255,255,255,0.25)", fontFamily: "'Inter',sans-serif", fontSize: 11, cursor: "pointer", textDecoration: "underline" }}
+                      >
+                        Nova foto
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              )}
+
+              {/* ESTADO 4: Erro */}
+              {estado === "erro" && erro && (
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 30, textAlign: "center" }}>
+                  <div style={{ width: 48, height: 48, borderRadius: "50%", background: "rgba(224,112,112,0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#E07070" strokeWidth="2">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="8" x2="12" y2="12" />
+                      <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                  </div>
+                  <h4 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 18, color: "#f4ead0", marginBottom: 8, fontWeight: 400 }}>
+                    Falha na Criação
+                  </h4>
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.40)", lineHeight: 1.6, marginBottom: 20 }}>
+                    Não conseguimos converter a foto em silhueta de joia neste momento. Pode ter ocorrido uma instabilidade temporária na IA.
+                  </p>
+                  <button 
+                    onClick={handleGerar}
+                    style={{ padding: "10px 20px", borderRadius: 8, border: "none", background: "rgba(255,255,255,0.08)", color: "#fff", fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
+                  >
+                    Tentar Novamente
+                  </button>
+                  <button 
+                    onClick={() => { setFoto(null); setFotoUrl(null); setResultado(null); setEstado("idle"); }} 
+                    style={{ background: "none", border: "none", color: "rgba(255,255,255,0.25)", fontFamily: "'Inter',sans-serif", fontSize: 11, cursor: "pointer", textDecoration: "underline", marginTop: 12 }}
+                  >
+                    Trocar Foto
+                  </button>
+                </div>
+              )}
+
+            </div>
+
+          </div>
+
         </div>
       </div>
     </section>
