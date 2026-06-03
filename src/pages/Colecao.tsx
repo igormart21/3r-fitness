@@ -972,18 +972,19 @@ const PersonalizarIA = () => {
 
         </div>
 
-        {/* ── RESULTADO DA JOIA — fora do grid, tamanho máximo ── */}
+        {/* ── RESULTADO DA JOIA ── */}
         {estado === "pronto" && resultado && (
-          <div style={{ marginTop: 48, display: "flex", flexDirection: "column", alignItems: "center", gap: 24 }}>
+          <div style={{ marginTop: 48, display: "grid", gridTemplateColumns: "1fr 380px", gap: 48, alignItems: "start" }}>
+            <style>{`@media(max-width:860px){ .result-grid{ grid-template-columns:1fr!important; gap:32px!important; } }`}</style>
 
-            {/* Imagem — sem container fixo, cresce livremente */}
+            {/* Imagem — coluna esquerda, tamanho máximo */}
             <img
               src={resultado}
               alt="Joia gerada por IA"
+              className="result-grid-img"
               style={{
                 display: "block",
-                width: "90%",
-                maxWidth: 500,
+                width: "100%",
                 height: "auto",
                 borderRadius: 16,
                 border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)",
@@ -993,27 +994,27 @@ const PersonalizarIA = () => {
               }}
             />
 
-            {/* Preço */}
-            <div style={{ textAlign: "center" }}>
-              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#E8C84A", marginBottom: 8 }}>✦ Personalizado</div>
-              <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "1.3rem", fontStyle: "italic", color: "#f4ead0", margin: "0 0 16px" }}>"Você acabou de eternizar sua paixão."</p>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 12, background: material === "ouro" ? "rgba(232,200,74,0.08)" : "rgba(255,255,255,0.05)", border: material === "ouro" ? "1px solid rgba(232,200,74,0.25)" : "1px solid rgba(255,255,255,0.12)", borderRadius: 14, padding: "12px 28px" }}>
-                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.5)" }}>Pingente {material === "ouro" ? "Ouro 18k" : "Prata 925"}</span>
-                <span style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "1.9rem", fontWeight: 600, color: material === "ouro" ? "#E8C84A" : "#f0e6c8" }}>{fmtPreco(preco)}</span>
+            {/* Coluna direita: info + botões */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              <div>
+                <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#E8C84A", marginBottom: 8 }}>✦ Personalizado</div>
+                <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "1.4rem", fontStyle: "italic", color: "#f4ead0", margin: "0 0 20px" }}>"Você acabou de eternizar sua paixão."</p>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 12, background: material === "ouro" ? "rgba(232,200,74,0.08)" : "rgba(255,255,255,0.05)", border: material === "ouro" ? "1px solid rgba(232,200,74,0.25)" : "1px solid rgba(255,255,255,0.12)", borderRadius: 14, padding: "14px 28px" }}>
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.5)" }}>Pingente {material === "ouro" ? "Ouro 18k" : "Prata 925"}</span>
+                  <span style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "2rem", fontWeight: 600, color: material === "ouro" ? "#E8C84A" : "#f0e6c8" }}>{fmtPreco(preco)}</span>
+                </div>
               </div>
-            </div>
-
-            {/* Botões */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, width: "100%", maxWidth: 400 }}>
-              <button onClick={handleComprarAgora} disabled={comprando} style={{ width: "100%", padding: "16px 0", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#C9A220,#E8C84A)", color: "#1C1814", fontFamily: "'Inter',sans-serif", fontSize: 14, fontWeight: 700, cursor: comprando ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, boxShadow: "0 8px 24px rgba(232,200,74,0.25)" }}>
-                {comprando ? <Loader2 size={14} style={{ animation: "col-spin 1s linear infinite" }} /> : <><Zap size={14} /> Comprar Agora</>}
-              </button>
-              <button onClick={handleAddCart} disabled={adicionando || adicionado} style={{ width: "100%", padding: "14px 0", borderRadius: 12, border: `1px solid ${adicionado ? "#4ade80" : "rgba(212,175,55,0.30)"}`, background: adicionado ? "rgba(42,122,71,0.1)" : "transparent", color: adicionado ? "#4ade80" : "#E8C84A", fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600, cursor: adicionando || adicionado ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-                {adicionando ? <Loader2 size={14} style={{ animation: "col-spin 1s linear infinite" }} /> : adicionado ? "✓ Adicionado ao Carrinho!" : <><ShoppingBag size={14} /> Adicionar ao Carrinho</>}
-              </button>
-              <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 4 }}>
-                <button onClick={handleGerar} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.35)", fontFamily: "'Inter',sans-serif", fontSize: 12, cursor: "pointer", textDecoration: "underline" }}>Gerar novamente</button>
-                <button onClick={() => { setFoto(null); setFotoUrl(null); setResultado(null); setEstado("idle"); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.25)", fontFamily: "'Inter',sans-serif", fontSize: 12, cursor: "pointer", textDecoration: "underline" }}>Nova foto</button>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <button onClick={handleComprarAgora} disabled={comprando} style={{ width: "100%", padding: "16px 0", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#C9A220,#E8C84A)", color: "#1C1814", fontFamily: "'Inter',sans-serif", fontSize: 14, fontWeight: 700, cursor: comprando ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, boxShadow: "0 8px 24px rgba(232,200,74,0.25)" }}>
+                  {comprando ? <Loader2 size={14} style={{ animation: "col-spin 1s linear infinite" }} /> : <><Zap size={14} /> Comprar Agora</>}
+                </button>
+                <button onClick={handleAddCart} disabled={adicionando || adicionado} style={{ width: "100%", padding: "14px 0", borderRadius: 12, border: `1px solid ${adicionado ? "#4ade80" : "rgba(212,175,55,0.30)"}`, background: adicionado ? "rgba(42,122,71,0.1)" : "transparent", color: adicionado ? "#4ade80" : "#E8C84A", fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600, cursor: adicionando || adicionado ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                  {adicionando ? <Loader2 size={14} style={{ animation: "col-spin 1s linear infinite" }} /> : adicionado ? "✓ Adicionado ao Carrinho!" : <><ShoppingBag size={14} /> Adicionar ao Carrinho</>}
+                </button>
+                <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 4 }}>
+                  <button onClick={handleGerar} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.35)", fontFamily: "'Inter',sans-serif", fontSize: 12, cursor: "pointer", textDecoration: "underline" }}>Gerar novamente</button>
+                  <button onClick={() => { setFoto(null); setFotoUrl(null); setResultado(null); setEstado("idle"); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.25)", fontFamily: "'Inter',sans-serif", fontSize: 12, cursor: "pointer", textDecoration: "underline" }}>Nova foto</button>
+                </div>
               </div>
             </div>
 
