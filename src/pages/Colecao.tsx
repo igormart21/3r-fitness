@@ -658,8 +658,6 @@ const PersonalizarIA = () => {
 
   return (
     <section style={{ background: "radial-gradient(circle at top, #14110E 0%, #080605 100%)", padding: "100px 0", borderTop: "1px solid rgba(212,175,55,0.08)" }}>
-      {/* wrapper para clipar os glows horizontais sem afetar o conteúdo */}
-      <div style={{ overflow: "hidden", position: "relative" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
         
         {/* Cabeçalho */}
@@ -820,8 +818,7 @@ const PersonalizarIA = () => {
           </div>
 
           {/* Lado Direito - Preview / Upload Box */}
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            
+          <div>
             {/* Box Interativo Principal */}
             <div style={{
               background: "rgba(15,12,10,0.7)",
@@ -833,8 +830,8 @@ const PersonalizarIA = () => {
               display: "flex",
               flexDirection: "column",
               gap: 20,
-              minHeight: estado === "pronto" ? "unset" : 520,
-              justifyContent: estado === "pronto" ? "flex-start" : "center",
+              minHeight: 520,
+              justifyContent: "center",
             }}>
               
               {/* ESTADO 1: Idle (Apenas Upload de Foto) */}
@@ -930,26 +927,22 @@ const PersonalizarIA = () => {
               {/* ESTADO 3: Pronto (Exibição da Joia Gerada) */}
               {estado === "pronto" && resultado && (
                 <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                  
-                  {/* Imagem da Joia */}
-                  <div style={{
-                    borderRadius: 18,
-                    border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)",
-                    background: "#f8f8f8",
-                    boxShadow: material === "ouro"
-                      ? "0 16px 48px rgba(232,200,74,0.12), 0 4px 16px rgba(0,0,0,0.4)"
-                      : "0 16px 48px rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.4)",
-                    margin: "0 auto",
-                    width: "100%",
-                    lineHeight: 0,
-                    overflow: "visible",
-                  }}>
-                    <img
-                      src={resultado}
-                      alt="Joia gerada por IA"
-                      style={{ width: "100%", height: "auto", display: "block", borderRadius: 16 }}
-                    />
-                  </div>
+
+                  {/* Imagem da Joia — sem overflow, sem height fixo */}
+                  <img
+                    src={resultado}
+                    alt="Joia gerada por IA"
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      display: "block",
+                      borderRadius: 14,
+                      border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)",
+                      boxShadow: material === "ouro"
+                        ? "0 16px 48px rgba(232,200,74,0.12), 0 4px 16px rgba(0,0,0,0.4)"
+                        : "0 16px 48px rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.4)",
+                    }}
+                  />
 
                   {/* Mensagem + Preço em destaque */}
                   <div style={{ textAlign: "center", padding: "0 8px" }}>
@@ -1118,7 +1111,6 @@ const PersonalizarIA = () => {
         </div>
 
       </div>
-      </div>{/* fim wrapper glow */}
     </section>
   );
 };
