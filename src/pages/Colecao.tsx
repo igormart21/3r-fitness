@@ -528,6 +528,15 @@ const getPersonalizadoProductMock = (material: "ouro" | "prata", imageUrl: strin
   };
 };
 
+const MENSAGENS_PROGRESSO = [
+  "Analisando a pose e proporções da foto...",
+  "Esculpindo os detalhes do rosto em metal...",
+  "Gravando detalhes do cabelo e roupas...",
+  "Aplicando polimento e reflexos metálicos...",
+  "Finalizando a peça com qualidade de joalheria...",
+  "Quase pronto, ajustando os últimos detalhes...",
+];
+
 const PersonalizarIA = () => {
   const inputRef      = useRef<HTMLInputElement>(null);
   const addItem       = useCartStore(s => s.addItem);
@@ -541,6 +550,9 @@ const PersonalizarIA = () => {
   const [comprando, setComprando]     = useState(false);
   const [adicionando, setAdicionando] = useState(false);
   const [adicionado, setAdicionado]   = useState(false);
+  const [segundos, setSegundos]       = useState(0);
+  const [msgIdx, setMsgIdx]           = useState(0);
+  const timerRef                      = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const preco     = material === "ouro" ? PRECO_OURO : PRECO_PRATA;
   const fmtPreco  = (v: number) => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }).format(v);
@@ -558,6 +570,14 @@ const PersonalizarIA = () => {
   const handleGerar = async () => {
     if (!foto) return;
     setEstado("gerando"); setResultado(null); setAdicionado(false);
+    setSegundos(0); setMsgIdx(0);
+    timerRef.current = setInterval(() => {
+      setSegundos(s => {
+        const next = s + 1;
+        setMsgIdx(Math.min(Math.floor(next / 12), MENSAGENS_PROGRESSO.length - 1));
+        return next;
+      });
+    }, 1000);
     try {
       const res = await fetch("/api/gerar-joia", {
         method: "POST",
@@ -567,7 +587,9 @@ const PersonalizarIA = () => {
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setResultado(data.imageUrl); setEstado("pronto");
-    } catch { setEstado("erro"); }
+    } catch { setEstado("erro"); } finally {
+      if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
+    }
   };
 
   const handleAddCart = async () => {
@@ -873,10 +895,21 @@ const PersonalizarIA = () => {
                   <h4 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 22, color: "#f4ead0", marginBottom: 8, fontWeight: 400 }}>
                     Nossa IA está esculpindo sua joia
                   </h4>
-                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.35)", lineHeight: 1.6, maxWidth: 300, margin: "0 auto" }}>
-                    Desenhando a silhueta 3D da pose e simulando a gravação a laser no pingente de {material === "ouro" ? "Ouro 18k" : "Prata 925"}...
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.8, maxWidth: 300, margin: "0 auto", minHeight: 40, transition: "all 0.5s" }}>
+                    {MENSAGENS_PROGRESSO[msgIdx]}
                   </p>
-                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: "rgba(212,175,55,0.50)", marginTop: 14 }}>Pode levar de 15 a 20 segundos</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16 }}>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(212,175,55,0.6)" }}>
+                      {segundos}s
+                    </span>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.2)" }}>·</span>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.3)" }}>
+                      pode levar até 90 segundos
+                    </span>
+                  </div>
+                  <div style={{ width: 220, height: 2, background: "rgba(255,255,255,0.06)", borderRadius: 2, marginTop: 14, overflow: "hidden" }}>
+                    <div style={{ height: "100%", background: "linear-gradient(90deg,#E8C84A,#f4ead0)", borderRadius: 2, width: `${Math.min((segundos / 90) * 100, 95)}%`, transition: "width 1s linear" }} />
+                  </div>
                 </div>
               )}
 
