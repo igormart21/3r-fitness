@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== "POST") {
@@ -73,21 +73,21 @@ export default async function handler(req: Request): Promise<Response> {
     ].join(" ");
 
     console.log("[gerar-joia] Etapa 2: gerando pingente com DALL-E 3...");
-    const image = await openai.images.generate({
-      model: "dall-e-3",
+    const image = await (openai.images.generate as Function)({
+      model: "gpt-image-1-mini",
       prompt,
       size: "1024x1024",
-      quality: "standard",
-      response_format: "b64_json",
     });
 
-    const b64 = image.data[0]?.b64_json;
-    if (!b64) {
+    const item = (image as any).data?.[0];
+    const imageUrl = item?.url ?? (item?.b64_json ? `data:image/png;base64,${item.b64_json}` : null);
+
+    if (!imageUrl) {
       return Response.json({ error: "Sem imagem gerada." }, { status: 500 });
     }
 
     console.log("[gerar-joia] Pingente gerado com sucesso!");
-    return Response.json({ imageUrl: `data:image/png;base64,${b64}` });
+    return Response.json({ imageUrl });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : "Erro inesperado.";
     console.error("[gerar-joia] Erro:", msg);

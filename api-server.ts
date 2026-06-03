@@ -66,19 +66,19 @@ app.post("/api/gerar-joia", async (req, res) => {
     ].join(" ");
 
     console.log("[IA] Etapa 2: gerando pingente com DALL-E 3...");
-    const image = await openai.images.generate({
-      model: "dall-e-3",
+    const image = await (openai.images.generate as any)({
+      model: "gpt-image-1-mini",
       prompt,
       size: "1024x1024",
-      quality: "standard",
-      response_format: "b64_json",
     });
 
-    const b64 = image.data[0]?.b64_json;
-    if (!b64) return res.status(500).json({ error: "Sem imagem gerada." });
+    const item = (image as any).data?.[0];
+    const imageUrl = item?.url ?? (item?.b64_json ? `data:image/png;base64,${item.b64_json}` : null);
+
+    if (!imageUrl) return res.status(500).json({ error: "Sem imagem gerada." });
 
     console.log("[IA] Pingente gerado com sucesso!");
-    return res.json({ imageUrl: `data:image/png;base64,${b64}` });
+    return res.json({ imageUrl });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : "Erro inesperado.";
     console.error("[IA] Erro:", msg);
