@@ -62,14 +62,14 @@ export default async function handler(req: Request): Promise<Response> {
 
     console.log("[gerar-joia] Using images.edit with gpt-image-1 (image-to-image)...");
 
-    const response = await openai.images.edit({
+    const response = await (openai.images.edit as Function)({
       model: "gpt-image-1",
       image: file,
       prompt,
       size: "1024x1024",
-    } as Parameters<typeof openai.images.edit>[0]);
+    });
 
-    const item = response.data[0];
+    const item = (response as any).data?.[0];
     // gpt-image-1 retorna b64_json por padrão
     const imageUrl =
       (item as any)?.url ??
