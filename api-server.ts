@@ -24,27 +24,37 @@ app.post("/api/gerar-joia", async (req, res) => {
   try {
     // ── Etapa 1: GPT-4o Vision descreve a pose (~3s) ──
     console.log("[IA] Etapa 1: analisando foto com GPT-4o...");
-    const vision = await openai.chat.completions.create({
-      model: "gpt-4o",
-      max_tokens: 300,
-      messages: [
-        {
-          role: "user",
-          content: [
-            {
-              type: "image_url",
-              image_url: { url: imageBase64, detail: "low" },
-            },
-            {
-              type: "text",
-              text: "Describe this person in detail for a jewelry sculptor: exact body pose and limb angles, head orientation, hairstyle and hair length, clothing type and key details, overall body proportions. Be precise and concise, max 5 sentences.",
-            },
-          ],
-        },
-      ],
-    });
-
-    const description = vision.choices[0]?.message?.content ?? "a person standing upright";
+    let description = "an athlete in a dynamic sports pose, arms and legs in motion, athletic clothing";
+    try {
+      const vision = await openai.chat.completions.create({
+        model: "gpt-4o",
+        max_tokens: 300,
+        messages: [
+          {
+            role: "user",
+            content: [
+              {
+                type: "image_url",
+                image_url: { url: imageBase64, detail: "low" },
+              },
+              {
+                type: "text",
+                text: "You are a sculptor's assistant. Analyze this sports/fitness photo and describe ONLY: the exact body pose (limb angles, stance), head angle, hair length and style, and clothing silhouette. Do NOT identify or name the person. Focus purely on shapes and positions for sculpting reference. Be concise, max 4 sentences.",
+              },
+            ],
+          },
+        ],
+      });
+      const raw = vision.choices[0]?.message?.content ?? "";
+      // se GPT-4o recusar, usa descrição genérica
+      if (raw && !raw.toLowerCase().includes("sorry") && !raw.toLowerCase().includes("can't") && !raw.toLowerCase().includes("cannot")) {
+        description = raw;
+      } else {
+        console.warn("[IA] GPT-4o recusou descrever, usando descrição genérica");
+      }
+    } catch (visionErr) {
+      console.warn("[IA] GPT-4o Vision falhou, usando descrição genérica:", visionErr instanceof Error ? visionErr.message : visionErr);
+    }
     console.log("[IA] Descrição:", description);
 
     // ── Etapa 2: DALL-E 3 gera o pingente (~10s) ──
