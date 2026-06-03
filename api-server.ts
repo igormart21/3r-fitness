@@ -104,6 +104,7 @@ app.post("/api/gerar-joia", async (req, res) => {
       image: file,
       prompt,
       size: "1024x1024",
+      quality: "low",
     } as Parameters<typeof openai.images.edit>[0]);
 
     const item = response.data[0];

@@ -111,6 +111,7 @@ export default async function handler(req: Request): Promise<Response> {
       image: file,
       prompt,
       size: "1024x1024",
+      quality: "low",
     });
 
     const item = (response as any).data?.[0];
