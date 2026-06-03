@@ -249,7 +249,7 @@ export const PersonalizacaoTeaser = () => {
         </div>
 
         {/* Grid */}
-        <div className="pers-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 56, alignItems: "stretch" }}>
+        <div className="pers-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 56, alignItems: "start" }}>
           <style>{`@media(max-width:900px){.pers-grid{grid-template-columns:1fr!important;gap:40px!important;}}`}</style>
 
           {/* Lado Esquerdo - Instruções e Configurações */}
@@ -385,19 +385,17 @@ export const PersonalizacaoTeaser = () => {
           <div style={{ display: "flex", flexDirection: "column" }}>
             
             {/* Box Interativo Principal */}
-            <div style={{ 
-              flex: 1,
-              background: "rgba(15,12,10,0.7)", 
-              backdropFilter: "blur(12px)", 
-              border: "1px solid rgba(212,175,55,0.15)", 
-              borderRadius: 24, 
-              padding: "24px", 
+            <div style={{
+              background: "rgba(15,12,10,0.7)",
+              backdropFilter: "blur(12px)",
+              border: "1px solid rgba(212,175,55,0.15)",
+              borderRadius: 24,
+              padding: "28px 24px",
               boxShadow: "0 24px 64px rgba(0,0,0,0.6)",
               display: "flex",
               flexDirection: "column",
               gap: 20,
               minHeight: 460,
-              justifyContent: "center"
             }}>
               
               {/* ESTADO 1: Idle (Apenas Upload de Foto) */}
@@ -499,7 +497,7 @@ export const PersonalizacaoTeaser = () => {
 
               {/* ESTADO 3: Pronto (Exibição da Joia Gerada) */}
               {estado === "pronto" && resultado && (
-                <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 20 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                   
                   {/* Imagem da Joia */}
                   <div style={{
