@@ -27,38 +27,79 @@ export default async function handler(req: Request): Promise<Response> {
   }
 
   const isOuro = material !== "prata";
-  const materialName = isOuro ? "18k yellow gold" : "sterling silver 925";
-  const materialFinish = isOuro
-    ? "warm golden polished surface with rich reflections"
-    : "cool bright silver brushed matte surface";
 
   const openai = new OpenAI({ apiKey });
 
   try {
-    // ── Converter base64 data URI para File para o endpoint images.edit ──
     const base64Data = imageBase64.replace(/^data:image\/\w+;base64,/, "");
     const imageBuffer = Buffer.from(base64Data, "base64");
     const file = await toFile(imageBuffer, "reference.png", { type: "image/png" });
 
-    // ── Prompt que instrui o modelo a OLHAR a foto e criar o pingente ──
-    const prompt = [
-      `Study the person in this reference photo very carefully. Memorize their EXACT body pose, the angle of every limb, their clothing outline, any sports equipment, and their body proportions.`,
-      ``,
-      `Now create a COMPLETELY NEW product photo showing ONLY a single luxury rectangular pendant (3cm x 2cm metal tag shape) made of ${materialName}, with a ${materialFinish}.`,
-      ``,
-      `On the front polished face of this pendant, engrave a bold, crisp BLACK SILHOUETTE that PRECISELY reproduces the person's EXACT pose from the reference photo above.`,
-      `Every detail must match: same arm angles, same leg positions, same torso tilt, same head angle, same equipment position, same clothing outline. The silhouette must be instantly recognizable as the same pose.`,
-      ``,
-      `The engraving style: solid black filled silhouette, clean sharp edges, professional laser-cut quality on the polished metal surface. The silhouette should be large and centered, filling most of the pendant face.`,
-      ``,
-      `CRITICAL RULES:`,
-      `- Show ONLY the pendant itself, floating centered on a pure solid white background`,
-      `- ABSOLUTELY NO chain, no necklace, no neck, no human model, no hands, no display stand`,
-      `- NO text, NO logo, NO watermark, NO brand name on the pendant or anywhere`,
-      `- The pendant must look like a real physical luxury jewelry piece`,
-      ``,
-      `Professional macro jewelry product photography, soft diffused studio lighting from above-left, shallow depth of field, ultra-sharp photorealistic 8K detail.`,
-    ].join("\n");
+    const prompt = isOuro
+      ? [
+          `Analyze the uploaded image and extract the exact human silhouette, pose, facial orientation, hairstyle and clothing.`,
+          ``,
+          `Create a luxury 18K gold pendant from this uploaded photo.`,
+          ``,
+          `Preserve the exact pose, body posture, facial angle, hairstyle, clothing shape, and all recognizable details.`,
+          `Transform the subject into a handcrafted high-end jewelry pendant made of polished yellow gold.`,
+          ``,
+          `IMPORTANT: Do not change the pose. Do not change the body proportions. Do not change the facial structure. Do not create a new person.`,
+          ``,
+          `Features:`,
+          `- Solid 18K gold appearance`,
+          `- High-relief sculpted details`,
+          `- Fine engraving of facial features`,
+          `- Fine engraving of hair`,
+          `- Fine engraving of clothing folds`,
+          `- Realistic metallic reflections`,
+          `- Smooth polished finish`,
+          `- Luxury pendant bail integrated at the top`,
+          `- Museum-quality sculpture craftsmanship`,
+          ``,
+          `Photography:`,
+          `- Neutral beige-gray luxury studio background`,
+          `- Soft diffused studio lighting`,
+          `- Centered pendant, front view`,
+          `- Isolated pendant only, no hands, no neck, no display stand`,
+          `- Soft realistic shadow beneath pendant`,
+          `- Clean luxury catalog style`,
+          `- No text, no watermark, no additional objects`,
+          ``,
+          `Ultra realistic. Photorealistic. Luxury jewelry catalog. Macro shot. 8K render. Commercial product photography. Premium e-commerce catalog.`,
+        ].join("\n")
+      : [
+          `Analyze the uploaded image and extract the exact human silhouette, pose, facial orientation, hairstyle and clothing.`,
+          ``,
+          `Create a premium jewelry pendant from the uploaded photo.`,
+          ``,
+          `Preserve the person's exact pose, body position, facial orientation, hairstyle, clothing details, and proportions.`,
+          `Transform the subject into a highly detailed luxury silver pendant.`,
+          ``,
+          `IMPORTANT: Do not change the pose. Do not change the body proportions. Do not change the facial structure. Do not create a new person.`,
+          ``,
+          `Requirements:`,
+          `- Convert the entire person into a polished sterling silver sculpture`,
+          `- Preserve all recognizable features from the original photo`,
+          `- Realistic jewelry manufacturing appearance`,
+          `- High-relief metal engraving`,
+          `- Fine facial details`,
+          `- Sharp clothing folds`,
+          `- Detailed hair engraving`,
+          `- Smooth polished silver surface`,
+          `- Realistic reflections`,
+          `- Luxury handcrafted pendant design`,
+          `- Integrated pendant bail at the top`,
+          `- Centered composition`,
+          ``,
+          `Background:`,
+          `- Neutral light gray studio background`,
+          `- Soft shadow beneath pendant`,
+          `- Clean luxury catalog style`,
+          `- No text, no watermark, no additional objects`,
+          ``,
+          `Ultra realistic. Macro photography. 8K jewelry rendering. Commercial product photography. Premium e-commerce catalog. Photorealistic silver metal.`,
+        ].join("\n");
 
     console.log("[gerar-joia] Using images.edit with gpt-image-1 (image-to-image)...");
 
