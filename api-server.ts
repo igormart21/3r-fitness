@@ -106,13 +106,13 @@ Be extremely specific with angles and positions. This is for sculpting — preci
       `• NO text, NO watermark, NO logo`,
     ].join("\n");
 
-    console.log("[IA] Etapa 2: gerando pingente com gpt-image-1 images.edit...");
+    console.log("[IA] Etapa 2: gerando pingente com gpt-image-1 portrait 1024x1536...");
 
-    const response = await (openai.images.edit as Function)({
+    // portrait para dar mais espaço vertical ao pingente (bail no topo, pés na base)
+    const response = await (openai.images.generate as Function)({
       model: "gpt-image-1",
-      image: imageFile,
       prompt,
-      size: "1024x1024",
+      size: "1024x1536",
     });
 
     const item     = (response as any).data?.[0];

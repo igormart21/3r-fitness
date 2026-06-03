@@ -974,14 +974,13 @@ const PersonalizarIA = () => {
 
         {/* ── RESULTADO DA JOIA ── */}
         {estado === "pronto" && resultado && (
-          <div style={{ marginTop: 48, display: "grid", gridTemplateColumns: "1fr 380px", gap: 48, alignItems: "start" }}>
-            <style>{`@media(max-width:860px){ .result-grid{ grid-template-columns:1fr!important; gap:32px!important; } }`}</style>
+          <div style={{ marginTop: 48, display: "grid", gridTemplateColumns: "minmax(0,1fr) 360px", gap: 48, alignItems: "start" }}>
+            <style>{`@media(max-width:860px){ .result-layout{ grid-template-columns:1fr!important; gap:32px!important; } }`}</style>
 
-            {/* Imagem — coluna esquerda, tamanho máximo */}
+            {/* Imagem SOLTA — sem overflow, sem height, cresce livremente */}
             <img
               src={resultado}
               alt="Joia gerada por IA"
-              className="result-grid-img"
               style={{
                 display: "block",
                 width: "100%",
