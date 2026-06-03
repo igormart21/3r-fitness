@@ -1,5 +1,5 @@
 import express from "express";
-import OpenAI from "openai";
+import OpenAI, { toFile } from "openai";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -22,73 +22,50 @@ app.post("/api/gerar-joia", async (req, res) => {
   const openai = new OpenAI({ apiKey });
 
   try {
-    // ── Etapa 1: GPT-4o Vision descreve a pose (~3s) ──
-    console.log("[IA] Etapa 1: analisando foto com GPT-4o...");
-    let description = "an athlete in a dynamic sports pose, arms and legs in motion, athletic clothing";
-    try {
-      const vision = await openai.chat.completions.create({
-        model: "gpt-4o",
-        max_tokens: 300,
-        messages: [
-          {
-            role: "user",
-            content: [
-              {
-                type: "image_url",
-                image_url: { url: imageBase64, detail: "low" },
-              },
-              {
-                type: "text",
-                text: "You are a sculptor's assistant. Analyze this sports/fitness photo and describe ONLY: the exact body pose (limb angles, stance), head angle, hair length and style, and clothing silhouette. Do NOT identify or name the person. Focus purely on shapes and positions for sculpting reference. Be concise, max 4 sentences.",
-              },
-            ],
-          },
-        ],
-      });
-      const raw = vision.choices[0]?.message?.content ?? "";
-      // se GPT-4o recusar, usa descrição genérica
-      if (raw && !raw.toLowerCase().includes("sorry") && !raw.toLowerCase().includes("can't") && !raw.toLowerCase().includes("cannot")) {
-        description = raw;
-      } else {
-        console.warn("[IA] GPT-4o recusou descrever, usando descrição genérica");
-      }
-    } catch (visionErr) {
-      console.warn("[IA] GPT-4o Vision falhou, usando descrição genérica:", visionErr instanceof Error ? visionErr.message : visionErr);
-    }
-    console.log("[IA] Descrição:", description);
+    // Detecta o tipo MIME real da imagem
+    const mimeMatch = imageBase64.match(/^data:(image\/[\w+]+);base64,/);
+    const mimeType  = (mimeMatch?.[1] ?? "image/jpeg") as "image/jpeg" | "image/png" | "image/webp";
+    const ext       = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
+    const base64Data = imageBase64.replace(/^data:image\/[\w+]+;base64,/, "");
+    const imageBuffer = Buffer.from(base64Data, "base64");
+    const imageFile   = await toFile(imageBuffer, `photo.${ext}`, { type: mimeType });
 
-    // ── Etapa 2: DALL-E 3 gera o pingente (~10s) ──
     const metalDesc = isOuro
-      ? "solid 18K polished yellow gold, warm golden color with rich metallic reflections"
-      : "solid sterling silver 925, bright cool silver color with polished metallic surface";
+      ? "solid 18K polished yellow gold with warm golden reflections"
+      : "solid sterling silver 925 with bright cool metallic surface";
 
     const bgDesc = isOuro
       ? "neutral beige-gray luxury studio background"
-      : "neutral light gray studio background";
+      : "neutral light gray luxury studio background";
 
     const prompt = [
-      `A single luxury jewelry pendant made of ${metalDesc}.`,
-      `The pendant is a high-relief 3D sculpture depicting: ${description}`,
-      `Sculpting style: fine engraving of facial features, detailed hair, clothing folds, realistic body proportions preserved exactly.`,
-      `The pendant has an integrated bail loop at the top. Centered on a ${bgDesc}.`,
-      `Soft diffused studio lighting, soft shadow beneath, isolated pendant only — no hands, no chain, no neck, no stand.`,
-      `Ultra realistic macro jewelry photography, 8K detail, premium e-commerce catalog style. No text, no watermark.`,
+      `Transform the person in this photo into a single luxury jewelry pendant made of ${metalDesc}.`,
+      `CRITICAL: preserve the EXACT same body pose, limb angles, head position, hairstyle, and clothing silhouette from the photo — do not change anything about the posture or proportions.`,
+      `Convert the entire figure into a high-relief 3D metal sculpture engraved on the pendant face.`,
+      `Sculpting details: fine facial engraving, detailed hair texture, sharp clothing folds, precise body proportions matching the original photo exactly.`,
+      `The pendant has an integrated bail loop at the top for a necklace chain.`,
+      `Centered on a ${bgDesc}. Soft diffused studio lighting, soft shadow beneath.`,
+      `Isolated pendant only — no hands, no chain visible, no neck, no display stand.`,
+      `Ultra realistic macro jewelry photography, 8K detail, premium e-commerce catalog. No text, no watermark.`,
     ].join(" ");
 
-    console.log("[IA] Etapa 2: gerando pingente com DALL-E 3...");
-    const image = await (openai.images.generate as any)({
+    console.log("[IA] Gerando pingente com gpt-image-1-mini images.edit...");
+
+    const response = await (openai.images.edit as Function)({
       model: "gpt-image-1-mini",
+      image: imageFile,
       prompt,
       size: "1024x1024",
     });
 
-    const item = (image as any).data?.[0];
+    const item = (response as any).data?.[0];
     const imageUrl = item?.url ?? (item?.b64_json ? `data:image/png;base64,${item.b64_json}` : null);
 
     if (!imageUrl) return res.status(500).json({ error: "Sem imagem gerada." });
 
     console.log("[IA] Pingente gerado com sucesso!");
     return res.json({ imageUrl });
+
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : "Erro inesperado.";
     console.error("[IA] Erro:", msg);
