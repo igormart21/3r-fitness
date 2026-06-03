@@ -976,20 +976,27 @@ const PersonalizarIA = () => {
         {estado === "pronto" && resultado && (
           <div style={{ marginTop: 48, display: "flex", flexDirection: "column", alignItems: "center", gap: 24 }}>
 
-            {/* Imagem grande sem restrição */}
-            <div style={{ width: "100%", maxWidth: 600 }}>
+            {/* Imagem — altura fixa + objectFit contain = pingente SEMPRE completo */}
+            <div style={{
+              width: "100%",
+              maxWidth: 520,
+              height: 480,
+              borderRadius: 16,
+              overflow: "hidden",
+              background: "#f0f0f0",
+              border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)",
+              boxShadow: material === "ouro"
+                ? "0 24px 64px rgba(232,200,74,0.15), 0 8px 24px rgba(0,0,0,0.5)"
+                : "0 24px 64px rgba(255,255,255,0.08), 0 8px 24px rgba(0,0,0,0.5)",
+            }}>
               <img
                 src={resultado}
                 alt="Joia gerada por IA"
                 style={{
                   width: "100%",
-                  height: "auto",
+                  height: "100%",
+                  objectFit: "contain",
                   display: "block",
-                  borderRadius: 16,
-                  border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)",
-                  boxShadow: material === "ouro"
-                    ? "0 24px 64px rgba(232,200,74,0.15), 0 8px 24px rgba(0,0,0,0.5)"
-                    : "0 24px 64px rgba(255,255,255,0.08), 0 8px 24px rgba(0,0,0,0.5)",
                 }}
               />
             </div>
