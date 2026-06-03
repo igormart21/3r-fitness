@@ -87,6 +87,7 @@ interface CartStore {
   isLoading: boolean;
   isSyncing: boolean;
   addItem: (item: Omit<CartItem, 'lineId'>) => Promise<void>;
+  patchItem: (variantId: string, patch: Partial<Omit<CartItem, 'lineId' | 'variantId'>>) => void;
   updateQuantity: (variantId: string, quantity: number) => Promise<void>;
   removeItem: (variantId: string) => Promise<void>;
   clearCart: () => void;
@@ -184,6 +185,11 @@ export const useCartStore = create<CartStore>()(
         } finally {
           set({ isLoading: false });
         }
+      },
+
+      patchItem: (variantId, patch) => {
+        const currentItems = get().items;
+        set({ items: currentItems.map(i => i.variantId === variantId ? { ...i, ...patch } : i) });
       },
 
       clearCart: () => set({ items: [], cartId: null, checkoutUrl: null }),

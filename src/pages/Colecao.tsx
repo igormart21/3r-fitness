@@ -454,7 +454,7 @@ const ColecaoCard = ({ col, onClick }: { col: ColItem; onClick: () => void }) =>
 };
 
 // ── Seção IA (Pingente Personalizado) ──────────────────────────────────────────
-const PRECO_OURO  = 1297;
+const PRECO_OURO  = 1497; // preço real no Shopify (variante HALTER Ouro 18k)
 const PRECO_PRATA = 347;
 
 // GIDs das variantes do produto "Pingente Personalizado" no Shopify.
@@ -465,7 +465,7 @@ const VARIANT_ID_PRATA_PERS = "gid://shopify/ProductVariant/48912055501027"; // 
 const getPersonalizadoProductMock = (material: "ouro" | "prata", imageUrl: string): ShopifyProduct => {
   const isOuro = material === "ouro";
   const variantId = isOuro ? VARIANT_ID_OURO_PERS : VARIANT_ID_PRATA_PERS;
-  const priceAmount = isOuro ? "1297.00" : "347.00";
+  const priceAmount = isOuro ? "1497.00" : "347.00";
   
   return {
     node: {
@@ -540,6 +540,7 @@ const MENSAGENS_PROGRESSO = [
 const PersonalizarIA = () => {
   const inputRef      = useRef<HTMLInputElement>(null);
   const addItem       = useCartStore(s => s.addItem);
+  const patchItem     = useCartStore(s => s.patchItem);
   const openCart      = useCartUIStore(s => s.openCart);
 
   const [foto, setFoto]               = useState<string | null>(null);
@@ -605,28 +606,29 @@ const PersonalizarIA = () => {
   const handleAddCart = async () => {
     if (!resultado) return;
     setAdicionando(true);
+    const isOuro    = material === "ouro";
+    const variantId = isOuro ? VARIANT_ID_OURO_PERS : VARIANT_ID_PRATA_PERS;
+    const priceAmt  = isOuro ? "1497.00" : "347.00";
+    const mockProduct = getPersonalizadoProductMock(material, resultado);
+    const thumb     = { url: resultado, altText: "Pingente Personalizado" };
     try {
-      const mockProduct = getPersonalizadoProductMock(material, resultado);
-      const isOuro = material === "ouro";
-      const variantId = isOuro ? VARIANT_ID_OURO_PERS : VARIANT_ID_PRATA_PERS;
-      const priceAmount = isOuro ? "1297.00" : "347.00";
-
       await addItem({
         product: mockProduct,
         variantId,
         variantTitle: isOuro ? "Ouro 18k" : "Prata 925",
-        price: { amount: priceAmount, currencyCode: "BRL" },
+        price: { amount: priceAmt, currencyCode: "BRL" },
         quantity: 1,
         selectedOptions: [{ name: "Material", value: isOuro ? "Ouro 18k" : "Prata 925" }],
-        thumbnailImage: { url: resultado, altText: "Pingente Personalizado" }
+        thumbnailImage: thumb,
       });
+      // força a imagem gerada no carrinho (Shopify sobrescreve com a do produto)
+      patchItem(variantId, { thumbnailImage: thumb, product: mockProduct, price: { amount: priceAmt, currencyCode: "BRL" } });
       setAdicionado(true);
-      setTimeout(() => {
-        setAdicionado(false);
-        openCart();
-      }, 900);
+      setTimeout(() => { setAdicionado(false); openCart(); }, 900);
     } catch (err) {
-      console.error("[Shopify] Erro ao adicionar ao carrinho:", err);
+      console.error("[Shopify] Erro ao adicionar:", err);
+      setErroMsg("Erro ao adicionar ao carrinho. Tente novamente.");
+      setEstado("erro");
     } finally {
       setAdicionando(false);
     }
@@ -636,17 +638,19 @@ const PersonalizarIA = () => {
     if (!resultado) return;
     setComprando(true);
     try {
-      const isOuro = material === "ouro";
+      const isOuro    = material === "ouro";
       const variantId = isOuro ? VARIANT_ID_OURO_PERS : VARIANT_ID_PRATA_PERS;
-      
       const r = await createShopifyCart({ variantId, quantity: 1 });
       if (r?.checkoutUrl) {
         window.location.href = r.checkoutUrl;
       } else {
-        throw new Error("Não foi possível gerar a URL de checkout do Shopify.");
+        setErroMsg("Erro ao iniciar o checkout. Tente adicionar ao carrinho.");
+        setEstado("erro");
       }
     } catch (err) {
-      console.error("[Shopify] Erro no checkout direto:", err);
+      console.error("[Shopify] Erro no checkout:", err);
+      setErroMsg("Erro ao conectar com o Shopify. Verifique sua conexão.");
+      setEstado("erro");
     } finally {
       setComprando(false);
     }

@@ -4,7 +4,7 @@ import { useCartUIStore } from "@/stores/cartUIStore";
 import { createShopifyCart, ShopifyProduct } from "@/lib/shopify";
 import { Loader2, ShoppingBag, Zap } from "lucide-react";
 
-const PRECO_OURO  = 1297;
+const PRECO_OURO  = 1497;
 const PRECO_PRATA = 347;
 
 const MSGS_GERANDO = [
@@ -22,7 +22,7 @@ const VARIANT_ID_PRATA_PERS = "gid://shopify/ProductVariant/48912055501027";
 const getPersonalizadoProductMock = (material: "ouro" | "prata", imageUrl: string): ShopifyProduct => {
   const isOuro = material === "ouro";
   const variantId = isOuro ? VARIANT_ID_OURO_PERS : VARIANT_ID_PRATA_PERS;
-  const priceAmount = isOuro ? "1297.00" : "347.00";
+  const priceAmount = isOuro ? "1497.00" : "347.00";
   
   return {
     node: {
@@ -96,6 +96,7 @@ type Estado = "idle" | "gerando" | "pronto" | "erro";
 export const PersonalizacaoTeaser = () => {
   const inputRef      = useRef<HTMLInputElement>(null);
   const addItem       = useCartStore(s => s.addItem);
+  const patchItem     = useCartStore(s => s.patchItem);
   const openCart      = useCartUIStore(s => s.openCart);
 
   const [foto, setFoto]               = useState<string | null>(null);
@@ -172,28 +173,28 @@ export const PersonalizacaoTeaser = () => {
   const handleAddCart = async () => {
     if (!resultado) return;
     setAdicionando(true);
+    const isOuro    = material === "ouro";
+    const variantId = isOuro ? VARIANT_ID_OURO_PERS : VARIANT_ID_PRATA_PERS;
+    const priceAmt  = isOuro ? "1497.00" : "347.00";
+    const mockProduct = getPersonalizadoProductMock(material, resultado);
+    const thumb     = { url: resultado, altText: "Pingente Personalizado" };
     try {
-      const mockProduct = getPersonalizadoProductMock(material, resultado);
-      const isOuro = material === "ouro";
-      const variantId = isOuro ? VARIANT_ID_OURO_PERS : VARIANT_ID_PRATA_PERS;
-      const priceAmount = isOuro ? "1297.00" : "347.00";
-
       await addItem({
         product: mockProduct,
         variantId,
         variantTitle: isOuro ? "Ouro 18k" : "Prata 925",
-        price: { amount: priceAmount, currencyCode: "BRL" },
+        price: { amount: priceAmt, currencyCode: "BRL" },
         quantity: 1,
         selectedOptions: [{ name: "Material", value: isOuro ? "Ouro 18k" : "Prata 925" }],
-        thumbnailImage: { url: resultado, altText: "Pingente Personalizado" }
+        thumbnailImage: thumb,
       });
+      patchItem(variantId, { thumbnailImage: thumb, product: mockProduct, price: { amount: priceAmt, currencyCode: "BRL" } });
       setAdicionado(true);
-      setTimeout(() => {
-        setAdicionado(false);
-        openCart();
-      }, 900);
+      setTimeout(() => { setAdicionado(false); openCart(); }, 900);
     } catch (err) {
-      console.error("[Shopify] Erro ao adicionar ao carrinho:", err);
+      console.error("[Shopify] Erro ao adicionar:", err);
+      setErro("Erro ao adicionar ao carrinho. Tente novamente.");
+      setEstado("erro");
     } finally {
       setAdicionando(false);
     }
@@ -203,17 +204,19 @@ export const PersonalizacaoTeaser = () => {
     if (!resultado) return;
     setComprando(true);
     try {
-      const isOuro = material === "ouro";
+      const isOuro    = material === "ouro";
       const variantId = isOuro ? VARIANT_ID_OURO_PERS : VARIANT_ID_PRATA_PERS;
-      
       const r = await createShopifyCart({ variantId, quantity: 1 });
       if (r?.checkoutUrl) {
         window.location.href = r.checkoutUrl;
       } else {
-        throw new Error("Não foi possível gerar a URL de checkout do Shopify.");
+        setErro("Erro ao iniciar checkout. Tente adicionar ao carrinho.");
+        setEstado("erro");
       }
     } catch (err) {
-      console.error("[Shopify] Erro no checkout direto:", err);
+      console.error("[Shopify] Erro no checkout:", err);
+      setErro("Erro ao conectar com o Shopify.");
+      setEstado("erro");
     } finally {
       setComprando(false);
     }
