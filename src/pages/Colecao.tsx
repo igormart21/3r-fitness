@@ -657,7 +657,7 @@ const PersonalizarIA = () => {
   };
 
   return (
-    <section style={{ background: "radial-gradient(circle at top, #14110E 0%, #080605 100%)", padding: "100px 0", borderTop: "1px solid rgba(212,175,55,0.08)", overflow: "hidden" }}>
+    <section style={{ background: "radial-gradient(circle at top, #14110E 0%, #080605 100%)", padding: "100px 0", borderTop: "1px solid rgba(212,175,55,0.08)", overflowX: "hidden" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
         
         {/* Cabeçalho */}
@@ -676,7 +676,7 @@ const PersonalizarIA = () => {
           </p>
         </div>
 
-        <div className="col-pers-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 56, alignItems: "start" }}>
+        <div className="col-pers-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 56, alignItems: "center" }}>
           <style>{`
             @media(max-width:900px){
               .col-pers-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
@@ -831,7 +831,7 @@ const PersonalizarIA = () => {
               display: "flex",
               flexDirection: "column",
               gap: 20,
-              minHeight: 460,
+              minHeight: 500,
             }}>
               
               {/* ESTADO 1: Idle (Apenas Upload de Foto) */}
@@ -932,18 +932,26 @@ const PersonalizarIA = () => {
                   <div style={{
                     borderRadius: 18,
                     border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)",
-                    background: "#fff",
+                    background: "#f8f8f8",
                     boxShadow: material === "ouro"
                       ? "0 16px 48px rgba(232,200,74,0.12), 0 4px 16px rgba(0,0,0,0.4)"
                       : "0 16px 48px rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.4)",
                     margin: "0 auto",
                     width: "100%",
                     lineHeight: 0,
+                    overflow: "visible",
                   }}>
                     <img
                       src={resultado}
                       alt="Joia gerada por IA"
-                      style={{ width: "100%", height: "auto", display: "block", borderRadius: 16 }}
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        display: "block",
+                        borderRadius: 16,
+                        maxHeight: "600px",
+                        objectFit: "contain",
+                      }}
                     />
                   </div>
 

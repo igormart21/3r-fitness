@@ -223,7 +223,7 @@ export const PersonalizacaoTeaser = () => {
   };
 
   return (
-    <section id="personalizar" style={{ background: "radial-gradient(circle at top, #1A1512 0%, #0A0807 100%)", padding: "100px 0", position: "relative", overflow: "hidden", borderTop: "1px solid rgba(212,175,55,0.08)" }}>
+    <section id="personalizar" style={{ background: "radial-gradient(circle at top, #1A1512 0%, #0A0807 100%)", padding: "100px 0", position: "relative", overflowX: "hidden", borderTop: "1px solid rgba(212,175,55,0.08)" }}>
       {/* Glow orbs */}
       <div style={{ position: "absolute", top: "-10%", right: "-5%", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,162,32,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: "-15%", left: "-8%", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,162,32,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
@@ -249,7 +249,7 @@ export const PersonalizacaoTeaser = () => {
         </div>
 
         {/* Grid */}
-        <div className="pers-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 56, alignItems: "start" }}>
+        <div className="pers-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 56, alignItems: "center" }}>
           <style>{`@media(max-width:900px){.pers-grid{grid-template-columns:1fr!important;gap:40px!important;}}`}</style>
 
           {/* Lado Esquerdo - Instruções e Configurações */}
@@ -395,7 +395,7 @@ export const PersonalizacaoTeaser = () => {
               display: "flex",
               flexDirection: "column",
               gap: 20,
-              minHeight: 460,
+              minHeight: 500,
             }}>
               
               {/* ESTADO 1: Idle (Apenas Upload de Foto) */}
@@ -503,18 +503,26 @@ export const PersonalizacaoTeaser = () => {
                   <div style={{
                     borderRadius: 18,
                     border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)",
-                    background: "#fff",
+                    background: "#f8f8f8",
                     boxShadow: material === "ouro"
                       ? "0 16px 48px rgba(232,200,74,0.12), 0 4px 16px rgba(0,0,0,0.4)"
                       : "0 16px 48px rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.4)",
                     margin: "0 auto",
                     width: "100%",
                     lineHeight: 0,
+                    overflow: "visible",
                   }}>
                     <img
                       src={resultado}
                       alt="Joia gerada por IA"
-                      style={{ width: "100%", height: "auto", display: "block", borderRadius: 16 }}
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        display: "block",
+                        borderRadius: 16,
+                        maxHeight: "600px",
+                        objectFit: "contain",
+                      }}
                     />
                   </div>
 
