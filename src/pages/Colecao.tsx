@@ -657,7 +657,9 @@ const PersonalizarIA = () => {
   };
 
   return (
-    <section style={{ background: "radial-gradient(circle at top, #14110E 0%, #080605 100%)", padding: "100px 0", borderTop: "1px solid rgba(212,175,55,0.08)", overflowX: "hidden" }}>
+    <section style={{ background: "radial-gradient(circle at top, #14110E 0%, #080605 100%)", padding: "100px 0", borderTop: "1px solid rgba(212,175,55,0.08)" }}>
+      {/* wrapper para clipar os glows horizontais sem afetar o conteúdo */}
+      <div style={{ overflow: "hidden", position: "relative" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
         
         {/* Cabeçalho */}
@@ -676,7 +678,7 @@ const PersonalizarIA = () => {
           </p>
         </div>
 
-        <div className="col-pers-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 56, alignItems: "center" }}>
+        <div className="col-pers-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 56, alignItems: "start" }}>
           <style>{`
             @media(max-width:900px){
               .col-pers-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
@@ -831,7 +833,8 @@ const PersonalizarIA = () => {
               display: "flex",
               flexDirection: "column",
               gap: 20,
-              minHeight: 500,
+              minHeight: estado === "pronto" ? "unset" : 520,
+              justifyContent: estado === "pronto" ? "flex-start" : "center",
             }}>
               
               {/* ESTADO 1: Idle (Apenas Upload de Foto) */}
@@ -944,14 +947,7 @@ const PersonalizarIA = () => {
                     <img
                       src={resultado}
                       alt="Joia gerada por IA"
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        display: "block",
-                        borderRadius: 16,
-                        maxHeight: "600px",
-                        objectFit: "contain",
-                      }}
+                      style={{ width: "100%", height: "auto", display: "block", borderRadius: 16 }}
                     />
                   </div>
 
@@ -1122,6 +1118,7 @@ const PersonalizarIA = () => {
         </div>
 
       </div>
+      </div>{/* fim wrapper glow */}
     </section>
   );
 };

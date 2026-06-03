@@ -223,7 +223,7 @@ export const PersonalizacaoTeaser = () => {
   };
 
   return (
-    <section id="personalizar" style={{ background: "radial-gradient(circle at top, #1A1512 0%, #0A0807 100%)", padding: "100px 0", position: "relative", overflowX: "hidden", borderTop: "1px solid rgba(212,175,55,0.08)" }}>
+    <section id="personalizar" style={{ background: "radial-gradient(circle at top, #1A1512 0%, #0A0807 100%)", padding: "100px 0", position: "relative", borderTop: "1px solid rgba(212,175,55,0.08)" }}>
       {/* Glow orbs */}
       <div style={{ position: "absolute", top: "-10%", right: "-5%", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,162,32,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: "-15%", left: "-8%", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,162,32,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
@@ -249,7 +249,7 @@ export const PersonalizacaoTeaser = () => {
         </div>
 
         {/* Grid */}
-        <div className="pers-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 56, alignItems: "center" }}>
+        <div className="pers-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 56, alignItems: "start" }}>
           <style>{`@media(max-width:900px){.pers-grid{grid-template-columns:1fr!important;gap:40px!important;}}`}</style>
 
           {/* Lado Esquerdo - Instruções e Configurações */}
@@ -395,7 +395,8 @@ export const PersonalizacaoTeaser = () => {
               display: "flex",
               flexDirection: "column",
               gap: 20,
-              minHeight: 500,
+              minHeight: estado === "pronto" ? "unset" : 520,
+              justifyContent: estado === "pronto" ? "flex-start" : "center",
             }}>
               
               {/* ESTADO 1: Idle (Apenas Upload de Foto) */}
@@ -515,14 +516,7 @@ export const PersonalizacaoTeaser = () => {
                     <img
                       src={resultado}
                       alt="Joia gerada por IA"
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        display: "block",
-                        borderRadius: 16,
-                        maxHeight: "600px",
-                        objectFit: "contain",
-                      }}
+                      style={{ width: "100%", height: "auto", display: "block", borderRadius: 16 }}
                     />
                   </div>
 
