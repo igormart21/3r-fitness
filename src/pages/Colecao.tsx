@@ -825,13 +825,12 @@ const PersonalizarIA = () => {
               backdropFilter: "blur(12px)",
               border: "1px solid rgba(212,175,55,0.15)",
               borderRadius: 24,
-              padding: "28px 24px",
+              padding: estado === "pronto" ? "24px" : "28px 24px",
               boxShadow: "0 24px 64px rgba(0,0,0,0.6)",
               display: "flex",
               flexDirection: "column",
               gap: 20,
-              minHeight: 520,
-              justifyContent: "center",
+              ...(estado !== "pronto" && { minHeight: 520, justifyContent: "center" }),
             }}>
               
               {/* ESTADO 1: Idle (Apenas Upload de Foto) */}
