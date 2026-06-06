@@ -619,8 +619,18 @@ export const ProductShowcase = () => {
 
                 {/* Description */}
                 {node.description && (
-                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 300, color: "#6B5E52", lineHeight: 1.75, marginBottom: 24 }}>{node.description}</p>
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 300, color: "#6B5E52", lineHeight: 1.75, marginBottom: 16 }}>{node.description}</p>
                 )}
+
+                {/* Tamanho do pingente */}
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 8, alignSelf: "flex-start", background: "rgba(201,162,32,0.08)", border: "1px solid rgba(201,162,32,0.30)", borderRadius: 8, padding: "8px 14px", marginBottom: 24 }}>
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#C9A220" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 3 3 21" /><path d="M3 8V3h5" /><path d="M21 16v5h-5" />
+                  </svg>
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: "0.02em", color: "#9a7c16" }}>
+                    Tamanho do pingente: 2,5 cm
+                  </span>
+                </div>
 
                 <div style={{ marginTop: "auto" }}>
                   {/* Variant selector */}

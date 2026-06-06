@@ -1655,9 +1655,17 @@ const Colecao = () => {
               <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#666", marginBottom: 14 }}>
                 {selectedProduct.tipo} • {selectedProduct.material} • {selectedProduct.categoria}
               </div>
-              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 1.7, color: "#4e4e4e", marginBottom: 18 }}>
+              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 1.7, color: "#4e4e4e", marginBottom: 14 }}>
                 Joia exclusiva da linha {selectedProduct.nome.split(" ")[0]}, criada para representar sua trajetória no {selectedProduct.categoria.toLowerCase()} com acabamento premium e design autoral.
               </p>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, alignSelf: "flex-start", background: "#f6f1e3", border: "1px solid #e6d9b0", borderRadius: 8, padding: "8px 14px", marginBottom: 18 }}>
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#9a7c16" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 3 3 21" /><path d="M3 8V3h5" /><path d="M21 16v5h-5" />
+                </svg>
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: "0.02em", color: "#7a6310" }}>
+                  Tamanho do pingente: 2,5 cm
+                </span>
+              </div>
               <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 34, fontWeight: 700, color: "#111", marginBottom: 2 }}>
                 {fmtBRL(String(selectedProduct.preco))}
               </div>
