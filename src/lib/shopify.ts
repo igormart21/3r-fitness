@@ -1,4 +1,5 @@
 import { toast } from "sonner";
+import aeronJoia from "@/assets/aeron-joia.jpeg";
 
 export const SHOPIFY_API_VERSION = '2026-04';
 export const SHOPIFY_STORE_PERMANENT_DOMAIN = 'store-store-builder-joaax.myshopify.com';
@@ -204,6 +205,253 @@ export const CART_LINES_REMOVE_MUTATION = `
   }
 `;
 
+// Tabela de preços sobressalentes para contornar limitações da API do Shopify
+const PRECOS_OVERRIDE: Record<string, { basePrice: string; variantPrices?: Record<string, string> }> = {
+  halter: {
+    basePrice: "3487.00",
+    variantPrices: {
+      "ouro": "3487.00",
+      "prata": "2510.64"
+    }
+  },
+  "velox-royale": {
+    basePrice: "3487.00",
+    variantPrices: {
+      "ouro": "3487.00",
+      "prata": "2510.64"
+    }
+  },
+  aeron: {
+    basePrice: "3387.00",
+    variantPrices: {
+      "prata": "3387.00",
+      "ouro": "4704.17"
+    }
+  },
+  "trion-elite": {
+    basePrice: "4387.00",
+    variantPrices: {
+      "ouro": "4387.00",
+      "prata": "3158.64"
+    }
+  },
+  velarion: {
+    basePrice: "4297.00",
+    variantPrices: {
+      "ouro": "4297.00",
+      "prata": "3093.84"
+    }
+  },
+  imperium: {
+    basePrice: "2987.00",
+    variantPrices: {
+      "ouro": "2987.00",
+      "prata": "297.00"
+    }
+  },
+  "imperium-ouro": {
+    basePrice: "2987.00",
+    variantPrices: {
+      "ouro": "2987.00"
+    }
+  },
+  "imperium-prata": {
+    basePrice: "297.00",
+    variantPrices: {
+      "prata": "297.00"
+    }
+  },
+  strata: {
+    basePrice: "549.90",
+    variantPrices: {
+      "ouro": "549.90",
+      "prata": "297.00"
+    }
+  },
+  dominus: {
+    basePrice: "3997.00",
+    variantPrices: {
+      "clássico ouro": "2487.00",
+      "classico ouro": "2487.00",
+      "clássico prata": "297.00",
+      "classico prata": "297.00",
+      "ouro": "3997.00",
+      "prata": "327.00"
+    }
+  },
+  monarch: {
+    basePrice: "3997.00",
+    variantPrices: {
+      "underground ouro": "2987.00",
+      "underground prata": "327.00",
+      "ouro": "3997.00",
+      "prata": "327.00"
+    }
+  },
+  valenza: {
+    basePrice: "3997.00",
+    variantPrices: {
+      "clássico ouro": "2357.00",
+      "classico ouro": "2357.00",
+      "clássico prata": "297.00",
+      "classico prata": "297.00",
+      "underground ouro": "2787.00",
+      "underground prata": "327.00",
+      "ouro": "3997.00",
+      "prata": "327.00"
+    }
+  },
+  "imperium-crossfit": {
+    basePrice: "3200.00",
+    variantPrices: {
+      "ouro": "3200.00",
+      "prata": "297.00"
+    }
+  },
+  "corrida-atleta": {
+    basePrice: "3597.00",
+    variantPrices: {
+      "ouro": "3597.00",
+      "prata": "297.00"
+    }
+  },
+  "corrida-elite": {
+    basePrice: "3597.00",
+    variantPrices: {
+      "ouro": "3597.00"
+    }
+  },
+  "halter-elite": {
+    basePrice: "3487.00",
+    variantPrices: {
+      "ouro": "3487.00"
+    }
+  }
+};
+
+const IMAGENS_OVERRIDE: Record<string, { productFeatured?: string; variants?: Record<string, string> }> = {
+  aeron: {
+    variants: {
+      "ouro": aeronJoia
+    }
+  }
+};
+
+export function overridePrices(obj: any): any {
+  if (!obj || typeof obj !== 'object') return obj;
+
+  // Se o objeto for um produto
+  if (obj.handle && PRECOS_OVERRIDE[obj.handle]) {
+    const override = PRECOS_OVERRIDE[obj.handle];
+    if (obj.priceRange && obj.priceRange.minVariantPrice) {
+      obj.priceRange.minVariantPrice.amount = override.basePrice;
+    }
+    if (obj.variants && Array.isArray(obj.variants.edges)) {
+      obj.variants.edges.forEach((edge: any) => {
+        if (edge.node) {
+          const v = edge.node;
+          const titleLower = (v.title || "").toLowerCase();
+          let priceSet = false;
+          if (override.variantPrices) {
+            for (const [key, val] of Object.entries(override.variantPrices)) {
+              if (titleLower.includes(key)) {
+                v.price = { ...v.price, amount: val };
+                priceSet = true;
+                break;
+              }
+            }
+          }
+          if (!priceSet && v.price) {
+            v.price.amount = override.basePrice;
+          }
+        }
+      });
+    }
+  }
+
+  // Sobrescrever imagens do produto e variante no Shopify
+  if (obj.handle && IMAGENS_OVERRIDE[obj.handle]) {
+    const imgOverride = IMAGENS_OVERRIDE[obj.handle];
+    if (obj.variants && Array.isArray(obj.variants.edges)) {
+      obj.variants.edges.forEach((edge: any) => {
+        if (edge.node) {
+          const v = edge.node;
+          const titleLower = (v.title || "").toLowerCase();
+          if (imgOverride.variants) {
+            for (const [key, val] of Object.entries(imgOverride.variants)) {
+              if (titleLower.includes(key)) {
+                v.image = { url: val, altText: v.title };
+                break;
+              }
+            }
+          }
+        }
+      });
+    }
+    if (obj.variants && Array.isArray(obj.variants.edges) && obj.variants.edges[0]?.node) {
+      const firstVariant = obj.variants.edges[0].node;
+      const titleLower = (firstVariant.title || "").toLowerCase();
+      if (imgOverride.variants) {
+        for (const [key, val] of Object.entries(imgOverride.variants)) {
+          if (titleLower.includes(key)) {
+            if (obj.featuredImage) {
+              obj.featuredImage.url = val;
+            }
+            if (obj.images && Array.isArray(obj.images.edges) && obj.images.edges[0]?.node) {
+              obj.images.edges[0].node.url = val;
+            }
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  // Se for uma variante contida em merchandise (como no carrinho)
+  if (obj.merchandise && obj.merchandise.product) {
+    const product = obj.merchandise.product;
+    if (product.handle && PRECOS_OVERRIDE[product.handle]) {
+      const override = PRECOS_OVERRIDE[product.handle];
+      const titleLower = (obj.merchandise.title || "").toLowerCase();
+      let priceSet = false;
+      if (override.variantPrices) {
+        for (const [key, val] of Object.entries(override.variantPrices)) {
+          if (titleLower.includes(key)) {
+            obj.merchandise.price = { ...obj.merchandise.price, amount: val };
+            priceSet = true;
+            break;
+          }
+        }
+      }
+      if (!priceSet && obj.merchandise.price) {
+        obj.merchandise.price.amount = override.basePrice;
+      }
+    }
+
+    if (product.handle && IMAGENS_OVERRIDE[product.handle]) {
+      const imgOverride = IMAGENS_OVERRIDE[product.handle];
+      const titleLower = (obj.merchandise.title || "").toLowerCase();
+      if (imgOverride.variants) {
+        for (const [key, val] of Object.entries(imgOverride.variants)) {
+          if (titleLower.includes(key)) {
+            obj.merchandise.image = { url: val, altText: obj.merchandise.title };
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  // Percorre recursivamente
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key) && typeof obj[key] === 'object') {
+      overridePrices(obj[key]);
+    }
+  }
+
+  return obj;
+}
+
 export async function storefrontApiRequest(query: string, variables: any = {}) {
   try {
     const response = await fetch(SHOPIFY_STOREFRONT_URL, {
@@ -242,6 +490,10 @@ export async function storefrontApiRequest(query: string, variables: any = {}) {
       console.error('[Shopify] status HTTP:', response.status);
       console.error('[Shopify] resposta completa:', data);
       throw new Error(`Erro no Shopify: ${data.errors.map((e: any) => e.message).join(', ')}`);
+    }
+
+    if (data) {
+      overridePrices(data);
     }
 
     return data;

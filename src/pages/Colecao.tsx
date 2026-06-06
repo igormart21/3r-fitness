@@ -26,8 +26,16 @@ import vigorOuro     from "@/assets/linha-vigor-ouro.jpg";
 import vigorPrata    from "@/assets/linha-vigor-prata.jpg";
 import imperiumOuro  from "@/assets/linha-imperium-ouro.jpg";
 import imperiumPrata from "@/assets/linha-imperium-prata.jpg";
+import imperiumOuroNova from "@/assets/linha-imperium-ouro-nova.jpg";
+import imperiumPrataNova from "@/assets/linha-imperium-prata-nova.jpg";
+import novaHalterOuro from "@/assets/linha-halter-ouro-nova.jpg";
+import novaImperiumOuroCrossfit from "@/assets/linha-imperium-ouro-crossfit.jpg";
 import strataOuro    from "@/assets/linha-strata-ouro.jpg";
 import strataPrata   from "@/assets/linha-strata-prata.jpg";
+import wodOuro from "@/assets/linha-wod-ouro.jpeg";
+import wodPrata from "@/assets/linha-wod-prata.jpeg";
+import eliteCrossOuro from "@/assets/linha-elite-ouro.jpeg";
+import eliteCrossPrata from "@/assets/linha-elite-prata.jpeg";
 import veloxOuro     from "@/assets/linha-velox-royale-ouro-masculino.jpg";
 import veloxPrata    from "@/assets/linha-velox-royale-prata-masculino.jpg";
 import aeronOuro     from "@/assets/linha-aeron-ouro.png";
@@ -39,10 +47,16 @@ import triadeOuro    from "@/assets/linha-triade-ouro.jpg";
 import triadePrata   from "@/assets/linha-triade-prata.jpg";
 import dominusOuro   from "@/assets/linha-dominus-ouro.png";
 import dominusPrata  from "@/assets/dominus-prata-banner.png";
+import dominusJoiaPrata from "@/assets/dominus-joia-prata.jpeg";
+import dominusJoiaOuro from "@/assets/dominus-joia-ouro.jpeg";
 import monarchOuro   from "@/assets/linha-monarch-ouro.png";
 import monarchPrata  from "@/assets/802988ab-baa6-48ce-89e9-109263359edc.png";
+import monarchJoiaPrata from "@/assets/monarch-joia-prata.jpeg";
+import monarchJoiaOuro from "@/assets/monarch-joia-ouro.jpeg";
 import valenzaOuro   from "@/assets/linha-valenza-ouro.png";
 import valenzaPrata  from "@/assets/valenza-prata-banner.png";
+import valenzaJoia   from "@/assets/valenza-joia.jpeg";
+import valenzaJoiaPrata from "@/assets/valenza-joia-prata.jpeg";
 import bonecoFisiMascClassicoOuro  from "@/assets/boneco-fisiculturismo-masc-classico-ouro.jpg";
 import bonecoFisiMascClassicoPrata from "@/assets/boneco-fisiculturismo-masc-classico-prata.jpg";
 import bonecoFisiFemClassicoOuro   from "@/assets/boneco-fisiculturismo-fem-classico-ouro.jpg";
@@ -53,8 +67,18 @@ import bonecoFisiFemUndergroundOuro   from "@/assets/boneco-fisiculturismo-fem-u
 import bonecoFisiFemUndergroundPrata  from "@/assets/boneco-fisiculturismo-fem-underground-prata.jpg";
 import titanOuro     from "@/assets/titan-atleta-masc-ouro.png";
 import titanPrata    from "@/assets/titan-atleta-masc-prata.png";
+import titanJoiaOuro from "@/assets/titan-joia-ouro.jpeg";
+import titanJoiaPrata from "@/assets/titan-joia-prata.jpeg";
 import velocitaOuro  from "@/assets/velocita-atleta-fem-ouro.png";
 import velocitaPrata from "@/assets/velocita-atleta-fem-prata.png";
+import novaCorridaOuroFem from "@/assets/linha-corrida-ouro-fem.jpg";
+import novaCorridaPrataFem from "@/assets/linha-corrida-prata-fem.jpg";
+import novaCorridaOuroMasc from "@/assets/linha-corrida-ouro-masc.jpg";
+import velocitaJoiaPrata from "@/assets/velocita-joia-prata.jpeg";
+import velocitaJoiaOuro from "@/assets/velocita-joia-ouro.jpeg";
+import sprintJoia from "@/assets/linha-sprint.jpeg";
+import ritmoJoia from "@/assets/linha-ritmo.jpeg";
+import passadaJoia from "@/assets/linha-passada.jpeg";
 import bikeSpeedClassicoOuro  from "@/assets/bike-speed-classico-ouro.jpg";
 import bikeSpeedClassicoPrata from "@/assets/bike-speed-classico-prata.jpg";
 import bonecoTriMascClassicoOuro  from "@/assets/boneco-triatlon-masc-classico-ouro.jpg";
@@ -99,19 +123,13 @@ const fmtBRL = (v: string) =>
 const WPP =
   "https://wa.me/5548991486304?text=Ol%C3%A1!%20Tenho%20interesse%20em%20uma%20joia%203R%20Fitness.%20Pode%20me%20informar%20mais%3F";
 
-// ── Dados das coleções ────────────────────────────────────────────────────────
-export type ColItem = {
-  n: string; name: string; handle: string; sport: string;
-  img: string; imgPrata: string; desc: string;
-  pos?: string; posPrata?: string; skipPrata?: boolean;
-  imgFilter?: string; imgFilterPrata?: string;
-};
-
-const COLECOES: ColItem[] = [
+// ── Dados das coleções ───────────────────────────
+const COLECOES = [
   { n:"01", name:"Halter",            handle:"halter",  sport:"Musculação", img:halterOuro,             imgPrata:halterPrata,            desc:"Força que esculpe. Disciplina que constrói." },
   { n:"02", name:"Vigor",             handle:"vigor",   sport:"Musculação", img:vigorOuro,              imgPrata:vigorPrata,             desc:"Evolução contínua. Presença marcante." },
   { n:"19", name:"Clássico Masc",     handle:"halter",  sport:"Musculação", img:bonecoMuscMascClassicoOuro, imgPrata:bonecoMuscMascClassicoPrata, desc:"Constância e disciplina representadas em cada detalhe." },
   { n:"20", name:"Clássico Fem",      handle:"vigor",   sport:"Musculação", img:bonecoMuscFemClassicoOuro,  imgPrata:bonecoMuscFemClassicoPrata,  desc:"Evolução feminina. Força e elegância em ouro e prata." },
+  { n:"01B", name:"Halter Elite",     handle:"halter-elite", sport:"Musculação", img:novaHalterOuro, desc:"Design robusto e moderno esculpido em ouro 18k.", skipPrata: true },
   { n:"03", name:"Dominus",           handle:"dominus",      sport:"Fisiculturismo", img:dominusOuro,              imgPrata:dominusPrata,              desc:"A busca incessante pela melhor versão." },
   { n:"04", name:"Monarch",           handle:"monarch",      sport:"Fisiculturismo", img:monarchOuro,              imgPrata:monarchPrata,              desc:"Domínio, disciplina extrema e presença absoluta." },
   { n:"05", name:"Valenza",           handle:"valenza",      sport:"Fisiculturismo", img:valenzaOuro,              imgPrata:valenzaPrata,              desc:"A união perfeita entre força e elegância.", posPrata:"82% center" },
@@ -119,20 +137,25 @@ const COLECOES: ColItem[] = [
   { n:"16", name:"Clássico Fem",      handle:"valenza",      sport:"Fisiculturismo", img:bonecoFisiFemClassicoOuro,     imgPrata:bonecoFisiFemClassicoPrata,     desc:"Elegância e postura que definem a campeã." },
   { n:"17", name:"Underground Masc",  handle:"monarch",      sport:"Fisiculturismo", img:bonecoFisiMascUndergroundOuro, imgPrata:bonecoFisiMascUndergroundPrata, desc:"Identidade raw. Intensidade que não pede licença." },
   { n:"18", name:"Underground Fem",   handle:"valenza",      sport:"Fisiculturismo", img:bonecoFisiFemUndergroundOuro,  imgPrata:bonecoFisiFemUndergroundPrata,  desc:"Atitude, estética e força sem concessões." },
-  { n:"06", name:"Imperium",      handle:"imperium", sport:"Crossfit", img:imperiumOuro,             imgPrata:imperiumPrata,              desc:"Construída para quem nasceu para dominar." },
+  { n:"06", name:"Imperium",      handle:"imperium", sport:"Crossfit", img:imperiumOuro,             desc:"Construída para quem nasceu para dominar.", skipPrata: true },
+  { n:"06C", name:"Imperium", handle:"imperium-prata", sport:"Crossfit", imgPrata:imperiumPrataNova, desc:"Estética premium esculpida em prata 925.", skipOuro: true },
+  { n:"06B", name:"Imperium", handle:"imperium-ouro", sport:"Crossfit", img:imperiumOuroNova,     desc:"Estética premium esculpida em ouro 18k.", skipPrata: true },
+  { n:"06D", name:"Imperium",      handle:"imperium", sport:"Crossfit", imgPrata:imperiumPrata,          desc:"Construída para quem nasceu para dominar.", skipOuro: true },
+  { n:"06E", name:"Imperium CrossFit", handle:"imperium-crossfit", sport:"Crossfit", img:novaImperiumOuroCrossfit, desc:"Estética premium e a força do crossfit em ouro 18k.", skipPrata: true },
   { n:"07", name:"Strata",        handle:"strata",   sport:"Crossfit", img:strataOuro,               imgPrata:strataPrata,                desc:"Movimento bruto refinado em luxo contemporâneo." },
   { n:"23", name:"Clássico Masc", handle:"imperium", sport:"Crossfit", img:bonecoCrossMascClassicoOuro, imgPrata:bonecoCrossMascClassicoPrata, desc:"Força bruta e determinação representadas em joia." },
   { n:"24", name:"Clássico Fem",  handle:"strata",   sport:"Crossfit", img:bonecoCrossFemClassicoOuro,  imgPrata:bonecoCrossFemClassicoPrata,  desc:"Potência feminina. Precisão e estilo em cada peça." },
   { n:"08", name:"Velox Royale", handle:"velox-royale", sport:"Ciclismo", img:veloxOuro,         imgPrata:veloxPrata,         desc:"Potência, precisão e elegância em movimento." },
-  { n:"09", name:"Aeron",        handle:"aeron",        sport:"Ciclismo", img:aeronOuro,         imgPrata:aeronPrata,         desc:"Leveza, velocidade e constância sobre duas rodas." },
-  { n:"25", name:"Speed Clássico",handle:"velox-royale",sport:"Ciclismo", img:bikeSpeedClassicoOuro, imgPrata:bikeSpeedClassicoPrata, desc:"Velocidade e estilo para quem pedala com propósito.", imgFit:"contain" },
-  { n:"10", name:"Titan",        handle:"titan",        sport:"Corrida",        img:titanOuro,    imgPrata:titanPrata,    desc:"Resistência mental, evolução e força silenciosa." },
-  { n:"11", name:"Velocità",         handle:"velocita",  sport:"Corrida", img:velocitaOuro,            imgPrata:velocitaPrata,           desc:"Movimento transformado em elegância.", pos:"88% center" },
+  { n:"25", name:"Speed Clássico",  handle:"velox-royale", sport:"Ciclismo", img:bikeSpeedClassicoOuro,   imgPrata:bikeSpeedClassicoPrata,  desc:"Velocidade e estilo para quem pedala com propósito.", imgFit:"contain" },
+  { n:"09", name:"Aeron",           handle:"aeron",        sport:"Ciclismo", img:aeronOuro,              imgPrata:aeronPrata,              desc:"Cada giro, um pulso eterno. Cadência e elegância em movimento.", imgFit:"contain" },
+  { n:"10", name:"Titan",        handle:"titan",     sport:"Corrida", img:titanJoiaOuro,   imgPrata:titanJoiaPrata,          desc:"Resistência mental, evolução e força silenciosa." },
+  { n:"11", name:"Velocità",     handle:"velocita",  sport:"Corrida", img:velocitaJoiaOuro, imgPrata:velocitaJoiaPrata,      desc:"Movimento transformado em elegância." },
+  { n:"11A", name:"Sprint",      handle:"sprint",    sport:"Corrida", img:sprintJoia,      imgPrata:sprintJoia,              desc:"A força e a velocidade da explosão inicial em ouro ou prata.", skipPrata: true },
+  { n:"11B", name:"Ritmo",       handle:"ritmo",     sport:"Corrida", img:ritmoJoia,       imgPrata:passadaJoia,             desc:"A constância e a determinação do ritmo perfeito esculpidos em joia." },
   { n:"21", name:"Clássico Masc",    handle:"titan",     sport:"Corrida", img:bonecoCorrMascClassicoOuro, imgPrata:bonecoCorrMascClassicoPrata, desc:"Resistência e foco representados em joia exclusiva." },
   { n:"22", name:"Clássico Fem",     handle:"velocita",  sport:"Corrida", img:bonecoCorrFemClassicoOuro,  imgPrata:bonecoCorrFemClassicoPrata,  desc:"Leveza, ritmo e elegância em cada detalhe." },
   { n:"12", name:"Trion Elite",  handle:"trion-elite",  sport:"Triatlo",        img:trionOuro,    imgPrata:trionOuro,     desc:"Para atletas que vivem além dos limites comuns.", imgFilterPrata:"grayscale(100%) brightness(1.15) contrast(1.05)" },
   { n:"13", name:"Velarion",     handle:"velarion",     sport:"Triatlo",        img:velarionOuro, imgPrata:velarionOuro,  desc:"Luxo silencioso. Performance elevada.", imgFilterPrata:"grayscale(100%) brightness(1.15) contrast(1.05)" },
-  { n:"14", name:"Tríade",        handle:"triade",      sport:"Triatlo", img:triadeOuro,             imgPrata:triadePrata,             desc:"Identidade de quem atravessa três mundos." },
   { n:"26", name:"Clássico Masc", handle:"trion-elite", sport:"Triatlo",  img:bonecoTriMascClassicoOuro, imgPrata:bonecoTriMascClassicoPrata, desc:"Resistência, força e elegância em três modalidades." },
   { n:"27", name:"Cartier",        handle:"cartier",     sport:"Colares", img:colarCartierOuro,   imgPrata:colarCartierPrata,   desc:"Corrente elo cartier. Leveza e sofisticação para o dia a dia.", imgFit:"contain" },
   { n:"28", name:"Veneziana",      handle:"veneziana",   sport:"Colares", img:colarVenezianaOuro, imgPrata:colarVenezianaPrata, desc:"Corrente veneziana. Elegância clássica em cada detalhe.", imgFit:"contain" },
@@ -326,11 +349,151 @@ const ColecaoView = ({
 }) => {
   // Filtra produtos Shopify que pertencem a esta coleção
   const colName = col.name.toLowerCase();
-  const products = allProducts.filter(p =>
+  let products = allProducts.filter(p =>
     p.node.handle === col.handle ||
     p.node.handle.startsWith(col.handle + "-") ||
     p.node.title.toLowerCase().includes(colName)
   );
+
+  // Mapeamento especial para coleções estáticas do ateliê
+  if (products.length === 0 && allProducts.length > 0) {
+    if (col.handle === "halter-elite") {
+      const baseProduct = allProducts.find(p => p.node.handle === "halter");
+      if (baseProduct) {
+        const cloned = JSON.parse(JSON.stringify(baseProduct)) as ShopifyProduct;
+        cloned.node.title = "Halter Elite";
+        cloned.node.handle = "halter-elite";
+        if (col.img) {
+          cloned.node.featuredImage = { url: col.img, altText: "Halter Elite" };
+          cloned.node.images.edges = [{ node: { url: col.img, altText: "Halter Elite" } }];
+        }
+        if (col.skipPrata) {
+          cloned.node.variants.edges = cloned.node.variants.edges.filter(v => 
+            v.node.title.toLowerCase().includes("ouro")
+          );
+        }
+        products = [cloned];
+      }
+    } else if (col.handle === "imperium-crossfit" || col.handle === "imperium-ouro" || col.handle === "imperium-prata") {
+      const baseProduct = allProducts.find(p => p.node.handle === "imperium");
+      if (baseProduct) {
+        const cloned = JSON.parse(JSON.stringify(baseProduct)) as ShopifyProduct;
+        cloned.node.title = col.name;
+        cloned.node.handle = col.handle;
+        if (col.img) {
+          cloned.node.featuredImage = { url: col.img, altText: col.name };
+          cloned.node.images.edges = [{ node: { url: col.img, altText: col.name } }];
+        } else if (col.imgPrata) {
+          cloned.node.featuredImage = { url: col.imgPrata, altText: col.name };
+          cloned.node.images.edges = [{ node: { url: col.imgPrata, altText: col.name } }];
+        }
+        if (col.skipPrata) {
+          cloned.node.variants.edges = cloned.node.variants.edges.filter(v => 
+            v.node.title.toLowerCase().includes("ouro")
+          );
+        }
+        if (col.skipOuro) {
+          cloned.node.variants.edges = cloned.node.variants.edges.filter(v => 
+            v.node.title.toLowerCase().includes("prata")
+          );
+        }
+        products = [cloned];
+      }
+    } else if (col.handle === "corrida-atleta") {
+      const baseProduct = allProducts.find(p => p.node.handle === "velocita");
+      if (baseProduct) {
+        const cloned = JSON.parse(JSON.stringify(baseProduct)) as ShopifyProduct;
+        cloned.node.title = "Corrida Atleta";
+        cloned.node.handle = "corrida-atleta";
+        if (col.img) {
+          cloned.node.featuredImage = { url: col.img, altText: "Corrida Atleta" };
+          cloned.node.images.edges = [{ node: { url: col.img, altText: "Corrida Atleta" } }];
+        }
+        products = [cloned];
+      }
+    } else if (col.handle === "corrida-elite") {
+      const baseProduct = allProducts.find(p => p.node.handle === "titan");
+      if (baseProduct) {
+        const cloned = JSON.parse(JSON.stringify(baseProduct)) as ShopifyProduct;
+        cloned.node.title = "Corrida Elite";
+        cloned.node.handle = "corrida-elite";
+        if (col.img) {
+          cloned.node.featuredImage = { url: col.img, altText: "Corrida Elite" };
+          cloned.node.images.edges = [{ node: { url: col.img, altText: "Corrida Elite" } }];
+        }
+        if (col.skipPrata) {
+          cloned.node.variants.edges = cloned.node.variants.edges.filter(v => 
+            v.node.title.toLowerCase().includes("ouro")
+          );
+        }
+        products = [cloned];
+      }
+    } else if (col.handle === "sprint" || col.handle === "ritmo") {
+      const baseProduct = allProducts.find(p => p.node.handle === "velocita");
+      if (baseProduct) {
+        const cloned = JSON.parse(JSON.stringify(baseProduct)) as ShopifyProduct;
+        cloned.node.title = col.name;
+        cloned.node.handle = col.handle;
+        if (col.img) {
+          cloned.node.featuredImage = { url: col.img, altText: col.name };
+          cloned.node.images.edges = [{ node: { url: col.img, altText: col.name } }];
+        }
+        products = [cloned];
+      }
+    }
+  }
+
+  // Se após os filtros ainda estiver vazio e não estiver carregando, geramos o mock baseado na coleção
+  if (products.length === 0 && !loadingShopify) {
+    const isGoldOnly = col.skipOuro === false && col.skipPrata === true;
+    const isSilverOnly = col.skipOuro === true && col.skipPrata === false;
+    
+    // Preços oficiais das variantes do HALTER (placeholder do projeto)
+    const precoOuro = 1497;
+    const precoPrata = 347;
+
+    const variantsList = [];
+    if (!isSilverOnly) {
+      variantsList.push({
+        node: {
+          id: "gid://shopify/ProductVariant/48912055468259", // Placeholder Ouro HALTER
+          title: "Ouro 18k",
+          price: { amount: precoOuro.toFixed(2), currencyCode: "BRL" },
+          availableForSale: true,
+          selectedOptions: [{ name: "Material", value: "Ouro 18k" }],
+          image: { url: col.img || col.imgPrata, altText: col.name }
+        }
+      });
+    }
+    if (!isGoldOnly) {
+      variantsList.push({
+        node: {
+          id: "gid://shopify/ProductVariant/48912055501027", // Placeholder Prata HALTER
+          title: "Prata 925",
+          price: { amount: precoPrata.toFixed(2), currencyCode: "BRL" },
+          availableForSale: true,
+          selectedOptions: [{ name: "Material", value: "Prata 925" }],
+          image: { url: col.imgPrata || col.img, altText: col.name }
+        }
+      });
+    }
+
+    const mockProduct: ShopifyProduct = {
+      node: {
+        id: `gid://shopify/Product/Mock-${col.handle}`,
+        title: col.name,
+        description: col.desc,
+        handle: col.handle,
+        featuredImage: { url: col.img || col.imgPrata, altText: col.name },
+        priceRange: { minVariantPrice: { amount: (isGoldOnly ? precoOuro : precoPrata).toFixed(2), currencyCode: "BRL" } },
+        images: { edges: [{ node: { url: col.img || col.imgPrata, altText: col.name } }] },
+        options: [{ name: "Material", values: variantsList.map(v => v.node.title) }],
+        variants: { edges: variantsList }
+      }
+    };
+    
+    products = [mockProduct];
+  }
 
   return (
     <div>
@@ -1036,7 +1199,16 @@ const Colecao = () => {
   const [ordem, setOrdem] = useState("Mais Vendidos");
   const [allProducts, setAllProducts] = useState<ShopifyProduct[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<CatalogProduct | null>(null);
+  const [activeImage, setActiveImage] = useState<string>("");
   const [adding, setAdding] = useState(false);
+
+  useEffect(() => {
+    if (selectedProduct) {
+      setActiveImage(selectedProduct.imagem);
+    } else {
+      setActiveImage("");
+    }
+  }, [selectedProduct]);
   const [buying, setBuying] = useState(false);
 
   useEffect(() => {
@@ -1064,6 +1236,8 @@ const Colecao = () => {
       monarch: "Pingentes",
       valenza: "Pingentes",
       imperium: "Pingentes",
+      "imperium-ouro": "Pingentes",
+      "imperium-prata": "Pingentes",
       strata: "Pingentes",
       "velox-royale": "Colares",
       aeron: "Colares",
@@ -1085,19 +1259,29 @@ const Colecao = () => {
     };
 
     const precoBase: Record<string, number> = {
-      halter: 299.9,
-      vigor: 349.9,
-      dominus: 1899.9,
-      monarch: 1699.9,
-      valenza: 1499.9,
-      imperium: 459.9,
+      halter: 2587.0,
+      "halter-elite": 3487.0,
+      vigor: 2487.0,
+      dominus: 3997.0,
+      monarch: 3997.0,
+      valenza: 3997.0,
+      imperium: 2987.0,
+      "imperium-ouro": 2987.0,
+      "imperium-prata": 297.0,
+      "imperium-crossfit": 3200.0,
+      wod: 4207.0,
+      "elite-cross": 4207.0,
       strata: 549.9,
-      "velox-royale": 799.9,
-      aeron: 699.9,
+      "velox-royale": 2587.0,
+      aeron: 2587.0,
+      "corrida-atleta": 3597.0,
+      "corrida-elite": 3597.0,
       titan: 459.9,
       velocita: 399.9,
-      "trion-elite": 999.9,
-      velarion: 1099.9,
+      sprint: 459.9,
+      ritmo: 459.9,
+      "trion-elite": 2687.0,
+      velarion: 2497.0,
       triade: 899.9,
       cartier: 349.9,
       veneziana: 399.9,
@@ -1112,35 +1296,70 @@ const Colecao = () => {
     };
 
     return COLECOES.flatMap((c) => {
+      const isClassicoMascFisi = c.sport === "Fisiculturismo" && c.name === "Clássico Masc";
+      const isClassicoFemFisi = c.sport === "Fisiculturismo" && c.name === "Clássico Fem";
+      const isUndergroundFemFisi = c.sport === "Fisiculturismo" && c.name === "Underground Fem";
+      const isUndergroundMascFisi = c.sport === "Fisiculturismo" && c.name === "Underground Masc";
+      const isClassicoMascCorrida = c.sport === "Corrida" && c.name === "Clássico Masc";
+      const isClassicoFemCorrida = c.sport === "Corrida" && c.name === "Clássico Fem";
+      
+      let precoOuro = precoBase[c.handle] ?? 399.9;
+      if (isClassicoMascFisi) precoOuro = 2487.0;
+      else if (isClassicoFemFisi) precoOuro = 2357.0;
+      else if (isUndergroundFemFisi) precoOuro = 2787.0;
+      else if (isUndergroundMascFisi) precoOuro = 2987.0;
+      else if (c.name === "Speed Clássico") precoOuro = 2387.0;
+      else if (c.name === "Titan") precoOuro = 2487.0;
+      else if (c.name === "Velocità") precoOuro = 2487.0;
+      else if (isClassicoMascCorrida) precoOuro = 2187.0;
+      else if (isClassicoFemCorrida) precoOuro = 2187.0;
+
       const ouro = {
         id: `${c.n}-ouro`,
         nome: c.name,
         categoria: c.sport,
         tipo: tipoPorColecao[c.handle] ?? "Pingentes",
         material: "Ouro 18k" as const,
-        preco: precoBase[c.handle] ?? 399.9,
+        preco: precoOuro,
         parcelas: 10,
-        imagem: c.img,
+        imagem: c.img ?? "",
         collectionHandle: c.handle,
         imgPos: c.pos ?? "center center",
         imgFilter: undefined,
         imgFit: c.imgFit,
       };
       if (c.skipPrata) return [ouro];
+      const isPrecoPrataEspecial = ["dominus", "monarch", "valenza"].includes(c.handle);
+      let precoPrata = isPrecoPrataEspecial ? 327.0 : Math.max((precoBase[c.handle] ?? 399.9) * 0.72, 149.9);
+      if (c.handle === "imperium" || c.handle === "imperium-prata") precoPrata = 297.0;
+      if (c.handle === "corrida-atleta") precoPrata = 297.0;
+      if (c.handle === "strata") precoPrata = 297.0;
+      if (c.handle === "halter") precoPrata = 297.0;
+      if (c.handle === "vigor") precoPrata = 297.0;
+      if (c.handle === "velox-royale") precoPrata = 297.0;
+      if (c.handle === "aeron") precoPrata = 297.0;
+      if (c.handle === "trion-elite") precoPrata = 327.0;
+      if (c.name === "Titan") precoPrata = 327.0;
+      if (c.name === "Velocità") precoPrata = 327.0;
+      if (isClassicoMascCorrida || isClassicoFemCorrida) precoPrata = 297.0;
+      if (c.handle === "velarion") precoPrata = 327.0;
+      if (isClassicoMascFisi || isClassicoFemFisi) precoPrata = 297.0;
+
       const prata = {
         id: `${c.n}-prata`,
         nome: c.name,
         categoria: c.sport,
         tipo: tipoPorColecao[c.handle] ?? "Pingentes",
         material: "Prata 925" as const,
-        preco: Math.max((precoBase[c.handle] ?? 399.9) * 0.72, 149.9),
+        preco: precoPrata,
         parcelas: 6,
-        imagem: c.imgPrata,
+        imagem: c.imgPrata ?? "",
         collectionHandle: c.handle,
         imgPos: c.posPrata ?? c.pos ?? "center center",
         imgFilter: c.imgFilterPrata,
         imgFit: c.imgFit,
       };
+      if (c.skipOuro) return [prata];
       return [prata, ouro];
     });
   }, []);
@@ -1235,7 +1454,9 @@ const Colecao = () => {
           <Link to="/" style={{ display: "inline-flex", alignItems: "center", gap: 6, textDecoration: "none", color: "#555", fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase" }}>
             <ArrowLeft size={13} strokeWidth={1.5} /> Início
           </Link>
-          <img src={logo3r} alt="3R Fitness" style={{ height: 140, width: "auto", objectFit: "contain" }} />
+          <Link to="/" style={{ display: "flex", alignItems: "center" }}>
+            <img src={logo3r} alt="3R Fitness" style={{ height: 140, width: "auto", objectFit: "contain" }} />
+          </Link>
           <button
             onClick={openCart}
             aria-label="Carrinho"
@@ -1338,8 +1559,8 @@ const Colecao = () => {
             <div className="products-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4,minmax(0,1fr))", gap: 16 }}>
               {produtosFiltrados.map((p) => (
                 <article key={p.id} style={{ background: "#fff", borderRadius: 10, border: "1px solid #e8e8e8", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-                  <div style={{ aspectRatio: "3/4", background: "#0a0a0a", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <img src={p.imagem} alt={p.nome} style={{ width: "100%", height: "100%", objectFit: (p.imgFit ?? "cover") as any, objectPosition: p.imgPos ?? "center center", filter: p.imgFilter }} />
+                  <div style={{ aspectRatio: "3/4", overflow: "hidden" }}>
+                    <img src={p.imagem} alt={p.nome} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: p.imgPos ?? "center center", filter: p.imgFilter }} />
                   </div>
                   <div style={{ padding: "12px 12px 14px", display: "flex", flexDirection: "column", flex: 1 }}>
                     <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 17, fontWeight: 400, color: "#1a1a1a", lineHeight: 1.2, marginBottom: 3 }}>
@@ -1384,8 +1605,47 @@ const Colecao = () => {
             className="product-modal"
           >
             <style>{`@media(max-width:820px){.product-modal{grid-template-columns:1fr!important;}}`}</style>
-            <div style={{ background: "#f2f2f2", minHeight: 360 }}>
-              <img src={selectedProduct.imagem} alt={selectedProduct.nome} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <div style={{ background: "#000000", minHeight: 360, display: "flex", flexDirection: "column" }}>
+              <div style={{ flex: 1, position: "relative", minHeight: 320 }}>
+                <img src={activeImage} alt={selectedProduct.nome} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain" }} />
+              </div>
+              {((selectedProduct.collectionHandle === "valenza" || selectedProduct.nome.toLowerCase().includes("valenza") || selectedProduct.collectionHandle === "monarch" || selectedProduct.nome.toLowerCase().includes("monarch") || selectedProduct.collectionHandle === "dominus" || selectedProduct.nome.toLowerCase().includes("dominus") || ((selectedProduct.collectionHandle === "titan" || selectedProduct.nome.toLowerCase().includes("titan") || selectedProduct.collectionHandle === "velocita" || selectedProduct.nome.toLowerCase().includes("velocita") || selectedProduct.nome.toLowerCase().includes("velocità")) && !selectedProduct.nome.toLowerCase().includes("clássico") && !selectedProduct.nome.toLowerCase().includes("classico")))) && (() => {
+                const handleLower = (selectedProduct.collectionHandle || selectedProduct.nome).toLowerCase();
+                const isValenza = handleLower.includes("valenza");
+                const isMonarch = handleLower.includes("monarch");
+                const isDominus = handleLower.includes("dominus");
+                const isTitan = handleLower.includes("titan");
+                const isPrata = selectedProduct.material === "Prata 925";
+
+                let joiaImg = "";
+                if (isValenza) {
+                  joiaImg = isPrata ? valenzaJoiaPrata : valenzaJoia;
+                } else if (isMonarch) {
+                  joiaImg = isPrata ? monarchJoiaPrata : monarchJoiaOuro;
+                } else if (isDominus) {
+                  joiaImg = isPrata ? dominusJoiaPrata : dominusJoiaOuro;
+                } else if (isTitan) {
+                  joiaImg = isPrata ? titanJoiaPrata : titanJoiaOuro;
+                } else {
+                  joiaImg = isPrata ? velocitaJoiaPrata : velocitaJoiaOuro;
+                }
+                return (
+                  <div style={{ display: "flex", gap: 8, padding: 12, background: "#fff", borderTop: "1px solid #eee", justifyContent: "center" }}>
+                    <button
+                      onClick={() => setActiveImage(selectedProduct.imagem)}
+                      style={{ width: 50, height: 50, padding: 0, border: activeImage === selectedProduct.imagem ? "2px solid #C9A220" : "1px solid #ddd", borderRadius: 4, overflow: "hidden", cursor: "pointer", background: "none" }}
+                    >
+                      <img src={selectedProduct.imagem} alt="Campanha" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    </button>
+                    <button
+                      onClick={() => setActiveImage(joiaImg)}
+                      style={{ width: 50, height: 50, padding: 0, border: activeImage === joiaImg ? "2px solid #C9A220" : "1px solid #ddd", borderRadius: 4, overflow: "hidden", cursor: "pointer", background: "none" }}
+                    >
+                      <img src={joiaImg} alt="Joia" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    </button>
+                  </div>
+                );
+              })()}
             </div>
             <div style={{ padding: 24, display: "flex", flexDirection: "column" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
