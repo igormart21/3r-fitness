@@ -15,6 +15,7 @@ import velocitaJoiaOuro from "@/assets/velocita-joia-ouro.jpeg";
 
 import linhaImperiumOuro from "@/assets/linha-imperium-ouro.jpg";
 import linhaImperiumPrata from "@/assets/linha-imperium-prata.jpg";
+import linhaImperiumPrataNova from "@/assets/linha-imperium-prata-nova.jpg";
 import linhaStrataOuro from "@/assets/linha-strata-ouro.jpg";
 import linhaStrataPrata from "@/assets/linha-strata-prata.jpg";
 import linhaTriadeOuro from "@/assets/linha-triade-ouro.jpg";
@@ -25,14 +26,24 @@ import linhaHalterOuro from "@/assets/linha-halter-ouro.jpg";
 import linhaHalterPrata from "@/assets/linha-halter-prata.jpg";
 import linhaVeloxOuro from "@/assets/linha-velox-ouro.png";
 import linhaVeloxPrata from "@/assets/linha-velox-royale-prata-masculino.jpg";
+import veloxRoyaleOuroMasc from "@/assets/linha-velox-royale-ouro-masculino.jpg";
 import linhaAeronOuro from "@/assets/linha-aeron-ouro.png";
 import linhaAeronPrata from "@/assets/linha-aeron-prata-masculino.jpg";
+import placaTriatloOuro from "@/assets/linha-placa-triatlo-ouro.jpg";
+import placaTriatloPrata from "@/assets/linha-placa-triatlo-prata.jpg";
+import velarionOuro from "@/assets/linha-velarion-ouro.png";
+import velarionPrata from "@/assets/linha-triade-prata-clean.jpg";
 
 import novaImperiumCrossfitOuro from "@/assets/linha-imperium-ouro-crossfit.jpg";
+import wodOuro from "@/assets/linha-wod-ouro.jpeg";
+import eliteOuro from "@/assets/linha-elite-ouro.jpeg";
 import novaHalterOuro from "@/assets/linha-halter-ouro-nova.jpg";
 import novaCorridaOuroFem from "@/assets/linha-corrida-ouro-fem.jpg";
 import novaCorridaPrataFem from "@/assets/linha-corrida-prata-fem.jpg";
 import novaCorridaOuroMasc from "@/assets/linha-corrida-ouro-masc.jpg";
+import conjuntoCrossfitOuro from "@/assets/linha-conjunto-crossfit-ouro.jpg";
+import corridaAtletaOuroImg from "@/assets/f0a37cfa-13dc-4e8e-9a86-d811b329d5a1.png";
+import corridaAtletaPrataImg from "@/assets/velocita-card-cover.png";
 
 const STATIC = [
   { nome: "Imperium", mat: "Ouro 18k", img: linhaImperiumOuro, hot: true },
@@ -46,22 +57,26 @@ const STATIC = [
   { nome: "Imperium CrossFit", mat: "Ouro 18k", img: novaImperiumCrossfitOuro, preco: 3200 },
   { nome: "Halter Elite",      mat: "Ouro 18k", img: novaHalterOuro, preco: 3487 },
   { nome: "Corrida Atleta",    mat: "Ouro 18k", img: novaCorridaOuroFem, preco: 3597 },
-  { nome: "Corrida Atleta",    mat: "Prata",    img: novaCorridaPrataFem, preco: 297 },
   { nome: "Corrida Elite",     mat: "Ouro 18k", img: novaCorridaOuroMasc, preco: 3597 },
+  { nome: "Corrente e Pingente CrossFit", mat: "Ouro 18k", img: conjuntoCrossfitOuro, preco: 3487 },
 ];
 
 const ATELIE_EXTRA = [
   { nome: "Imperium CrossFit", mat: "Ouro 18k", img: novaImperiumCrossfitOuro, preco: 3200 },
   { nome: "Halter Elite",      mat: "Ouro 18k", img: novaHalterOuro, preco: 3487 },
   { nome: "Corrida Atleta",    mat: "Ouro 18k", img: novaCorridaOuroFem, preco: 3597 },
-  { nome: "Corrida Atleta",    mat: "Prata",    img: novaCorridaPrataFem, preco: 297 },
   { nome: "Corrida Elite",     mat: "Ouro 18k", img: novaCorridaOuroMasc, preco: 3597 },
+  { nome: "Corrente e Pingente CrossFit", mat: "Ouro 18k", img: conjuntoCrossfitOuro, preco: 3487 },
 ];
 
 const WPP = "https://wa.me/5548991486304?text=Ol%C3%A1!%20Tenho%20interesse%20em%20uma%20joia%203R%20Fitness.%20Pode%20me%20informar%20mais%3F";
 
 const isGold = (title: string) =>
   title.toLowerCase().includes("ouro") || title.toLowerCase().includes("gold");
+
+const getProductMaterials = (product: ShopifyProduct) => {
+  return ["Ouro 18k", "Prata"];
+};
 
 const fmtBRL = (amount: string) =>
   new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(parseFloat(amount));
@@ -77,6 +92,9 @@ const getAtelieProductMock = (nome: string, mat: string, img: string, preco: num
   } else if (nome.toLowerCase().includes("imperium crossfit")) {
     handle = "imperium-crossfit";
     variantId = isOuro ? "gid://shopify/ProductVariant/48916550746339" : "gid://shopify/ProductVariant/48916550811875";
+  } else if (nome.toLowerCase().includes("corrente e pingente crossfit")) {
+    handle = "conjunto-crossfit-ouro";
+    variantId = "gid://shopify/ProductVariant/48916550746339";
   } else if (nome.toLowerCase().includes("corrida atleta")) {
     handle = "corrida-atleta";
     variantId = isOuro ? "gid://shopify/ProductVariant/48914322391267" : "gid://shopify/ProductVariant/48914322424035";
@@ -89,6 +107,206 @@ const getAtelieProductMock = (nome: string, mat: string, img: string, preco: num
   }
 
   const priceStr = preco.toString();
+
+  // Corrida Atleta: produto com DUAS variantes (Ouro 18k + Prata)
+  if (handle === "corrida-atleta") {
+    return {
+      node: {
+        id: "gid://shopify/Product/Atelie-Corrida-Atleta",
+        title: "Corrida Atleta",
+        description: "Edição especial produzida com acabamento premium em Ouro 18k ou Prata.",
+        handle: "corrida-atleta",
+        featuredImage: { url: corridaAtletaOuroImg, altText: "Corrida Atleta" },
+        priceRange: { minVariantPrice: { amount: "297", currencyCode: "BRL" } },
+        images: { edges: [{ node: { url: corridaAtletaOuroImg, altText: "Corrida Atleta" } }] },
+        options: [{ name: "Material", values: ["Ouro 18k", "Prata"] }],
+        variants: {
+          edges: [
+            {
+              node: {
+                id: "gid://shopify/ProductVariant/48914322391267",
+                title: "Ouro 18k",
+                price: { amount: "3597", currencyCode: "BRL" },
+                availableForSale: true,
+                selectedOptions: [{ name: "Material", value: "Ouro 18k" }],
+                image: { url: novaCorridaOuroFem, altText: "Corrida Atleta Ouro 18k" },
+              },
+            },
+            {
+              node: {
+                id: "gid://shopify/ProductVariant/48914322424035",
+                title: "Prata",
+                price: { amount: "297", currencyCode: "BRL" },
+                availableForSale: true,
+                selectedOptions: [{ name: "Material", value: "Prata" }],
+                image: { url: novaCorridaPrataFem, altText: "Corrida Atleta Prata" },
+              },
+            },
+          ],
+        },
+      },
+    };
+  }
+
+  // Halter Elite: produto com DUAS variantes (Ouro 18k + Prata)
+  if (handle === "halter-elite") {
+    return {
+      node: {
+        id: "gid://shopify/Product/Atelie-Halter-Elite",
+        title: "Halter Elite",
+        description: "Edição especial produzida com acabamento premium em Ouro 18k ou Prata.",
+        handle: "halter-elite",
+        featuredImage: { url: novaHalterOuro, altText: "Halter Elite" },
+        priceRange: { minVariantPrice: { amount: "297", currencyCode: "BRL" } },
+        images: { edges: [{ node: { url: novaHalterOuro, altText: "Halter Elite" } }] },
+        options: [{ name: "Material", values: ["Ouro 18k", "Prata"] }],
+        variants: {
+          edges: [
+            {
+              node: {
+                id: "gid://shopify/ProductVariant/48912055468259",
+                title: "Ouro 18k",
+                price: { amount: "3487", currencyCode: "BRL" },
+                availableForSale: true,
+                selectedOptions: [{ name: "Material", value: "Ouro 18k" }],
+                image: { url: linhaHalterOuro, altText: "Halter Elite Ouro 18k" },
+              },
+            },
+            {
+              node: {
+                id: "gid://shopify/ProductVariant/48912055501027",
+                title: "Prata",
+                price: { amount: "297", currencyCode: "BRL" },
+                availableForSale: true,
+                selectedOptions: [{ name: "Material", value: "Prata" }],
+                image: { url: linhaHalterPrata, altText: "Halter Elite Prata" },
+              },
+            },
+          ],
+        },
+      },
+    };
+  }
+
+  // Corrente e Pingente CrossFit: produto com DUAS variantes (Ouro 18k + Prata)
+  if (handle === "conjunto-crossfit-ouro") {
+    return {
+      node: {
+        id: "gid://shopify/Product/Atelie-Conjunto-CrossFit",
+        title: "Corrente e Pingente CrossFit",
+        description: "Edição especial produzida com acabamento premium em Ouro 18k ou Prata.",
+        handle: "conjunto-crossfit-ouro",
+        featuredImage: { url: conjuntoCrossfitOuro, altText: "Corrente e Pingente CrossFit" },
+        priceRange: { minVariantPrice: { amount: "297", currencyCode: "BRL" } },
+        images: { edges: [{ node: { url: conjuntoCrossfitOuro, altText: "Corrente e Pingente CrossFit" } }] },
+        options: [{ name: "Material", values: ["Ouro 18k", "Prata"] }],
+        variants: {
+          edges: [
+            {
+              node: {
+                id: "gid://shopify/ProductVariant/48916550746339",
+                title: "Ouro 18k",
+                price: { amount: "3487", currencyCode: "BRL" },
+                availableForSale: true,
+                selectedOptions: [{ name: "Material", value: "Ouro 18k" }],
+                image: { url: conjuntoCrossfitOuro, altText: "Corrente e Pingente CrossFit Ouro 18k" },
+              },
+            },
+            {
+              node: {
+                id: "gid://shopify/ProductVariant/48916550811875",
+                title: "Prata",
+                price: { amount: "297", currencyCode: "BRL" },
+                availableForSale: true,
+                selectedOptions: [{ name: "Material", value: "Prata" }],
+                image: { url: conjuntoCrossfitOuro, altText: "Corrente e Pingente CrossFit Prata" },
+              },
+            },
+          ],
+        },
+      },
+    };
+  }
+
+  // Corrida Elite: produto com DUAS variantes (Ouro 18k + Prata)
+  if (handle === "corrida-elite") {
+    return {
+      node: {
+        id: "gid://shopify/Product/Atelie-Corrida-Elite",
+        title: "Corrida Elite",
+        description: "Edição especial produzida com acabamento premium em Ouro 18k ou Prata.",
+        handle: "corrida-elite",
+        featuredImage: { url: novaCorridaOuroMasc, altText: "Corrida Elite" },
+        priceRange: { minVariantPrice: { amount: "297", currencyCode: "BRL" } },
+        images: { edges: [{ node: { url: novaCorridaOuroMasc, altText: "Corrida Elite" } }] },
+        options: [{ name: "Material", values: ["Ouro 18k", "Prata"] }],
+        variants: {
+          edges: [
+            {
+              node: {
+                id: "gid://shopify/ProductVariant/48914311708899",
+                title: "Ouro 18k",
+                price: { amount: "3597", currencyCode: "BRL" },
+                availableForSale: true,
+                selectedOptions: [{ name: "Material", value: "Ouro 18k" }],
+                image: { url: titanJoiaOuro, altText: "Corrida Elite Ouro 18k" },
+              },
+            },
+            {
+              node: {
+                id: "gid://shopify/ProductVariant/48914311741667",
+                title: "Prata",
+                price: { amount: "297", currencyCode: "BRL" },
+                availableForSale: true,
+                selectedOptions: [{ name: "Material", value: "Prata" }],
+                image: { url: titanJoiaPrata, altText: "Corrida Elite Prata" },
+              },
+            },
+          ],
+        },
+      },
+    };
+  }
+
+  // Imperium CrossFit: produto com DUAS variantes (Ouro 18k + Prata)
+  if (handle === "imperium-crossfit") {
+    return {
+      node: {
+        id: "gid://shopify/Product/Atelie-Imperium-CrossFit",
+        title: "Imperium CrossFit",
+        description: "Edição especial produzida com acabamento premium em Ouro 18k ou Prata.",
+        handle: "imperium-crossfit",
+        featuredImage: { url: novaImperiumCrossfitOuro, altText: "Imperium CrossFit" },
+        priceRange: { minVariantPrice: { amount: "297", currencyCode: "BRL" } },
+        images: { edges: [{ node: { url: novaImperiumCrossfitOuro, altText: "Imperium CrossFit" } }] },
+        options: [{ name: "Material", values: ["Ouro 18k", "Prata"] }],
+        variants: {
+          edges: [
+            {
+              node: {
+                id: "gid://shopify/ProductVariant/48916550746339",
+                title: "Ouro 18k",
+                price: { amount: "3200", currencyCode: "BRL" },
+                availableForSale: true,
+                selectedOptions: [{ name: "Material", value: "Ouro 18k" }],
+                image: { url: wodOuro, altText: "Imperium CrossFit Ouro 18k" },
+              },
+            },
+            {
+              node: {
+                id: "gid://shopify/ProductVariant/48916550811875",
+                title: "Prata",
+                price: { amount: "297", currencyCode: "BRL" },
+                availableForSale: true,
+                selectedOptions: [{ name: "Material", value: "Prata" }],
+                image: { url: eliteOuro, altText: "Imperium CrossFit Prata" },
+              },
+            },
+          ],
+        },
+      },
+    };
+  }
 
   return {
     node: {
@@ -309,22 +527,67 @@ export const ProductShowcase = () => {
                     </div>
                   </div>
                   <div style={{ padding: "14px 16px 16px" }}>
-                    <div style={{ height: 50, display: "flex", flexDirection: "column", justifyContent: "flex-start", marginBottom: 12 }}>
+                    <div style={{ height: 68, display: "flex", flexDirection: "column", justifyContent: "flex-start", marginBottom: 8 }}>
                       <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 16, fontWeight: 400, color: "#1C1814", lineHeight: 1.2, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                         {name}
                       </div>
+                      {(() => {
+                        const mats = getProductMaterials(product);
+                        return (
+                          <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "#6B5E52", display: "flex", flexDirection: "column", gap: 2, marginTop: 4 }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                              <div style={{ display: "flex", gap: 2 }}>
+                                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "linear-gradient(135deg,#C9A220,#E8C84A)", display: "inline-block", flexShrink: 0 }} />
+                                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "linear-gradient(135deg,#A0A0A0,#D4D4D4)", display: "inline-block", flexShrink: 0 }} />
+                              </div>
+                              {mats.join(" / ")}
+                            </div>
+                            <span style={{ fontSize: 9.5, color: "#C9A220", fontWeight: 600, letterSpacing: "0.03em" }}>Corrente + Pingente</span>
+                          </div>
+                        );
+                      })()}
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, color: "#C9A220" }}>
-                        {hasMultipleVariants ? "A partir de " : ""}{fmtBRL(price.amount)}
+                    <div style={{ marginBottom: 12 }}>
+                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600, color: "#C9A220" }}>
+                        {fmtBRL(price.amount)}
                       </span>
-                      <button
-                        onClick={() => setPreview({ kind: "shopify", data: { product, variantIdx: 0 } })}
-                        style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, color: "#C9A220", background: "none", border: "none", cursor: "pointer", padding: 0, whiteSpace: "nowrap" }}
-                      >
-                        Ver →
-                      </button>
                     </div>
+                    <button
+                      onClick={() => setPreview({ kind: "shopify", data: { product, variantIdx: 0 } })}
+                      style={{
+                        width: "100%",
+                        fontFamily: "'Inter',sans-serif",
+                        fontSize: 11,
+                        fontWeight: 600,
+                        letterSpacing: "0.05em",
+                        color: "#1C1814",
+                        background: "none",
+                        border: "1px solid rgba(28,24,20,0.15)",
+                        borderRadius: 8,
+                        padding: "8px 12px",
+                        cursor: "pointer",
+                        whiteSpace: "nowrap",
+                        transition: "all 0.2s ease",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 4
+                      }}
+                      onMouseEnter={e => {
+                        const target = e.currentTarget as HTMLElement;
+                        target.style.background = "#1C1814";
+                        target.style.color = "#F8F5F0";
+                        target.style.borderColor = "#1C1814";
+                      }}
+                      onMouseLeave={e => {
+                        const target = e.currentTarget as HTMLElement;
+                        target.style.background = "none";
+                        target.style.color = "#1C1814";
+                        target.style.borderColor = "rgba(28,24,20,0.15)";
+                      }}
+                    >
+                      Ver detalhes →
+                    </button>
                   </div>
                 </div>
               );
@@ -360,26 +623,62 @@ export const ProductShowcase = () => {
                     </div>
                   </div>
                   <div style={{ padding: "14px 16px 16px" }}>
-                    <div style={{ height: 50, display: "flex", flexDirection: "column", justifyContent: "flex-start", marginBottom: 12 }}>
+                    <div style={{ height: 68, display: "flex", flexDirection: "column", justifyContent: "flex-start", marginBottom: 8 }}>
                       <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 16, fontWeight: 400, color: "#1C1814", lineHeight: 1.2, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                         {nome}
                       </div>
-                      <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "#6B5E52", display: "flex", alignItems: "center", gap: 4, marginTop: 4 }}>
-                        <span style={{ width: 6, height: 6, borderRadius: "50%", background: isGold(mat) ? "linear-gradient(135deg,#C9A220,#E8C84A)" : "linear-gradient(135deg,#A0A0A0,#D4D4D4)", display: "inline-block", flexShrink: 0 }} />
-                        {mat}
+                      <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "#6B5E52", display: "flex", flexDirection: "column", gap: 2, marginTop: 4 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                          <div style={{ display: "flex", gap: 2 }}>
+                            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "linear-gradient(135deg,#C9A220,#E8C84A)", display: "inline-block", flexShrink: 0 }} />
+                            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "linear-gradient(135deg,#A0A0A0,#D4D4D4)", display: "inline-block", flexShrink: 0 }} />
+                          </div>
+                          Ouro 18k / Prata
+                        </div>
+                        <span style={{ fontSize: 9.5, color: "#C9A220", fontWeight: 600, letterSpacing: "0.03em" }}>Corrente + Pingente</span>
                       </div>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, color: "#C9A220" }}>
+                    <div style={{ marginBottom: 12 }}>
+                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600, color: "#C9A220" }}>
                         {preco ? fmtBRL(String(preco)) : "Sob consulta"}
                       </span>
-                      <button
-                        onClick={() => setPreview({ kind: "shopify", data: { product: mockProduct, variantIdx: 0 } })}
-                        style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, color: "#C9A220", background: "none", border: "none", cursor: "pointer", padding: 0, whiteSpace: "nowrap" }}
-                      >
-                        Ver →
-                      </button>
                     </div>
+                    <button
+                      onClick={() => setPreview({ kind: "shopify", data: { product: mockProduct, variantIdx: 0 } })}
+                      style={{
+                        width: "100%",
+                        fontFamily: "'Inter',sans-serif",
+                        fontSize: 11,
+                        fontWeight: 600,
+                        letterSpacing: "0.05em",
+                        color: "#1C1814",
+                        background: "none",
+                        border: "1px solid rgba(28,24,20,0.15)",
+                        borderRadius: 8,
+                        padding: "8px 12px",
+                        cursor: "pointer",
+                        whiteSpace: "nowrap",
+                        transition: "all 0.2s ease",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 4
+                      }}
+                      onMouseEnter={e => {
+                        const target = e.currentTarget as HTMLElement;
+                        target.style.background = "#1C1814";
+                        target.style.color = "#F8F5F0";
+                        target.style.borderColor = "#1C1814";
+                      }}
+                      onMouseLeave={e => {
+                        const target = e.currentTarget as HTMLElement;
+                        target.style.background = "none";
+                        target.style.color = "#1C1814";
+                        target.style.borderColor = "rgba(28,24,20,0.15)";
+                      }}
+                    >
+                      Ver detalhes →
+                    </button>
                   </div>
                 </div>
               );
@@ -422,20 +721,60 @@ export const ProductShowcase = () => {
                   </div>
                 </div>
                 <div style={{ padding: "14px 16px 16px" }}>
-                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 17, fontWeight: 400, color: "#1C1814", marginBottom: 2 }}>{nome}</div>
-                  <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "#6B5E52", display: "flex", alignItems: "center", gap: 4, marginBottom: 8 }}>
-                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: isGold(mat) ? "linear-gradient(135deg,#C9A220,#E8C84A)" : "linear-gradient(135deg,#A0A0A0,#D4D4D4)", display: "inline-block" }} />
-                    {mat}
+                  <div style={{ height: 68, display: "flex", flexDirection: "column", justifyContent: "flex-start", marginBottom: 8 }}>
+                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 17, fontWeight: 400, color: "#1C1814", marginBottom: 2 }}>{nome}</div>
+                    <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "#6B5E52", display: "flex", flexDirection: "column", gap: 2, marginTop: 4 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                        <div style={{ display: "flex", gap: 2 }}>
+                          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "linear-gradient(135deg,#C9A220,#E8C84A)", display: "inline-block" }} />
+                          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "linear-gradient(135deg,#A0A0A0,#D4D4D4)", display: "inline-block" }} />
+                        </div>
+                        Ouro 18k / Prata
+                      </div>
+                      <span style={{ fontSize: 9.5, color: "#C9A220", fontWeight: 600, letterSpacing: "0.03em" }}>Corrente + Pingente</span>
+                    </div>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div style={{ marginBottom: 12 }}>
                     <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600, color: "#C9A220" }}>
                       {preco ? fmtBRL(String(preco)) : "Sob consulta"}
                     </span>
-                    <a href={WPP} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
-                      style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, color: "#C9A220" }}>
-                      Pedir →
-                    </a>
                   </div>
+                  <button
+                    onClick={() => setPreview({ kind: "static", data: { img, nome, mat, preco } })}
+                    style={{
+                      width: "100%",
+                      fontFamily: "'Inter',sans-serif",
+                      fontSize: 11,
+                      fontWeight: 600,
+                      letterSpacing: "0.05em",
+                      color: "#1C1814",
+                      background: "none",
+                      border: "1px solid rgba(28,24,20,0.15)",
+                      borderRadius: 8,
+                      padding: "8px 12px",
+                      cursor: "pointer",
+                      whiteSpace: "nowrap",
+                      transition: "all 0.2s ease",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 4
+                    }}
+                    onMouseEnter={e => {
+                      const target = e.currentTarget as HTMLElement;
+                      target.style.background = "#1C1814";
+                      target.style.color = "#F8F5F0";
+                      target.style.borderColor = "#1C1814";
+                    }}
+                    onMouseLeave={e => {
+                      const target = e.currentTarget as HTMLElement;
+                      target.style.background = "none";
+                      target.style.color = "#1C1814";
+                      target.style.borderColor = "rgba(28,24,20,0.15)";
+                    }}
+                  >
+                    Ver detalhes →
+                  </button>
                 </div>
               </div>
             ))}
@@ -457,17 +796,31 @@ export const ProductShowcase = () => {
             >
               <img src={img} alt={`${nome} ${mat}`} style={{ width: "100%", display: "block", objectFit: "cover" }} />
               <div style={{ padding: "20px 24px 24px", borderTop: "1px solid rgba(28,24,20,0.07)" }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: preco ? 16 : 0 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                   <div>
                     <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontWeight: 400, color: "#1C1814", marginBottom: 4 }}>{nome}</div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600, color: isGold(mat) ? "#C9A220" : "#6B5E52" }}>
-                      <span style={{ width: 9, height: 9, borderRadius: "50%", background: isGold(mat) ? "linear-gradient(135deg,#C9A220,#E8C84A)" : "linear-gradient(135deg,#A0A0A0,#D4D4D4)", display: "inline-block" }} />
-                      {mat}
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600, color: "#C9A220" }}>
+                      <div style={{ display: "flex", gap: 2 }}>
+                        <span style={{ width: 9, height: 9, borderRadius: "50%", background: "linear-gradient(135deg,#C9A220,#E8C84A)", display: "inline-block" }} />
+                        <span style={{ width: 9, height: 9, borderRadius: "50%", background: "linear-gradient(135deg,#A0A0A0,#D4D4D4)", display: "inline-block" }} />
+                      </div>
+                      Ouro 18k / Prata
                     </div>
                   </div>
                   <button onClick={() => setPreview(null)} style={{ width: 36, height: 36, borderRadius: 10, border: "1.5px solid rgba(28,24,20,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#6B5E52", flexShrink: 0, cursor: "pointer", background: "none" }}>
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                   </button>
+                </div>
+                
+                {/* Badge Corrente + Pingente */}
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 8, alignSelf: "flex-start", background: "rgba(28,24,20,0.04)", border: "1px solid rgba(28,24,20,0.15)", borderRadius: 8, padding: "8px 14px", marginBottom: preco ? 16 : 20 }}>
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#1C1814" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 12h8M12 8v8" />
+                  </svg>
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: "0.02em", color: "#1C1814" }}>
+                    Conjunto: Corrente + Pingente
+                  </span>
                 </div>
                 {preco && (
                   <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 20 }}>
@@ -495,10 +848,10 @@ export const ProductShowcase = () => {
       {preview?.kind === "shopify" && (() => {
         const { product, variantIdx } = preview.data;
         const node = product.node;
-        const variants = node.variants.edges;
+        let variants = node.variants.edges;
         const selectedVariant = variants[variantIdx]?.node;
         const img = node.images?.edges?.[0]?.node?.url ?? "";
-        const hasVariants = variants.length > 1;
+        const hasVariants = node.variants.edges.length > 1;
 
         return (
           <div
@@ -506,9 +859,30 @@ export const ProductShowcase = () => {
             style={{ position: "fixed", inset: 0, zIndex: 999, background: "rgba(28,24,20,0.88)", backdropFilter: "blur(12px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px 16px", cursor: "zoom-out" }}
           >
             <style>{`
-              @media(max-width:640px){.lb-inner{flex-direction:column!important;max-height:92vh!important;}
-              .lb-img{width:100%!important;min-height:260px!important;max-height:320px!important;}
-              .lb-info{max-height:none!important;overflow:visible!important;}}
+              @media(max-width:640px){
+                .lb-inner {
+                  flex-direction: column !important;
+                  max-height: 90vh !important;
+                }
+                .lb-img {
+                  width: 100% !important;
+                  height: 300px !important;
+                  min-height: auto !important;
+                  max-height: none !important;
+                  flex-shrink: 0 !important;
+                }
+                .lb-image-container {
+                  min-height: auto !important;
+                  height: 100% !important;
+                  flex: 1 !important;
+                }
+                .lb-info {
+                  padding: 20px 24px 24px !important;
+                  overflow-y: auto !important;
+                  max-height: calc(90vh - 300px) !important;
+                  flex: 1 !important;
+                }
+              }
               @keyframes spin{to{transform:rotate(360deg)}}
             `}</style>
             <div
@@ -528,12 +902,41 @@ export const ProductShowcase = () => {
                 cursor: "auto",
               }}
             >
+              {/* Botão de Fechar Absoluto (Design Premium Flutuante) */}
+              <button
+                onClick={() => setPreview(null)}
+                style={{
+                  position: "absolute",
+                  top: 14,
+                  right: 14,
+                  width: 36,
+                  height: 36,
+                  borderRadius: "50%",
+                  border: "1px solid rgba(28,24,20,0.15)",
+                  background: "#fff",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#1C1814",
+                  cursor: "pointer",
+                  zIndex: 90,
+                  transition: "all 0.2s"
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "scale(1.08)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ""; }}
+              >
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
               {/* Image — left panel */}
               <div
                 className="lb-img"
-                style={{ width: "48%", flexShrink: 0, background: (node.handle === "valenza" || node.title.toLowerCase().includes("valenza") || node.handle === "monarch" || node.title.toLowerCase().includes("monarch") || node.handle === "dominus" || node.title.toLowerCase().includes("dominus") || ((node.handle === "titan" || node.title.toLowerCase().includes("titan") || node.handle === "velocita" || node.title.toLowerCase().includes("velocita") || node.title.toLowerCase().includes("velocità")) && !node.title.toLowerCase().includes("clássico") && !node.title.toLowerCase().includes("classico"))) ? "#000000" : "#F2EDE6", position: "relative", minHeight: 480, display: "flex", flexDirection: "column" }}
+                style={{ width: "48%", flexShrink: 0, background: (node.handle === "valenza" || node.title.toLowerCase().includes("valenza") || node.handle === "monarch" || node.title.toLowerCase().includes("monarch") || node.handle === "dominus" || node.title.toLowerCase().includes("dominus") || node.handle === "trion-elite" || node.title.toLowerCase().includes("trion") || node.handle === "velarion" || node.title.toLowerCase().includes("velarion") || node.handle === "imperium" || node.title.toLowerCase().includes("imperium") || ((node.handle === "titan" || node.title.toLowerCase().includes("titan") || node.handle === "velocita" || node.title.toLowerCase().includes("velocita") || node.title.toLowerCase().includes("velocità")) && !node.title.toLowerCase().includes("clássico") && !node.title.toLowerCase().includes("classico"))) ? "#000000" : "#F2EDE6", position: "relative", minHeight: 480, display: "flex", flexDirection: "column" }}
               >
-                <div style={{ flex: 1, position: "relative", minHeight: 380 }}>
+                <div className="lb-image-container" style={{ flex: 1, position: "relative", minHeight: 380 }}>
                   {activePreviewImage ? (
                     <img
                       src={activePreviewImage}
@@ -548,6 +951,9 @@ export const ProductShowcase = () => {
                 </div>
                 {(() => {
                   const handleLower = (node.handle || node.title).toLowerCase();
+                  const isCorridaAtleta = handleLower.includes("corrida-atleta") || handleLower.includes("corrida atleta");
+                  const isCorridaElite = handleLower.includes("corrida-elite") || handleLower.includes("corrida elite");
+                  const isHalterElite = handleLower.includes("halter-elite") || handleLower.includes("halter elite");
                   const isHalter   = handleLower.includes("halter") && !handleLower.includes("elite");
                   const isVelox    = handleLower.includes("velox");
                   const isValenza  = handleLower.includes("valenza");
@@ -555,7 +961,11 @@ export const ProductShowcase = () => {
                   const isDominus  = handleLower.includes("dominus");
                   const isTitan    = handleLower.includes("titan");
                   const isVelocita = handleLower.includes("velocita") || handleLower.includes("velocità");
-                  const showThumbs = isHalter || isVelox || isValenza || isMonarch || isDominus || isTitan || isVelocita;
+                  const isTrion    = handleLower.includes("trion");
+                  const isVelarion = handleLower.includes("velarion");
+                  const isImperiumCrossfit = handleLower.includes("imperium-crossfit");
+                  const isImperium = handleLower.includes("imperium") && !isImperiumCrossfit;
+                  const showThumbs = isHalter || isHalterElite || isCorridaAtleta || isCorridaElite || isVelox || isTrion || isVelarion || isImperiumCrossfit || isImperium || isValenza || isMonarch || isDominus || isTitan || isVelocita;
                   if (!showThumbs) return null;
 
                   const isPrata = selectedVariant?.title.toLowerCase().includes("prata") ||
@@ -563,15 +973,67 @@ export const ProductShowcase = () => {
 
                   let thumbs: { src: string; alt: string }[] = [];
 
-                  if (isHalter) {
+                  if (isCorridaAtleta) {
+                    thumbs = [
+                      { src: corridaAtletaOuroImg,  alt: "OURO 18K"  },
+                      { src: corridaAtletaPrataImg, alt: "PRATA 925" },
+                    ];
+                  } else if (isCorridaElite) {
+                    thumbs = [
+                      { src: titanJoiaOuro,  alt: "OURO 18K"  },
+                      { src: titanJoiaPrata, alt: "PRATA 925" },
+                    ];
+                  } else if (isHalterElite) {
+                    thumbs = [
+                      { src: img,              alt: "Capa"      },
+                      { src: linhaHalterOuro,  alt: "OURO 18K"  },
+                      { src: linhaHalterPrata, alt: "PRATA 925" },
+                    ];
+                  } else if (isHalter) {
                     thumbs = [
                       { src: linhaHalterPrata, alt: "PRATA 925" },
                       { src: linhaHalterOuro,  alt: "OURO 18K"  },
                     ];
                   } else if (isVelox) {
                     thumbs = [
-                      { src: linhaVeloxOuro,  alt: "OURO 18K"  },
+                      { src: veloxRoyaleOuroMasc,  alt: "OURO 18K"  },
                       { src: linhaVeloxPrata, alt: "PRATA 925" },
+                    ];
+                  } else if (isTrion) {
+                    thumbs = [
+                      { src: placaTriatloOuro,  alt: "OURO 18K"  },
+                      { src: placaTriatloPrata, alt: "PRATA 925" },
+                    ];
+                  } else if (isVelarion) {
+                    thumbs = [
+                      { src: velarionOuro,  alt: "OURO 18K"  },
+                      { src: velarionPrata, alt: "PRATA 925" },
+                    ];
+                  } else if (isImperiumCrossfit) {
+                    thumbs = [
+                      { src: img,       alt: "Capa"  },
+                      { src: wodOuro,   alt: "WOD"   },
+                      { src: eliteOuro, alt: "Elite" },
+                    ];
+                  } else if (isImperium) {
+                    thumbs = [
+                      { src: linhaImperiumOuro,      alt: "OURO 18K"  },
+                      { src: linhaImperiumPrataNova, alt: "PRATA 925" },
+                    ];
+                  } else if (isDominus) {
+                    thumbs = [
+                      { src: dominusJoiaOuro,  alt: "OURO 18K"  },
+                      { src: dominusJoiaPrata, alt: "PRATA 925" },
+                    ];
+                  } else if (isMonarch) {
+                    thumbs = [
+                      { src: monarchJoiaOuro,  alt: "OURO 18K"  },
+                      { src: monarchJoiaPrata, alt: "PRATA 925" },
+                    ];
+                  } else if (isValenza) {
+                    thumbs = [
+                      { src: valenzaJoia,      alt: "OURO 18K"  },
+                      { src: valenzaJoiaPrata, alt: "PRATA 925" },
                     ];
                   } else {
                     let joiaImg = "";
@@ -607,12 +1069,9 @@ export const ProductShowcase = () => {
                 className="lb-info"
                 style={{ flex: 1, overflowY: "auto", padding: "36px 32px 32px", display: "flex", flexDirection: "column" }}
               >
-                {/* Close */}
-                <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 20 }}>
-                  <button onClick={() => setPreview(null)} style={{ width: 36, height: 36, borderRadius: 10, border: "1.5px solid rgba(28,24,20,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#6B5E52", cursor: "pointer", background: "none", flexShrink: 0 }}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  </button>
-                </div>
+                {/* Espaço compensatório para não bater com o botão de fechar absoluto no desktop */}
+                <div style={{ height: 12 }} className="mobile-close-spacer" />
+                <style>{`@media(max-width:640px){.mobile-close-spacer{display:none!important;}}`}</style>
 
                 {/* Title */}
                 <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 26, fontWeight: 400, color: "#1C1814", lineHeight: 1.15, marginBottom: 14 }}>{node.title}</div>
@@ -622,19 +1081,31 @@ export const ProductShowcase = () => {
                   <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 300, color: "#6B5E52", lineHeight: 1.75, marginBottom: 16 }}>{node.description}</p>
                 )}
 
-                {/* Tamanho do pingente */}
-                <div style={{ display: "inline-flex", alignItems: "center", gap: 8, alignSelf: "flex-start", background: "rgba(201,162,32,0.08)", border: "1px solid rgba(201,162,32,0.30)", borderRadius: 8, padding: "8px 14px", marginBottom: 24 }}>
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#C9A220" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 3 3 21" /><path d="M3 8V3h5" /><path d="M21 16v5h-5" />
-                  </svg>
-                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: "0.02em", color: "#9a7c16" }}>
-                    Tamanho do pingente: 2,5 cm
-                  </span>
+                {/* Detalhes do Conjunto e Tamanho */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 24 }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8, alignSelf: "flex-start", background: "rgba(28,24,20,0.04)", border: "1px solid rgba(28,24,20,0.15)", borderRadius: 8, padding: "8px 14px" }}>
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#1C1814" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M8 12h8M12 8v8" />
+                    </svg>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: "0.02em", color: "#1C1814" }}>
+                      Conjunto: Corrente + Pingente
+                    </span>
+                  </div>
+                  
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8, alignSelf: "flex-start", background: "rgba(201,162,32,0.08)", border: "1px solid rgba(201,162,32,0.30)", borderRadius: 8, padding: "8px 14px" }}>
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#C9A220" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 3 3 21" /><path d="M3 8V3h5" /><path d="M21 16v5h-5" />
+                    </svg>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: "0.02em", color: "#9a7c16" }}>
+                      Tamanho do pingente: 2,5 cm
+                    </span>
+                  </div>
                 </div>
 
                 <div style={{ marginTop: "auto" }}>
                   {/* Variant selector */}
-                  {hasVariants && (() => {
+                  {variants.length >= 1 && (() => {
                     const renderedMaterials: string[] = [];
                     const selectedVariantNode = variants[variantIdx]?.node;
                     const selectedMat = selectedVariantNode?.selectedOptions.find(o => o.name.toLowerCase().includes("material") || o.name.toLowerCase().includes("tipo"))?.value ?? selectedVariantNode?.title;
@@ -663,10 +1134,28 @@ export const ProductShowcase = () => {
                                   const handleLb = (node.handle || node.title).toLowerCase();
                                   const isPrataLb = matVal.toLowerCase().includes("prata");
                                   let overrideImg: string | undefined;
-                                  if (handleLb === "halter") {
+                                  if (handleLb === "halter" || handleLb.includes("halter-elite")) {
                                     overrideImg = isPrataLb ? linhaHalterPrata : linhaHalterOuro;
                                   } else if (handleLb.includes("velox")) {
-                                    overrideImg = isPrataLb ? linhaVeloxPrata : linhaVeloxOuro;
+                                    overrideImg = isPrataLb ? linhaVeloxPrata : veloxRoyaleOuroMasc;
+                                  } else if (handleLb.includes("trion")) {
+                                    overrideImg = isPrataLb ? placaTriatloPrata : placaTriatloOuro;
+                                  } else if (handleLb.includes("velarion")) {
+                                    overrideImg = isPrataLb ? velarionPrata : velarionOuro;
+                                  } else if (handleLb.includes("imperium-crossfit")) {
+                                    overrideImg = isPrataLb ? eliteOuro : wodOuro;
+                                  } else if (handleLb.includes("imperium")) {
+                                    overrideImg = isPrataLb ? linhaImperiumPrataNova : linhaImperiumOuro;
+                                  } else if (handleLb.includes("corrida-atleta")) {
+                                    overrideImg = isPrataLb ? corridaAtletaPrataImg : corridaAtletaOuroImg;
+                                  } else if (handleLb.includes("corrida-elite")) {
+                                    overrideImg = isPrataLb ? titanJoiaPrata : titanJoiaOuro;
+                                  } else if (handleLb.includes("dominus")) {
+                                    overrideImg = isPrataLb ? dominusJoiaPrata : dominusJoiaOuro;
+                                  } else if (handleLb.includes("monarch")) {
+                                    overrideImg = isPrataLb ? monarchJoiaPrata : monarchJoiaOuro;
+                                  } else if (handleLb.includes("valenza")) {
+                                    overrideImg = isPrataLb ? valenzaJoiaPrata : valenzaJoia;
                                   }
                                   setPreview({ kind: "shopify", data: { product, variantIdx: vi, overrideImage: overrideImg } });
                                 }}
@@ -700,8 +1189,8 @@ export const ProductShowcase = () => {
                     let parcelas: string | null = null;
                     if (isHalterLb) {
                       if (isPrataLb) {
-                        displayPrice = "2510.64";
-                        parcelas = "em até 6x de R$ 418,44";
+                        displayPrice = "297";
+                        parcelas = "em até 3x de R$ 99,00";
                       } else {
                         displayPrice = "3487";
                         parcelas = "em até 10x de R$ 348,70";

@@ -249,14 +249,63 @@ export const PersonalizacaoTeaser = () => {
         </div>
 
         {/* Grid */}
-        <div className="pers-grid" style={{ display: "grid", gridTemplateColumns: estado === "pronto" ? "1fr 1.2fr" : "1.1fr 0.9fr", gap: 56, alignItems: "start" }}>
-          <style>{`@media(max-width:900px){.pers-grid{grid-template-columns:1fr!important;gap:40px!important;}}`}</style>
+        <div className="pers-grid" style={{ display: "grid", gap: 56, alignItems: "start" }}>
+          <style>{`
+            .pers-grid {
+              grid-template-columns: 1.1fr 0.9fr;
+            }
+            .pers-instructions {
+              grid-column: 1;
+              grid-row: 1;
+            }
+            .pers-material-panel {
+              grid-column: 1;
+              grid-row: 2;
+            }
+            .pers-preview-panel {
+              grid-column: 2;
+              grid-row: 1 / span 2;
+            }
+            .pers-result-img {
+              max-width: 340px;
+              height: auto;
+            }
+            @media(max-width:900px){
+              .pers-grid {
+                grid-template-columns: 1fr !important;
+                gap: 32px !important;
+              }
+              .pers-instructions {
+                grid-column: 1 !important;
+                grid-row: 3 !important;
+                order: 3 !important;
+              }
+              .pers-material-panel {
+                grid-column: 1 !important;
+                grid-row: 2 !important;
+                order: 2 !important;
+              }
+              .pers-preview-panel {
+                grid-column: 1 !important;
+                grid-row: 1 !important;
+                order: 1 !important;
+                min-height: auto !important;
+              }
+            }
+            @media(max-width:600px){
+              .pers-result-img {
+                max-width: 260px !important;
+              }
+            }
+            @media(max-width:480px){
+              .pers-preview-panel {
+                padding: 20px 16px !important;
+              }
+            }
+          `}</style>
 
-          {/* Lado Esquerdo - Instruções e Configurações */}
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 40 }}>
-            
-            {/* Passos do Processo */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+          {/* Passos do Processo */}
+          <div className="pers-instructions" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
               <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "1.8rem", fontWeight: 300, color: "#f4ead0", marginBottom: 10, borderBottom: "1px solid rgba(212,175,55,0.12)", paddingBottom: 12 }}>
                 Como Funciona
               </h3>
@@ -374,15 +423,13 @@ export const PersonalizacaoTeaser = () => {
               </button>
               {!foto && (
                 <p style={{ textAlign: "center", fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(212,175,55,0.40)", marginTop: 10, marginBottom: 0 }}>
-                  * Envie sua foto no painel ao lado primeiro para liberar a criação por IA
+                  * Envie sua foto no painel acima primeiro para liberar a criação por IA
                 </p>
               )}
             </div>
 
-          </div>
-
           {/* Lado Direito - Preview / Upload Box */}
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div className="pers-preview-panel" style={{ display: "flex", flexDirection: "column" }}>
             
             {/* Box Interativo Principal */}
             <div style={{
@@ -503,11 +550,10 @@ export const PersonalizacaoTeaser = () => {
                   <img
                     src={resultado}
                     alt="Joia gerada por IA"
+                    className="pers-result-img"
                     style={{
                       display: "block",
                       width: "90%",
-                      maxWidth: 440,
-                      height: "auto",
                       margin: "0 auto",
                       borderRadius: 14,
                       border: material === "ouro" ? "1.5px solid rgba(232,200,74,0.35)" : "1.5px solid rgba(255,255,255,0.18)",

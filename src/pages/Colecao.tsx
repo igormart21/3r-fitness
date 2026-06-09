@@ -4,6 +4,7 @@ import { ArrowLeft, ShoppingBag, Zap, Loader2, ChevronRight } from "lucide-react
 import { Footer } from "@/components/Footer";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartUIStore } from "@/stores/cartUIStore";
+import { useLanguage } from "@/context/LanguageContext";
 import {
   storefrontApiRequest,
   STOREFRONT_QUERY,
@@ -32,13 +33,23 @@ import novaHalterOuro from "@/assets/linha-halter-ouro-nova.jpg";
 import novaImperiumOuroCrossfit from "@/assets/linha-imperium-ouro-crossfit.jpg";
 import strataOuro    from "@/assets/linha-strata-ouro.jpg";
 import strataPrata   from "@/assets/linha-strata-prata.jpg";
+import kettlebellOuro from "@/assets/linha-kettlebell-ouro.jpg";
+import kettlebellPrata from "@/assets/linha-kettlebell-prata.jpg";
+import conjuntoCrossfitOuro from "@/assets/linha-conjunto-crossfit-ouro.jpg";
+import conjuntoCrossfitElite from "@/assets/linha-conjunto-crossfit-elite.jpg";
+import placaTriatloOuro from "@/assets/linha-placa-triatlo-ouro.jpg";
+import placaTriatloPrata from "@/assets/linha-placa-triatlo-prata.jpg";
 import wodOuro from "@/assets/linha-wod-ouro.jpeg";
 import wodPrata from "@/assets/linha-wod-prata.jpeg";
 import eliteCrossOuro from "@/assets/linha-elite-ouro.jpeg";
 import eliteCrossPrata from "@/assets/linha-elite-prata.jpeg";
-import veloxOuro     from "@/assets/linha-velox-royale-ouro-masculino.jpg";
+import veloxOuro     from "@/assets/linha-velox-ouro.png";
 import veloxPrata    from "@/assets/linha-velox-royale-prata-masculino.jpg";
-import aeronOuro     from "@/assets/linha-aeron-ouro.png";
+import veloxFemSpeedOuro from "@/assets/linha-velox-royale-ouro-feminino-speed.jpg";
+import veloxFemSpeedPrata from "@/assets/linha-velox-royale-prata-feminino-speed.jpg";
+import veloxFemMtbOuro from "@/assets/linha-velox-royale-ouro-feminino-mtb.jpg";
+import veloxFemMtbPrata from "@/assets/linha-velox-royale-prata-feminino-mtb.jpg";
+import aeronOuro     from "@/assets/8c5b91a8-d2a6-4785-9930-9c9dec489c2b.png";
 import aeronPrata    from "@/assets/linha-aeron-prata-masculino.jpg";
 import trionOuro     from "@/assets/linha-trion-elite-ouro.png";
 import trionPrata    from "@/assets/trion-elite-atleta-prata.jpg";
@@ -129,10 +140,6 @@ const COLECOES = [
   { n:"02", name:"Vigor",             handle:"vigor",   sport:"Musculação", img:vigorOuro,              imgPrata:vigorPrata,             desc:"Evolução contínua. Presença marcante." },
   { n:"19", name:"Clássico Masc",     handle:"halter",  sport:"Musculação", img:bonecoMuscMascClassicoOuro, imgPrata:bonecoMuscMascClassicoPrata, desc:"Constância e disciplina representadas em cada detalhe." },
   { n:"20", name:"Clássico Fem",      handle:"vigor",   sport:"Musculação", img:bonecoMuscFemClassicoOuro,  imgPrata:bonecoMuscFemClassicoPrata,  desc:"Evolução feminina. Força e elegância em ouro e prata." },
-  { n:"01B", name:"Halter Elite",     handle:"halter-elite", sport:"Musculação", img:novaHalterOuro, desc:"Design robusto e moderno esculpido em ouro 18k.", skipPrata: true },
-  { n:"03", name:"Dominus",           handle:"dominus",      sport:"Fisiculturismo", img:dominusOuro,              imgPrata:dominusPrata,              desc:"A busca incessante pela melhor versão." },
-  { n:"04", name:"Monarch",           handle:"monarch",      sport:"Fisiculturismo", img:monarchOuro,              imgPrata:monarchPrata,              desc:"Domínio, disciplina extrema e presença absoluta." },
-  { n:"05", name:"Valenza",           handle:"valenza",      sport:"Fisiculturismo", img:valenzaOuro,              imgPrata:valenzaPrata,              desc:"A união perfeita entre força e elegância.", posPrata:"82% center" },
   { n:"15", name:"Clássico Masc",     handle:"dominus",      sport:"Fisiculturismo", img:bonecoFisiMascClassicoOuro,    imgPrata:bonecoFisiMascClassicoPrata,    desc:"Postura clássica. Força representada em cada detalhe." },
   { n:"16", name:"Clássico Fem",      handle:"valenza",      sport:"Fisiculturismo", img:bonecoFisiFemClassicoOuro,     imgPrata:bonecoFisiFemClassicoPrata,     desc:"Elegância e postura que definem a campeã." },
   { n:"17", name:"Underground Masc",  handle:"monarch",      sport:"Fisiculturismo", img:bonecoFisiMascUndergroundOuro, imgPrata:bonecoFisiMascUndergroundPrata, desc:"Identidade raw. Intensidade que não pede licença." },
@@ -141,21 +148,24 @@ const COLECOES = [
   { n:"06C", name:"Imperium", handle:"imperium-prata", sport:"Crossfit", imgPrata:imperiumPrataNova, desc:"Estética premium esculpida em prata 925.", skipOuro: true },
   { n:"06B", name:"Imperium", handle:"imperium-ouro", sport:"Crossfit", img:imperiumOuroNova,     desc:"Estética premium esculpida em ouro 18k.", skipPrata: true },
   { n:"06D", name:"Imperium",      handle:"imperium", sport:"Crossfit", imgPrata:imperiumPrata,          desc:"Construída para quem nasceu para dominar.", skipOuro: true },
-  { n:"06E", name:"Imperium CrossFit", handle:"imperium-crossfit", sport:"Crossfit", img:novaImperiumOuroCrossfit, desc:"Estética premium e a força do crossfit em ouro 18k.", skipPrata: true },
   { n:"07", name:"Strata",        handle:"strata",   sport:"Crossfit", img:strataOuro,               imgPrata:strataPrata,                desc:"Movimento bruto refinado em luxo contemporâneo." },
+  { n:"07B", name:"Kettlebell CrossFit", handle:"kettlebell-crossfit", sport:"Crossfit", img:kettlebellOuro, imgPrata:kettlebellPrata, desc:"A força e a resiliência do CrossFit moldadas em formato de kettlebell." },
   { n:"23", name:"Clássico Masc", handle:"imperium", sport:"Crossfit", img:bonecoCrossMascClassicoOuro, imgPrata:bonecoCrossMascClassicoPrata, desc:"Força bruta e determinação representadas em joia." },
   { n:"24", name:"Clássico Fem",  handle:"strata",   sport:"Crossfit", img:bonecoCrossFemClassicoOuro,  imgPrata:bonecoCrossFemClassicoPrata,  desc:"Potência feminina. Precisão e estilo em cada peça." },
-  { n:"08", name:"Velox Royale", handle:"velox-royale", sport:"Ciclismo", img:veloxOuro,         imgPrata:veloxPrata,         desc:"Potência, precisão e elegância em movimento." },
+  { n:"08", name:"Velox Royale", handle:"velox-royale", sport:"Ciclismo", img:veloxOuro,         imgPrata:veloxPrata,         desc:"Criada para quem transforma resistência em assinatura. A linha VELOX ROYALE representa o ciclismo em sua forma mais refinada: potência, precisão e elegância em movimento. Inspirada nos atletas que enxergam a estrada como extensão da própria identidade, cada peça carrega uma estética minimalista com presença absoluta. Disponível nas versões Ouro 18k e Prata 925. Luxo esportivo elevado ao máximo nível. VELOX ROYALE.Para quem pedala acima do comum." },
+  { n:"08B", name:"Velox Royale Fem Speed", handle:"velox-royale-fem-speed", sport:"Ciclismo", img:veloxFemSpeedOuro, imgPrata:veloxFemSpeedPrata, desc:"Velocidade, elegância e a silhueta da ciclista feminina em velocidade." },
+  { n:"08C", name:"Velox Royale Fem MTB", handle:"velox-royale-fem-mtb", sport:"Ciclismo", img:veloxFemMtbOuro, imgPrata:veloxFemMtbPrata, desc:"A força e a determinação da ciclista feminina de Mountain Bike." },
   { n:"25", name:"Speed Clássico",  handle:"velox-royale", sport:"Ciclismo", img:bikeSpeedClassicoOuro,   imgPrata:bikeSpeedClassicoPrata,  desc:"Velocidade e estilo para quem pedala com propósito.", imgFit:"contain" },
   { n:"09", name:"Aeron",           handle:"aeron",        sport:"Ciclismo", img:aeronOuro,              imgPrata:aeronPrata,              desc:"Cada giro, um pulso eterno. Cadência e elegância em movimento.", imgFit:"contain" },
   { n:"10", name:"Titan",        handle:"titan",     sport:"Corrida", img:titanJoiaOuro,   imgPrata:titanJoiaPrata,          desc:"Resistência mental, evolução e força silenciosa." },
   { n:"11", name:"Velocità",     handle:"velocita",  sport:"Corrida", img:velocitaJoiaOuro, imgPrata:velocitaJoiaPrata,      desc:"Movimento transformado em elegância." },
   { n:"11A", name:"Sprint",      handle:"sprint",    sport:"Corrida", img:sprintJoia,      imgPrata:sprintJoia,              desc:"A força e a velocidade da explosão inicial em ouro ou prata.", skipPrata: true },
-  { n:"11B", name:"Ritmo",       handle:"ritmo",     sport:"Corrida", img:ritmoJoia,       imgPrata:passadaJoia,             desc:"A constância e a determinação do ritmo perfeito esculpidos em joia." },
+  { n:"11B", name:"Ritmo",       handle:"ritmo",     sport:"Corrida", img:passadaJoia,       imgPrata:ritmoJoia,             desc:"A constância e a determinação do ritmo perfeito esculpidos em joia." },
   { n:"21", name:"Clássico Masc",    handle:"titan",     sport:"Corrida", img:bonecoCorrMascClassicoOuro, imgPrata:bonecoCorrMascClassicoPrata, desc:"Resistência e foco representados em joia exclusiva." },
   { n:"22", name:"Clássico Fem",     handle:"velocita",  sport:"Corrida", img:bonecoCorrFemClassicoOuro,  imgPrata:bonecoCorrFemClassicoPrata,  desc:"Leveza, ritmo e elegância em cada detalhe." },
-  { n:"12", name:"Trion Elite",  handle:"trion-elite",  sport:"Triatlo",        img:trionOuro,    imgPrata:trionOuro,     desc:"Para atletas que vivem além dos limites comuns.", imgFilterPrata:"grayscale(100%) brightness(1.15) contrast(1.05)" },
-  { n:"13", name:"Velarion",     handle:"velarion",     sport:"Triatlo",        img:velarionOuro, imgPrata:velarionOuro,  desc:"Luxo silencioso. Performance elevada.", imgFilterPrata:"grayscale(100%) brightness(1.15) contrast(1.05)" },
+  { n:"12", name:"Trion Elite",  handle:"trion-elite",  sport:"Triatlo",        img:trionOuro,    imgPrata:placaTriatloPrata,     desc:"TRION ÉLITE Criada para atletas que vivem além dos limites comuns, a linha TRION ÉLITE representa a união perfeita entre resistência, precisão e presença. Inspirada na intensidade do triathlon, cada peça carrega a essência da disciplina absoluta — mente forte, corpo preparado e espírito inabalável. Minimalista. Técnica. Atemporal. Desenvolvida artesanalmente em versões Ouro 18k e Prata 925, TRION ÉLITE foi criada para quem transforma esforço extremo em identidade. Não é apenas uma joia. É um símbolo de permanência entre os que suportam o impossível. TRION ÉLITE. Para atletas que nasceram para atravessar distâncias que poucos suportam.", skipPrata: true },
+  { n:"13", name:"Velarion",     handle:"velarion",     sport:"Triatlo",        img:velarionOuro,  desc:"Luxo silencioso. Performance elevada.", skipPrata: true },
+  { n:"13B", name:"Placa Triatlo", handle:"placa-triatlo", sport:"Triatlo", img:placaTriatloOuro, imgPrata:placaTriatloPrata, desc:"Placa exclusiva com as três modalidades do Triatlo esculpidas em ouro 18k ou prata 925." },
   { n:"26", name:"Clássico Masc", handle:"trion-elite", sport:"Triatlo",  img:bonecoTriMascClassicoOuro, imgPrata:bonecoTriMascClassicoPrata, desc:"Resistência, força e elegância em três modalidades." },
   { n:"27", name:"Cartier",        handle:"cartier",     sport:"Colares", img:colarCartierOuro,   imgPrata:colarCartierPrata,   desc:"Corrente elo cartier. Leveza e sofisticação para o dia a dia.", imgFit:"contain" },
   { n:"28", name:"Veneziana",      handle:"veneziana",   sport:"Colares", img:colarVenezianaOuro, imgPrata:colarVenezianaPrata, desc:"Corrente veneziana. Elegância clássica em cada detalhe.", imgFit:"contain" },
@@ -291,7 +301,7 @@ const ProductCard = ({ product, fallbackImg }: { product: ShopifyProduct; fallba
         )}
 
         {/* Opções */}
-        {product.node.options.filter(o => o.values.length > 1).map(opt => (
+        {product.node.options.filter(o => o.values.length > 1 || o.name.toLowerCase().includes("material") || o.name.toLowerCase().includes("tipo")).map(opt => (
           <div key={opt.name} style={{ marginBottom: 12 }}>
             <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, fontWeight: 600, letterSpacing: "0.4em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 7 }}>
               {opt.name}
@@ -354,6 +364,7 @@ const ColecaoView = ({
     p.node.handle.startsWith(col.handle + "-") ||
     p.node.title.toLowerCase().includes(colName)
   );
+
 
   // Mapeamento especial para coleções estáticas do ateliê
   if (products.length === 0 && allProducts.length > 0) {
@@ -443,14 +454,69 @@ const ColecaoView = ({
     }
   }
 
+  // Se for Gold-only ou Silver-only, filtramos as variantes e opções dos produtos (Shopify ou clones)
+  if (products.length > 0 && (col.skipPrata || col.skipOuro)) {
+    products = products.map(p => {
+      const cloned = JSON.parse(JSON.stringify(p)) as ShopifyProduct;
+      
+      // Filtra as variantes
+      cloned.node.variants.edges = cloned.node.variants.edges.filter(ve => {
+        const v = ve.node;
+        const mat = (v.selectedOptions.find(o => o.name.toLowerCase().includes("material") || o.name.toLowerCase().includes("tipo"))?.value ?? v.title).toLowerCase();
+        if (col.skipPrata) return !mat.includes("prata");
+        if (col.skipOuro) return !mat.includes("ouro");
+        return true;
+      });
+      
+      // Filtra os valores das opções
+      cloned.node.options = cloned.node.options.map(opt => {
+        if (opt.name.toLowerCase().includes("material") || opt.name.toLowerCase().includes("tipo")) {
+          return {
+            ...opt,
+            values: opt.values.filter(val => {
+              const valLower = val.toLowerCase();
+              if (col.skipPrata) return !valLower.includes("prata");
+              if (col.skipOuro) return !valLower.includes("ouro");
+              return true;
+            })
+          };
+        }
+        return opt;
+      });
+      
+      return cloned;
+    });
+  }
+
   // Se após os filtros ainda estiver vazio e não estiver carregando, geramos o mock baseado na coleção
   if (products.length === 0 && !loadingShopify) {
-    const isGoldOnly = col.skipOuro === false && col.skipPrata === true;
-    const isSilverOnly = col.skipOuro === true && col.skipPrata === false;
+    const isGoldOnly = !col.skipOuro && col.skipPrata;
+    const isSilverOnly = col.skipOuro && !col.skipPrata;
     
     // Preços oficiais das variantes do HALTER (placeholder do projeto)
-    const precoOuro = 1497;
-    const precoPrata = 347;
+    let precoOuro = 1497;
+    let precoPrata = 347;
+
+    if (col.handle === "halter" || col.handle === "halter-elite") {
+      precoOuro = 3487;
+      precoPrata = 297;
+    } else if (col.handle.startsWith("velox-royale-fem")) {
+      precoOuro = 2487;
+      precoPrata = 297;
+    } else if (col.handle === "velox-royale") {
+      precoOuro = 3487;
+      precoPrata = 297;
+    } else if (col.handle === "kettlebell-crossfit") {
+      precoOuro = 2490;
+      precoPrata = 327;
+    } else if (col.handle === "conjunto-crossfit-ouro") {
+      precoOuro = 3487;
+    } else if (col.handle === "conjunto-crossfit-elite") {
+      precoOuro = 4397;
+    } else if (col.handle === "placa-triatlo") {
+      precoOuro = 2587;
+      precoPrata = 327;
+    }
 
     const variantsList = [];
     if (!isSilverOnly) {
@@ -1188,8 +1254,88 @@ const PersonalizarIA = () => {
   );
 };
 
+const getSportSlug = (sportName: string) => {
+  const clean = sportName.trim().toLowerCase();
+  if (clean.includes("muscul") || clean === "musculação" || clean === "musculacion" || clean === "bodybuilding") return "musculacao";
+  if (clean.includes("cross")) return "crossfit";
+  if (clean.includes("corr") || clean === "corrida" || clean === "carrera" || clean === "running") return "corrida";
+  if (clean.includes("cicl") || clean === "ciclismo" || clean === "cycling") return "ciclismo";
+  if (clean.includes("triat") || clean === "triatlo" || clean === "triathlon") return "triathlon";
+  if (clean.includes("fisi") || clean === "fisiculturismo" || clean === "bodybuilding elite") return "fisiculturismo";
+  if (clean.includes("colar") || clean === "colares") return "colares";
+  if (clean.includes("anel") || clean === "anéis" || clean === "aneis") return "aneis";
+  if (clean.includes("brinco") || clean === "brincos") return "brincos";
+  return clean;
+};
+
+const useProductTranslation = () => {
+  const { t } = useLanguage();
+
+  const translateProduct = (handle: string, name: string, defaultDesc: string) => {
+    const handleClean = handle.trim().toLowerCase();
+    const nameClean = name.trim().toLowerCase();
+
+    // Resolver Nome do Produto
+    let translatedName = name;
+    if (handleClean === "cartier") translatedName = t("product.name.cartier");
+    else if (handleClean === "veneziana") translatedName = t("product.name.veneziana");
+    else if (handleClean === "brinco") translatedName = t("product.name.brinco_corrida");
+    else if (handleClean === "anel-corrida") translatedName = t("product.name.anel_corrida_fem");
+    else if (handleClean === "anel-fisi") translatedName = t("product.name.anel_fisi");
+    else if (handleClean === "anel-musc") translatedName = t("product.name.anel_musc");
+    else if (handleClean === "anel-cross") translatedName = t("product.name.anel_cross");
+    else if (handleClean === "anel-cicl") translatedName = t("product.name.anel_cicl");
+    else if (handleClean === "anel-corrm") translatedName = t("product.name.anel_corrm");
+    else if (handleClean === "anel-tri") translatedName = t("product.name.anel_tri");
+    else if (handleClean === "sprint") translatedName = t("product.name.sprint");
+    else if (handleClean === "ritmo") translatedName = t("product.name.ritmo");
+    else if (handleClean === "kettlebell-crossfit") translatedName = t("product.name.kettlebell_crossfit");
+    else if (handleClean.startsWith("velox-royale-fem-speed")) translatedName = t("product.name.velox_fem_speed");
+    else if (handleClean.startsWith("velox-royale-fem-mtb")) translatedName = t("product.name.velox_fem_mtb");
+    else if (nameClean.includes("speed clássico") || nameClean.includes("speed classico")) translatedName = t("product.name.speed_classico");
+    else if (handleClean === "placa-triatlo") translatedName = t("product.name.placa_triatlo");
+    else if (nameClean === "clássico masc" || nameClean === "classico masc") translatedName = t("product.name.classico_masc");
+    else if (nameClean === "clássico fem" || nameClean === "classico fem") translatedName = t("product.name.classico_fem");
+    else if (nameClean === "underground masc") translatedName = t("product.name.underground_masc");
+    else if (nameClean === "underground fem") translatedName = t("product.name.underground_fem");
+    else if (t("line." + handleClean + ".nome") !== ("line." + handleClean + ".nome")) {
+      translatedName = t("line." + handleClean + ".nome");
+    }
+
+    // Resolver Descrição
+    let translatedDesc = defaultDesc;
+    if (t("line." + handleClean + ".frase") !== ("line." + handleClean + ".frase")) {
+      translatedDesc = t("line." + handleClean + ".frase");
+    } else if (nameClean === "clássico masc" || nameClean === "classico masc") {
+      translatedDesc = t("product.desc.classico_masc");
+    } else if (nameClean === "clássico fem" || nameClean === "classico fem") {
+      translatedDesc = t("product.desc.classico_fem");
+    } else if (nameClean === "underground masc") {
+      translatedDesc = t("product.desc.underground_masc");
+    } else if (nameClean === "underground fem") {
+      translatedDesc = t("product.desc.underground_fem");
+    } else if (handleClean === "cartier") {
+      translatedDesc = t("product.desc.cartier");
+    } else if (handleClean === "veneziana") {
+      translatedDesc = t("product.desc.veneziana");
+    } else if (handleClean === "brinco") {
+      translatedDesc = t("product.desc.brinco_corrida");
+    } else if (handleClean === "anel-corrida") {
+      translatedDesc = t("product.desc.anel_corrida_fem");
+    } else if (handleClean === "placa-triatlo") {
+      translatedDesc = t("product.desc.placa_triatlo");
+    }
+
+    return { nome: translatedName, desc: translatedDesc };
+  };
+
+  return { translateProduct };
+};
+
 // ── Página principal ──────────────────────────────────────────────────────────
 const Colecao = () => {
+  const { t } = useLanguage();
+  const { translateProduct } = useProductTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const totalItems = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0));
   const openCart = useCartUIStore((s) => s.openCart);
@@ -1239,7 +1385,13 @@ const Colecao = () => {
       "imperium-ouro": "Pingentes",
       "imperium-prata": "Pingentes",
       strata: "Pingentes",
+      "kettlebell-crossfit": "Pingentes",
+      "placa-triatlo": "Pingentes",
+      "conjunto-crossfit-ouro": "Colares",
+      "conjunto-crossfit-elite": "Colares",
       "velox-royale": "Colares",
+      "velox-royale-fem-speed": "Colares",
+      "velox-royale-fem-mtb": "Colares",
       aeron: "Colares",
       titan: "Colares",
       velocita: "Anéis",
@@ -1272,19 +1424,25 @@ const Colecao = () => {
       wod: 4207.0,
       "elite-cross": 4207.0,
       strata: 549.9,
+      "kettlebell-crossfit": 2490.0,
+      "conjunto-crossfit-ouro": 3487.0,
+      "conjunto-crossfit-elite": 4397.0,
       "velox-royale": 2587.0,
+      "velox-royale-fem-speed": 2487.0,
+      "velox-royale-fem-mtb": 2487.0,
+      "placa-triatlo": 2587.0,
       aeron: 2587.0,
       "corrida-atleta": 3597.0,
       "corrida-elite": 3597.0,
       titan: 459.9,
       velocita: 399.9,
-      sprint: 459.9,
-      ritmo: 459.9,
-      "trion-elite": 2687.0,
+      sprint: 297.0,
+      ritmo: 2187.0,
+      "trion-elite": 4387.0,
       velarion: 2497.0,
       triade: 899.9,
-      cartier: 349.9,
-      veneziana: 399.9,
+      cartier: 1700.0,
+      veneziana: 1500.0,
       "anel-corrida": 299.9,
       "anel-fisi":  349.9,
       "anel-musc":  299.9,
@@ -1292,7 +1450,7 @@ const Colecao = () => {
       "anel-cicl":  299.9,
       "anel-corrm": 299.9,
       "anel-tri":   349.9,
-      brinco: 249.9,
+      brinco: 1300.0,
     };
 
     return COLECOES.flatMap((c) => {
@@ -1336,13 +1494,19 @@ const Colecao = () => {
       if (c.handle === "strata") precoPrata = 297.0;
       if (c.handle === "halter") precoPrata = 297.0;
       if (c.handle === "vigor") precoPrata = 297.0;
-      if (c.handle === "velox-royale") precoPrata = 297.0;
+      if (c.handle === "kettlebell-crossfit") precoPrata = 327.0;
+      if (c.handle === "placa-triatlo") precoPrata = 327.0;
+      if (c.handle.startsWith("velox-royale")) precoPrata = 297.0;
       if (c.handle === "aeron") precoPrata = 297.0;
       if (c.handle === "trion-elite") precoPrata = 327.0;
       if (c.name === "Titan") precoPrata = 327.0;
       if (c.name === "Velocità") precoPrata = 327.0;
       if (isClassicoMascCorrida || isClassicoFemCorrida) precoPrata = 297.0;
       if (c.handle === "velarion") precoPrata = 327.0;
+      if (c.handle === "ritmo") precoPrata = 297.0;
+      if (c.handle === "cartier") precoPrata = 259.0;
+      if (c.handle === "veneziana") precoPrata = 287.0;
+      if (c.handle === "brinco") precoPrata = 299.0;
       if (isClassicoMascFisi || isClassicoFemFisi) precoPrata = 297.0;
 
       const prata = {
@@ -1479,7 +1643,7 @@ const Colecao = () => {
 
       <main style={{ maxWidth: 1280, margin: "0 auto", padding: "18px 24px 64px" }}>
         <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "#787878", marginBottom: 12 }}>
-          INÍCIO &nbsp;&gt;&nbsp; CATEGORIAS &nbsp;&gt;&nbsp; <strong style={{ color: "#404040" }}>{activeSport === "Todas" ? "TODOS OS PRODUTOS" : activeSport.toUpperCase()}</strong>
+          {t("nav.home").toUpperCase()} &nbsp;&gt;&nbsp; {t("nav.collections").toUpperCase()} &nbsp;&gt;&nbsp; <strong style={{ color: "#404040" }}>{activeSport === "Todas" ? t("collection.filter.all").toUpperCase() : t("sport." + getSportSlug(activeSport)).toUpperCase()}</strong>
         </div>
 
         <div className="category-hero" style={{ borderRadius: 8, overflow: "hidden", background: "#121212", marginBottom: 20, border: "1px solid #dedede", position: "relative", minHeight: 220 }}>
@@ -1487,12 +1651,12 @@ const Colecao = () => {
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.78) 45%, rgba(0,0,0,0.9) 100%)" }} />
           <div className="category-hero-content" style={{ position: "relative", zIndex: 2, marginLeft: "48%", padding: "34px 32px", color: "#fff" }}>
             <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 44, lineHeight: 1, marginBottom: 10 }}>
-              {activeSport === "Todas" ? "TODOS OS PRODUTOS" : activeSport.toUpperCase()}
+              {activeSport === "Todas" ? t("collection.filter.all").toUpperCase() : t("sport." + getSportSlug(activeSport)).toUpperCase()}
             </h1>
             <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, color: "rgba(255,255,255,0.84)", maxWidth: 460, lineHeight: 1.6 }}>{heroCopy}</p>
             <div style={{ display: "flex", gap: 24, marginTop: 20 }}>
-              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(232,200,74,0.9)" }}>Símbolos exclusivos</div>
-              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(232,200,74,0.9)" }}>Prata 925 e Ouro 18k</div>
+              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(232,200,74,0.9)" }}>{t("announcement.customized")}</div>
+              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(232,200,74,0.9)" }}>{t("announcement.materials")}</div>
             </div>
           </div>
         </div>
@@ -1502,7 +1666,7 @@ const Colecao = () => {
             const ativo = s === activeSport;
             return (
               <button key={s} onClick={() => setSearchParams({ sport: s })} style={{ padding: "8px 14px", borderRadius: 100, border: ativo ? "1px solid #1f1f1f" : "1px solid #d5d5d5", background: ativo ? "#1f1f1f" : "#fff", color: ativo ? "#fff" : "#666", fontSize: 11, fontFamily: "'Inter',sans-serif", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer" }}>
-                {s === "Todas" ? "Todos os produtos" : s}
+                {s === "Todas" ? t("collection.filter.all") : t("sport." + getSportSlug(s))}
               </button>
             );
           })}
@@ -1517,24 +1681,32 @@ const Colecao = () => {
           `}</style>
 
           <aside style={{ background: "#fff", border: "1px solid #e6e6e6", borderRadius: 8, padding: "16px 14px", height: "fit-content" }}>
-            <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 700, color: "#222", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14 }}>Filtrar por</div>
+            <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 700, color: "#222", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14 }}>{t("cart.item.remove") === "Remover" ? "Filtrar por" : (t("cart.item.remove") === "Eliminar" ? "Filtrar por" : "Filter by")}</div>
             <div style={{ borderTop: "1px solid #ececec", paddingTop: 12 }}>
-              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 700, color: "#555", textTransform: "uppercase", marginBottom: 10 }}>Tipo de joia</div>
+              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 700, color: "#555", textTransform: "uppercase", marginBottom: 10 }}>{t("cart.item.gender") === "Modelo" ? "Tipo de joia" : (t("cart.item.gender") === "Model" ? "Jewelry Type" : "Tipo de joya")}</div>
               {tiposDisponiveis.length === 0
                 ? <p style={{ fontFamily:"'Inter',sans-serif", fontSize:12, color:"#aaa" }}>Nenhum tipo disponível</p>
-                : tiposDisponiveis.map((tipo) => (
-                <label key={tipo} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, fontFamily: "'Inter',sans-serif", fontSize: 13, color: "#4a4a4a", cursor: "pointer" }}>
-                  <input type="checkbox" checked={tipos.includes(tipo)} onChange={() => toggleTipo(tipo)} />
-                  {tipo}
-                </label>
-              ))}
+                : tiposDisponiveis.map((tipo) => {
+                  const cleanTipo = tipo.toLowerCase();
+                  let tipoTraduzido = tipo;
+                  if (cleanTipo.includes("pingente")) tipoTraduzido = t("product.badge") === "Peça do Ateliê" ? "Pingentes" : (t("product.badge") === "Atelier Piece" ? "Pendants" : "Colgantes");
+                  else if (cleanTipo.includes("colar")) tipoTraduzido = t("sport.colares");
+                  else if (cleanTipo.includes("anel")) tipoTraduzido = t("sport.aneis");
+                  else if (cleanTipo.includes("brinco")) tipoTraduzido = t("sport.brincos");
+                  return (
+                    <label key={tipo} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, fontFamily: "'Inter',sans-serif", fontSize: 13, color: "#4a4a4a", cursor: "pointer" }}>
+                      <input type="checkbox" checked={tipos.includes(tipo)} onChange={() => toggleTipo(tipo)} />
+                      {tipoTraduzido}
+                    </label>
+                  );
+                })}
             </div>
             <div style={{ borderTop: "1px solid #ececec", paddingTop: 12, marginTop: 12 }}>
-              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 700, color: "#555", textTransform: "uppercase", marginBottom: 10 }}>Material</div>
+              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 700, color: "#555", textTransform: "uppercase", marginBottom: 10 }}>{t("cart.item.material")}</div>
               {(["Prata 925", "Ouro 18k"] as MaterialFiltro[]).map((material) => (
                 <label key={material} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, fontFamily: "'Inter',sans-serif", fontSize: 13, color: "#4a4a4a", cursor: "pointer" }}>
                   <input type="checkbox" checked={materiais.includes(material)} onChange={() => toggleMaterial(material)} />
-                  {material}
+                  {material === "Ouro 18k" ? t("atelie.linha.material.ouro") : t("atelie.linha.material.prata")}
                 </label>
               ))}
             </div>
@@ -1543,47 +1715,60 @@ const Colecao = () => {
           <section>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
               <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, color: "#666" }}>
-                {produtosFiltrados.length} produtos em <strong style={{ color: "#222" }}>{activeSport === "Todas" ? "Todos os produtos" : activeSport}</strong>
+                {produtosFiltrados.length} {produtosFiltrados.length === 1 ? t("collection.results_count_single") : t("collection.results_count")} <strong style={{ color: "#222" }}>{activeSport === "Todas" ? t("collection.filter.all") : t("sport." + getSportSlug(activeSport))}</strong>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "#666" }}>Ordenar por:</span>
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "#666" }}>{t("collection.sort.by")}</span>
                 <select value={ordem} onChange={(e) => setOrdem(e.target.value)} style={{ padding: "8px 12px", border: "1px solid #dadada", borderRadius: 6, fontFamily: "'Inter',sans-serif", fontSize: 12, color: "#333", background: "#fff" }}>
-                  <option>Mais Vendidos</option>
-                  <option>Menor Preço</option>
-                  <option>Maior Preço</option>
-                  <option>Mais Novos</option>
+                  <option value="Mais Vendidos">{t("collection.sort.default") === "Padrão" ? "Mais Vendidos" : (t("collection.sort.default") === "Default" ? "Best Sellers" : (t("collection.sort.default") === "Predefinito" ? "Più venduti" : "Más vendidos"))}</option>
+                  <option value="Menor Preço">{t("collection.sort.price_asc")}</option>
+                  <option value="Maior Preço">{t("collection.sort.price_desc")}</option>
+                  <option value="Mais Novos">{t("collection.sort.name") === "Nome" ? "Mais Novos" : (t("collection.sort.name") === "Name" ? "Newest" : (t("collection.sort.name") === "Nombre" ? "Más nuevos" : "Nuovi arrivi"))}</option>
                 </select>
               </div>
             </div>
 
             <div className="products-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4,minmax(0,1fr))", gap: 16 }}>
-              {produtosFiltrados.map((p) => (
-                <article key={p.id} style={{ background: "#fff", borderRadius: 10, border: "1px solid #e8e8e8", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-                  <div style={{ aspectRatio: "3/4", overflow: "hidden" }}>
-                    <img src={p.imagem} alt={p.nome} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: p.imgPos ?? "center center", filter: p.imgFilter }} />
-                  </div>
-                  <div style={{ padding: "12px 12px 14px", display: "flex", flexDirection: "column", flex: 1 }}>
-                    <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 17, fontWeight: 400, color: "#1a1a1a", lineHeight: 1.2, marginBottom: 3 }}>
-                      {p.nome}
+              {produtosFiltrados.map((p) => {
+                const { nome: nameTranslated } = translateProduct(p.collectionHandle, p.nome, "");
+                const categoryClean = p.categoria.toLowerCase();
+                let categoryTranslated = p.categoria;
+                if (categoryClean.includes("pingente")) categoryTranslated = t("product.badge") === "Peça do Ateliê" ? "Pingentes" : (t("product.badge") === "Atelier Piece" ? "Pendants" : "Colgantes");
+                else if (categoryClean.includes("colar")) categoryTranslated = t("sport.colares");
+                else if (categoryClean.includes("anel")) categoryTranslated = t("sport.aneis");
+                else if (categoryClean.includes("brinco")) categoryTranslated = t("sport.brincos");
+                else categoryTranslated = t("sport." + getSportSlug(p.categoria));
+
+                const materialTranslated = p.material === "Ouro 18k" ? t("atelie.linha.material.ouro") : t("atelie.linha.material.prata");
+
+                return (
+                  <article key={p.id} style={{ background: "#fff", borderRadius: 10, border: "1px solid #e8e8e8", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+                    <div style={{ aspectRatio: "3/4", overflow: "hidden" }}>
+                      <img src={p.imagem} alt={nameTranslated} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: p.imgPos ?? "center center", filter: p.imgFilter }} />
                     </div>
-                    <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.28em", textTransform: "uppercase", color: "#aaa", marginBottom: 10 }}>
-                      {p.material} · {p.categoria}
+                    <div style={{ padding: "12px 12px 14px", display: "flex", flexDirection: "column", flex: 1 }}>
+                      <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 17, fontWeight: 400, color: "#1a1a1a", lineHeight: 1.2, marginBottom: 3 }}>
+                        {nameTranslated}
+                      </div>
+                      <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.28em", textTransform: "uppercase", color: "#aaa", marginBottom: 10 }}>
+                        {materialTranslated} · {categoryTranslated}
+                      </div>
+                      <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 20, fontWeight: 700, color: "#171717", marginBottom: 2 }}>
+                        {fmtBRL(String(p.preco))}
+                      </div>
+                      <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "#888", marginBottom: 12 }}>
+                        {t("cart.item.quantity") === "Qtd" ? `em até ${p.parcelas}x de ` : (t("cart.item.quantity") === "Qty" ? `up to ${p.parcelas}x of ` : (t("cart.item.quantity") === "Cant" ? `hasta ${p.parcelas}x de ` : `fino a ${p.parcelas}x di `))} {fmtBRL(String(p.preco / p.parcelas))}
+                      </div>
+                      <button
+                        onClick={() => setSelectedProduct(p)}
+                        style={{ width: "100%", border: "1px solid #121212", background: "#121212", color: "#fff", borderRadius: 7, padding: "11px 12px", fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", marginTop: "auto" }}
+                      >
+                        {t("collection.btn.view_jewelry")}
+                      </button>
                     </div>
-                    <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 20, fontWeight: 700, color: "#171717", marginBottom: 2 }}>
-                      {fmtBRL(String(p.preco))}
-                    </div>
-                    <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "#888", marginBottom: 12 }}>
-                      em até {p.parcelas}x de {fmtBRL(String(p.preco / p.parcelas))}
-                    </div>
-                    <button
-                      onClick={() => setSelectedProduct(p)}
-                      style={{ width: "100%", border: "1px solid #121212", background: "#121212", color: "#fff", borderRadius: 7, padding: "11px 12px", fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", marginTop: "auto" }}
-                    >
-                      Ver joia
-                    </button>
-                  </div>
-                </article>
-              ))}
+                  </article>
+                );
+              })}
             </div>
 
             {produtosFiltrados.length === 0 && (
@@ -1601,12 +1786,68 @@ const Colecao = () => {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            style={{ width: "min(920px,100%)", background: "#fff", borderRadius: 10, overflow: "hidden", display: "grid", gridTemplateColumns: "1fr 1fr" }}
+            style={{ position: "relative", width: "min(920px,100%)", background: "#fff", borderRadius: 10, overflow: "hidden", display: "grid", gridTemplateColumns: "1fr 1fr", maxHeight: "88vh" }}
             className="product-modal"
           >
-            <style>{`@media(max-width:820px){.product-modal{grid-template-columns:1fr!important;}}`}</style>
-            <div style={{ background: "#000000", minHeight: 360, display: "flex", flexDirection: "column" }}>
-              <div style={{ flex: 1, position: "relative", minHeight: 320 }}>
+            <style>{`
+              @media(max-width:820px){
+                .product-modal {
+                  display: flex !important;
+                  flex-direction: column !important;
+                  max-height: 90vh !important;
+                }
+                .product-modal-left {
+                  width: 100% !important;
+                  height: 300px !important;
+                  min-height: auto !important;
+                  flex-shrink: 0 !important;
+                }
+                .product-modal-image-container {
+                  min-height: auto !important;
+                  height: 100% !important;
+                  flex: 1 !important;
+                }
+                .product-modal-right {
+                  padding: 20px 24px 24px !important;
+                  overflow-y: auto !important;
+                  max-height: calc(90vh - 300px) !important;
+                  flex: 1 !important;
+                }
+              }
+            `}</style>
+            
+            {/* Botão de fechar absoluto premium */}
+            <button
+              onClick={() => setSelectedProduct(null)}
+              style={{
+                position: "absolute",
+                top: 14,
+                right: 14,
+                width: 36,
+                height: 36,
+                borderRadius: "50%",
+                border: "1px solid rgba(28,24,20,0.15)",
+                background: "#fff",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#1C1814",
+                cursor: "pointer",
+                zIndex: 90,
+                transition: "all 0.2s"
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "scale(1.08)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ""; }}
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+
+            <div className="product-modal-left" style={{ background: "#000000", minHeight: 360, display: "flex", flexDirection: "column" }}>
+              <div className="product-modal-image-container" style={{ flex: 1, position: "relative", minHeight: 320 }}>
                 <img src={activeImage} alt={selectedProduct.nome} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain" }} />
               </div>
               {((selectedProduct.collectionHandle === "valenza" || selectedProduct.nome.toLowerCase().includes("valenza") || selectedProduct.collectionHandle === "monarch" || selectedProduct.nome.toLowerCase().includes("monarch") || selectedProduct.collectionHandle === "dominus" || selectedProduct.nome.toLowerCase().includes("dominus") || ((selectedProduct.collectionHandle === "titan" || selectedProduct.nome.toLowerCase().includes("titan") || selectedProduct.collectionHandle === "velocita" || selectedProduct.nome.toLowerCase().includes("velocita") || selectedProduct.nome.toLowerCase().includes("velocità")) && !selectedProduct.nome.toLowerCase().includes("clássico") && !selectedProduct.nome.toLowerCase().includes("classico")))) && (() => {
@@ -1647,30 +1888,63 @@ const Colecao = () => {
                 );
               })()}
             </div>
-            <div style={{ padding: 24, display: "flex", flexDirection: "column" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
-                <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 38, lineHeight: 1, color: "#1f1f1f" }}>{selectedProduct.nome}</h3>
-                <button onClick={() => setSelectedProduct(null)} style={{ border: "1px solid #ddd", background: "#fff", borderRadius: 8, width: 34, height: 34, cursor: "pointer" }}>x</button>
-              </div>
-              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#666", marginBottom: 14 }}>
-                {selectedProduct.tipo} • {selectedProduct.material} • {selectedProduct.categoria}
-              </div>
-              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 1.7, color: "#4e4e4e", marginBottom: 14 }}>
-                Joia exclusiva da linha {selectedProduct.nome.split(" ")[0]}, criada para representar sua trajetória no {selectedProduct.categoria.toLowerCase()} com acabamento premium e design autoral.
-              </p>
+            <div className="product-modal-right" style={{ padding: 24, display: "flex", flexDirection: "column", overflowY: "auto" }}>
+              {(() => {
+                const { nome: nameTrans, desc: descTrans } = translateProduct(selectedProduct.collectionHandle, selectedProduct.nome, "");
+                
+                const cleanCat = selectedProduct.categoria.toLowerCase();
+                let catTrans = selectedProduct.categoria;
+                if (cleanCat.includes("pingente")) catTrans = t("product.badge") === "Peça do Ateliê" ? "Pingentes" : (t("product.badge") === "Atelier Piece" ? "Pendants" : "Colgantes");
+                else if (cleanCat.includes("colar")) catTrans = t("sport.colares");
+                else if (cleanCat.includes("anel")) catTrans = t("sport.aneis");
+                else if (cleanCat.includes("brinco")) catTrans = t("sport.brincos");
+                else catTrans = t("sport." + getSportSlug(selectedProduct.categoria));
+
+                const matTrans = selectedProduct.material === "Ouro 18k" ? t("atelie.linha.material.ouro") : t("atelie.linha.material.prata");
+                const typeClean = selectedProduct.tipo.toLowerCase();
+                let typeTrans = selectedProduct.tipo;
+                if (typeClean.includes("pingente")) typeTrans = t("product.badge") === "Peça do Ateliê" ? "Pingente" : (t("product.badge") === "Atelier Piece" ? "Pendant" : "Colgante");
+                else if (typeClean.includes("colar")) typeTrans = t("sport.colares").slice(0, -1); // simplificado
+                else if (typeClean.includes("anel")) typeTrans = t("cart.item.gender") === "Modelo" ? "Anel" : (t("cart.item.gender") === "Model" ? "Ring" : "Anillo");
+                else if (typeClean.includes("brinco")) typeTrans = t("cart.item.gender") === "Modelo" ? "Brinco" : (t("cart.item.gender") === "Model" ? "Earring" : "Pendiente");
+
+                let displayDesc = descTrans;
+                if (!displayDesc) {
+                  // Fallback se não traduzido
+                  displayDesc = t("cart.item.remove") === "Remover"
+                    ? `Joia exclusiva da linha ${nameTrans.split(" ")[0]}, criada para representar sua trajetória no ${selectedProduct.categoria.toLowerCase()} com acabamento premium e design autoral.`
+                    : (t("cart.item.remove") === "Eliminar"
+                      ? `Joya exclusiva de la línea ${nameTrans.split(" ")[0]}, creada para representar tu trayectoria en el ${selectedProduct.categoria.toLowerCase()} con acabado premium y diseño de autor.`
+                      : `Exclusive jewelry from the ${nameTrans.split(" ")[0]} line, created to represent your journey in ${selectedProduct.categoria.toLowerCase()} with premium finish and signature design.`);
+                }
+
+                return (
+                  <>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10, paddingRight: 36 }}>
+                      <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 38, lineHeight: 1, color: "#1f1f1f" }}>{nameTrans}</h3>
+                    </div>
+                    <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#666", marginBottom: 14 }}>
+                      {typeTrans} • {matTrans} • {catTrans}
+                    </div>
+                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 1.7, color: "#4e4e4e", marginBottom: 14 }}>
+                      {displayDesc}
+                    </p>
+                  </>
+                );
+              })()}
               <div style={{ display: "inline-flex", alignItems: "center", gap: 8, alignSelf: "flex-start", background: "#f6f1e3", border: "1px solid #e6d9b0", borderRadius: 8, padding: "8px 14px", marginBottom: 18 }}>
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#9a7c16" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 3 3 21" /><path d="M3 8V3h5" /><path d="M21 16v5h-5" />
                 </svg>
                 <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: "0.02em", color: "#7a6310" }}>
-                  Tamanho do pingente: 2,5 cm
+                  {t("product.size_details")}
                 </span>
               </div>
               <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 34, fontWeight: 700, color: "#111", marginBottom: 2 }}>
                 {fmtBRL(String(selectedProduct.preco))}
               </div>
               <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, color: "#666", marginBottom: 24 }}>
-                em até {selectedProduct.parcelas}x de {fmtBRL(String(selectedProduct.preco / selectedProduct.parcelas))}
+                {t("cart.item.quantity") === "Qtd" ? `em até ${selectedProduct.parcelas}x de ` : (t("cart.item.quantity") === "Qty" ? `up to ${selectedProduct.parcelas}x of ` : (t("cart.item.quantity") === "Cant" ? `hasta ${selectedProduct.parcelas}x de ` : `fino a ${selectedProduct.parcelas}x di `))} {fmtBRL(String(selectedProduct.preco / selectedProduct.parcelas))}
               </div>
               <div style={{ display: "grid", gap: 10, marginTop: "auto" }}>
                 <button
@@ -1678,14 +1952,14 @@ const Colecao = () => {
                   disabled={adding}
                   style={{ width: "100%", border: "1px solid #111", background: "#111", color: "#fff", borderRadius: 8, padding: "13px 12px", fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", cursor: adding ? "not-allowed" : "pointer", opacity: adding ? 0.65 : 1 }}
                 >
-                  {adding ? "Adicionando..." : "Adicionar ao carrinho"}
+                  {adding ? t("product.adding") : t("product.add_to_collection")}
                 </button>
                 <button
                   onClick={handleBuyNow}
                   disabled={buying}
                   style={{ width: "100%", border: "1px solid #c9a220", background: "#fff", color: "#9a7c16", borderRadius: 8, padding: "13px 12px", fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", cursor: buying ? "not-allowed" : "pointer", opacity: buying ? 0.65 : 1 }}
                 >
-                  {buying ? "Redirecionando..." : "Comprar agora"}
+                  {buying ? (t("cart.item.remove") === "Remover" ? "Redirecionando..." : (t("cart.item.remove") === "Eliminar" ? "Redireccionando..." : "Redirecting...")) : (t("cart.item.remove") === "Remover" ? "Comprar agora" : (t("cart.item.remove") === "Eliminar" ? "Comprar ahora" : "Buy now"))}
                 </button>
               </div>
             </div>

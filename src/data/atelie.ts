@@ -26,6 +26,8 @@ import veloxEditorialMascOuro from "@/assets/velox-royale-masculino-ouro.png";
 import veloxEditorialMascPrata from "@/assets/velox-royale-masculino-prata.png";
 import velarionOuro from "@/assets/linha-velarion-ouro.png";
 import trionEliteOuro from "@/assets/linha-trion-elite-ouro.png";
+import placaTriatloOuro from "@/assets/linha-placa-triatlo-ouro.jpg";
+import placaTriatloPrata from "@/assets/linha-placa-triatlo-prata.jpg";
 import titanAtletaMascOuro from "@/assets/titan-atleta-masc-ouro.png";
 import titanAtletaMascPrata from "@/assets/titan-atleta-masc-prata.png";
 import titanAtletaFemOuro from "@/assets/titan-atleta-fem-ouro.png";
@@ -215,7 +217,7 @@ export const LINHAS: Record<string, Linha> = {
     nome: "TRION ELITE",
     assinatura: "Assinatura da Excelência",
     frase: "O refinamento dos que vão além.",
-    imagens: { ouro: trionEliteOuro, prata: trionEliteOuro },
+    imagens: { ouro: placaTriatloOuro, prata: placaTriatloPrata },
     campaign: trionEliteOuro,
     cardFit: "contain",
     cinematic: {
