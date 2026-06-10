@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { ArrowLeft, ShoppingBag, Zap, Loader2, ChevronRight } from "lucide-react";
+import { ArrowLeft, ShoppingBag, Zap, Loader2, ChevronRight, Home, User } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartUIStore } from "@/stores/cartUIStore";
@@ -1615,29 +1615,52 @@ const Colecao = () => {
     <div style={{ minHeight: "100vh", background: "#f7f7f7", color: "#1c1c1c" }}>
       <header style={{ background: "#fff", borderBottom: "1px solid #e8e8e8" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", height: 160, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <Link to="/" style={{ display: "inline-flex", alignItems: "center", gap: 6, textDecoration: "none", color: "#555", fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase" }}>
-            <ArrowLeft size={13} strokeWidth={1.5} /> Início
-          </Link>
           <Link to="/" style={{ display: "flex", alignItems: "center" }}>
             <img src={logo3r} alt="3R Fitness" style={{ height: 140, width: "auto", objectFit: "contain" }} />
           </Link>
-          <button
-            onClick={openCart}
-            aria-label="Carrinho"
-            style={{ position: "relative", width: 42, height: 42, borderRadius: 10, border: "1.5px solid rgba(28,24,20,0.15)", display: "flex", alignItems: "center", justifyContent: "center", color: "#1C1814", background: "none", cursor: "pointer", transition: "border-color 0.25s, color 0.25s" }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#C9A220"; (e.currentTarget as HTMLElement).style.color = "#C9A220"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(28,24,20,0.15)"; (e.currentTarget as HTMLElement).style.color = "#1C1814"; }}
-          >
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-            </svg>
-            {totalItems > 0 && (
-              <span style={{ position: "absolute", top: -4, right: -4, minWidth: 18, height: 18, borderRadius: 100, background: "#C9A220", color: "#fff", fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 4px" }}>
-                {totalItems}
-              </span>
-            )}
-          </button>
+
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            {/* Início */}
+            <Link
+              to="/"
+              aria-label="Início"
+              style={{ width: 42, height: 42, borderRadius: 10, border: "1.5px solid rgba(28,24,20,0.15)", display: "flex", alignItems: "center", justifyContent: "center", color: "#1C1814", background: "none", cursor: "pointer", transition: "border-color 0.25s, color 0.25s" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#C9A220"; (e.currentTarget as HTMLElement).style.color = "#C9A220"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(28,24,20,0.15)"; (e.currentTarget as HTMLElement).style.color = "#1C1814"; }}
+            >
+              <Home size={18} strokeWidth={1.75} />
+            </Link>
+
+            {/* Conta */}
+            <Link
+              to="/auth"
+              aria-label="Conta"
+              style={{ width: 42, height: 42, borderRadius: 10, border: "1.5px solid rgba(28,24,20,0.15)", display: "flex", alignItems: "center", justifyContent: "center", color: "#1C1814", background: "none", cursor: "pointer", transition: "border-color 0.25s, color 0.25s" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#C9A220"; (e.currentTarget as HTMLElement).style.color = "#C9A220"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(28,24,20,0.15)"; (e.currentTarget as HTMLElement).style.color = "#1C1814"; }}
+            >
+              <User size={18} strokeWidth={1.75} />
+            </Link>
+
+            {/* Carrinho */}
+            <button
+              onClick={openCart}
+              aria-label="Carrinho"
+              style={{ position: "relative", width: 42, height: 42, borderRadius: 10, border: "1.5px solid rgba(28,24,20,0.15)", display: "flex", alignItems: "center", justifyContent: "center", color: "#1C1814", background: "none", cursor: "pointer", transition: "border-color 0.25s, color 0.25s" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#C9A220"; (e.currentTarget as HTMLElement).style.color = "#C9A220"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(28,24,20,0.15)"; (e.currentTarget as HTMLElement).style.color = "#1C1814"; }}
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+              </svg>
+              {totalItems > 0 && (
+                <span style={{ position: "absolute", top: -4, right: -4, minWidth: 18, height: 18, borderRadius: 100, background: "#C9A220", color: "#fff", fontFamily: "'Inter',sans-serif", fontSize: 10, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 4px" }}>
+                  {totalItems}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </header>
 

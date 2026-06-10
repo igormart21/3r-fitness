@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -28,9 +29,19 @@ import { LanguageProvider } from "@/context/LanguageContext";
 const queryClient = new QueryClient();
 
 
+const ScrollToTop = () => {
+  const { pathname, search } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [pathname, search]);
+  return null;
+};
+
 const AppRoutes = () => {
   useCartSync();
   return (
+    <>
+    <ScrollToTop />
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/product/:handle" element={<ProductDetail />} />
@@ -50,12 +61,16 @@ const AppRoutes = () => {
       
       <Route path="*" element={<NotFound />} />
     </Routes>
+    </>
   );
 };
 
 const FloatingButtons = () => {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
+  // Na página de coleção os ícones de Início/Conta ficam no header (ao lado do carrinho)
+  const isColecao = pathname === "/colecao";
+  if (isColecao) return null;
   return (
     <>
       <HomeFloatingButton />
