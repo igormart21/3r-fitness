@@ -43,7 +43,7 @@ import wodOuro from "@/assets/linha-wod-ouro.jpeg";
 import wodPrata from "@/assets/linha-wod-prata.jpeg";
 import eliteCrossOuro from "@/assets/linha-elite-ouro.jpeg";
 import eliteCrossPrata from "@/assets/linha-elite-prata.jpeg";
-import veloxOuro     from "@/assets/linha-velox-ouro.png";
+import veloxOuro     from "@/assets/velox-royale-ouro-novo.jpg";
 import veloxPrata    from "@/assets/linha-velox-royale-prata-masculino.jpg";
 import veloxFemSpeedOuro from "@/assets/linha-velox-royale-ouro-feminino-speed.jpg";
 import veloxFemSpeedPrata from "@/assets/linha-velox-royale-prata-feminino-speed.jpg";
