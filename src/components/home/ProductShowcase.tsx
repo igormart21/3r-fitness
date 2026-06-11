@@ -35,15 +35,15 @@ import velarionOuro from "@/assets/linha-velarion-ouro.png";
 import velarionPrata from "@/assets/linha-triade-prata-clean.jpg";
 
 import novaImperiumCrossfitOuro from "@/assets/linha-imperium-ouro-crossfit.jpg";
-import wodOuro from "@/assets/linha-wod-ouro.jpeg";
-import eliteOuro from "@/assets/linha-elite-ouro.jpeg";
 import novaHalterOuro from "@/assets/linha-halter-ouro-nova.jpg";
 import novaCorridaOuroFem from "@/assets/linha-corrida-ouro-fem.jpg";
 import novaCorridaPrataFem from "@/assets/linha-corrida-prata-fem.jpg";
 import novaCorridaOuroMasc from "@/assets/linha-corrida-ouro-masc.jpg";
 import conjuntoCrossfitOuro from "@/assets/linha-conjunto-crossfit-ouro.jpg";
-import corridaAtletaOuroImg from "@/assets/f0a37cfa-13dc-4e8e-9a86-d811b329d5a1.png";
-import corridaAtletaPrataImg from "@/assets/velocita-card-cover.png";
+import conjuntoWodOuro from "@/assets/linha-wod-ouro.jpeg";
+import conjuntoEliteOuro from "@/assets/linha-elite-ouro.jpeg";
+import corridaAtletaOuroImg from "@/assets/corrida-atleta-ouro-novo.jpg";
+import corridaAtletaPrataImg from "@/assets/corrida-atleta-novo.jpg";
 
 const STATIC = [
   { nome: "Imperium", mat: "Ouro 18k", img: linhaImperiumOuro, hot: true },
@@ -116,9 +116,9 @@ const getAtelieProductMock = (nome: string, mat: string, img: string, preco: num
         title: "Corrida Atleta",
         description: "Edição especial produzida com acabamento premium em Ouro 18k ou Prata.",
         handle: "corrida-atleta",
-        featuredImage: { url: corridaAtletaOuroImg, altText: "Corrida Atleta" },
+        featuredImage: { url: novaCorridaOuroFem, altText: "Corrida Atleta" },
         priceRange: { minVariantPrice: { amount: "297", currencyCode: "BRL" } },
-        images: { edges: [{ node: { url: corridaAtletaOuroImg, altText: "Corrida Atleta" } }] },
+        images: { edges: [{ node: { url: novaCorridaOuroFem, altText: "Corrida Atleta" } }] },
         options: [{ name: "Material", values: ["Ouro 18k", "Prata"] }],
         variants: {
           edges: [
@@ -209,7 +209,7 @@ const getAtelieProductMock = (nome: string, mat: string, img: string, preco: num
                 price: { amount: "3487", currencyCode: "BRL" },
                 availableForSale: true,
                 selectedOptions: [{ name: "Material", value: "Ouro 18k" }],
-                image: { url: conjuntoCrossfitOuro, altText: "Corrente e Pingente CrossFit Ouro 18k" },
+                image: { url: conjuntoWodOuro, altText: "Corrente e Pingente CrossFit Ouro 18k" },
               },
             },
             {
@@ -219,7 +219,7 @@ const getAtelieProductMock = (nome: string, mat: string, img: string, preco: num
                 price: { amount: "297", currencyCode: "BRL" },
                 availableForSale: true,
                 selectedOptions: [{ name: "Material", value: "Prata" }],
-                image: { url: conjuntoCrossfitOuro, altText: "Corrente e Pingente CrossFit Prata" },
+                image: { url: conjuntoEliteOuro, altText: "Corrente e Pingente CrossFit Prata" },
               },
             },
           ],
@@ -289,7 +289,7 @@ const getAtelieProductMock = (nome: string, mat: string, img: string, preco: num
                 price: { amount: "3200", currencyCode: "BRL" },
                 availableForSale: true,
                 selectedOptions: [{ name: "Material", value: "Ouro 18k" }],
-                image: { url: wodOuro, altText: "Imperium CrossFit Ouro 18k" },
+                image: { url: linhaStrataOuro, altText: "Imperium CrossFit Ouro 18k" },
               },
             },
             {
@@ -299,7 +299,7 @@ const getAtelieProductMock = (nome: string, mat: string, img: string, preco: num
                 price: { amount: "297", currencyCode: "BRL" },
                 availableForSale: true,
                 selectedOptions: [{ name: "Material", value: "Prata" }],
-                image: { url: eliteOuro, altText: "Imperium CrossFit Prata" },
+                image: { url: linhaStrataPrata, altText: "Imperium CrossFit Prata" },
               },
             },
           ],
@@ -623,8 +623,8 @@ export const ProductShowcase = () => {
                     </div>
                   </div>
                   <div style={{ padding: "14px 16px 16px" }}>
-                    <div style={{ height: 68, display: "flex", flexDirection: "column", justifyContent: "flex-start", marginBottom: 8 }}>
-                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 16, fontWeight: 400, color: "#1C1814", lineHeight: 1.2, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                    <div style={{ minHeight: 76, display: "flex", flexDirection: "column", justifyContent: "flex-start", marginBottom: 8 }}>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 400, color: "#1C1814", lineHeight: 1.25, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                         {nome}
                       </div>
                       <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "#6B5E52", display: "flex", flexDirection: "column", gap: 2, marginTop: 4 }}>
@@ -953,6 +953,7 @@ export const ProductShowcase = () => {
                   const handleLower = (node.handle || node.title).toLowerCase();
                   const isCorridaAtleta = handleLower.includes("corrida-atleta") || handleLower.includes("corrida atleta");
                   const isCorridaElite = handleLower.includes("corrida-elite") || handleLower.includes("corrida elite");
+                  const isConjuntoCrossfit = handleLower.includes("conjunto-crossfit");
                   const isHalterElite = handleLower.includes("halter-elite") || handleLower.includes("halter elite");
                   const isHalter   = handleLower.includes("halter") && !handleLower.includes("elite");
                   const isVelox    = handleLower.includes("velox");
@@ -965,7 +966,7 @@ export const ProductShowcase = () => {
                   const isVelarion = handleLower.includes("velarion");
                   const isImperiumCrossfit = handleLower.includes("imperium-crossfit");
                   const isImperium = handleLower.includes("imperium") && !isImperiumCrossfit;
-                  const showThumbs = isHalter || isHalterElite || isCorridaAtleta || isCorridaElite || isVelox || isTrion || isVelarion || isImperiumCrossfit || isImperium || isValenza || isMonarch || isDominus || isTitan || isVelocita;
+                  const showThumbs = isHalter || isHalterElite || isCorridaAtleta || isCorridaElite || isConjuntoCrossfit || isVelox || isTrion || isVelarion || isImperiumCrossfit || isImperium || isValenza || isMonarch || isDominus || isTitan || isVelocita;
                   if (!showThumbs) return null;
 
                   const isPrata = selectedVariant?.title.toLowerCase().includes("prata") ||
@@ -973,13 +974,21 @@ export const ProductShowcase = () => {
 
                   let thumbs: { src: string; alt: string }[] = [];
 
-                  if (isCorridaAtleta) {
+                  if (isConjuntoCrossfit) {
                     thumbs = [
+                      { src: img,               alt: "Capa"      },
+                      { src: conjuntoWodOuro,   alt: "OURO 18K"  },
+                      { src: conjuntoEliteOuro, alt: "PRATA 925" },
+                    ];
+                  } else if (isCorridaAtleta) {
+                    thumbs = [
+                      { src: img,                   alt: "Capa"      },
                       { src: corridaAtletaOuroImg,  alt: "OURO 18K"  },
                       { src: corridaAtletaPrataImg, alt: "PRATA 925" },
                     ];
                   } else if (isCorridaElite) {
                     thumbs = [
+                      { src: img,            alt: "Capa"      },
                       { src: titanJoiaOuro,  alt: "OURO 18K"  },
                       { src: titanJoiaPrata, alt: "PRATA 925" },
                     ];
@@ -991,47 +1000,55 @@ export const ProductShowcase = () => {
                     ];
                   } else if (isHalter) {
                     thumbs = [
-                      { src: linhaHalterPrata, alt: "PRATA 925" },
+                      { src: img,              alt: "Capa"      },
                       { src: linhaHalterOuro,  alt: "OURO 18K"  },
+                      { src: linhaHalterPrata, alt: "PRATA 925" },
                     ];
                   } else if (isVelox) {
                     thumbs = [
-                      { src: veloxRoyaleOuroMasc,  alt: "OURO 18K"  },
-                      { src: linhaVeloxPrata, alt: "PRATA 925" },
+                      { src: img,                 alt: "Capa"      },
+                      { src: veloxRoyaleOuroMasc, alt: "OURO 18K"  },
+                      { src: linhaVeloxPrata,     alt: "PRATA 925" },
                     ];
                   } else if (isTrion) {
                     thumbs = [
+                      { src: img,               alt: "Capa"      },
                       { src: placaTriatloOuro,  alt: "OURO 18K"  },
                       { src: placaTriatloPrata, alt: "PRATA 925" },
                     ];
                   } else if (isVelarion) {
                     thumbs = [
+                      { src: img,           alt: "Capa"      },
                       { src: velarionOuro,  alt: "OURO 18K"  },
                       { src: velarionPrata, alt: "PRATA 925" },
                     ];
                   } else if (isImperiumCrossfit) {
                     thumbs = [
-                      { src: img,       alt: "Capa"  },
-                      { src: wodOuro,   alt: "WOD"   },
-                      { src: eliteOuro, alt: "Elite" },
+                      { src: img,              alt: "Capa"      },
+                      { src: linhaStrataOuro,  alt: "OURO 18K"  },
+                      { src: linhaStrataPrata, alt: "PRATA 925" },
                     ];
                   } else if (isImperium) {
                     thumbs = [
+                      { src: img,                    alt: "Capa"      },
                       { src: linhaImperiumOuro,      alt: "OURO 18K"  },
                       { src: linhaImperiumPrataNova, alt: "PRATA 925" },
                     ];
                   } else if (isDominus) {
                     thumbs = [
+                      { src: img,              alt: "Capa"      },
                       { src: dominusJoiaOuro,  alt: "OURO 18K"  },
                       { src: dominusJoiaPrata, alt: "PRATA 925" },
                     ];
                   } else if (isMonarch) {
                     thumbs = [
+                      { src: img,              alt: "Capa"      },
                       { src: monarchJoiaOuro,  alt: "OURO 18K"  },
                       { src: monarchJoiaPrata, alt: "PRATA 925" },
                     ];
                   } else if (isValenza) {
                     thumbs = [
+                      { src: img,              alt: "Capa"      },
                       { src: valenzaJoia,      alt: "OURO 18K"  },
                       { src: valenzaJoiaPrata, alt: "PRATA 925" },
                     ];
@@ -1093,13 +1110,23 @@ export const ProductShowcase = () => {
                     </span>
                   </div>
                   
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8, alignSelf: "flex-start", background: "rgba(201,162,32,0.08)", border: "1px solid rgba(201,162,32,0.30)", borderRadius: 8, padding: "8px 14px" }}>
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#C9A220" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 3 3 21" /><path d="M3 8V3h5" /><path d="M21 16v5h-5" />
-                    </svg>
-                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: "0.02em", color: "#9a7c16" }}>
-                      Tamanho do pingente: 2,5 cm
-                    </span>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
+                    <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(201,162,32,0.08)", border: "1px solid rgba(201,162,32,0.30)", borderRadius: 8, padding: "8px 14px" }}>
+                      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#C9A220" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 3 3 21" /><path d="M3 8V3h5" /><path d="M21 16v5h-5" />
+                      </svg>
+                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: "0.02em", color: "#9a7c16" }}>
+                        Tamanho do pingente: 2,5 cm
+                      </span>
+                    </div>
+                    <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(63,122,74,0.08)", border: "1px solid rgba(63,122,74,0.30)", borderRadius: 8, padding: "8px 14px" }}>
+                      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#3f7a4a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />
+                      </svg>
+                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: "0.02em", color: "#356b40" }}>
+                        Prazo de produção e entrega: até 20 dias
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -1143,9 +1170,11 @@ export const ProductShowcase = () => {
                                   } else if (handleLb.includes("velarion")) {
                                     overrideImg = isPrataLb ? velarionPrata : velarionOuro;
                                   } else if (handleLb.includes("imperium-crossfit")) {
-                                    overrideImg = isPrataLb ? eliteOuro : wodOuro;
+                                    overrideImg = isPrataLb ? linhaStrataPrata : linhaStrataOuro;
                                   } else if (handleLb.includes("imperium")) {
                                     overrideImg = isPrataLb ? linhaImperiumPrataNova : linhaImperiumOuro;
+                                  } else if (handleLb.includes("conjunto-crossfit")) {
+                                    overrideImg = isPrataLb ? conjuntoEliteOuro : conjuntoWodOuro;
                                   } else if (handleLb.includes("corrida-atleta")) {
                                     overrideImg = isPrataLb ? corridaAtletaPrataImg : corridaAtletaOuroImg;
                                   } else if (handleLb.includes("corrida-elite")) {

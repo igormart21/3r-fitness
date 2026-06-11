@@ -83,12 +83,14 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.title.shop": "Loja",
     "footer.title.contact": "Contato",
     "footer.rights": "Todos os direitos reservados.",
+    "footer.exchange_policy": "Política de Troca e Devolução",
     "footer.tagline": "Joias premium para atletas",
 
     // Product Detail & Showcase
     "product.badge": "Peça do Ateliê",
     "product.set_details": "Conjunto: Corrente + Pingente",
     "product.size_details": "Tamanho do pingente: 2,5 cm",
+    "product.delivery": "Prazo de produção e entrega: até 20 dias",
     "product.variations": "Variações",
     "product.investment": "Investimento da peça",
     "product.add_to_collection": "Adicionar à sua coleção",
@@ -354,12 +356,14 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.title.shop": "Shop",
     "footer.title.contact": "Contact",
     "footer.rights": "All rights reserved.",
+    "footer.exchange_policy": "Exchange & Return Policy",
     "footer.tagline": "Premium jewelry for athletes",
 
     // Product Detail & Showcase
     "product.badge": "Atelier Piece",
     "product.set_details": "Set: Chain + Pendant",
     "product.size_details": "Pendant size: 2.5 cm",
+    "product.delivery": "Production and delivery time: up to 20 days",
     "product.variations": "Variations",
     "product.investment": "Investment price",
     "product.add_to_collection": "Add to your collection",
@@ -625,12 +629,14 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.title.shop": "Tienda",
     "footer.title.contact": "Contacto",
     "footer.rights": "Todos los derechos reservados.",
+    "footer.exchange_policy": "Política de Cambios y Devoluciones",
     "footer.tagline": "Joyas premium para atletas",
 
     // Product Detail & Showcase
     "product.badge": "Pieza del Atelier",
     "product.set_details": "Conjunto: Cadena + Colgante",
     "product.size_details": "Tamaño del colgante: 2,5 cm",
+    "product.delivery": "Plazo de producción y entrega: hasta 20 días",
     "product.variations": "Variaciones",
     "product.investment": "Inversión de la pieza",
     "product.add_to_collection": "Añadir a tu colección",
@@ -896,12 +902,14 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.title.shop": "Negozio",
     "footer.title.contact": "Contatti",
     "footer.rights": "Tutti i diritti riservati.",
+    "footer.exchange_policy": "Politica di Cambio e Reso",
     "footer.tagline": "Gioielli premium per atleti",
 
     // Product Detail & Showcase
     "product.badge": "Pezzo dell'Atelier",
     "product.set_details": "Set: Catena + Ciondolo",
     "product.size_details": "Dimensione ciondolo: 2,5 cm",
+    "product.delivery": "Tempi di produzione e consegna: fino a 20 giorni",
     "product.variations": "Variazioni",
     "product.investment": "Investimento del pezzo",
     "product.add_to_collection": "Aggiungi alla tua collezione",
@@ -1167,12 +1175,14 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.title.shop": "Boutique",
     "footer.title.contact": "Contact",
     "footer.rights": "Tous droits réservés.",
+    "footer.exchange_policy": "Politique d'Échange et de Retour",
     "footer.tagline": "Bijoux haut de gamme pour athlètes",
 
     // Product Detail & Showcase
     "product.badge": "Pièce de l'Atelier",
     "product.set_details": "Ensemble : Chaîne + Pendentif",
     "product.size_details": "Taille du pendentif : 2,5 cm",
+    "product.delivery": "Délai de production et de livraison : jusqu'à 20 jours",
     "product.variations": "Variations",
     "product.investment": "Investissement de la pièce",
     "product.add_to_collection": "Ajouter à votre collection",

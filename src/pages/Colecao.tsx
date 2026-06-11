@@ -180,6 +180,9 @@ const COLECOES = [
 ];
 
 const SPORTS = ["Todas", "Musculação", "Fisiculturismo", "Crossfit", "Ciclismo", "Corrida", "Triatlo", "Colares", "Anéis", "Brincos"];
+// Categorias ocultas no site (mantidas no código para uso futuro). Ex.: Anéis.
+const HIDDEN_SPORTS = ["Anéis"];
+const VISIBLE_SPORTS = SPORTS.filter((s) => !HIDDEN_SPORTS.includes(s));
 
 type TipoJoia = "Pingentes" | "Colares" | "Anéis" | "Brincos";
 type MaterialFiltro = "Prata 925" | "Ouro 18k";
@@ -1368,7 +1371,7 @@ const Colecao = () => {
   }, []);
   const sportParam = searchParams.get("sport");
   const activeSport =
-    sportParam && SPORTS.includes(sportParam)
+    sportParam && VISIBLE_SPORTS.includes(sportParam)
       ? sportParam
       : "Fisiculturismo";
   const heroImage = activeSport === "Todas" ? colecoesHero : (HERO_BY_SPORT[activeSport] ?? colecoesHero);
@@ -1530,8 +1533,8 @@ const Colecao = () => {
 
   const produtosFiltrados = useMemo(() => {
     let result = activeSport === "Todas"
-      ? [...catalogProducts]
-      : catalogProducts.filter((p) => p.categoria === activeSport);
+      ? catalogProducts.filter((p) => !HIDDEN_SPORTS.includes(p.categoria))
+      : catalogProducts.filter((p) => p.categoria === activeSport && !HIDDEN_SPORTS.includes(p.categoria));
     if (tipos.length) result = result.filter((p) => tipos.includes(p.tipo));
     if (materiais.length) result = result.filter((p) => materiais.includes(p.material));
 
@@ -1544,10 +1547,13 @@ const Colecao = () => {
   // Reset filtros ao trocar de esporte
   useEffect(() => { setTipos([]); setMateriais([]); }, [activeSport]);
 
-  // Tipos disponíveis no esporte atual
+  // Tipos disponíveis no esporte atual (excluindo categorias ocultas, ex.: Anéis)
   const tiposDisponiveis = useMemo(() => {
-    const base = activeSport === "Todas" ? catalogProducts : catalogProducts.filter(p => p.categoria === activeSport);
-    return (["Pingentes", "Colares", "Anéis", "Brincos"] as TipoJoia[]).filter(t => base.some(p => p.tipo === t));
+    const visibles = catalogProducts.filter(p => !HIDDEN_SPORTS.includes(p.categoria));
+    const base = activeSport === "Todas" ? visibles : visibles.filter(p => p.categoria === activeSport);
+    return (["Pingentes", "Colares", "Anéis", "Brincos"] as TipoJoia[])
+      .filter(t => t !== "Anéis")
+      .filter(t => base.some(p => p.tipo === t));
   }, [activeSport, catalogProducts]);
 
   const toggleTipo = (tipo: TipoJoia) => {
@@ -1685,7 +1691,7 @@ const Colecao = () => {
         </div>
 
         <div style={{ marginBottom: 18, display: "flex", flexWrap: "wrap", gap: 8 }}>
-          {SPORTS.map((s) => {
+          {VISIBLE_SPORTS.map((s) => {
             const ativo = s === activeSport;
             return (
               <button key={s} onClick={() => setSearchParams({ sport: s })} style={{ padding: "8px 14px", borderRadius: 100, border: ativo ? "1px solid #1f1f1f" : "1px solid #d5d5d5", background: ativo ? "#1f1f1f" : "#fff", color: ativo ? "#fff" : "#666", fontSize: 11, fontFamily: "'Inter',sans-serif", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer" }}>
@@ -1955,13 +1961,25 @@ const Colecao = () => {
                   </>
                 );
               })()}
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, alignSelf: "flex-start", background: "#f6f1e3", border: "1px solid #e6d9b0", borderRadius: 8, padding: "8px 14px", marginBottom: 18 }}>
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#9a7c16" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 3 3 21" /><path d="M3 8V3h5" /><path d="M21 16v5h-5" />
-                </svg>
-                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: "0.02em", color: "#7a6310" }}>
-                  {t("product.size_details")}
-                </span>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start", marginBottom: 18 }}>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#f6f1e3", border: "1px solid #e6d9b0", borderRadius: 8, padding: "8px 14px" }}>
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#9a7c16" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 3 3 21" /><path d="M3 8V3h5" /><path d="M21 16v5h-5" />
+                  </svg>
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: "0.02em", color: "#7a6310" }}>
+                    {t("product.size_details")}
+                  </span>
+                </div>
+                {selectedProduct.tipo === "Pingentes" && (
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#eef4ec", border: "1px solid #cfe0c8", borderRadius: 8, padding: "8px 14px" }}>
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#3f7a4a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />
+                    </svg>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: "0.02em", color: "#356b40" }}>
+                      {t("product.delivery")}
+                    </span>
+                  </div>
+                )}
               </div>
               <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 34, fontWeight: 700, color: "#111", marginBottom: 2 }}>
                 {fmtBRL(String(selectedProduct.preco))}
