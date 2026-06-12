@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useCartStore } from "@/stores/cartStore";
 import { storefrontApiRequest, STOREFRONT_QUERY, type ShopifyProduct } from "@/lib/shopify";
 import { getShopifyProductUrl } from "@/lib/shopifyExternal";
+import { downscaleImage } from "@/lib/downscaleImage";
 import { supabase } from "@/integrations/supabase/client";
 import fisiculturismoHero from "@/assets/fisiculturismo-hero.png";
 import fisiculturismoHeroBg from "@/assets/fisiculturismo-hero-bg.png";
@@ -456,13 +457,20 @@ const ModalidadePage = ({ config }: { config: ModalidadeConfig }) => {
       toast.error("A foto deve ter no máximo 5MB");
       return;
     }
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const url = reader.result as string;
+    (async () => {
+      let url: string;
+      try {
+        url = await downscaleImage(file); // reduz p/ caber no limite de body do Vercel
+      } catch {
+        url = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(file);
+        });
+      }
       setFotoCliente(url);
       gerarPingente(url);
-    };
-    reader.readAsDataURL(file);
+    })();
     e.target.value = "";
   };
 
