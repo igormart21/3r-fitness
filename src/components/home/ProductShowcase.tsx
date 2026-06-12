@@ -404,10 +404,11 @@ export const ProductShowcase = () => {
     storefrontApiRequest(STOREFRONT_QUERY, { first: 20 })
       .then(data => {
         const edges: ShopifyProduct[] = data?.data?.products?.edges ?? [];
-        const exclusoes = ["vigor", "titan", "velocità", "velocita", "strata", "aeron"];
+        const exclusoes = ["vigor", "titan", "velocità", "velocita", "strata", "aeron", "joia-personalizada", "joia personalizada", "personalizada", "personalizado"];
         const filtrados = edges.filter(p => {
           const title = p.node.title.toLowerCase();
-          return !exclusoes.some(ex => title.includes(ex));
+          const handle = p.node.handle.toLowerCase();
+          return !exclusoes.some(ex => title.includes(ex) || handle.includes(ex));
         });
         setShopifyProducts(filtrados);
       })
