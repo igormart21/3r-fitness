@@ -493,7 +493,14 @@ export const ProductShowcase = () => {
               const product = p;
               const img = product.node.images?.edges?.[0]?.node?.url ?? "";
               const name = product.node.title;
-              const price = product.node.priceRange.minVariantPrice;
+              // Mostra o preço do Ouro primeiro (fallback: maior variante / minVariantPrice)
+              const ouroIdx = product.node.variants.edges.findIndex(ve =>
+                ve.node.title.toLowerCase().includes("ouro") ||
+                ve.node.selectedOptions.some(o => o.value.toLowerCase().includes("ouro"))
+              );
+              const ouroVariant = ouroIdx >= 0 ? product.node.variants.edges[ouroIdx] : undefined;
+              const openIdx = ouroIdx >= 0 ? ouroIdx : 0;
+              const price = ouroVariant?.node.price ?? product.node.priceRange.minVariantPrice;
               const hasMultipleVariants = product.node.variants.edges.length > 1;
               return (
                 <div
@@ -505,7 +512,7 @@ export const ProductShowcase = () => {
                 >
                   <div
                     style={{ position: "relative", aspectRatio: "2/3", background: "#F2EDE6", overflow: "hidden", cursor: "zoom-in" }}
-                    onClick={() => setPreview({ kind: "shopify", data: { product, variantIdx: 0 } })}
+                    onClick={() => setPreview({ kind: "shopify", data: { product, variantIdx: openIdx } })}
                   >
                     {img ? (
                       <img
@@ -554,7 +561,7 @@ export const ProductShowcase = () => {
                       </span>
                     </div>
                     <button
-                      onClick={() => setPreview({ kind: "shopify", data: { product, variantIdx: 0 } })}
+                      onClick={() => setPreview({ kind: "shopify", data: { product, variantIdx: openIdx } })}
                       style={{
                         width: "100%",
                         fontFamily: "'Inter',sans-serif",

@@ -502,8 +502,8 @@ const ColecaoView = ({
     let precoPrata = 347;
 
     if (col.handle === "halter") {
-      precoOuro = 2;
-      precoPrata = 2;
+      precoOuro = 2587;
+      precoPrata = 297;
     } else if (col.handle === "halter-elite") {
       precoOuro = 3487;
       precoPrata = 297;
@@ -1437,7 +1437,7 @@ const Colecao = () => {
     };
 
     const precoBase: Record<string, number> = {
-      halter: 2.0,
+      halter: 2587.0,
       "halter-elite": 3487.0,
       vigor: 2487.0,
       dominus: 3997.0,
@@ -1518,7 +1518,7 @@ const Colecao = () => {
       if (c.handle === "imperium" || c.handle === "imperium-prata") precoPrata = 297.0;
       if (c.handle === "corrida-atleta") precoPrata = 297.0;
       if (c.handle === "strata") precoPrata = 297.0;
-      if (c.handle === "halter") precoPrata = 2.0;
+      if (c.handle === "halter") precoPrata = 297.0;
       if (c.handle === "vigor") precoPrata = 297.0;
       if (c.handle === "kettlebell-crossfit") precoPrata = 327.0;
       if (c.handle === "placa-triatlo") precoPrata = 327.0;
