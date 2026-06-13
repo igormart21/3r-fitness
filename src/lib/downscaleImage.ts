@@ -33,3 +33,26 @@ export async function downscaleImage(
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   return canvas.toDataURL("image/jpeg", quality);
 }
+
+// Variante que recebe um data URL (ex.: foto já lida ou vinda de outra origem).
+export async function downscaleDataUrl(
+  dataUrl: string,
+  maxDim = 1280,
+  quality = 0.85,
+): Promise<string> {
+  const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const el = new Image();
+    el.onload = () => resolve(el);
+    el.onerror = () => reject(new Error("Falha ao carregar a imagem"));
+    el.src = dataUrl;
+  });
+  const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+  if (scale === 1 && dataUrl.length < 3_500_000) return dataUrl;
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(img.width * scale);
+  canvas.height = Math.round(img.height * scale);
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return dataUrl;
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  return canvas.toDataURL("image/jpeg", quality);
+}
