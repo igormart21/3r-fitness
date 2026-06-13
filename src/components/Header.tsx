@@ -87,8 +87,7 @@ export const Header = () => {
   const openCart   = useCartUIStore(s => s.openCart);
 
   const NAV = [
-    { to: "/colecao", label: t("nav.collections") },
-    { to: "/atelie", label: t("nav.atelier") }
+    { to: "/colecao", label: t("nav.collections") }
   ];
 
   useEffect(() => {

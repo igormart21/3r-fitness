@@ -83,6 +83,7 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.title.shop": "Loja",
     "footer.title.contact": "Contato",
     "footer.rights": "Todos os direitos reservados.",
+    "footer.exchange_policy": "Política de Troca e Devolução",
     "footer.tagline": "Joias premium para atletas",
 
     // Product Detail & Showcase
@@ -354,6 +355,7 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.title.shop": "Shop",
     "footer.title.contact": "Contact",
     "footer.rights": "All rights reserved.",
+    "footer.exchange_policy": "Exchange & Return Policy",
     "footer.tagline": "Premium jewelry for athletes",
 
     // Product Detail & Showcase
@@ -625,6 +627,7 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.title.shop": "Tienda",
     "footer.title.contact": "Contacto",
     "footer.rights": "Todos los derechos reservados.",
+    "footer.exchange_policy": "Política de Cambios y Devoluciones",
     "footer.tagline": "Joyas premium para atletas",
 
     // Product Detail & Showcase
@@ -896,6 +899,7 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.title.shop": "Negozio",
     "footer.title.contact": "Contatti",
     "footer.rights": "Tutti i diritti riservati.",
+    "footer.exchange_policy": "Politica di Cambio e Reso",
     "footer.tagline": "Gioielli premium per atleti",
 
     // Product Detail & Showcase
@@ -1167,6 +1171,7 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.title.shop": "Boutique",
     "footer.title.contact": "Contact",
     "footer.rights": "Tous droits réservés.",
+    "footer.exchange_policy": "Politique d'Échange et de Retour",
     "footer.tagline": "Bijoux haut de gamme pour athlètes",
 
     // Product Detail & Showcase

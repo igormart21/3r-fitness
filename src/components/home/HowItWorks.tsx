@@ -52,7 +52,7 @@ export const HowItWorks = () => {
             <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, fontWeight: 300, color: "rgba(248,245,240,0.50)" }}>{t("how.cta.desc")}</div>
           </div>
           <Link
-              to="/atelie/modalidades"
+              to="/colecao"
               style={{ display: "inline-flex", alignItems: "center", border: "1.5px solid rgba(248,245,240,0.20)", color: "rgba(248,245,240,0.70)", fontFamily: "'Inter',sans-serif", fontSize: 14, fontWeight: 500, padding: "13px 24px", borderRadius: 12 }}
             >
               {t("how.cta.btn")}

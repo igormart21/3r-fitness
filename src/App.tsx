@@ -17,6 +17,7 @@ import AtelieModalidade from "./pages/AtelieModalidade.tsx";
 import AtelieLinha from "./pages/AtelieLinha.tsx";
 import Continuar from "./pages/Continuar.tsx";
 import Essenciais from "./pages/Essenciais.tsx";
+import PoliticaTrocaDevolucao from "./pages/PoliticaTrocaDevolucao.tsx";
 import { useCartSync } from "@/hooks/useCartSync";
 import { InstagramFloatingButton } from "@/components/InstagramFloatingButton";
 import { WhatsappFloatingButton } from "@/components/WhatsappFloatingButton";
@@ -45,6 +46,7 @@ const AppRoutes = () => {
       <Route path="/continuar" element={<Continuar />} />
       <Route path="/continuar/:modalidade" element={<Continuar />} />
       <Route path="/essenciais" element={<Essenciais />} />
+      <Route path="/politica-troca-devolucao" element={<PoliticaTrocaDevolucao />} />
       <Route path="/modalidade/:id" element={<Modalidade />} />
       <Route path="/personalizar/:slug" element={<Modalidade />} />
       
