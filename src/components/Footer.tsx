@@ -11,8 +11,7 @@ export const Footer = () => {
   const shopLinks = [
     { to: "/", l: t("nav.home") },
     { to: "/colecao", l: t("nav.collections") },
-    { to: "/#personalizar", l: t("nav.customize") },
-    { to: "/politica-troca-devolucao", l: t("footer.exchange_policy") }
+    { to: "/#personalizar", l: t("nav.customize") }
   ];
 
   return (
@@ -71,12 +70,8 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="footer-bottom" style={{ borderTop: "1px solid rgba(248,245,240,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
+        <div className="footer-bottom" style={{ borderTop: "1px solid rgba(248,245,240,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
           <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(248,245,240,0.22)" }}>© {new Date().getFullYear()} 3R Fitness. {t("footer.rights")}</span>
-          <Link to="/politica-troca-devolucao" style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(248,245,240,0.48)", transition: "color 0.25s" }}
-            onMouseEnter={e => (e.currentTarget.style.color = "#E8C84A")}
-            onMouseLeave={e => (e.currentTarget.style.color = "rgba(248,245,240,0.48)")}
-          >{t("footer.exchange_policy")}</Link>
           <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(248,245,240,0.18)" }}>{t("footer.tagline")}</span>
         </div>
       </div>

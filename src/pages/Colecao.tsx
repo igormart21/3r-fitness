@@ -11,6 +11,7 @@ import {
   ShopifyProduct,
   createShopifyCart,
 } from "@/lib/shopify";
+import { downscaleImage } from "@/lib/downscaleImage";
 import colecoesHero from "@/assets/colecoes-hero.jpg";
 import logo3r from "@/assets/3r-logo.png";
 import sportFisiculturismo from "@/assets/sport-fisiculturismo.jpg";
@@ -43,7 +44,7 @@ import wodOuro from "@/assets/linha-wod-ouro.jpeg";
 import wodPrata from "@/assets/linha-wod-prata.jpeg";
 import eliteCrossOuro from "@/assets/linha-elite-ouro.jpeg";
 import eliteCrossPrata from "@/assets/linha-elite-prata.jpeg";
-import veloxOuro     from "@/assets/velox-royale-ouro-novo.jpg";
+import veloxOuro     from "@/assets/linha-velox-royale-ouro-masculino.jpg";
 import veloxPrata    from "@/assets/linha-velox-royale-prata-masculino.jpg";
 import veloxFemSpeedOuro from "@/assets/linha-velox-royale-ouro-feminino-speed.jpg";
 import veloxFemSpeedPrata from "@/assets/linha-velox-royale-prata-feminino-speed.jpg";
@@ -500,7 +501,10 @@ const ColecaoView = ({
     let precoOuro = 1497;
     let precoPrata = 347;
 
-    if (col.handle === "halter" || col.handle === "halter-elite") {
+    if (col.handle === "halter") {
+      precoOuro = 2;
+      precoPrata = 2;
+    } else if (col.handle === "halter-elite") {
       precoOuro = 3487;
       precoPrata = 297;
     } else if (col.handle.startsWith("velox-royale-fem")) {
@@ -689,10 +693,9 @@ const ColecaoCard = ({ col, onClick }: { col: ColItem; onClick: () => void }) =>
 const PRECO_OURO  = 1497; // preço real no Shopify (variante HALTER Ouro 18k)
 const PRECO_PRATA = 347;
 
-// GIDs das variantes do produto "Pingente Personalizado" no Shopify.
-// Você pode substituir pelos GIDs reais criados no seu Shopify Admin para atualizar os preços.
-const VARIANT_ID_OURO_PERS = "gid://shopify/ProductVariant/48912055468259"; // GID placeholder para Ouro
-const VARIANT_ID_PRATA_PERS = "gid://shopify/ProductVariant/48912055501027"; // GID placeholder para Prata
+// Variantes do produto "Joia Personalizada" na Shopify (handle: joia-personalizada)
+const VARIANT_ID_OURO_PERS = "gid://shopify/ProductVariant/49253071290595"; // Ouro 18k
+const VARIANT_ID_PRATA_PERS = "gid://shopify/ProductVariant/49253071323363"; // Prata 925
 
 const getPersonalizadoProductMock = (material: "ouro" | "prata", imageUrl: string): ShopifyProduct => {
   const isOuro = material === "ouro";
@@ -702,7 +705,7 @@ const getPersonalizadoProductMock = (material: "ouro" | "prata", imageUrl: strin
   return {
     node: {
       id: "gid://shopify/Product/Personalizado",
-      title: `Pingente Personalizado (IA - ${isOuro ? "Ouro 18k" : "Prata 925"})`,
+      title: "Joia Personalizada",
       description: "Você acabou de eternizar sua paixão com uma joia exclusiva gerada por IA.",
       handle: "pingente-personalizado-ia",
       featuredImage: {
@@ -781,6 +784,7 @@ const PersonalizarIA = () => {
   const [erroMsg, setErroMsg]         = useState<string>("");
   const [estado, setEstado]           = useState<"idle" | "gerando" | "pronto" | "erro">("idle");
   const [resultado, setResultado]     = useState<string | null>(null);
+  const [storageUrl, setStorageUrl]   = useState<string | null>(null);
   const [comprando, setComprando]     = useState(false);
   const [adicionando, setAdicionando] = useState(false);
   const [adicionado, setAdicionado]   = useState(false);
@@ -791,20 +795,24 @@ const PersonalizarIA = () => {
   const preco     = material === "ouro" ? PRECO_OURO : PRECO_PRATA;
   const fmtPreco  = (v: number) => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }).format(v);
 
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setFotoUrl(URL.createObjectURL(file));
-    const reader = new FileReader();
-    reader.onload = ev => setFoto(ev.target?.result as string);
-    reader.readAsDataURL(file);
-    setResultado(null); setEstado("idle"); setAdicionado(false);
+    setResultado(null); setStorageUrl(null); setEstado("idle"); setAdicionado(false);
+    try {
+      setFoto(await downscaleImage(file)); // reduz p/ caber no limite de body do Vercel
+    } catch {
+      const reader = new FileReader();
+      reader.onload = ev => setFoto(ev.target?.result as string);
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleGerar = async () => {
     console.log("[gerar-joia] handleGerar chamado, foto:", foto ? `${(foto.length/1024).toFixed(0)}KB` : "null");
     if (!foto) { console.warn("[gerar-joia] foto é null, abortando"); return; }
-    setEstado("gerando"); setResultado(null); setAdicionado(false); setErroMsg("");
+    setEstado("gerando"); setResultado(null); setStorageUrl(null); setAdicionado(false); setErroMsg("");
     setSegundos(0); setMsgIdx(0);
     timerRef.current = setInterval(() => {
       setSegundos(s => {
@@ -824,7 +832,7 @@ const PersonalizarIA = () => {
       const data = await res.json();
       console.log("[gerar-joia] JSON parseado, keys:", Object.keys(data), "imageUrl?", !!data.imageUrl);
       if (data.error) throw new Error(data.error);
-      setResultado(data.imageUrl); setEstado("pronto");
+      setResultado(data.imageUrl); setStorageUrl(data.storageUrl ?? null); setEstado("pronto");
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Erro desconhecido";
       console.error("[gerar-joia] ERRO:", msg);
@@ -833,6 +841,14 @@ const PersonalizarIA = () => {
     } finally {
       if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
     }
+  };
+
+  // `_imagem_url` (underscore) fica oculta para o cliente, mas visível no pedido do admin.
+  const buildJoiaAttributes = (): Array<{ key: string; value: string }> => {
+    const url = storageUrl ?? (resultado?.startsWith("http") ? resultado : null);
+    const attrs = [{ key: "Joia", value: "Personalizada por IA" }];
+    if (url) attrs.push({ key: "_imagem_url", value: url });
+    return attrs;
   };
 
   const handleAddCart = async () => {
@@ -852,6 +868,7 @@ const PersonalizarIA = () => {
         quantity: 1,
         selectedOptions: [{ name: "Material", value: isOuro ? "Ouro 18k" : "Prata 925" }],
         thumbnailImage: thumb,
+        attributes: buildJoiaAttributes(),
       });
       // força a imagem gerada no carrinho (Shopify sobrescreve com a do produto)
       patchItem(variantId, { thumbnailImage: thumb, product: mockProduct, price: { amount: priceAmt, currencyCode: "BRL" } });
@@ -872,7 +889,7 @@ const PersonalizarIA = () => {
     try {
       const isOuro    = material === "ouro";
       const variantId = isOuro ? VARIANT_ID_OURO_PERS : VARIANT_ID_PRATA_PERS;
-      const r = await createShopifyCart({ variantId, quantity: 1 });
+      const r = await createShopifyCart({ variantId, quantity: 1, attributes: buildJoiaAttributes() });
       if (r?.checkoutUrl) {
         window.location.href = r.checkoutUrl;
       } else {
@@ -1365,7 +1382,13 @@ const Colecao = () => {
       .then((data) => {
         const products: ShopifyProduct[] =
           (data?.data?.products?.edges ?? []).map((e: any) => ({ node: e.node }));
-        setAllProducts(products);
+        const exclusoes = ["joia-personalizada", "joia personalizada", "personalizada", "personalizado"];
+        const filtrados = products.filter((p: ShopifyProduct) => {
+          const title = p.node.title.toLowerCase();
+          const handle = p.node.handle.toLowerCase();
+          return !exclusoes.some(ex => title.includes(ex) || handle.includes(ex));
+        });
+        setAllProducts(filtrados);
       })
       .catch(() => {});
   }, []);
@@ -1414,7 +1437,7 @@ const Colecao = () => {
     };
 
     const precoBase: Record<string, number> = {
-      halter: 2587.0,
+      halter: 2.0,
       "halter-elite": 3487.0,
       vigor: 2487.0,
       dominus: 3997.0,
@@ -1495,7 +1518,7 @@ const Colecao = () => {
       if (c.handle === "imperium" || c.handle === "imperium-prata") precoPrata = 297.0;
       if (c.handle === "corrida-atleta") precoPrata = 297.0;
       if (c.handle === "strata") precoPrata = 297.0;
-      if (c.handle === "halter") precoPrata = 297.0;
+      if (c.handle === "halter") precoPrata = 2.0;
       if (c.handle === "vigor") precoPrata = 297.0;
       if (c.handle === "kettlebell-crossfit") precoPrata = 327.0;
       if (c.handle === "placa-triatlo") precoPrata = 327.0;

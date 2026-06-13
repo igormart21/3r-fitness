@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -18,7 +17,6 @@ import AtelieModalidade from "./pages/AtelieModalidade.tsx";
 import AtelieLinha from "./pages/AtelieLinha.tsx";
 import Continuar from "./pages/Continuar.tsx";
 import Essenciais from "./pages/Essenciais.tsx";
-import PoliticaTrocaDevolucao from "./pages/PoliticaTrocaDevolucao.tsx";
 import { useCartSync } from "@/hooks/useCartSync";
 import { InstagramFloatingButton } from "@/components/InstagramFloatingButton";
 import { WhatsappFloatingButton } from "@/components/WhatsappFloatingButton";
@@ -30,19 +28,9 @@ import { LanguageProvider } from "@/context/LanguageContext";
 const queryClient = new QueryClient();
 
 
-const ScrollToTop = () => {
-  const { pathname, search } = useLocation();
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, [pathname, search]);
-  return null;
-};
-
 const AppRoutes = () => {
   useCartSync();
   return (
-    <>
-    <ScrollToTop />
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/product/:handle" element={<ProductDetail />} />
@@ -57,22 +45,17 @@ const AppRoutes = () => {
       <Route path="/continuar" element={<Continuar />} />
       <Route path="/continuar/:modalidade" element={<Continuar />} />
       <Route path="/essenciais" element={<Essenciais />} />
-      <Route path="/politica-troca-devolucao" element={<PoliticaTrocaDevolucao />} />
       <Route path="/modalidade/:id" element={<Modalidade />} />
       <Route path="/personalizar/:slug" element={<Modalidade />} />
       
       <Route path="*" element={<NotFound />} />
     </Routes>
-    </>
   );
 };
 
 const FloatingButtons = () => {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
-  // Na página de coleção os ícones de Início/Conta ficam no header (ao lado do carrinho)
-  const isColecao = pathname === "/colecao";
-  if (isColecao) return null;
   return (
     <>
       <HomeFloatingButton />

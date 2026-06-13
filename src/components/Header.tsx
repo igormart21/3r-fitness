@@ -79,17 +79,16 @@ export const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen]         = useState(false);
   const [showLangDropdown, setShowLangDropdown] = useState(false);
-  const [showLangMobile, setShowLangMobile] = useState(false);
-
+  
   const { language, setLanguage, t } = useLanguage();
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const mobileDropdownRef = useRef<HTMLDivElement>(null);
   
   const totalItems = useCartStore(s => s.items.reduce((sum, i) => sum + i.quantity, 0));
   const openCart   = useCartUIStore(s => s.openCart);
 
   const NAV = [
-    { to: "/colecao", label: t("nav.collections") }
+    { to: "/colecao", label: t("nav.collections") },
+    { to: "/atelie", label: t("nav.atelier") }
   ];
 
   useEffect(() => {
@@ -103,9 +102,6 @@ export const Header = () => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setShowLangDropdown(false);
-      }
-      if (mobileDropdownRef.current && !mobileDropdownRef.current.contains(event.target as Node)) {
-        setShowLangMobile(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -243,78 +239,6 @@ export const Header = () => {
               )}
             </div>
 
-            {/* Language Selector Mobile — ao lado do carrinho */}
-            <div ref={mobileDropdownRef} className="show-mobile" style={{ position: "relative", display: "none" }}>
-              <button
-                onClick={() => setShowLangMobile(v => !v)}
-                aria-label="Idioma"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 5,
-                  height: 42,
-                  padding: "0 10px",
-                  borderRadius: 10,
-                  border: "1.5px solid rgba(248,245,240,0.15)",
-                  background: "none",
-                  cursor: "pointer",
-                  color: "#F8F5F0",
-                }}
-              >
-                <FlagIcon lang={language} />
-                <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: showLangMobile ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </button>
-
-              {showLangMobile && (
-                <div style={{
-                  position: "absolute",
-                  top: 50,
-                  right: 0,
-                  background: "#1C1814",
-                  border: "1px solid rgba(201,162,32,0.25)",
-                  borderRadius: 10,
-                  padding: "6px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 4,
-                  minWidth: 130,
-                  boxShadow: "0 12px 30px rgba(0,0,0,0.6)",
-                  zIndex: 100,
-                }}>
-                  {(["pt", "en", "es", "it", "fr"] as Language[]).map(lang => (
-                    <button
-                      key={lang}
-                      onClick={() => {
-                        setLanguage(lang);
-                        setShowLangMobile(false);
-                      }}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 8,
-                        padding: "8px 12px",
-                        borderRadius: 6,
-                        background: language === lang ? "rgba(201,162,32,0.15)" : "transparent",
-                        border: "none",
-                        color: language === lang ? "#E8C84A" : "rgba(248,245,240,0.8)",
-                        cursor: "pointer",
-                        width: "100%",
-                        textAlign: "left",
-                        fontSize: 12,
-                        fontFamily: "'Inter', sans-serif",
-                        fontWeight: language === lang ? 600 : 400,
-                      }}
-                    >
-                      <FlagIcon lang={lang} />
-                      <span style={{ textTransform: "uppercase" }}>{lang === "pt" ? "pt-br" : lang}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
             {/* Cart icon */}
             <button
               onClick={openCart}
@@ -386,6 +310,42 @@ export const Header = () => {
             </Link>
           ))}
         </nav>
+
+        {/* Language Selector Mobile */}
+        <div style={{ padding: "24px 28px", borderTop: "1px solid rgba(28,24,20,0.07)", marginTop: "auto", marginBottom: 32 }}>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, color: "rgba(28,24,20,0.45)", textTransform: "uppercase", letterSpacing: "0.2em", marginBottom: 16 }}>
+            Idioma / Language
+          </p>
+          <div style={{ display: "flex", gap: 14 }}>
+            {(["pt", "en", "es", "it", "fr"] as Language[]).map(lang => (
+              <button
+                key={lang}
+                onClick={() => {
+                  setLanguage(lang);
+                  setOpen(false);
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 42,
+                  height: 42,
+                  borderRadius: "50%",
+                  border: language === lang ? "2px solid #C9A220" : "1px solid rgba(28,24,20,0.15)",
+                  background: "none",
+                  padding: 0,
+                  cursor: "pointer",
+                  boxShadow: language === lang ? "0 4px 12px rgba(201,162,32,0.25)" : "none",
+                  transition: "transform 0.2s"
+                }}
+                onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"}
+                onMouseLeave={e => e.currentTarget.style.transform = "none"}
+              >
+                <FlagIcon lang={lang} />
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
