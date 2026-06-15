@@ -58,6 +58,9 @@ const AppRoutes = () => {
 const FloatingButtons = () => {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
+  // Na página de coleção os ícones de Início/Conta ficam no header (ao lado do carrinho)
+  const isColecao = pathname === "/colecao";
+  if (isColecao) return null;
   return (
     <>
       <HomeFloatingButton />
