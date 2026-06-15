@@ -44,6 +44,7 @@ import conjuntoWodOuro from "@/assets/linha-wod-ouro.jpeg";
 import conjuntoEliteOuro from "@/assets/linha-elite-ouro.jpeg";
 import corridaAtletaOuroImg from "@/assets/linha-corrida-ouro-fem.jpg";
 import corridaAtletaPrataImg from "@/assets/linha-corrida-prata-fem.jpg";
+import { NaoEncontrouCTA } from "@/components/NaoEncontrouCTA";
 
 const STATIC = [
   { nome: "Imperium", mat: "Ouro 18k", img: linhaImperiumOuro, hot: true },
@@ -788,6 +789,9 @@ export const ProductShowcase = () => {
             ))}
           </div>
         )}
+
+        {/* CTA discreta: não encontrou a joia */}
+        {!loading && <NaoEncontrouCTA variant="light" />}
       </div>
 
       {/* Lightbox — Static */}

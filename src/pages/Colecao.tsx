@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ArrowLeft, ShoppingBag, Zap, Loader2, ChevronRight, Home, User } from "lucide-react";
 import { Footer } from "@/components/Footer";
+import { NaoEncontrouCTA } from "@/components/NaoEncontrouCTA";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartUIStore } from "@/stores/cartUIStore";
 import { useLanguage } from "@/context/LanguageContext";
@@ -1828,6 +1829,9 @@ const Colecao = () => {
                 Nenhum produto encontrado com os filtros selecionados.
               </div>
             )}
+
+            {/* CTA discreta: não encontrou a joia */}
+            <NaoEncontrouCTA variant="light" />
           </section>
         </div>
       </main>
