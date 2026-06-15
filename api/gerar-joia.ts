@@ -1,5 +1,5 @@
 import OpenAI, { toFile } from "openai";
-import { uploadJoiaImage } from "./_lib/uploadJoia";
+import { uploadJoiaImage } from "./_lib/uploadJoia.js";
 
 // Assinatura Node.js (req, res) — é a que o Vercel usa para funções em /api num
 // projeto Vite. (A assinatura Web `Request => Response` trava: o Vercel nunca
