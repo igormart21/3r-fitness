@@ -793,6 +793,14 @@ const PersonalizarIA = () => {
   const [msgIdx, setMsgIdx]           = useState(0);
   const timerRef                      = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Limite de gerações por usuário (controlado no navegador via localStorage)
+  const LIMITE_GERACOES = 3;
+  const GERACOES_KEY = "3r_geracoes_ia";
+  const [geracoesUsadas, setGeracoesUsadas] = useState<number>(() => {
+    try { return Number(localStorage.getItem(GERACOES_KEY) || 0); } catch { return 0; }
+  });
+  const limiteAtingido = geracoesUsadas >= LIMITE_GERACOES;
+
   const preco     = material === "ouro" ? PRECO_OURO : PRECO_PRATA;
   const fmtPreco  = (v: number) => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }).format(v);
 
@@ -813,6 +821,12 @@ const PersonalizarIA = () => {
   const handleGerar = async () => {
     console.log("[gerar-joia] handleGerar chamado, foto:", foto ? `${(foto.length/1024).toFixed(0)}KB` : "null");
     if (!foto) { console.warn("[gerar-joia] foto é null, abortando"); return; }
+    // Limite de gerações por usuário
+    if (geracoesUsadas >= LIMITE_GERACOES) {
+      setErroMsg(`Você atingiu o limite de ${LIMITE_GERACOES} gerações. Fale com a gente no WhatsApp para criar sua joia personalizada.`);
+      setEstado("erro");
+      return;
+    }
     setEstado("gerando"); setResultado(null); setStorageUrl(null); setAdicionado(false); setErroMsg("");
     setSegundos(0); setMsgIdx(0);
     timerRef.current = setInterval(() => {
@@ -834,6 +848,12 @@ const PersonalizarIA = () => {
       console.log("[gerar-joia] JSON parseado, keys:", Object.keys(data), "imageUrl?", !!data.imageUrl);
       if (data.error) throw new Error(data.error);
       setResultado(data.imageUrl); setStorageUrl(data.storageUrl ?? null); setEstado("pronto");
+      // Conta a geração bem-sucedida (limite por usuário)
+      setGeracoesUsadas(prev => {
+        const novo = prev + 1;
+        try { localStorage.setItem(GERACOES_KEY, String(novo)); } catch { /* ignore */ }
+        return novo;
+      });
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Erro desconhecido";
       console.error("[gerar-joia] ERRO:", msg);
@@ -1014,32 +1034,32 @@ const PersonalizarIA = () => {
               </div>
 
               {/* Botão de Ação de Geração */}
-              <button 
-                onClick={handleGerar} 
-                disabled={!foto || estado === "gerando"}
-                style={{ 
-                  width: "100%", 
-                  padding: "16px 0", 
-                  borderRadius: 12, 
-                  border: "none", 
-                  background: !foto 
-                    ? "rgba(255,255,255,0.04)" 
-                    : estado === "gerando" 
-                      ? "rgba(212,175,55,0.15)" 
-                      : "linear-gradient(135deg,#C9A220,#E8C84A)", 
-                  color: !foto 
-                    ? "rgba(255,255,255,0.20)" 
-                    : estado === "gerando" 
-                      ? "rgba(255,255,255,0.40)" 
-                      : "#1C1814", 
-                  fontFamily: "'Inter',sans-serif", 
-                  fontSize: 13, 
-                  fontWeight: 700, 
-                  letterSpacing: "0.05em", 
-                  cursor: !foto || estado === "gerando" ? "not-allowed" : "pointer", 
-                  display: "flex", 
-                  alignItems: "center", 
-                  justifyContent: "center", 
+              <button
+                onClick={handleGerar}
+                disabled={!foto || estado === "gerando" || limiteAtingido}
+                style={{
+                  width: "100%",
+                  padding: "16px 0",
+                  borderRadius: 12,
+                  border: "none",
+                  background: (!foto || limiteAtingido)
+                    ? "rgba(255,255,255,0.04)"
+                    : estado === "gerando"
+                      ? "rgba(212,175,55,0.15)"
+                      : "linear-gradient(135deg,#C9A220,#E8C84A)",
+                  color: (!foto || limiteAtingido)
+                    ? "rgba(255,255,255,0.20)"
+                    : estado === "gerando"
+                      ? "rgba(255,255,255,0.40)"
+                      : "#1C1814",
+                  fontFamily: "'Inter',sans-serif",
+                  fontSize: 13,
+                  fontWeight: 700,
+                  letterSpacing: "0.05em",
+                  cursor: (!foto || estado === "gerando" || limiteAtingido) ? "not-allowed" : "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                   gap: 10,
                   transition: "all 0.2s"
                 }}
@@ -1049,6 +1069,8 @@ const PersonalizarIA = () => {
                     <Loader2 size={16} style={{ animation: "col-spin 1s linear infinite" }} />
                     Criando design da joia...
                   </>
+                ) : limiteAtingido ? (
+                  "Limite de gerações atingido"
                 ) : (
                   <>
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1058,6 +1080,16 @@ const PersonalizarIA = () => {
                   </>
                 )}
               </button>
+              {!limiteAtingido && foto && estado !== "gerando" && (
+                <p style={{ textAlign: "center", fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(212,175,55,0.55)", marginTop: 10, marginBottom: 0 }}>
+                  {LIMITE_GERACOES - geracoesUsadas} de {LIMITE_GERACOES} gerações restantes
+                </p>
+              )}
+              {limiteAtingido && (
+                <p style={{ textAlign: "center", fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(212,175,55,0.55)", marginTop: 10, marginBottom: 0 }}>
+                  Você usou suas {LIMITE_GERACOES} gerações. Fale conosco no WhatsApp para personalizar sua joia.
+                </p>
+              )}
               {!foto && (
                 <p style={{ textAlign: "center", fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(212,175,55,0.40)", marginTop: 10, marginBottom: 0 }}>
                   * Envie sua foto no painel ao lado primeiro para liberar a criação por IA
@@ -1383,7 +1415,7 @@ const Colecao = () => {
       .then((data) => {
         const products: ShopifyProduct[] =
           (data?.data?.products?.edges ?? []).map((e: any) => ({ node: e.node }));
-        const exclusoes = ["joia-personalizada", "joia personalizada", "personalizada", "personalizado"];
+        const exclusoes = ["joia-personalizada", "joia personalizada", "personalizada", "personalizado", "produto-teste", "produto teste", "teste"];
         const filtrados = products.filter((p: ShopifyProduct) => {
           const title = p.node.title.toLowerCase();
           const handle = p.node.handle.toLowerCase();

@@ -405,7 +405,7 @@ export const ProductShowcase = () => {
     storefrontApiRequest(STOREFRONT_QUERY, { first: 20 })
       .then(data => {
         const edges: ShopifyProduct[] = data?.data?.products?.edges ?? [];
-        const exclusoes = ["vigor", "titan", "velocità", "velocita", "strata", "aeron", "joia-personalizada", "joia personalizada", "personalizada", "personalizado"];
+        const exclusoes = ["vigor", "titan", "velocità", "velocita", "strata", "aeron", "joia-personalizada", "joia personalizada", "personalizada", "personalizado", "produto-teste", "produto teste", "teste"];
         const filtrados = edges.filter(p => {
           const title = p.node.title.toLowerCase();
           const handle = p.node.handle.toLowerCase();
