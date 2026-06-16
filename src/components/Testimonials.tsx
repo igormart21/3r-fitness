@@ -21,9 +21,9 @@ export const Testimonials = () => {
     { quote: t("testimonial.3.quote"), name: "Carin", city: "Florianópolis, SC", sport: t("testimonial.3.sport"), img: testimonialCarin, fit: "contain" },
     { quote: t("testimonial.4.quote"), name: "Elizandra", city: "Florianópolis, SC", sport: t("testimonial.4.sport"), img: testimonialNew1, fit: "contain" },
     { quote: t("testimonial.5.quote"), name: "Catiucia", city: "Florianópolis, SC", sport: t("testimonial.5.sport"), img: testimonialNew2, fit: "contain" },
-    { quote: t("testimonial.6.quote"), name: "Juliana", city: "Florianópolis, SC", sport: t("testimonial.6.sport"), img: testimonialNew3, fit: "contain" },
-    { quote: t("testimonial.7.quote"), name: "Mariana", city: "Florianópolis, SC", sport: t("testimonial.7.sport"), img: testimonialNew4, fit: "contain" },
-    { quote: t("testimonial.8.quote"), name: "Aline", city: "Florianópolis, SC", sport: t("testimonial.8.sport"), img: testimonialNew5, fit: "contain" },
+    { quote: t("testimonial.6.quote"), name: "Cinthia", city: "Florianópolis, SC", sport: t("testimonial.6.sport"), img: testimonialNew3, fit: "contain" },
+    { quote: t("testimonial.7.quote"), name: "Helena", city: "Florianópolis, SC", sport: t("testimonial.7.sport"), img: testimonialNew4, fit: "contain" },
+    { quote: t("testimonial.8.quote"), name: "Leda", city: "Florianópolis, SC", sport: t("testimonial.8.sport"), img: testimonialNew5, fit: "contain" },
   ];
 
   useEffect(() => {

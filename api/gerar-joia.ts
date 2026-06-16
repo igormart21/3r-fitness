@@ -50,38 +50,39 @@ export default async function handler(req: any, res: any) {
       : "neutral gray studio background (RGB ~175,175,175)";
 
     const prompt = [
-      `Convert the person in this uploaded photo into a FLAT 2D laser-cut pendant made of ${metalSurface}. Use the uploaded image as the PRIMARY GEOMETRY REFERENCE and treat it as a template.`,
-      `Redraw the person as clean editorial BLACK LINE-ART (a crisp vector / ink illustration, like a comic line drawing) and cut that illustration out of the flat brushed metal — exactly like a laser-cut silhouette jewelry pendant.`,
+      `Transform the person in this uploaded photo into a HIGHLY DETAILED ${metalSurface} portrait pendant, sculpted in fine BAS-RELIEF (low-relief 3D embossed metal) exactly like a premium custom jewelry piece. Use the uploaded image as the PRIMARY reference and reproduce the person faithfully.`,
       ``,
-      `ABSOLUTE PRIORITY — SILHOUETTE FIDELITY: The final pendant MUST preserve the EXACT silhouette and pose of the original person. Replicate with maximum fidelity: pose, body contour, face direction, hairstyle, clothing contour and accessories (sunglasses, watch, belt, shoe details). The result must look as if the person was directly converted into a laser-cut silver pendant. Do NOT modify the pose. The outer silhouette must match the uploaded image as closely as possible.`,
-      `STYLE — flat metal cutout, NOT a sculpture:`,
-      `• Flat 2D pendant with a single uniform thickness`,
-      `• NO sculpting, NO 3D relief, NO embossing, NO statue effect, NO depth modeling`,
-      `• NO artistic reinterpretation, NO stylization, NO pose modification`,
-      `• The outer edge is a precision laser-cut following the person's exact outline`,
+      `ABSOLUTE PRIORITY — MAXIMUM DETAIL & FIDELITY: Reproduce EVERY detail visible in the photo with rich, realistic engraving. This must look like a luxury laser-engraved + embossed metal relief portrait, NOT a flat minimalist silhouette and NOT a simple outline cartoon.`,
+      `Preserve faithfully and render in sculpted relief + fine engraved lines:`,
+      `• The exact pose, body proportions and silhouette of the person`,
+      `• Facial features and expression (eyes/sunglasses, nose, smile, jawline) — recognizable`,
+      `• Hair strands and hairstyle, cap/hat with its seams and curve`,
+      `• Clothing with realistic fabric folds, wrinkles, seams, hems, and any printed text or logos on the shirt`,
+      `• Race bib / number, accessories (sunglasses, watch, belt)`,
+      `• Hands and individual fingers, shoe laces, soles, stripes and shoe details`,
       ``,
-      `MATERIAL: ${metalSurface}.`,
+      `RELIEF & ENGRAVING STYLE (this is the key look):`,
+      `• Sculpted low-relief (bas-relief) so the figure has real depth and dimension — raised areas catch the light, recessed areas (folds, contours, details) fall into soft shadow`,
+      `• Fine crisp engraved contour lines for all internal detail (face, fabric folds, finger separation, shoe detail), like detailed metal etching`,
+      `• Rich tonal range across the polished ${isOuro ? "gold" : "silver"} surface — bright specular highlights on raised edges, gradual mid-tones, and darker engraved recesses, giving a true hand-crafted relief look`,
+      `• Smooth flat polished metal border/plate is NOT required — the outer edge is a precision cut that follows the person's exact outline`,
       ``,
-      `DETAILS:`,
-      `• Internal features (face, hair parting, clothing folds, finger separation, shoe straps) rendered ONLY as thin BLACK engraved contour lines on the flat metal — clean line art`,
-      `• Black engraved contour lines only — clean jewelry manufacturing lines, precision laser-cut edges, minimalist jewelry design`,
-      `• The flat metal surface MUST read as genuine ${isOuro ? "gold" : "silver"}: realistic metallic sheen, soft reflective highlights and gentle tonal variation like real polished precious metal — NOT a flat solid color, NOT grayscale, NOT yellow paint`,
-      `• Keep the SHAPE completely flat (no 3D relief, no embossing, no sculpting) — only the metal's natural surface reflections, with the detail rendered as black engraved lines`,
+      `MATERIAL: ${metalSurface}. The whole piece is ONE solid precious metal — realistic metallic sheen and reflections, absolutely NOT grayscale, NOT painted, NOT plastic, NOT a flat single color.`,
       ``,
-      `BAIL: small flat polished pendant bail loop at the very top, in matching metal, attached to the topmost point of the silhouette`,
+      `BAIL: small polished pendant bail loop at the very top in matching metal, attached to the topmost point.`,
       ``,
       `PRODUCT PHOTOGRAPHY:`,
       `• Background: ${bgColor}, perfectly uniform — professional e-commerce product photography`,
-      `• Lighting: soft studio light that creates gentle metallic reflections and highlights on the flat ${isOuro ? "gold" : "silver"} surface so it clearly looks like real precious metal, subtle drop shadow only, no shadows on the background`,
-      `• Camera: straight-on flat front view, FULL pendant visible — pendant max 60% of image height, ~20% empty space at top, ~20% at bottom, ~10% on each side`,
+      `• Lighting: soft directional studio light that reveals the relief depth — clear metallic highlights and shadows across the sculpted surface so it unmistakably reads as real ${isOuro ? "gold" : "silver"}; subtle drop shadow only, no shadows on the background`,
+      `• Camera: straight-on front view, FULL pendant visible — pendant max 60% of image height, ~20% empty space at top, ~20% at bottom, ~10% on each side`,
       `• CRITICAL: bail loop fully visible at top with space above, feet/base fully visible at bottom with space below — NOTHING cut off`,
       `• NO chain, NO neck, NO hand holding it, NO stand, NO props`,
-      `• Ultra sharp 8K — every black engraved contour line crisp and clean`,
-      `• Premium jewelry catalog quality`,
-      `• NO text, NO watermark, NO logo`,
+      `• Ultra sharp 8K macro jewelry photography — every engraved line and relief detail crisp, clean and richly defined`,
+      `• Premium luxury jewelry catalog quality`,
+      `• NO text caption, NO watermark, NO logo added by you`,
     ].join("\n");
 
-    console.log("[gerar-joia] gerando com gpt-image-1 portrait 1024x1536 (quality medium)...");
+    console.log("[gerar-joia] gerando com gpt-image-1 portrait 1024x1536 (quality HIGH, alto-relevo detalhado)...");
 
     const response = await (openai.images.edit as Function)({
       model: "gpt-image-1",
@@ -89,7 +90,7 @@ export default async function handler(req: any, res: any) {
       prompt,
       size: "1024x1536",
       input_fidelity: "high",
-      quality: "medium",
+      quality: "high",
     });
 
     const item     = (response as any).data?.[0];
